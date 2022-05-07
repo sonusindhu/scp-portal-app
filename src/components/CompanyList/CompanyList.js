@@ -9,14 +9,17 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import axios from "axios";
 import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
 
-const API_URL = "https://apigwqa.ifreightsystems.com/api/";
+import { format } from "date-fns";
+
+const API_URL = "http://localhost:1337/api/v1/app/company/";
 
 const CompanyList = () => {
-  const currentUser = AuthService.getCurrentUser();
+  const user = AuthService.getCurrentUser();
+  axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
+  axios.defaults.headers.common["token"] = user.token;
+  axios.defaults.headers.common["allowOrigins"] = "*";
 
-  axios.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${currentUser.accessToken}`;
+  console.log(axios.defaults.headers);
 
   const gridRef = useRef(null);
   const [gridApi, setGridApi] = useState(null);
@@ -31,7 +34,7 @@ const CompanyList = () => {
 
   function dateFormatter(params) {
     if (!params.value) return "";
-    return new Date(params.value).toLocaleString().split(",")[0];
+    return format(new Date(params.value), "dd/MM/yyyy");
   }
 
   return (
@@ -62,7 +65,7 @@ const CompanyList = () => {
           onGridReady={onGridReady}
         >
           <AgGridColumn
-            field="companyName"
+            field="name"
             sortable={true}
             filter="agTextColumnFilter"
             headerCheckboxSelection={true}
@@ -76,18 +79,7 @@ const CompanyList = () => {
               suppressFilterButton: true,
             }}
           ></AgGridColumn>
-          <AgGridColumn
-            field="companyID"
-            headerName="ID"
-            sortable={true}
-            filter={true}
-            lockPinned={true}
-            suppressMenu={true}
-            floatingFilterComponent="customTextFloatingFilter"
-            floatingFilterComponentParams={{
-              suppressFilterButton: true,
-            }}
-          ></AgGridColumn>
+
           <AgGridColumn
             field="status"
             sortable={true}
@@ -111,7 +103,7 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="phoneNum"
+            field="phone"
             headerName="Phone Number"
             sortable={true}
             filter={true}
@@ -123,7 +115,7 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="rating"
+            field="extension"
             sortable={true}
             filter={true}
             lockPinned={true}
@@ -145,7 +137,7 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="industry"
+            field="employeesCount"
             sortable={true}
             filter={true}
             lockPinned={true}
@@ -156,7 +148,7 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="salesOwner"
+            field="address1"
             sortable={true}
             filter={true}
             lockPinned={true}
@@ -167,8 +159,7 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="trackingTeamOwnerUser"
-            headerName="Tracking Owner"
+            field="address2"
             sortable={true}
             filter={true}
             lockPinned={true}
@@ -190,8 +181,29 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="adminSiteName"
-            headerName="Branch"
+            field="city"
+            sortable={true}
+            filter={true}
+            lockPinned={true}
+            suppressMenu={true}
+            floatingFilterComponent="customTextFloatingFilter"
+            floatingFilterComponentParams={{
+              suppressFilterButton: true,
+            }}
+          ></AgGridColumn>
+          <AgGridColumn
+            field="state"
+            sortable={true}
+            filter={true}
+            lockPinned={true}
+            suppressMenu={true}
+            floatingFilterComponent="customTextFloatingFilter"
+            floatingFilterComponentParams={{
+              suppressFilterButton: true,
+            }}
+          ></AgGridColumn>
+          <AgGridColumn
+            field="zipcode"
             sortable={true}
             filter={true}
             lockPinned={true}
@@ -214,8 +226,28 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="createdDate"
+            field="createdAt"
             headerName="Created Date"
+            sortable={true}
+            filter={true}
+            lockPinned={true}
+            valueFormatter={dateFormatter}
+          ></AgGridColumn>
+          <AgGridColumn
+            field="updatedBy"
+            headerName="Updated By"
+            sortable={true}
+            filter={true}
+            lockPinned={true}
+            suppressMenu={true}
+            floatingFilterComponent="customTextFloatingFilter"
+            floatingFilterComponentParams={{
+              suppressFilterButton: true,
+            }}
+          ></AgGridColumn>
+          <AgGridColumn
+            field="updatedAt"
+            headerName="Updated Date"
             sortable={true}
             filter={true}
             lockPinned={true}
@@ -254,7 +286,7 @@ function ServerSideDatasource() {
       });
       const payload = {
         skip: params.request.startRow,
-        take: 25,
+        take: 10,
         group: [],
         sort,
         filter: {
@@ -262,16 +294,18 @@ function ServerSideDatasource() {
           filters: filters,
         },
       };
+
       axios
-        .post(API_URL + "Company/ExcelView", payload)
-        .then((result) => result.data)
-        .then((rowData) => {
+        .post(API_URL + "list", payload)
+        .then(({ data }) => {
           params.success({
-            rowData: rowData.data || [],
-            rowCount: rowData.total,
+            rowData: data.result || [],
+            rowCount: data.total,
           });
         })
         .catch((error) => {
+          console.log(error.response);
+          console.log(error.request);
           params.fail();
         });
     },

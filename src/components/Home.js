@@ -1,33 +1,13 @@
-import React, { useState, useEffect } from "react";
-
-import UserService from "../services/user.service";
-
+import { Navigate } from "react-router-dom";
+import AuthService from "../services/auth.service";
 const Home = () => {
-  const [content, setContent] = useState("");
+  const user = AuthService.getCurrentUser();
 
-  useEffect(() => {
-    UserService.getPublicContent().then(
-      (response) => {
-        setContent(response.data);
-      },
-      (error) => {
-        const _content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-
-        setContent(_content);
-      }
-    );
-  }, []);
-
-  return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>{content}</h3>
-      </header>
-    </div>
-  );
+  if (user) {
+    return <Navigate to="/app/company-list" />;
+  } else {
+    return <Navigate to="/auth/login" />;
+  }
 };
 
 export default Home;
