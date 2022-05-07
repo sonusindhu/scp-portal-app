@@ -42,18 +42,18 @@ const App = () => {
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         {currentUser ? (
           <div className="navbar-nav ml-auto">
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to={"/profile"} className="nav-link">
-                {currentUser.user.fullName}
+                {currentUser.fullName}
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item">
-              <Link to={"/company-list"} className="nav-link">
+              <Link to={"/app/company-list"} className="nav-link">
                 Companies
               </Link>
             </li>
             <li className="nav-item">
-              <a href="/login" className="nav-link" onClick={logOut}>
+              <a href="/auth/login" className="nav-link" onClick={logOut}>
                 LogOut
               </a>
             </li>
@@ -66,9 +66,9 @@ const App = () => {
       <div className="container-fluid mt-3">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/company-list" element={<CompanyList />} />
+          <Route path="/auth/login" element={<Login />} />
+          <Route path="/app/profile" element={<Profile />} />
+          <Route path="/app/company-list" element={<CompanyList />} />
         </Routes>
       </div>
     </div>

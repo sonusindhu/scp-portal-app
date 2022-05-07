@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const API_URL = "https://apigwqa.ifreightsystems.com/api/";
+const API_URL = "http://localhost:1337/api/v1/";
 
 const register = (username, email, password) => {
-  return axios.post(API_URL + "signup", {
+  return axios.post(API_URL + "auth/signup", {
     username,
     email,
     password,
@@ -16,9 +16,11 @@ const login = (email, password) => {
     password,
   };
 
-  return axios.post(API_URL + "Account/Login", payload).then((response) => {
-    const userData = response.data.data;
-    if (userData.accessToken) {
+  console.log(axios.defaults.headers);
+
+  return axios.post(API_URL + "auth/login", payload).then((response) => {
+    const userData = response.data.result;
+    if (userData.token) {
       localStorage.setItem("user", JSON.stringify(userData));
     }
     return userData;

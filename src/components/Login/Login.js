@@ -26,20 +26,18 @@ const Login = (props) => {
 
     AuthService.login(username, password).then(
       () => {
-        // props.history.push("/profile");
-        // window.location.reload();
-        window.location.href = "/prifile";
+        setLoading(false);
+        // window.location.href = "/company-list";
       },
       (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
         setLoading(false);
-        setMessage(resMessage);
+        let errprMessage = error.message;
+        if (error.response) {
+          errprMessage = error.response.data;
+        } else if (error.request) {
+          errprMessage = error.request;
+        }
+        setMessage(errprMessage);
       }
     );
   };
