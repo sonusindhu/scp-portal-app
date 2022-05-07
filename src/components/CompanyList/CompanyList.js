@@ -43,13 +43,13 @@ const CompanyList = () => {
         <h3>CompanyList</h3>
       </header>
 
-      <div className="ag-theme-alpine" style={{ height: "85vh" }}>
+      <div className="ag-theme-alpine" style={{ height: "80vh" }}>
         <AgGridReact
           ref={gridRef}
           rowSelection="multiple"
           suppressRowClickSelection={true}
           pagination={true}
-          paginationPageSize={25}
+          paginationPageSize={10}
           modules={[ServerSideRowModelModule]}
           defaultColDef={{
             minWidth: 80,
@@ -61,7 +61,7 @@ const CompanyList = () => {
           }}
           rowModelType={"serverSide"}
           serverSideStoreType={"partial"}
-          cacheBlockSize={25}
+          cacheBlockSize={10}
           onGridReady={onGridReady}
         >
           <AgGridColumn
