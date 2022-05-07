@@ -12,6 +12,7 @@ import CompanyList from "./components/CompanyList/CompanyList";
 
 // import AuthVerify from "./common/AuthVerify";
 import EventBus from "./common/EventBus";
+import ContactList from "./components/ContactList/ContactList";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -53,6 +54,11 @@ const App = () => {
               </Link>
             </li>
             <li className="nav-item">
+              <Link to={"/app/contact-list"} className="nav-link">
+                Contacts
+              </Link>
+            </li>
+            <li className="nav-item">
               <a href="/auth/login" className="nav-link" onClick={logOut}>
                 LogOut
               </a>
@@ -69,6 +75,7 @@ const App = () => {
           <Route path="/auth/login" element={<Login />} />
           <Route path="/app/profile" element={<Profile />} />
           <Route path="/app/company-list" element={<CompanyList />} />
+          <Route path="/app/contact-list" element={<ContactList />} />
         </Routes>
       </div>
     </div>

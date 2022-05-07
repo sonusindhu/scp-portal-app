@@ -11,9 +11,9 @@ import GridTextFilterComponent from "../../shared/components/grid-filters/grid-t
 
 import { format } from "date-fns";
 
-const API_URL = "http://localhost:1337/api/v1/app/company/";
+const API_URL = "http://localhost:1337/api/v1/app/contact/";
 
-const CompanyList = () => {
+const ContactList = () => {
   const user = AuthService.getCurrentUser();
   axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
   axios.defaults.headers.common["token"] = user.token;
@@ -40,7 +40,7 @@ const CompanyList = () => {
   return (
     <div className="container-fluid">
       <header className="jumbotron">
-        <h3>CompanyList</h3>
+        <h3>ContactList</h3>
       </header>
 
       <div className="ag-theme-alpine" style={{ height: "80vh" }}>
@@ -65,7 +65,7 @@ const CompanyList = () => {
           onGridReady={onGridReady}
         >
           <AgGridColumn
-            field="name"
+            field="fullName"
             sortable={true}
             filter="agTextColumnFilter"
             headerCheckboxSelection={true}
@@ -80,6 +80,17 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
 
+          <AgGridColumn
+            field="companyName"
+            sortable={true}
+            filter={true}
+            lockPinned={true}
+            suppressMenu={true}
+            floatingFilterComponent="customTextFloatingFilter"
+            floatingFilterComponentParams={{
+              suppressFilterButton: true,
+            }}
+          ></AgGridColumn>
           <AgGridColumn
             field="status"
             sortable={true}
@@ -126,7 +137,7 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="revenue"
+            field="department"
             sortable={true}
             filter={true}
             lockPinned={true}
@@ -137,7 +148,7 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="employeesCount"
+            field="jobTitle"
             sortable={true}
             filter={true}
             lockPinned={true}
@@ -170,7 +181,7 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="type"
+            field="birthDate"
             sortable={true}
             filter={true}
             lockPinned={true}
@@ -312,4 +323,4 @@ function ServerSideDatasource() {
   };
 }
 
-export default CompanyList;
+export default ContactList;
