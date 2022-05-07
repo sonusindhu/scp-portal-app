@@ -274,7 +274,7 @@ function ServerSideDatasource() {
       console.log("[Datasource] - rows requested by grid: ", params.request);
 
       const sort = params.request.sortModel.map((item) => {
-        return { dir: item.sort, field: item.colId };
+        return { [`${item.colId}`]: item.sort };
       });
       const filters = Object.keys(params.request.filterModel).map((key) => {
         console.log(key);
