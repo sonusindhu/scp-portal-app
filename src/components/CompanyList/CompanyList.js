@@ -8,6 +8,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import axios from "axios";
 import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
+import GridOptions from "../../shared/components/grid-options.component";
 
 import { format } from "date-fns";
 import { Button } from "@mui/material";
@@ -58,9 +59,10 @@ const CompanyList = () => {
         <AgGridReact
           ref={gridRef}
           rowSelection="multiple"
-          suppressRowClickSelection={true}
+          suppressRowClickSelection={false}
           pagination={true}
           paginationPageSize={10}
+          checkboxSelection={true}
           modules={[ServerSideRowModelModule]}
           defaultColDef={{
             minWidth: 80,
@@ -272,6 +274,7 @@ const CompanyList = () => {
             filter={false}
             pinned="right"
             lockPinned={true}
+            cellRendererFramework={GridOptions}
           ></AgGridColumn>
         </AgGridReact>
       </div>
