@@ -13,6 +13,7 @@ import GridOptions from "../../shared/components/grid-options.component";
 import { format } from "date-fns";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
 
 const API_URL = "http://localhost:1337/api/v1/app/company/";
 
@@ -59,7 +60,7 @@ const CompanyList = () => {
         <AgGridReact
           ref={gridRef}
           rowSelection="multiple"
-          suppressRowClickSelection={false}
+          suppressRowClickSelection={true}
           pagination={true}
           paginationPageSize={10}
           checkboxSelection={true}
@@ -75,6 +76,7 @@ const CompanyList = () => {
           rowModelType={"serverSide"}
           serverSideStoreType={"partial"}
           cacheBlockSize={10}
+          animateRows={false}
           onGridReady={onGridReady}
         >
           <AgGridColumn
@@ -84,6 +86,7 @@ const CompanyList = () => {
             headerCheckboxSelection={true}
             headerCheckboxSelectionFilteredOnly={true}
             checkboxSelection={true}
+            headerComponentFramework={GridHeaderCheckbox}
             pinned="left"
             lockPinned={true}
             suppressMenu={true}
