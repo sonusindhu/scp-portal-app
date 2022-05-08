@@ -92,7 +92,7 @@ const CompanyList = () => {
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": { m: 3, width: "41ch" },
+          "& .MuiTextField-root": { m: 1.1, width: "41ch" },
         }}
         noValidate
         autoComplete="off"
@@ -113,7 +113,7 @@ const CompanyList = () => {
             onChange={handleChangeInput}
           />
 
-          <FormControl variant="outlined" sx={{ m: 3, width: "41ch" }}>
+          <FormControl variant="outlined" sx={{ m: 1.1, width: "41ch" }}>
             <InputLabel>Status</InputLabel>
             <Select
               id="status"
@@ -133,7 +133,7 @@ const CompanyList = () => {
         </div>
 
         <div>
-          <FormControl variant="outlined" sx={{ m: 3, width: "41ch" }}>
+          <FormControl variant="outlined" sx={{ m: 1.1, width: "41ch" }}>
             <InputLabel>Type</InputLabel>
             <Select
               id="type"
@@ -229,12 +229,17 @@ const CompanyList = () => {
           />
         </div>
 
-        <div style={{ marginLeft: "23px" }}>
+        <div style={{ marginLeft: "12px", marginTop: "15px" }}>
           <Stack direction="row" spacing={2}>
-            <Button variant="contained" onClick={handleSubmitForm}>
+            <Button size="large" variant="contained" onClick={handleSubmitForm}>
               Save
             </Button>
-            <Button variant="outlined" type="button" onClick={handleClearForm}>
+            <Button
+              size="large"
+              variant="outlined"
+              type="button"
+              onClick={handleClearForm}
+            >
               Cancel
             </Button>
           </Stack>
