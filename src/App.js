@@ -9,6 +9,8 @@ import Login from "./components/Login/Login";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import CompanyList from "./components/CompanyList/CompanyList";
+import AddCompany from "./components/CompanyList/AddCompany";
+import EditCompany from "./components/CompanyList/EditCompany";
 
 // import AuthVerify from "./common/AuthVerify";
 import EventBus from "./common/EventBus";
@@ -75,6 +77,9 @@ const App = () => {
           <Route path="/auth/login" element={<Login />} />
           <Route path="/app/profile" element={<Profile />} />
           <Route path="/app/company-list" element={<CompanyList />} />
+          <Route path="/app/company/create" element={<AddCompany />} />
+          <Route path="/app/company/:id/edit" element={<EditCompany />} />
+
           <Route path="/app/contact-list" element={<ContactList />} />
         </Routes>
       </div>

@@ -10,6 +10,8 @@ import axios from "axios";
 import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
 
 import { format } from "date-fns";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const API_URL = "http://localhost:1337/api/v1/app/company/";
 
@@ -18,8 +20,6 @@ const CompanyList = () => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
   axios.defaults.headers.common["token"] = user.token;
   axios.defaults.headers.common["allowOrigins"] = "*";
-
-  console.log(axios.defaults.headers);
 
   const gridRef = useRef(null);
   const [gridApi, setGridApi] = useState(null);
@@ -40,7 +40,18 @@ const CompanyList = () => {
   return (
     <div className="container-fluid">
       <header className="jumbotron">
-        <h3>CompanyList</h3>
+        <h3>
+          <span>Company List</span>
+
+          <Button
+            component={Link}
+            to="/app/company/create"
+            className="{ { float: 'right' } }"
+            variant="outlined"
+          >
+            Create
+          </Button>
+        </h3>
       </header>
 
       <div className="ag-theme-alpine" style={{ height: "80vh" }}>
