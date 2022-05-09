@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, FormControl, Stack, Alert } from "@mui/material";
-
+import { Button, Stack, Alert } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import AuthService from "../../services/auth.service";
@@ -11,14 +10,16 @@ import {
   SelectElement,
 } from "react-hook-form-mui";
 
-const API_URL = "http://localhost:1337/api/v1/app/company/";
+const API_URL = "http://localhost:1337/api/v1/app/contact/";
+const COMPANY_API_URL = "http://localhost:1337/api/v1/app/company/";
 
-const AddCompany = () => {
+const AddContact = () => {
   const user = AuthService.getCurrentUser();
   axios.defaults.headers.common["token"] = user.token;
   axios.defaults.headers.common["allowOrigins"] = "*";
 
   const [showError, setShowError] = useState("");
+  const [companies, setCompanies] = useState([]);
   const [showSuccess, setShowSuccess] = useState("");
 
   const formContext = useForm({
@@ -30,12 +31,12 @@ const AddCompany = () => {
   };
 
   const handleSubmitForm = (e) => {
-    if (!e.email || !e.name) return;
     const payload = { ...e };
     axios
       .post(API_URL + "create", payload)
       .then(({ data }) => data)
       .then((response) => {
+        console.log(response);
         if (response.status) {
           setShowSuccess(response.message);
           reset();
@@ -44,30 +45,66 @@ const AddCompany = () => {
         }
       })
       .catch((error) => {
-        setShowError(error.response.data);
+        console.log(error);
+        setShowError(error.response);
       });
   };
+
+  const statusList = [
+    {
+      id: "",
+      title: "Select",
+    },
+    {
+      id: "active",
+      title: "Active",
+    },
+    {
+      id: "inactive",
+      title: "Inactive",
+    },
+  ];
+
+  useEffect(() => {
+    axios
+      .get(COMPANY_API_URL + "listOfNames")
+      .then(({ data }) => data)
+      .then(({ result }) => {
+        setCompanies(result);
+      })
+      .catch((error) => {
+        setCompanies([]);
+      });
+  }, []);
 
   return (
     <div className="container-fluid">
       <header className="jumbotron">
         <h3>
-          <span>Add Company</span>
+          <span>Add Contact</span>
         </h3>
       </header>
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <div>
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1, width: "41ch" }}
             required
-            name={"name"}
-            label="Name"
+            name={"firstName"}
+            label="First Name"
             variant="outlined"
             margin={"dense"}
           />
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1, width: "41ch" }}
+            required
+            name={"lastName"}
+            label="Last Name"
+            variant="outlined"
+            margin={"dense"}
+          />
+          <TextFieldElement
+            sx={{ m: 1, width: "41ch" }}
             required
             type={"email"}
             name={"email"}
@@ -75,74 +112,47 @@ const AddCompany = () => {
             margin={"dense"}
             variant="outlined"
           />
+        </div>
 
+        <div>
           <SelectElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1, width: "41ch" }}
             required
-            options={[
-              {
-                id: "",
-                title: "Select",
-              },
-              {
-                id: "active",
-                title: "active",
-              },
-              {
-                id: "active",
-                title: "Inactive",
-              },
-            ]}
+            options={statusList}
             name={"status"}
             label="Status"
           ></SelectElement>
-        </div>
 
-        <div>
           <SelectElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1, width: "41ch" }}
             required
-            options={[
-              {
-                id: "",
-                title: "Select",
-              },
-              {
-                id: "customer",
-                title: "Customer",
-              },
-              {
-                id: "carrier",
-                title: "Carrier",
-              },
-            ]}
-            name={"type"}
-            label="Type"
+            options={companies}
+            name={"companyId"}
+            label="Company"
+            labelKey="name"
           ></SelectElement>
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1, width: "41ch" }}
             required
-            name={"revenue"}
-            label="Revenue"
+            name={"department"}
+            label="Department"
             variant="outlined"
-            validation={{ maxLength: 10 }}
-            type={"number"}
-          />
-
-          <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
-            required
-            name={"employeesCount"}
-            label="Employees Count"
-            variant="outlined"
-            validation={{ maxLength: 5 }}
-            type={"number"}
+            validation={{ maxLength: 20 }}
           />
         </div>
         <div>
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1, width: "41ch" }}
+            required
+            name={"jobTitle"}
+            label="Job Title"
+            variant="outlined"
+            validation={{ maxLength: 50 }}
+          />
+
+          <TextFieldElement
+            sx={{ m: 1, width: "41ch" }}
             required
             name={"address1"}
             label="Address1"
@@ -150,23 +160,22 @@ const AddCompany = () => {
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1, width: "41ch" }}
             name={"address2"}
             label="Address2"
-            variant="outlined"
-          />
-
-          <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
-            required
-            name={"city"}
-            label="City"
             variant="outlined"
           />
         </div>
         <div>
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1, width: "41ch" }}
+            required
+            name={"city"}
+            label="City"
+            variant="outlined"
+          />
+          <TextFieldElement
+            sx={{ m: 1, width: "41ch" }}
             required
             name={"state"}
             label="State"
@@ -174,25 +183,25 @@ const AddCompany = () => {
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1, width: "41ch" }}
             required
             name={"country"}
             label="Country"
-            variant="outlined"
-          />
-
-          <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
-            required
-            name={"zipcode"}
-            label="Zipcode"
             variant="outlined"
           />
         </div>
 
         <div>
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1, width: "41ch" }}
+            required
+            name={"zipcode"}
+            label="Zipcode"
+            variant="outlined"
+          />
+
+          <TextFieldElement
+            sx={{ m: 1, width: "41ch" }}
             required
             name={"phone"}
             label="Phone"
@@ -201,7 +210,7 @@ const AddCompany = () => {
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1, width: "41ch" }}
             name={"extension"}
             label="Extension"
             validation={{ maxLength: 6 }}
@@ -247,4 +256,4 @@ const AddCompany = () => {
   );
 };
 
-export default AddCompany;
+export default AddContact;

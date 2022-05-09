@@ -15,6 +15,7 @@ import EditCompany from "./components/CompanyList/EditCompany";
 // import AuthVerify from "./common/AuthVerify";
 import EventBus from "./common/EventBus";
 import ContactList from "./components/ContactList/ContactList";
+import AddContact from "./components/ContactList/AddContact";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -81,6 +82,8 @@ const App = () => {
           <Route path="/app/company/:id/edit" element={<EditCompany />} />
 
           <Route path="/app/contact-list" element={<ContactList />} />
+          <Route path="/app/contact/create" element={<AddContact />} />
+          {/* <Route path="/app/contact/:id/edit" element={<EditContact />} /> */}
         </Routes>
       </div>
     </div>
