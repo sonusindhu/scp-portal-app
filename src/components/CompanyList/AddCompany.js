@@ -1,85 +1,52 @@
-import React, { useState, useReducer, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-  Alert,
-} from "@mui/material";
+import { Button, FormControl, Stack, Alert } from "@mui/material";
+
+import { useForm } from "react-hook-form";
 
 import AuthService from "../../services/auth.service";
+import {
+  FormContainer,
+  TextFieldElement,
+  SelectElement,
+} from "react-hook-form-mui";
 
 const API_URL = "http://localhost:1337/api/v1/app/company/";
 
 const CompanyList = () => {
+  const user = AuthService.getCurrentUser();
+  axios.defaults.headers.common["token"] = user.token;
+  axios.defaults.headers.common["allowOrigins"] = "*";
+
   const [showError, setShowError] = useState("");
   const [showSuccess, setShowSuccess] = useState("");
 
-  const [state, setState] = useReducer((oldState, action) => {
-    if (action.type == "add") {
-      return {
-        ...oldState,
-        ...action.data,
-      };
-    } else if (action.type == "reset") {
-      return {};
-    }
-  }, {});
-
-  const handleChangeInput = (e) => {
-    const { id, value } = e.target;
-    const action = {
-      data: { [id]: value },
-      type: "add",
-    };
-    setState(action);
-  };
-
-  const handleClearForm = (e) => {
-    setState({ type: "reset" });
+  const formContext = useForm({
+    defaultValues: {},
+  });
+  const { reset } = formContext;
+  const handleClearForm = () => {
+    reset();
   };
 
   const handleSubmitForm = (e) => {
-    console.log(state);
-    if (!state.email || !state.name) return;
+    if (!e.email || !e.name) return;
+    const payload = { ...e };
     axios
-      .post(API_URL + "create", state)
+      .post(API_URL + "create", payload)
       .then(({ data }) => data)
       .then((response) => {
-        console.log(response);
         if (response.status) {
-          setState({ type: "reset" });
           setShowSuccess(response.message);
+          reset();
         } else {
           setShowError(response.message);
         }
       })
       .catch((error) => {
-        console.log(error.response.data);
         setShowError(error.response.data);
       });
   };
-
-  const onSelectChange = (data) => {
-    const action = {
-      data,
-      type: "add",
-    };
-    setState(action);
-  };
-
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
-
-  const user = AuthService.getCurrentUser();
-  axios.defaults.headers.common["token"] = user.token;
-  axios.defaults.headers.common["allowOrigins"] = "*";
 
   return (
     <div className="container-fluid">
@@ -89,149 +56,168 @@ const CompanyList = () => {
         </h3>
       </header>
 
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": { m: 1.1, width: "41ch" },
-        }}
-        noValidate
-        autoComplete="off"
-      >
+      <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <div>
-          <TextField
+          <TextFieldElement
+            sx={{ m: 1.1, width: "41ch" }}
             required
-            id="name"
+            name={"name"}
             label="Name"
             variant="outlined"
-            onChange={handleChangeInput}
+            margin={"dense"}
           />
-          <TextField
+          <TextFieldElement
+            sx={{ m: 1.1, width: "41ch" }}
             required
-            id="email"
+            type={"email"}
+            name={"email"}
             label="Email"
+            margin={"dense"}
             variant="outlined"
-            onChange={handleChangeInput}
           />
 
-          <FormControl variant="outlined" sx={{ m: 1.1, width: "41ch" }}>
-            <InputLabel>Status</InputLabel>
-            <Select
-              id="status"
-              value={state?.status || ""}
-              onChange={(event) => {
-                onSelectChange({ status: event?.target?.value });
-              }}
-              label="Status"
-            >
-              <MenuItem value="">
-                <em>Select</em>
-              </MenuItem>
-              <MenuItem value="active">Active</MenuItem>
-              <MenuItem value="inactive">Inactive</MenuItem>
-            </Select>
-          </FormControl>
+          <SelectElement
+            sx={{ m: 1.1, width: "41ch" }}
+            required
+            options={[
+              {
+                id: "",
+                title: "Select",
+              },
+              {
+                id: "active",
+                title: "active",
+              },
+              {
+                id: "active",
+                title: "Inactive",
+              },
+            ]}
+            name={"status"}
+            label="Status"
+          ></SelectElement>
         </div>
 
         <div>
-          <FormControl variant="outlined" sx={{ m: 1.1, width: "41ch" }}>
-            <InputLabel>Type</InputLabel>
-            <Select
-              id="type"
-              value={state?.type || ""}
-              onChange={(event) => {
-                onSelectChange({ type: event?.target?.value });
-              }}
-              label="Type"
-            >
-              <MenuItem value="">
-                <em>Select</em>
-              </MenuItem>
-              <MenuItem value="customer">Customer</MenuItem>
-              <MenuItem value="carrier">Carrier</MenuItem>
-            </Select>
-          </FormControl>
-          <TextField
+          <SelectElement
+            sx={{ m: 1.1, width: "41ch" }}
             required
-            id="revenue"
+            options={[
+              {
+                id: "",
+                title: "Select",
+              },
+              {
+                id: "customer",
+                title: "Customer",
+              },
+              {
+                id: "carrier",
+                title: "Carrier",
+              },
+            ]}
+            name={"type"}
+            label="Type"
+          ></SelectElement>
+
+          <TextFieldElement
+            sx={{ m: 1.1, width: "41ch" }}
+            required
+            name={"revenue"}
             label="Revenue"
             variant="outlined"
-            onChange={handleChangeInput}
+            validation={{ maxLength: 10 }}
+            type={"number"}
           />
-          <TextField
+
+          <TextFieldElement
+            sx={{ m: 1.1, width: "41ch" }}
             required
-            id="employeesCount"
+            name={"employeesCount"}
             label="Employees Count"
             variant="outlined"
-            onChange={handleChangeInput}
+            validation={{ maxLength: 5 }}
+            type={"number"}
           />
         </div>
         <div>
-          <TextField
+          <TextFieldElement
+            sx={{ m: 1.1, width: "41ch" }}
             required
-            id="address1"
+            name={"address1"}
             label="Address1"
             variant="outlined"
-            onChange={handleChangeInput}
           />
-          <TextField
-            required
-            id="address2"
+
+          <TextFieldElement
+            sx={{ m: 1.1, width: "41ch" }}
+            name={"address2"}
             label="Address2"
             variant="outlined"
-            onChange={handleChangeInput}
           />
-          <TextField
+
+          <TextFieldElement
+            sx={{ m: 1.1, width: "41ch" }}
             required
-            id="city"
+            name={"city"}
             label="City"
             variant="outlined"
-            onChange={handleChangeInput}
           />
         </div>
         <div>
-          <TextField
+          <TextFieldElement
+            sx={{ m: 1.1, width: "41ch" }}
             required
-            id="state"
+            name={"state"}
             label="State"
             variant="outlined"
-            onChange={handleChangeInput}
           />
-          <TextField
+
+          <TextFieldElement
+            sx={{ m: 1.1, width: "41ch" }}
             required
-            id="country"
+            name={"country"}
             label="Country"
             variant="outlined"
-            onChange={handleChangeInput}
           />
-          <TextField
+
+          <TextFieldElement
+            sx={{ m: 1.1, width: "41ch" }}
             required
-            id="zipcode"
+            name={"zipcode"}
             label="Zipcode"
             variant="outlined"
-            onChange={handleChangeInput}
           />
         </div>
 
         <div>
-          <TextField
+          <TextFieldElement
+            sx={{ m: 1.1, width: "41ch" }}
             required
-            id="phone"
+            name={"phone"}
             label="Phone"
+            validation={{ maxLength: 15, minLength: 8 }}
             variant="outlined"
-            onChange={handleChangeInput}
           />
-          <TextField
-            required
-            id="extension"
+
+          <TextFieldElement
+            sx={{ m: 1.1, width: "41ch" }}
+            name={"extension"}
             label="Extension"
+            validation={{ maxLength: 6 }}
+            type={"number"}
             variant="outlined"
-            onChange={handleChangeInput}
           />
         </div>
 
         <div style={{ marginLeft: "12px", marginTop: "15px" }}>
           <Stack direction="row" spacing={2}>
-            <Button size="large" variant="contained" onClick={handleSubmitForm}>
+            <Button
+              type={"submit"}
+              size="large"
+              variant="contained"
+              onClick={handleSubmitForm}
+            >
               Save
             </Button>
             <Button
@@ -242,17 +228,21 @@ const CompanyList = () => {
             >
               Cancel
             </Button>
+
+            {showError != "" ? (
+              <Alert severity="error">{showError}</Alert>
+            ) : (
+              <></>
+            )}
+
+            {showSuccess != "" ? (
+              <Alert severity="success">{showSuccess}</Alert>
+            ) : (
+              <></>
+            )}
           </Stack>
         </div>
-      </Box>
-
-      {showError != "" ? <Alert severity="error">{showError}</Alert> : <></>}
-
-      {showSuccess != "" ? (
-        <Alert severity="success">{showSuccess}</Alert>
-      ) : (
-        <></>
-      )}
+      </FormContainer>
     </div>
   );
 };
