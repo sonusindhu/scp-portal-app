@@ -38,11 +38,12 @@ const App = () => {
   const logOut = () => {
     AuthService.logout();
     setCurrentUser(undefined);
+    navigate("/auth/login");
   };
 
   return (
     <div>
-      {currentUser ? <AppHeader /> : <></>}
+      {currentUser ? <AppHeader onLogout={logOut} /> : <></>}
 
       <div className="container-fluid mt-3">
         <Routes>

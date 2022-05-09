@@ -9,15 +9,9 @@ const Profile = () => {
     <div className="container">
       <header className="jumbotron">
         <h3>
-          <strong>{currentUser.user.fullName}</strong> Profile
+          <strong>{currentUser.fullName}</strong> Profile
         </h3>
       </header>
-      <p>
-        <strong>Id:</strong> {currentUser.user.id}
-      </p>
-      <p>
-        <strong>Email:</strong> {currentUser.user.email}
-      </p>
     </div>
   );
 };

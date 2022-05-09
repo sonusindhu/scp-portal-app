@@ -16,22 +16,12 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import EventBus from "../../common/EventBus";
 
-const AppHeader = () => {
+const AppHeader = (props) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const [currentUser, setCurrentUser] = useState(undefined);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    EventBus.on("logout", () => logOut());
-    return () => EventBus.remove("logout");
-  }, []);
-
-  const logOut = () => {
-    AuthService.logout();
-    setCurrentUser(undefined);
-    navigate("/auth/login");
+  const logOut = (event) => {
+    props.onLogout(event);
   };
 
   const handleOpenNavMenu = (event) => {
@@ -182,7 +172,11 @@ const AppHeader = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleCloseUserMenu}>
+              <MenuItem
+                onClick={handleCloseUserMenu}
+                component={Link}
+                to="/app/profile"
+              >
                 <Typography textAlign="center">My Profile</Typography>
               </MenuItem>
               <MenuItem onClick={logOut}>
