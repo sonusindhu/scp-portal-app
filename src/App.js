@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
 
 import AuthService from "./services/auth.service";
-
 import Login from "./components/Login/Login";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
@@ -16,13 +14,14 @@ import EditCompany from "./components/CompanyList/EditCompany";
 import EventBus from "./common/EventBus";
 import ContactList from "./components/ContactList/ContactList";
 import AddContact from "./components/ContactList/AddContact";
+import AppHeader from "./layouts/AppHeader/AppHeader";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
+  let navigate = useNavigate();
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
-
     if (user) {
       setCurrentUser(user);
     }
@@ -43,34 +42,7 @@ const App = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
-        {currentUser ? (
-          <div className="navbar-nav ml-auto">
-            {/* <li className="nav-item">
-              <Link to={"/profile"} className="nav-link">
-                {currentUser.fullName}
-              </Link>
-            </li> */}
-            <li className="nav-item">
-              <Link to={"/app/company-list"} className="nav-link">
-                Companies
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={"/app/contact-list"} className="nav-link">
-                Contacts
-              </Link>
-            </li>
-            <li className="nav-item">
-              <a href="/auth/login" className="nav-link" onClick={logOut}>
-                LogOut
-              </a>
-            </li>
-          </div>
-        ) : (
-          <div className="navbar-nav ml-auto"></div>
-        )}
-      </nav>
+      {currentUser ? <AppHeader /> : <></>}
 
       <div className="container-fluid mt-3">
         <Routes>
