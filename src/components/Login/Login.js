@@ -27,10 +27,10 @@ const Login = (props) => {
 
     AuthService.login(username, password).then(
       (response) => {
-        setLoading(false);
         if (response.status) {
           window.location.href = "/app/company-list";
         } else {
+          setLoading(false);
           setMessage(response.message);
         }
       },
