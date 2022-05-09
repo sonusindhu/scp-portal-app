@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import AuthService from "../../services/auth.service";
 
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
@@ -12,20 +12,18 @@ import GridOptions from "../../shared/components/grid-options.component";
 
 import { format } from "date-fns";
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
 
 const API_URL = "http://localhost:1337/api/v1/app/company/";
 
 const CompanyList = () => {
-  const user = AuthService.getCurrentUser();
-  axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
-  axios.defaults.headers.common["token"] = user.token;
-  axios.defaults.headers.common["allowOrigins"] = "*";
-
+  let navigate = useNavigate();
   const gridRef = useRef(null);
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
+
+  const user = AuthService.getCurrentUser();
 
   const onGridReady = (params) => {
     setGridApi(params.api);
@@ -37,6 +35,20 @@ const CompanyList = () => {
   function dateFormatter(params) {
     if (!params.value) return "";
     return format(new Date(params.value), "dd/MM/yyyy");
+  }
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/auth/login");
+    }
+  }, []);
+
+  if (user) {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
+    axios.defaults.headers.common["token"] = user.token;
+    axios.defaults.headers.common["allowOrigins"] = "*";
+  } else {
+    return <></>;
   }
 
   return (

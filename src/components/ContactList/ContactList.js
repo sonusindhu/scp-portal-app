@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import AuthService from "../../services/auth.service";
 
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
@@ -11,18 +11,13 @@ import GridTextFilterComponent from "../../shared/components/grid-filters/grid-t
 
 import { format } from "date-fns";
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const API_URL = "http://localhost:1337/api/v1/app/contact/";
 
 const ContactList = () => {
   const user = AuthService.getCurrentUser();
-  axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
-  axios.defaults.headers.common["token"] = user.token;
-  axios.defaults.headers.common["allowOrigins"] = "*";
-
-  console.log(axios.defaults.headers);
-
+  const navigate = useNavigate();
   const gridRef = useRef(null);
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
@@ -37,6 +32,20 @@ const ContactList = () => {
   function dateFormatter(params) {
     if (!params.value) return "";
     return format(new Date(params.value), "dd/MM/yyyy");
+  }
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/auth/login");
+    }
+  }, []);
+
+  if (user) {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
+    axios.defaults.headers.common["token"] = user.token;
+    axios.defaults.headers.common["allowOrigins"] = "*";
+  } else {
+    return <></>;
   }
 
   return (
