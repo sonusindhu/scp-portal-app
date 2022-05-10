@@ -76,6 +76,13 @@ const AppHeader = (props) => {
             >
               Contacts
             </Button>
+            <Button
+              component={Link}
+              to="/app/inventories"
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Inventories
+            </Button>
           </Box>
 
           {/* MAIN MENU START DESKTOP END */}
@@ -123,6 +130,13 @@ const AppHeader = (props) => {
                 to="/app/contact-list"
               >
                 <Typography textAlign="center">Contacts</Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={handleCloseNavMenu}
+                component={Link}
+                to="/app/inventories"
+              >
+                <Typography textAlign="center">Inventories</Typography>
               </MenuItem>
             </Menu>
           </Box>

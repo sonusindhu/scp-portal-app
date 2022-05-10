@@ -15,6 +15,7 @@ import EventBus from "./common/EventBus";
 import ContactList from "./components/ContactList/ContactList";
 import AddContact from "./components/ContactList/AddContact";
 import AppHeader from "./layouts/AppHeader/AppHeader";
+import InventoryList from "./components/Inventory/InventoryList";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -57,6 +58,8 @@ const App = () => {
           <Route path="/app/contact-list" element={<ContactList />} />
           <Route path="/app/contact/create" element={<AddContact />} />
           {/* <Route path="/app/contact/:id/edit" element={<EditContact />} /> */}
+
+          <Route path="/app/inventories" element={<InventoryList />} />
         </Routes>
       </div>
     </div>
