@@ -52,8 +52,13 @@ const ContactList = () => {
     <div className="container-fluid">
       <header className="jumbotron">
         <h3>
-          ContactList
-          <Button component={Link} to="/app/contact/create" variant="outlined">
+          Contact List
+          <Button
+            className="fl-right"
+            component={Link}
+            to="/app/contact/create"
+            variant="outlined"
+          >
             Create
           </Button>
         </h3>

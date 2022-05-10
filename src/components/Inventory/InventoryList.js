@@ -57,6 +57,7 @@ const InventoryList = () => {
             component={Link}
             to="/app/inventory/create"
             variant="outlined"
+            className="fl-right"
           >
             Create
           </Button>

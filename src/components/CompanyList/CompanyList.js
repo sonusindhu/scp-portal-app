@@ -60,7 +60,7 @@ const CompanyList = () => {
           <Button
             component={Link}
             to="/app/company/create"
-            className="{ { float: 'right' } }"
+            className="fl-right"
             variant="outlined"
           >
             Create
