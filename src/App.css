@@ -1,0 +1,5 @@
+header a:hover, header a.active {
+    color: white;
+    font-weight: 600;
+  }
+  

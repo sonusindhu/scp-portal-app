@@ -12,7 +12,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import EventBus from "../../common/EventBus";
 
@@ -63,23 +63,26 @@ const AppHeader = (props) => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Button
-              component={Link}
+              component={NavLink}
               to="/app/company-list"
               sx={{ my: 2, color: "white", display: "block" }}
+              activeClassName="active"
             >
               Companies
             </Button>
             <Button
-              component={Link}
+              component={NavLink}
               to="/app/contact-list"
               sx={{ my: 2, color: "white", display: "block" }}
+              activeClassName="active"
             >
               Contacts
             </Button>
             <Button
-              component={Link}
+              component={NavLink}
               to="/app/inventories"
               sx={{ my: 2, color: "white", display: "block" }}
+              activeClassName="active"
             >
               Inventories
             </Button>
@@ -119,22 +122,25 @@ const AppHeader = (props) => {
             >
               <MenuItem
                 onClick={handleCloseNavMenu}
-                component={Link}
+                component={NavLink}
                 to="/app/company-list"
+                activeClassName="active"
               >
                 <Typography textAlign="center">Companies</Typography>
               </MenuItem>
               <MenuItem
                 onClick={handleCloseNavMenu}
-                component={Link}
+                component={NavLink}
                 to="/app/contact-list"
+                activeClassName="active"
               >
                 <Typography textAlign="center">Contacts</Typography>
               </MenuItem>
               <MenuItem
                 onClick={handleCloseNavMenu}
-                component={Link}
+                component={NavLink}
                 to="/app/inventories"
+                activeClassName="active"
               >
                 <Typography textAlign="center">Inventories</Typography>
               </MenuItem>
