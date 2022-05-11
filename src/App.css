@@ -1,3 +1,7 @@
+body{
+  padding: 0;
+  margin: 0;
+}
 header.MuiAppBar-root a:hover, header.MuiAppBar-root a.active {
     color: white;
     font-weight: 600;
@@ -6,4 +10,3 @@ header.MuiAppBar-root a:hover, header.MuiAppBar-root a.active {
 a.fl-right{
     float: right;
 }
-  

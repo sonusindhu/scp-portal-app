@@ -1,0 +1,16 @@
+.login-form {
+  justify-content: center;
+  min-height: 90vh;
+}
+.button-block {
+  width: 100%;
+}
+.login-background {
+  justify-content: center;
+  min-height: 30vh;
+  padding: 50px;
+}
+.MuiTypography-h5.login-title {
+  text-align: center;
+  margin-bottom: 20px;
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import AuthService from "./services/auth.service";
@@ -17,6 +17,7 @@ import ContactList from "./components/ContactList/ContactList";
 import AddContact from "./components/ContactList/AddContact";
 import AppHeader from "./layouts/AppHeader/AppHeader";
 import InventoryList from "./components/Inventory/InventoryList";
+import { Container } from "@material-ui/core";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -46,8 +47,7 @@ const App = () => {
   return (
     <div>
       {currentUser ? <AppHeader onLogout={logOut} /> : <></>}
-
-      <div className="container-fluid mt-3">
+      <Container maxWidth="xl">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth/login" element={<Login />} />
@@ -62,7 +62,7 @@ const App = () => {
 
           <Route path="/app/inventories" element={<InventoryList />} />
         </Routes>
-      </div>
+      </Container>
     </div>
   );
 };
