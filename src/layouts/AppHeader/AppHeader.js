@@ -49,11 +49,10 @@ const AppHeader = (props) => {
             variant="h6"
             noWrap
             component="a"
-            href="/app/company-list"
+            href="/app/company/list"
             sx={{
               mr: 3,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
               fontWeight: 700,
               color: "inherit",
               textDecoration: "none",
@@ -64,7 +63,7 @@ const AppHeader = (props) => {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Button
               component={NavLink}
-              to="/app/company-list"
+              to="/app/company/list"
               sx={{ my: 2, color: "white", display: "block" }}
               activeClassName="active"
             >
@@ -72,7 +71,7 @@ const AppHeader = (props) => {
             </Button>
             <Button
               component={NavLink}
-              to="/app/contact-list"
+              to="/app/contact/list"
               sx={{ my: 2, color: "white", display: "block" }}
               activeClassName="active"
             >
@@ -80,7 +79,7 @@ const AppHeader = (props) => {
             </Button>
             <Button
               component={NavLink}
-              to="/app/inventories"
+              to="/app/inventory/list"
               sx={{ my: 2, color: "white", display: "block" }}
               activeClassName="active"
             >
@@ -123,7 +122,7 @@ const AppHeader = (props) => {
               <MenuItem
                 onClick={handleCloseNavMenu}
                 component={NavLink}
-                to="/app/company-list"
+                to="/app/company/list"
                 activeClassName="active"
               >
                 <Typography textAlign="center">Companies</Typography>
@@ -131,7 +130,7 @@ const AppHeader = (props) => {
               <MenuItem
                 onClick={handleCloseNavMenu}
                 component={NavLink}
-                to="/app/contact-list"
+                to="/app/contact/list"
                 activeClassName="active"
               >
                 <Typography textAlign="center">Contacts</Typography>
@@ -139,7 +138,7 @@ const AppHeader = (props) => {
               <MenuItem
                 onClick={handleCloseNavMenu}
                 component={NavLink}
-                to="/app/inventories"
+                to="/app/inventory/list"
                 activeClassName="active"
               >
                 <Typography textAlign="center">Inventories</Typography>
@@ -156,7 +155,6 @@ const AppHeader = (props) => {
               mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",

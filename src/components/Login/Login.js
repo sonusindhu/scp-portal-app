@@ -38,7 +38,7 @@ const Login = (props) => {
     AuthService.login(username, password).then(
       (response) => {
         if (response.status) {
-          window.location.href = "/app/company-list";
+          window.location.href = "/app/company/list";
         } else {
           setLoading(false);
           setMessage(response.message);

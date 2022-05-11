@@ -52,15 +52,15 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/auth/login" element={<Login />} />
           <Route path="/app/profile" element={<Profile />} />
-          <Route path="/app/company-list" element={<CompanyList />} />
+          <Route path="/app/company/list" element={<CompanyList />} />
           <Route path="/app/company/create" element={<AddCompany />} />
           <Route path="/app/company/:id/edit" element={<EditCompany />} />
 
-          <Route path="/app/contact-list" element={<ContactList />} />
+          <Route path="/app/contact/list" element={<ContactList />} />
           <Route path="/app/contact/create" element={<AddContact />} />
           {/* <Route path="/app/contact/:id/edit" element={<EditContact />} /> */}
 
-          <Route path="/app/inventories" element={<InventoryList />} />
+          <Route path="/app/inventory/list" element={<InventoryList />} />
         </Routes>
       </Container>
     </div>
