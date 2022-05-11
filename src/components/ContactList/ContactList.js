@@ -264,6 +264,10 @@ const ContactList = () => {
             filter={true}
             lockPinned={true}
             valueFormatter={dateFormatter}
+            floatingFilterComponent="customTextFloatingFilter"
+            floatingFilterComponentParams={{
+              suppressFilterButton: true,
+            }}
           ></AgGridColumn>
           <AgGridColumn
             field="updatedBy"
@@ -284,6 +288,10 @@ const ContactList = () => {
             filter={true}
             lockPinned={true}
             valueFormatter={dateFormatter}
+            floatingFilterComponent="customTextFloatingFilter"
+            floatingFilterComponentParams={{
+              suppressFilterButton: true,
+            }}
           ></AgGridColumn>
 
           <AgGridColumn

@@ -260,6 +260,10 @@ const CompanyList = () => {
             filter={true}
             lockPinned={true}
             valueFormatter={dateFormatter}
+            floatingFilterComponent="customTextFloatingFilter"
+            floatingFilterComponentParams={{
+              suppressFilterButton: true,
+            }}
           ></AgGridColumn>
           <AgGridColumn
             field="updatedBy"
@@ -280,6 +284,10 @@ const CompanyList = () => {
             filter={true}
             lockPinned={true}
             valueFormatter={dateFormatter}
+            floatingFilterComponent="customTextFloatingFilter"
+            floatingFilterComponentParams={{
+              suppressFilterButton: true,
+            }}
           ></AgGridColumn>
 
           <AgGridColumn
