@@ -12,6 +12,7 @@ import GridTextFilterComponent from "../../shared/components/grid-filters/grid-t
 import { format } from "date-fns";
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
@@ -91,6 +92,7 @@ const ContactList = () => {
             filter="agTextColumnFilter"
             headerCheckboxSelection={true}
             headerCheckboxSelectionFilteredOnly={true}
+            headerComponentFramework={GridHeaderCheckbox}
             checkboxSelection={true}
             pinned="left"
             lockPinned={true}

@@ -7,6 +7,7 @@ import React, {
 } from "react";
 
 export default forwardRef((props, ref) => {
+  console.log(props);
   const [currentValue, setCurrentValue] = useState(null);
   const inputRef = useRef(null);
 
@@ -42,7 +43,6 @@ export default forwardRef((props, ref) => {
   };
 
   const style = {
-    // color: props.color,
     width: "93%",
   };
 
