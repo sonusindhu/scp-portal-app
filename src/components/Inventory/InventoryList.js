@@ -6,15 +6,12 @@ import { ServerSideRowModelModule } from "@ag-grid-enterprise/server-side-row-mo
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import axios from "axios";
 import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
 
-import { format } from "date-fns";
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
-
-const API_URL = process.env.REACT_APP_API_ENDPOINT;
+import GridService from "../../services/grid.service";
 
 const InventoryList = () => {
   const user = AuthService.getCurrentUser();
@@ -26,28 +23,15 @@ const InventoryList = () => {
   const onGridReady = (params) => {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
-    var datasource = new ServerSideDatasource();
+    const datasource = GridService.ServerSideDatasource("inventory/list");
     params.api.setServerSideDatasource(datasource);
   };
 
-  function dateFormatter(params) {
-    if (!params.value) return "";
-    return format(new Date(params.value), "dd/MM/yyyy");
-  }
-
   useEffect(() => {
-    if (!user) {
-      navigate("/auth/login");
-    }
+    if (!user) navigate("/auth/login");
   }, []);
 
-  if (user) {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
-    axios.defaults.headers.common["token"] = user.token;
-    axios.defaults.headers.common["allowOrigins"] = "*";
-  } else {
-    return <></>;
-  }
+  if (!user) return <></>;
 
   return (
     <div className="container-fluid">
@@ -243,7 +227,7 @@ const InventoryList = () => {
             sortable={true}
             filter={true}
             lockPinned={true}
-            valueFormatter={dateFormatter}
+            valueFormatter={GridService.dateFormatter}
             floatingFilterComponent="customTextFloatingFilter"
             floatingFilterComponentParams={{
               suppressFilterButton: true,
@@ -267,7 +251,7 @@ const InventoryList = () => {
             sortable={true}
             filter={true}
             lockPinned={true}
-            valueFormatter={dateFormatter}
+            valueFormatter={GridService.dateFormatter}
             floatingFilterComponent="customTextFloatingFilter"
             floatingFilterComponentParams={{
               suppressFilterButton: true,
@@ -287,49 +271,4 @@ const InventoryList = () => {
     </div>
   );
 };
-
-function ServerSideDatasource() {
-  return {
-    getRows: function (params) {
-      console.log("[Datasource] - rows requested by grid: ", params.request);
-
-      const sort = params.request.sortModel.map((item) => {
-        return { [`${item.colId}`]: item.sort };
-      });
-      const filters = Object.keys(params.request.filterModel).map((key) => {
-        console.log(key);
-        const item = params.request.filterModel[key];
-        return {
-          logic: "or",
-          filters: [{ field: key, operator: item.type, value: item.filter }],
-        };
-      });
-      const payload = {
-        skip: params.request.startRow,
-        take: 10,
-        group: [],
-        sort,
-        filter: {
-          logic: "and",
-          filters: filters,
-        },
-      };
-
-      axios
-        .post(API_URL + "inventory/list", payload)
-        .then(({ data }) => {
-          params.success({
-            rowData: data.result || [],
-            rowCount: data.total,
-          });
-        })
-        .catch((error) => {
-          console.log(error.response);
-          console.log(error.request);
-          params.fail();
-        });
-    },
-  };
-}
-
 export default InventoryList;

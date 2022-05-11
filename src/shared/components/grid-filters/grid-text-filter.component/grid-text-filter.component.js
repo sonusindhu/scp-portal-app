@@ -7,7 +7,6 @@ import React, {
 } from "react";
 
 export default forwardRef((props, ref) => {
-  console.log(props);
   const [currentValue, setCurrentValue] = useState(null);
   const inputRef = useRef(null);
 
