@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Button, Stack, Alert } from "@mui/material";
-import { useForm } from "react-hook-form";
-
-import AuthService from "../../services/auth.service";
 import {
   FormContainer,
   TextFieldElement,
   SelectElement,
 } from "react-hook-form-mui";
+import { useNavigate } from "react-router-dom";
+import { Button, Stack, Alert } from "@mui/material";
+import { useForm } from "react-hook-form";
+
+import axios from "../../config";
+import AuthService from "../../services/auth.service";
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const AddContact = () => {
-  const user = AuthService.getCurrentUser();
-  axios.defaults.headers.common["token"] = user.token;
-  axios.defaults.headers.common["allowOrigins"] = "*";
-
+  const navigate = useNavigate();
   const [showError, setShowError] = useState("");
   const [companies, setCompanies] = useState([]);
   const [showSuccess, setShowSuccess] = useState("");
@@ -25,9 +23,7 @@ const AddContact = () => {
     defaultValues: {},
   });
   const { reset } = formContext;
-  const handleClearForm = () => {
-    reset();
-  };
+  const handleClearForm = () => reset();
 
   const handleSubmitForm = (e) => {
     const payload = { ...e };
@@ -75,6 +71,13 @@ const AddContact = () => {
         setCompanies([]);
       });
   }, []);
+
+  // check if user is authenticated, if not redirect to login page
+  const user = AuthService.getCurrentUser();
+  useEffect(() => {
+    if (!user) navigate("/auth/login");
+  }, []);
+  if (!user) return <></>;
 
   return (
     <div className="container-fluid">

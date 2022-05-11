@@ -1,23 +1,20 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Button, FormControl, Stack, Alert } from "@mui/material";
-
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, Stack, Alert } from "@mui/material";
 import { useForm } from "react-hook-form";
-
-import AuthService from "../../services/auth.service";
 import {
   FormContainer,
   TextFieldElement,
   SelectElement,
 } from "react-hook-form-mui";
 
+import axios from "../../config";
+import AuthService from "../../services/auth.service";
+
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const AddCompany = () => {
-  const user = AuthService.getCurrentUser();
-  axios.defaults.headers.common["token"] = user.token;
-  axios.defaults.headers.common["allowOrigins"] = "*";
-
+  const navigate = useNavigate();
   const [showError, setShowError] = useState("");
   const [showSuccess, setShowSuccess] = useState("");
 
@@ -28,6 +25,13 @@ const AddCompany = () => {
   const handleClearForm = () => {
     reset();
   };
+
+  // check if user is authenticated, if not redirect to login page
+  const user = AuthService.getCurrentUser();
+  useEffect(() => {
+    if (!user) navigate("/auth/login");
+  }, []);
+  if (!user) return <></>;
 
   const handleSubmitForm = (e) => {
     if (!e.email || !e.name) return;
