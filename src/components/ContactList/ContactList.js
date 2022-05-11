@@ -1,20 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
-import AuthService from "../../services/auth.service";
-
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import { ServerSideRowModelModule } from "@ag-grid-enterprise/server-side-row-model";
-
-import GridService from "../../services/grid.service";
-
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
-
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
 
-const API_URL = process.env.REACT_APP_API_ENDPOINT;
+import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
+import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
+import GridOptions from "../../shared/components/grid-options.component";
+import AuthService from "../../services/auth.service";
+import GridService from "../../services/grid.service";
 
 const ContactList = () => {
   const user = AuthService.getCurrentUser();
@@ -290,6 +286,7 @@ const ContactList = () => {
             filter={false}
             pinned="right"
             lockPinned={true}
+            cellRendererFramework={GridOptions}
           ></AgGridColumn>
         </AgGridReact>
       </div>

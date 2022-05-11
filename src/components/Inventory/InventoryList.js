@@ -1,17 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
-import AuthService from "../../services/auth.service";
-
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import { ServerSideRowModelModule } from "@ag-grid-enterprise/server-side-row-model";
-
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
-
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+
+import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
 import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
+import AuthService from "../../services/auth.service";
 import GridService from "../../services/grid.service";
+import GridOptions from "../../shared/components/grid-options.component";
 
 const InventoryList = () => {
   const user = AuthService.getCurrentUser();
@@ -265,6 +264,7 @@ const InventoryList = () => {
             filter={false}
             pinned="right"
             lockPinned={true}
+            cellRendererFramework={GridOptions}
           ></AgGridColumn>
         </AgGridReact>
       </div>

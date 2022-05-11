@@ -1,22 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
-import AuthService from "../../services/auth.service";
-
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import { ServerSideRowModelModule } from "@ag-grid-enterprise/server-side-row-model";
-
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
-import GridOptions from "../../shared/components/grid-options.component";
-
-import GridService from "../../services/grid.service";
-
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+
+import GridOptions from "../../shared/components/grid-options.component";
+import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
+import AuthService from "../../services/auth.service";
+import GridService from "../../services/grid.service";
 import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
 
 const CompanyList = () => {
-  const user = AuthService.getCurrentUser();
   let navigate = useNavigate();
   const gridRef = useRef(null);
   const [gridApi, setGridApi] = useState(null);
@@ -29,6 +25,7 @@ const CompanyList = () => {
     params.api.setServerSideDatasource(datasource);
   };
 
+  const user = AuthService.getCurrentUser();
   useEffect(() => {
     if (!user) navigate("/auth/login");
   }, []);
