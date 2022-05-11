@@ -6,7 +6,7 @@ import { makeStyles } from "@mui/styles";
 
 import AuthService from "../../services/auth.service";
 
-const API_URL = "http://localhost:1337/api/v1/app/company/";
+const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const style = makeStyles({
   btnRight: {

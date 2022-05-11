@@ -15,7 +15,8 @@ import { Button } from "@mui/material";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
 
-const API_URL = "http://localhost:1337/api/v1/app/company/";
+const API_URL = process.env.REACT_APP_API_ENDPOINT;
+console.log(API_URL);
 
 const CompanyList = () => {
   let navigate = useNavigate();
@@ -333,7 +334,7 @@ function ServerSideDatasource() {
       };
 
       axios
-        .post(API_URL + "list", payload)
+        .post(API_URL + "company/list", payload)
         .then(({ data }) => {
           params.success({
             rowData: data.result || [],

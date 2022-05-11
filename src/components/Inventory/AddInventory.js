@@ -10,8 +10,7 @@ import {
   SelectElement,
 } from "react-hook-form-mui";
 
-const API_URL = "http://localhost:1337/api/v1/app/contact/";
-const COMPANY_API_URL = "http://localhost:1337/api/v1/app/company/";
+const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const AddContact = () => {
   const user = AuthService.getCurrentUser();
@@ -33,7 +32,7 @@ const AddContact = () => {
   const handleSubmitForm = (e) => {
     const payload = { ...e };
     axios
-      .post(API_URL + "create", payload)
+      .post(API_URL + "inventory/create", payload)
       .then(({ data }) => data)
       .then((response) => {
         console.log(response);
@@ -67,7 +66,7 @@ const AddContact = () => {
 
   useEffect(() => {
     axios
-      .get(COMPANY_API_URL + "listOfNames")
+      .get(API_URL + "company/listOfNames")
       .then(({ data }) => data)
       .then(({ result }) => {
         setCompanies(result);

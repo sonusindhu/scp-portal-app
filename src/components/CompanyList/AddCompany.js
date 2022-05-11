@@ -11,7 +11,7 @@ import {
   SelectElement,
 } from "react-hook-form-mui";
 
-const API_URL = "http://localhost:1337/api/v1/app/company/";
+const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const AddCompany = () => {
   const user = AuthService.getCurrentUser();
@@ -33,7 +33,7 @@ const AddCompany = () => {
     if (!e.email || !e.name) return;
     const payload = { ...e };
     axios
-      .post(API_URL + "create", payload)
+      .post(API_URL + "company/create", payload)
       .then(({ data }) => data)
       .then((response) => {
         if (response.status) {

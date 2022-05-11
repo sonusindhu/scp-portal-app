@@ -13,7 +13,7 @@ import { format } from "date-fns";
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:1337/api/v1/app/contact/";
+const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const ContactList = () => {
   const user = AuthService.getCurrentUser();
@@ -336,7 +336,7 @@ function ServerSideDatasource() {
       };
 
       axios
-        .post(API_URL + "list", payload)
+        .post(API_URL + "contact/list", payload)
         .then(({ data }) => {
           params.success({
             rowData: data.result || [],
