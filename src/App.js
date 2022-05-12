@@ -17,6 +17,7 @@ import ContactList from "./components/ContactList/ContactList";
 import AddContact from "./components/ContactList/AddContact";
 import AppHeader from "./layouts/AppHeader/AppHeader";
 import InventoryList from "./components/Inventory/InventoryList";
+import AddInventory from "./components/Inventory/AddInventory";
 import { Container } from "@material-ui/core";
 
 const App = () => {
@@ -61,6 +62,7 @@ const App = () => {
           {/* <Route path="/app/contact/:id/edit" element={<EditContact />} /> */}
 
           <Route path="/app/inventory/list" element={<InventoryList />} />
+          <Route path="/app/inventory/create" element={<AddInventory />} />
         </Routes>
       </Container>
     </div>
