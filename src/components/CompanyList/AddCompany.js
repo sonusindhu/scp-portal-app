@@ -26,13 +26,6 @@ const AddCompany = () => {
     reset();
   };
 
-  // check if user is authenticated, if not redirect to login page
-  const user = AuthService.getCurrentUser();
-  useEffect(() => {
-    if (!user) navigate("/auth/login");
-  }, []);
-  if (!user) return <></>;
-
   const handleSubmitForm = (e) => {
     if (!e.email || !e.name) return;
     const payload = { ...e };
@@ -51,6 +44,13 @@ const AddCompany = () => {
         setShowError(error.response.data);
       });
   };
+
+  // check if user is authenticated, if not redirect to login page
+  const user = AuthService.getCurrentUser();
+  useEffect(() => {
+    if (!user) navigate("/auth/login");
+  }, []);
+  if (!user) return <></>;
 
   return (
     <div className="container-fluid">

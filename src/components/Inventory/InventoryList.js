@@ -131,17 +131,6 @@ const InventoryList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="deviceType"
-            sortable={true}
-            filter={true}
-            lockPinned={true}
-            suppressMenu={true}
-            floatingFilterComponent="customTextFloatingFilter"
-            floatingFilterComponentParams={{
-              suppressFilterButton: true,
-            }}
-          ></AgGridColumn>
-          <AgGridColumn
             field="length"
             sortable={true}
             filter={true}
