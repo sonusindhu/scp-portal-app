@@ -1,19 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import { ServerSideRowModelModule } from "@ag-grid-enterprise/server-side-row-model";
-import { Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+import { Button } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 
-import GridOptions from "../../shared/components/grid-options.component";
 import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
+import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
 import AuthService from "../../services/auth.service";
 import GridService from "../../services/grid.service";
-import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
+import GridOptions from "../../shared/components/grid-options.component";
 
-const CompanyList = () => {
-  let navigate = useNavigate();
+const InventoryList = () => {
+  const user = AuthService.getCurrentUser();
+  const navigate = useNavigate();
   const gridRef = useRef(null);
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
@@ -21,11 +22,10 @@ const CompanyList = () => {
   const onGridReady = (params) => {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
-    var datasource = GridService.ServerSideDatasource("company/list");
+    const datasource = GridService.ServerSideDatasource("inventory/list");
     params.api.setServerSideDatasource(datasource);
   };
 
-  const user = AuthService.getCurrentUser();
   useEffect(() => {
     if (!user) navigate("/auth/login");
   }, []);
@@ -36,13 +36,12 @@ const CompanyList = () => {
     <div className="container-fluid">
       <header className="jumbotron">
         <h3>
-          <span>Company List</span>
-
+          Inventories
           <Button
             component={Link}
-            to="/app/company/create"
-            className="fl-right"
+            to="/app/inventory/create"
             variant="outlined"
+            className="fl-right"
           >
             Create
           </Button>
@@ -56,7 +55,6 @@ const CompanyList = () => {
           suppressRowClickSelection={true}
           pagination={true}
           paginationPageSize={10}
-          checkboxSelection={true}
           modules={[ServerSideRowModelModule]}
           defaultColDef={{
             minWidth: 80,
@@ -69,17 +67,16 @@ const CompanyList = () => {
           rowModelType={"serverSide"}
           serverSideStoreType={"partial"}
           cacheBlockSize={10}
-          animateRows={false}
           onGridReady={onGridReady}
         >
           <AgGridColumn
-            field="name"
+            field="packageId"
             sortable={true}
             filter="agTextColumnFilter"
+            headerComponentFramework={GridHeaderCheckbox}
             headerCheckboxSelection={true}
             headerCheckboxSelectionFilteredOnly={true}
             checkboxSelection={true}
-            headerComponentFramework={GridHeaderCheckbox}
             pinned="left"
             lockPinned={true}
             suppressMenu={true}
@@ -89,6 +86,17 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
 
+          <AgGridColumn
+            field="trackingNumber"
+            sortable={true}
+            filter={true}
+            lockPinned={true}
+            suppressMenu={true}
+            floatingFilterComponent="customTextFloatingFilter"
+            floatingFilterComponentParams={{
+              suppressFilterButton: true,
+            }}
+          ></AgGridColumn>
           <AgGridColumn
             field="status"
             sortable={true}
@@ -101,74 +109,7 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="email"
-            sortable={true}
-            filter={true}
-            lockPinned={true}
-            suppressMenu={true}
-            floatingFilterComponent="customTextFloatingFilter"
-            floatingFilterComponentParams={{
-              suppressFilterButton: true,
-            }}
-          ></AgGridColumn>
-          <AgGridColumn
-            field="phone"
-            headerName="Phone Number"
-            sortable={true}
-            filter={true}
-            lockPinned={true}
-            suppressMenu={true}
-            floatingFilterComponent="customTextFloatingFilter"
-            floatingFilterComponentParams={{
-              suppressFilterButton: true,
-            }}
-          ></AgGridColumn>
-          <AgGridColumn
-            field="extension"
-            sortable={true}
-            filter={true}
-            lockPinned={true}
-            suppressMenu={true}
-            floatingFilterComponent="customTextFloatingFilter"
-            floatingFilterComponentParams={{
-              suppressFilterButton: true,
-            }}
-          ></AgGridColumn>
-          <AgGridColumn
-            field="revenue"
-            sortable={true}
-            filter={true}
-            lockPinned={true}
-            suppressMenu={true}
-            floatingFilterComponent="customTextFloatingFilter"
-            floatingFilterComponentParams={{
-              suppressFilterButton: true,
-            }}
-          ></AgGridColumn>
-          <AgGridColumn
-            field="employeesCount"
-            sortable={true}
-            filter={true}
-            lockPinned={true}
-            suppressMenu={true}
-            floatingFilterComponent="customTextFloatingFilter"
-            floatingFilterComponentParams={{
-              suppressFilterButton: true,
-            }}
-          ></AgGridColumn>
-          <AgGridColumn
-            field="address1"
-            sortable={true}
-            filter={true}
-            lockPinned={true}
-            suppressMenu={true}
-            floatingFilterComponent="customTextFloatingFilter"
-            floatingFilterComponentParams={{
-              suppressFilterButton: true,
-            }}
-          ></AgGridColumn>
-          <AgGridColumn
-            field="address2"
+            field="company"
             sortable={true}
             filter={true}
             lockPinned={true}
@@ -190,7 +131,7 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="city"
+            field="deviceType"
             sortable={true}
             filter={true}
             lockPinned={true}
@@ -201,7 +142,7 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="state"
+            field="length"
             sortable={true}
             filter={true}
             lockPinned={true}
@@ -212,7 +153,52 @@ const CompanyList = () => {
             }}
           ></AgGridColumn>
           <AgGridColumn
-            field="zipcode"
+            field="width"
+            sortable={true}
+            filter={true}
+            lockPinned={true}
+            suppressMenu={true}
+            floatingFilterComponent="customTextFloatingFilter"
+            floatingFilterComponentParams={{
+              suppressFilterButton: true,
+            }}
+          ></AgGridColumn>
+          <AgGridColumn
+            field="height"
+            sortable={true}
+            filter={true}
+            lockPinned={true}
+            suppressMenu={true}
+            floatingFilterComponent="customTextFloatingFilter"
+            floatingFilterComponentParams={{
+              suppressFilterButton: true,
+            }}
+          ></AgGridColumn>
+          <AgGridColumn
+            field="weight"
+            headerName="Weight"
+            sortable={true}
+            filter={true}
+            lockPinned={true}
+            suppressMenu={true}
+            floatingFilterComponent="customTextFloatingFilter"
+            floatingFilterComponentParams={{
+              suppressFilterButton: true,
+            }}
+          ></AgGridColumn>
+          <AgGridColumn
+            field="location"
+            sortable={true}
+            filter={true}
+            lockPinned={true}
+            suppressMenu={true}
+            floatingFilterComponent="customTextFloatingFilter"
+            floatingFilterComponentParams={{
+              suppressFilterButton: true,
+            }}
+          ></AgGridColumn>
+          <AgGridColumn
+            field="notes"
             sortable={true}
             filter={true}
             lockPinned={true}
@@ -285,5 +271,4 @@ const CompanyList = () => {
     </div>
   );
 };
-
-export default CompanyList;
+export default InventoryList;

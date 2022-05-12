@@ -42,8 +42,7 @@ export default forwardRef((props, ref) => {
   };
 
   const style = {
-    // color: props.color,
-    width: "100%",
+    width: "93%",
   };
 
   return (

@@ -1,5 +1,16 @@
 import React, { useState } from "react";
 
+import {
+  Button,
+  TextField,
+  Grid,
+  Paper,
+  AppBar,
+  Typography,
+  Toolbar,
+} from "@material-ui/core";
+import "./Login.css";
+
 import AuthService from "../../services/auth.service";
 
 const Login = (props) => {
@@ -25,9 +36,13 @@ const Login = (props) => {
     setLoading(true);
 
     AuthService.login(username, password).then(
-      () => {
-        setLoading(false);
-        // window.location.href = "/company-list";
+      (response) => {
+        if (response.status) {
+          window.location.href = "/app/company/list";
+        } else {
+          setLoading(false);
+          setMessage(response.message);
+        }
       },
       (error) => {
         setLoading(false);
@@ -43,57 +58,93 @@ const Login = (props) => {
   };
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
-
-        <form onSubmit={handleLogin}>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              className="form-control"
-              name="username"
-              value={username}
-              onChange={onChangeUsername}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              value={password}
-              onChange={onChangePassword}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <button className="btn btn-primary btn-block" disabled={loading}>
-              {loading && (
-                <span className="spinner-border spinner-border-sm"></span>
-              )}
-              <span>Login</span>
-            </button>
-          </div>
-
-          {message && (
-            <div className="form-group">
-              <div className="alert alert-danger" role="alert">
-                {message}
-              </div>
-            </div>
-          )}
-        </form>
-      </div>
+    <div>
+      <AppBar position="static" alignitems="center" color="primary">
+        <Toolbar>
+          <Grid container justifyContent="center" wrap="wrap">
+            <Grid item>
+              <Typography variant="h6">Supply Chain Portal</Typography>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+      <Grid container spacing={0} justifyContent="center" direction="row">
+        <Grid item>
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            spacing={2}
+            className="login-form"
+          >
+            <Paper
+              variant="elevation"
+              elevation={2}
+              className="login-background"
+            >
+              <Grid item>
+                <Typography component="h1" variant="h5" className="login-title">
+                  Sign in
+                </Typography>
+              </Grid>
+              <Grid item>
+                <form onSubmit={handleLogin}>
+                  <Grid container direction="column" spacing={2}>
+                    <Grid item>
+                      <TextField
+                        type="email"
+                        placeholder="Email"
+                        fullWidth
+                        name="username"
+                        variant="outlined"
+                        value={username}
+                        onChange={onChangeUsername}
+                        required
+                        autoFocus
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        type="password"
+                        placeholder="Password"
+                        fullWidth
+                        name="password"
+                        variant="outlined"
+                        value={password}
+                        onChange={onChangePassword}
+                        required
+                      />
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        className="button-block"
+                        disabled={loading}
+                      >
+                        {loading && (
+                          <span className="spinner-border spinner-border-sm"></span>
+                        )}
+                        Submit
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </form>
+              </Grid>
+              <Grid item>
+                {message && (
+                  <div className="form-group">
+                    <div className="alert alert-danger" role="alert">
+                      {message}
+                    </div>
+                  </div>
+                )}
+              </Grid>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Grid>
     </div>
   );
 };

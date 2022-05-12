@@ -15,16 +15,16 @@ const login = (email, password) => {
     email,
     password,
   };
-
-  console.log(axios.defaults.headers);
-
-  return axios.post(API_URL + "auth/login", payload).then((response) => {
-    const userData = response.data.result;
-    if (userData.token) {
-      localStorage.setItem("user", JSON.stringify(userData));
-    }
-    return userData;
-  });
+  return axios
+    .post(API_URL + "auth/login", payload)
+    .then(({ data }) => data)
+    .then((response) => {
+      if (response.status) {
+        const userData = response.result;
+        localStorage.setItem("user", JSON.stringify(userData));
+      }
+      return response;
+    });
 };
 
 const logout = () => {

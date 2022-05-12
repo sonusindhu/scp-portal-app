@@ -4,7 +4,7 @@ const Home = () => {
   const user = AuthService.getCurrentUser();
 
   if (user) {
-    return <Navigate to="/app/company-list" />;
+    return <Navigate to="/app/company/list" />;
   } else {
     return <Navigate to="/auth/login" />;
   }
