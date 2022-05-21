@@ -1,10 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
-import { AgGridColumn, AgGridReact } from "ag-grid-react";
-import { ServerSideRowModelModule } from "@ag-grid-enterprise/server-side-row-model";
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+
+import 'ag-grid-enterprise';
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+import { AgGridColumn, AgGridReact } from "@ag-grid-community/react";
+import { ModuleRegistry, GetRowIdFunc } from '@ag-grid-community/core';
+import { ServerSideRowModelModule } from '@ag-grid-enterprise/server-side-row-model';
 
 import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
 import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
@@ -12,12 +15,15 @@ import GridOptions from "../../shared/components/grid-options.component";
 import AuthService from "../../services/auth.service";
 import GridService from "../../services/grid.service";
 
+ModuleRegistry.registerModules([ServerSideRowModelModule]);
+
 const ContactList = () => {
   const user = AuthService.getCurrentUser();
   const navigate = useNavigate();
   const gridRef = useRef(null);
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
+  const getRowId: GetRowIdFunc = useCallback(({ data }) => data.id, []);
 
   const onGridReady = (params) => {
     setGridApi(params.api);
@@ -52,16 +58,17 @@ const ContactList = () => {
         <AgGridReact
           ref={gridRef}
           rowSelection="multiple"
+          suppressCellFocus={true}
           suppressRowClickSelection={true}
+          getRowId={getRowId}
           pagination={true}
           paginationPageSize={10}
-          modules={[ServerSideRowModelModule]}
           defaultColDef={{
             minWidth: 80,
             resizable: true,
             floatingFilter: true,
           }}
-          frameworkComponents={{
+          components={{
             customTextFloatingFilter: GridTextFilterComponent,
           }}
           rowModelType={"serverSide"}
@@ -73,9 +80,7 @@ const ContactList = () => {
             field="fullName"
             sortable={true}
             filter="agTextColumnFilter"
-            headerCheckboxSelection={true}
-            headerCheckboxSelectionFilteredOnly={true}
-            headerComponentFramework={GridHeaderCheckbox}
+            headerComponent={GridHeaderCheckbox}
             checkboxSelection={true}
             pinned="left"
             lockPinned={true}
@@ -281,12 +286,12 @@ const ContactList = () => {
 
           <AgGridColumn
             headerName="Action"
-            width="80"
+            width={80}
             sortable={false}
             filter={false}
             pinned="right"
             lockPinned={true}
-            cellRendererFramework={GridOptions}
+            cellRenderer={GridOptions}
           ></AgGridColumn>
         </AgGridReact>
       </div>

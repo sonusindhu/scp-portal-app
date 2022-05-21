@@ -1,4 +1,4 @@
-import axios from "../config";
+import axios from "../utils/config.util";
 import { format } from "date-fns";
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 

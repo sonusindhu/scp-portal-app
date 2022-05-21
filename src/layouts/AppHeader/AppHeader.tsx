@@ -1,3 +1,4 @@
+import * as React from 'react';
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,10 +12,8 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import AuthService from "../../services/auth.service";
-import EventBus from "../../common/EventBus";
+import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 const AppHeader = (props) => {
   const [anchorElNav, setAnchorElNav] = useState(null);

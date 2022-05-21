@@ -1,5 +1,5 @@
 import axios from "axios";
-import AuthService from "./services/auth.service";
+import AuthService from "../services/auth.service";
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const instance = axios.create({

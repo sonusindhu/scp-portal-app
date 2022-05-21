@@ -1,34 +1,36 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "../../utils/config.util";
+import { Button, Stack, Alert } from "@mui/material";
+import { useForm } from "react-hook-form";
+
+import AuthService from "../../services/auth.service";
 import {
   FormContainer,
   TextFieldElement,
   SelectElement,
 } from "react-hook-form-mui";
-import { useNavigate } from "react-router-dom";
-import { Button, Stack, Alert } from "@mui/material";
-import { useForm } from "react-hook-form";
-
-import axios from "../../config";
-import AuthService from "../../services/auth.service";
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const AddContact = () => {
   const navigate = useNavigate();
   const [showError, setShowError] = useState("");
-  const [companies, setCompanies] = useState([]);
   const [showSuccess, setShowSuccess] = useState("");
+  const [companies, setCompanies] = useState([]);
 
   const formContext = useForm({
     defaultValues: {},
   });
   const { reset } = formContext;
-  const handleClearForm = () => reset();
+  const handleClearForm = () => {
+    reset();
+  };
 
   const handleSubmitForm = (e) => {
     const payload = { ...e };
     axios
-      .post(API_URL + "contact/create", payload)
+      .post(API_URL + "inventory/create", payload)
       .then(({ data }) => data)
       .then((response) => {
         console.log(response);
@@ -59,6 +61,24 @@ const AddContact = () => {
       title: "Inactive",
     },
   ];
+  const packages = [
+    {
+      id: "",
+      title: "Select",
+    },
+    {
+      id: "parcel",
+      title: "Parcel",
+    },
+    {
+      id: "pallet",
+      title: "Pallet",
+    },
+    {
+      id: "bale",
+      title: "bale",
+    },
+  ];
 
   useEffect(() => {
     axios
@@ -82,9 +102,7 @@ const AddContact = () => {
   return (
     <div className="container-fluid">
       <header className="jumbotron">
-        <h3>
-          <span>Add Contact</span>
-        </h3>
+        <h3>Add Inventory</h3>
       </header>
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
@@ -92,31 +110,11 @@ const AddContact = () => {
           <TextFieldElement
             sx={{ m: 1, width: "52ch" }}
             required
-            name={"firstName"}
-            label="First Name"
+            name={"trackingNumber"}
+            label="Tracking Number"
             variant="outlined"
             margin={"dense"}
           />
-          <TextFieldElement
-            sx={{ m: 1, width: "52ch" }}
-            required
-            name={"lastName"}
-            label="Last Name"
-            variant="outlined"
-            margin={"dense"}
-          />
-          <TextFieldElement
-            sx={{ m: 1, width: "52ch" }}
-            required
-            type={"email"}
-            name={"email"}
-            label="Email"
-            margin={"dense"}
-            variant="outlined"
-          />
-        </div>
-
-        <div>
           <SelectElement
             sx={{ m: 1, width: "52ch" }}
             required
@@ -124,7 +122,16 @@ const AddContact = () => {
             name={"status"}
             label="Status"
           ></SelectElement>
+          <SelectElement
+            sx={{ m: 1, width: "52ch" }}
+            required
+            options={packages}
+            name={"type"}
+            label="Type"
+          ></SelectElement>
+        </div>
 
+        <div>
           <SelectElement
             sx={{ m: 1, width: "52ch" }}
             required
@@ -133,91 +140,60 @@ const AddContact = () => {
             label="Company"
             labelKey="name"
           ></SelectElement>
-
           <TextFieldElement
             sx={{ m: 1, width: "52ch" }}
-            required
-            name={"department"}
-            label="Department"
-            variant="outlined"
-            validation={{ maxLength: 20 }}
-          />
-        </div>
-        <div>
-          <TextFieldElement
-            sx={{ m: 1, width: "52ch" }}
-            required
-            name={"jobTitle"}
-            label="Job Title"
+            name={"location"}
+            label="Location"
             variant="outlined"
             validation={{ maxLength: 50 }}
+            multiline={true}
           />
-
           <TextFieldElement
             sx={{ m: 1, width: "52ch" }}
             required
-            name={"address1"}
-            label="Address1"
+            name={"length"}
+            label="Length"
             variant="outlined"
-          />
-
-          <TextFieldElement
-            sx={{ m: 1, width: "52ch" }}
-            name={"address2"}
-            label="Address2"
-            variant="outlined"
+            validation={{ maxLength: 7 }}
           />
         </div>
         <div>
           <TextFieldElement
             sx={{ m: 1, width: "52ch" }}
             required
-            name={"city"}
-            label="City"
+            name={"width"}
+            label="Width"
             variant="outlined"
-          />
-          <TextFieldElement
-            sx={{ m: 1, width: "52ch" }}
-            required
-            name={"state"}
-            label="State"
-            variant="outlined"
+            validation={{ maxLength: 7 }}
           />
 
           <TextFieldElement
             sx={{ m: 1, width: "52ch" }}
             required
-            name={"country"}
-            label="Country"
+            name={"height"}
+            label="Height"
             variant="outlined"
+            validation={{ maxLength: 7 }}
+          />
+
+          <TextFieldElement
+            required
+            sx={{ m: 1, width: "52ch" }}
+            name={"weight"}
+            label="Weight"
+            variant="outlined"
+            validation={{ maxLength: 8 }}
           />
         </div>
-
         <div>
           <TextFieldElement
-            sx={{ m: 1, width: "52ch" }}
-            required
-            name={"zipcode"}
-            label="Zipcode"
+            sx={{ m: 1, width: "160ch" }}
+            name={"notes"}
+            label="Notes"
             variant="outlined"
-          />
-
-          <TextFieldElement
-            sx={{ m: 1, width: "52ch" }}
-            required
-            name={"phone"}
-            label="Phone"
-            validation={{ maxLength: 15, minLength: 8 }}
-            variant="outlined"
-          />
-
-          <TextFieldElement
-            sx={{ m: 1, width: "52ch" }}
-            name={"extension"}
-            label="Extension"
-            validation={{ maxLength: 6 }}
-            type={"number"}
-            variant="outlined"
+            validation={{ maxLength: 254 }}
+            multiline={true}
+            rows={4}
           />
         </div>
 
@@ -240,13 +216,9 @@ const AddContact = () => {
               Cancel
             </Button>
 
-            {showError != "" ? (
-              <Alert severity="error">{showError}</Alert>
-            ) : (
-              <></>
-            )}
+            {showError ? <Alert severity="error">{showError}</Alert> : <></>}
 
-            {showSuccess != "" ? (
+            {showSuccess ? (
               <Alert severity="success">{showSuccess}</Alert>
             ) : (
               <></>

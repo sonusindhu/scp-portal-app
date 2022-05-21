@@ -1,11 +1,11 @@
-import axios from "../config";
+import axios from "../utils/config.util";
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
-const deleteCompanies = (ids) => {
+const deleteCompanies = (ids: number[]) => {
   return axios.post(`${API_URL}company/deleteRange`, { ids });
 };
 
-const find = (id) => {
+const find = (id: number) => {
   return axios.get(`${API_URL}company/find/${id}`).then(({ data }) => data);
 };
 

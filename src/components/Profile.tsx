@@ -3,8 +3,6 @@ import AuthService from "../services/auth.service";
 
 const Profile = () => {
   const currentUser = AuthService.getCurrentUser();
-  console.log(currentUser);
-
   return (
     <div className="container">
       <header className="jumbotron">
