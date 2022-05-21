@@ -25,6 +25,29 @@ const CompanyList = () => {
     params.api.setServerSideDatasource(datasource);
   };
 
+  const deleteCompany = ($event) => {
+    console.log($event);
+  };
+
+  const editCompany = ($event) => {
+    console.log($event);
+  };
+
+  const OptionsList = {
+    menus: [
+      {
+        key: "edit",
+        title: "Edit",
+        action: editCompany,
+      },
+      {
+        key: "delete",
+        title: "Delete",
+        action: deleteCompany,
+      },
+    ],
+  };
+
   const user = AuthService.getCurrentUser();
   useEffect(() => {
     if (!user) navigate("/auth/login");
@@ -76,8 +99,6 @@ const CompanyList = () => {
             field="name"
             sortable={true}
             filter="agTextColumnFilter"
-            headerCheckboxSelection={true}
-            headerCheckboxSelectionFilteredOnly={true}
             checkboxSelection={true}
             headerComponentFramework={GridHeaderCheckbox}
             pinned="left"
@@ -279,6 +300,7 @@ const CompanyList = () => {
             pinned="right"
             lockPinned={true}
             cellRendererFramework={GridOptions}
+            cellRendererParams={OptionsList}
           ></AgGridColumn>
         </AgGridReact>
       </div>

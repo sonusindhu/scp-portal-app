@@ -4,6 +4,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const ITEM_HEIGHT = 48;
 const GridOptions = (props) => {
+  console.log(props);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const handleClick = (event) => {
@@ -13,6 +15,17 @@ const GridOptions = (props) => {
   const handleClose = () => {
     setAnchorEl(null);
     setOpen(false);
+  };
+
+  const actionEvent = (event, menu) => {
+    const data = props.data;
+    const eventData = {
+      event,
+      data,
+      menu,
+    };
+    setOpen(false);
+    menu?.action(eventData);
   };
 
   return (
@@ -42,12 +55,14 @@ const GridOptions = (props) => {
           },
         }}
       >
-        <MenuItem key="edit" onClick={handleClose}>
-          Edit
-        </MenuItem>
-        <MenuItem key="delete" onClick={handleClose}>
-          Delete
-        </MenuItem>
+        {props.menus.map((menu) => (
+          <MenuItem
+            key={menu.key}
+            onClick={($event) => actionEvent($event, menu)}
+          >
+            {menu.title}
+          </MenuItem>
+        ))}
       </Menu>
     </span>
   );
