@@ -55,7 +55,7 @@ const ContactList = () => {
         </h3>
       </header>
 
-      <div className="ag-theme-alpine" style={{ height: "80vh" }}>
+      <div className="ag-theme-alpine" style={{ height: "79vh" }}>
         <AgGridReact
           ref={gridRef}
           rowSelection="multiple"
@@ -65,7 +65,7 @@ const ContactList = () => {
           pagination={true}
           paginationPageSize={10}
           defaultColDef={{
-            minWidth: 80,
+            minWidth: 40,
             resizable: true,
             floatingFilter: true,
           }}
@@ -77,12 +77,20 @@ const ContactList = () => {
           cacheBlockSize={10}
           onGridReady={onGridReady}
         >
+
+          <AgGridColumn
+            checkboxSelection={true}
+            headerComponent={GridHeaderCheckbox}
+            pinned="left"
+            lockPinned={true}
+            suppressMenu={true}
+            width={40}
+          ></AgGridColumn>
+
           <AgGridColumn
             field="fullName"
             sortable={true}
             filter="agTextColumnFilter"
-            headerComponent={GridHeaderCheckbox}
-            checkboxSelection={true}
             pinned="left"
             lockPinned={true}
             suppressMenu={true}

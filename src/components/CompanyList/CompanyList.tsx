@@ -91,8 +91,7 @@ const CompanyList = () => {
     <div className="container-fluid">
       <header className="jumbotron">
         <h3>
-          <span>Company List</span>
-
+          Company List
           <Button
             component={Link}
             to="/app/company/create"
@@ -104,7 +103,7 @@ const CompanyList = () => {
         </h3>
       </header>
 
-      <div className="ag-theme-alpine" style={{ height: "80vh" }}>
+      <div className="ag-theme-alpine" style={{ height: "79vh" }}>
         <AgGridReact
           ref={gridRef}
           rowSelection="multiple"
@@ -114,7 +113,7 @@ const CompanyList = () => {
           pagination={true}
           paginationPageSize={10}
           defaultColDef={{
-            minWidth: 80,
+            minWidth: 40,
             resizable: true,
             floatingFilter: true,
           }}
@@ -123,16 +122,22 @@ const CompanyList = () => {
           }}
           rowModelType={"serverSide"}
           serverSideStoreType={"partial"}
-          cacheBlockSize={10}
           animateRows={false}
           onGridReady={onGridReady}
         >
           <AgGridColumn
+            checkboxSelection={true}
+            headerComponent={GridHeaderCheckbox}
+            pinned="left"
+            lockPinned={true}
+            suppressMenu={true}
+            width={40}
+          ></AgGridColumn>
+
+          <AgGridColumn
             field="name"
             sortable={true}
             filter="agTextColumnFilter"
-            checkboxSelection={true}
-            headerComponent={GridHeaderCheckbox}
             pinned="left"
             lockPinned={true}
             suppressMenu={true}
@@ -327,7 +332,7 @@ const CompanyList = () => {
 
           <AgGridColumn
             headerName="Action"
-            width={80}
+            width={78}
             sortable={false}
             filter={false}
             pinned="right"
