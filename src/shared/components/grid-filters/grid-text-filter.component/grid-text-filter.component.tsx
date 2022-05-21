@@ -6,19 +6,19 @@ import React, {
   useState,
 } from "react";
 
-export default forwardRef((props, ref) => {
+export default forwardRef((props: any, ref) => {
   const [currentValue, setCurrentValue] = useState(null);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // expose AG Grid Filter Lifecycle callbacks
   useImperativeHandle(ref, () => {
     return {
       onParentModelChanged(parentModel) {
         // When the filter is empty we will receive a null value here
-        if (!parentModel) {
+        if (!parentModel && inputRef && inputRef.current) {
           inputRef.current.value = "";
           setCurrentValue(null);
-        } else {
+        } else if(inputRef && inputRef.current) {
           inputRef.current.value = parentModel.filter + "";
           setCurrentValue(parentModel.filter);
         }
@@ -35,7 +35,7 @@ export default forwardRef((props, ref) => {
       return;
     }
 
-    setCurrentValue(Number(input.target.value));
+    setCurrentValue(input.target.value);
     props.parentFilterInstance((instance) => {
       instance.onFloatingFilterChanged("contains", input.target.value);
     });

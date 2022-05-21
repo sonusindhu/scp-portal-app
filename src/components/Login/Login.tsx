@@ -59,7 +59,7 @@ const Login = (props) => {
 
   return (
     <div>
-      <AppBar position="static" alignitems="center" color="primary">
+      <AppBar position="static" color="primary">
         <Toolbar>
           <Grid container justifyContent="center" wrap="wrap">
             <Grid item>

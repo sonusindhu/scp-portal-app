@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
@@ -13,7 +13,7 @@ import CompanyService from "../../services/company.service";
 import toast from "../../utils/toast.util";
 
 const EditCompany = (props) => {
-  let { id: companyId } = useParams();
+  let { id } = useParams();
   const navigate = useNavigate();
   const formContext = useForm({
     defaultValues: {},
@@ -41,8 +41,8 @@ const EditCompany = (props) => {
   // check if user is authenticated, if not redirect to login page
   const user = AuthService.getCurrentUser();
   useEffect(() => {
-    if (user) {
-      CompanyService.find(companyId)
+    if (user && id) {
+      CompanyService.find(+id)
         .then((response) => {
           reset(response.result);
         })

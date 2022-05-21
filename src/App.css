@@ -16,3 +16,7 @@ header.MuiAppBar-root a {
 a.fl-right {
   float: right;
 }
+
+.ag-theme-alpine .ag-layout-normal .ag-paging-panel {
+  justify-content: center;
+}
