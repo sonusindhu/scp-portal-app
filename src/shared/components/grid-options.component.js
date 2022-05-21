@@ -4,8 +4,6 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const ITEM_HEIGHT = 48;
 const GridOptions = (props) => {
-  console.log(props);
-
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const handleClick = (event) => {
@@ -37,33 +35,39 @@ const GridOptions = (props) => {
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
         onClick={handleClick}
+        disabled={!props.menus || props.menus.length == 0 || props.disabled}
       >
         <MoreVertIcon />
       </IconButton>
-      <Menu
-        id="long-menu"
-        MenuListProps={{
-          "aria-labelledby": "long-button",
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            maxHeight: ITEM_HEIGHT * 4.5,
-            width: "20ch",
-          },
-        }}
-      >
-        {props.menus.map((menu) => (
-          <MenuItem
-            key={menu.key}
-            onClick={($event) => actionEvent($event, menu)}
-          >
-            {menu.title}
-          </MenuItem>
-        ))}
-      </Menu>
+
+      {props.menus && props.menus.length > 0 ? (
+        <Menu
+          id="long-menu"
+          MenuListProps={{
+            "aria-labelledby": "long-button",
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            style: {
+              maxHeight: ITEM_HEIGHT * 4.5,
+              width: "20ch",
+            },
+          }}
+        >
+          {props.menus.map((menu) => (
+            <MenuItem
+              key={menu.key}
+              onClick={($event) => actionEvent($event, menu)}
+            >
+              {menu.title}
+            </MenuItem>
+          ))}
+        </Menu>
+      ) : (
+        ""
+      )}
     </span>
   );
 };
