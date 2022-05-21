@@ -20,3 +20,13 @@ a.fl-right {
 .ag-theme-alpine .ag-layout-normal .ag-paging-panel {
   justify-content: center;
 }
+
+.custom-header-checkbox .MuiCheckbox-root {
+  padding-left: 0;
+  width: 20px;
+  height: 20px;
+}
+.custom-header-checkbox .MuiCheckbox-root .MuiSvgIcon-root {
+  width: 20px;
+  height: 20px;
+}

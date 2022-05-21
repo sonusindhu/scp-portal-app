@@ -1,5 +1,5 @@
 import { Checkbox } from "@mui/material";
-import React, { ComponentElement, useState } from "react";
+import React, { useState } from "react";
 // import { Component } from "ag-grid-community";
 
 const GridHeaderCheckbox = (props) => {
@@ -19,7 +19,6 @@ const GridHeaderCheckbox = (props) => {
   return (
     <div className="custom-header-checkbox">
       <Checkbox onChange={updateState} />
-      {props.displayName}
     </div>
   );
 };
