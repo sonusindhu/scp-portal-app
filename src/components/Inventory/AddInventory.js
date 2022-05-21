@@ -102,15 +102,13 @@ const AddContact = () => {
   return (
     <div className="container-fluid">
       <header className="jumbotron">
-        <h3>
-          <span>Add Contact</span>
-        </h3>
+        <h3>Add Inventory</h3>
       </header>
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <div>
           <TextFieldElement
-            sx={{ m: 1, width: "41ch" }}
+            sx={{ m: 1, width: "52ch" }}
             required
             name={"trackingNumber"}
             label="Tracking Number"
@@ -118,14 +116,14 @@ const AddContact = () => {
             margin={"dense"}
           />
           <SelectElement
-            sx={{ m: 1, width: "41ch" }}
+            sx={{ m: 1, width: "52ch" }}
             required
             options={statusList}
             name={"status"}
             label="Status"
           ></SelectElement>
           <SelectElement
-            sx={{ m: 1, width: "41ch" }}
+            sx={{ m: 1, width: "52ch" }}
             required
             options={packages}
             name={"type"}
@@ -135,7 +133,7 @@ const AddContact = () => {
 
         <div>
           <SelectElement
-            sx={{ m: 1, width: "41ch" }}
+            sx={{ m: 1, width: "52ch" }}
             required
             options={companies}
             name={"companyId"}
@@ -143,7 +141,7 @@ const AddContact = () => {
             labelKey="name"
           ></SelectElement>
           <TextFieldElement
-            sx={{ m: 1, width: "41ch" }}
+            sx={{ m: 1, width: "52ch" }}
             name={"location"}
             label="Location"
             variant="outlined"
@@ -151,7 +149,7 @@ const AddContact = () => {
             multiline="true"
           />
           <TextFieldElement
-            sx={{ m: 1, width: "41ch" }}
+            sx={{ m: 1, width: "52ch" }}
             required
             name={"length"}
             label="Length"
@@ -161,7 +159,7 @@ const AddContact = () => {
         </div>
         <div>
           <TextFieldElement
-            sx={{ m: 1, width: "41ch" }}
+            sx={{ m: 1, width: "52ch" }}
             required
             name={"width"}
             label="Width"
@@ -170,7 +168,7 @@ const AddContact = () => {
           />
 
           <TextFieldElement
-            sx={{ m: 1, width: "41ch" }}
+            sx={{ m: 1, width: "52ch" }}
             required
             name={"height"}
             label="Height"
@@ -180,7 +178,7 @@ const AddContact = () => {
 
           <TextFieldElement
             required
-            sx={{ m: 1, width: "41ch" }}
+            sx={{ m: 1, width: "52ch" }}
             name={"weight"}
             label="Weight"
             variant="outlined"
@@ -189,12 +187,13 @@ const AddContact = () => {
         </div>
         <div>
           <TextFieldElement
-            sx={{ m: 1, width: "125ch" }}
+            sx={{ m: 1, width: "160ch" }}
             name={"notes"}
             label="Notes"
             variant="outlined"
             validation={{ maxLength: 254 }}
             multiline="true"
+            rows={4}
           />
         </div>
 

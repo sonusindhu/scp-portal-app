@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Stack, Alert } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import {
   FormContainer,
@@ -8,16 +8,12 @@ import {
   SelectElement,
 } from "react-hook-form-mui";
 
-import axios from "../../config";
 import AuthService from "../../services/auth.service";
-
-const API_URL = process.env.REACT_APP_API_ENDPOINT;
+import CompanyService from "../../services/company.service";
+import toast from "../../utils/toast.util";
 
 const AddCompany = () => {
   const navigate = useNavigate();
-  const [showError, setShowError] = useState("");
-  const [showSuccess, setShowSuccess] = useState("");
-
   const formContext = useForm({
     defaultValues: {},
   });
@@ -29,19 +25,17 @@ const AddCompany = () => {
   const handleSubmitForm = (e) => {
     if (!e.email || !e.name) return;
     const payload = { ...e };
-    axios
-      .post(API_URL + "company/create", payload)
-      .then(({ data }) => data)
+    CompanyService.create(payload)
       .then((response) => {
         if (response.status) {
-          setShowSuccess(response.message);
+          toast.success(response.message);
           reset();
         } else {
-          setShowError(response.message);
+          toast.error(response.message);
         }
       })
-      .catch((error) => {
-        setShowError(error.response.data);
+      .catch(({ response }) => {
+        toast.error(response.message);
       });
   };
 
@@ -63,7 +57,7 @@ const AddCompany = () => {
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <div>
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1.1, width: "52ch" }}
             required
             name={"name"}
             label="Name"
@@ -71,7 +65,7 @@ const AddCompany = () => {
             margin={"dense"}
           />
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1.1, width: "52ch" }}
             required
             type={"email"}
             name={"email"}
@@ -81,7 +75,7 @@ const AddCompany = () => {
           />
 
           <SelectElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1.1, width: "52ch" }}
             required
             options={[
               {
@@ -104,7 +98,7 @@ const AddCompany = () => {
 
         <div>
           <SelectElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1.1, width: "52ch" }}
             required
             options={[
               {
@@ -125,7 +119,7 @@ const AddCompany = () => {
           ></SelectElement>
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1.1, width: "52ch" }}
             required
             name={"revenue"}
             label="Revenue"
@@ -135,7 +129,7 @@ const AddCompany = () => {
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1.1, width: "52ch" }}
             required
             name={"employeesCount"}
             label="Employees Count"
@@ -146,7 +140,7 @@ const AddCompany = () => {
         </div>
         <div>
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1.1, width: "52ch" }}
             required
             name={"address1"}
             label="Address1"
@@ -154,14 +148,14 @@ const AddCompany = () => {
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1.1, width: "52ch" }}
             name={"address2"}
             label="Address2"
             variant="outlined"
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1.1, width: "52ch" }}
             required
             name={"city"}
             label="City"
@@ -170,7 +164,7 @@ const AddCompany = () => {
         </div>
         <div>
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1.1, width: "52ch" }}
             required
             name={"state"}
             label="State"
@@ -178,7 +172,7 @@ const AddCompany = () => {
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1.1, width: "52ch" }}
             required
             name={"country"}
             label="Country"
@@ -186,7 +180,7 @@ const AddCompany = () => {
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1.1, width: "52ch" }}
             required
             name={"zipcode"}
             label="Zipcode"
@@ -196,7 +190,7 @@ const AddCompany = () => {
 
         <div>
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1.1, width: "52ch" }}
             required
             name={"phone"}
             label="Phone"
@@ -205,7 +199,7 @@ const AddCompany = () => {
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "41ch" }}
+            sx={{ m: 1.1, width: "52ch" }}
             name={"extension"}
             label="Extension"
             validation={{ maxLength: 6 }}
@@ -232,18 +226,6 @@ const AddCompany = () => {
             >
               Cancel
             </Button>
-
-            {showError != "" ? (
-              <Alert severity="error">{showError}</Alert>
-            ) : (
-              <></>
-            )}
-
-            {showSuccess != "" ? (
-              <Alert severity="success">{showSuccess}</Alert>
-            ) : (
-              <></>
-            )}
           </Stack>
         </div>
       </FormContainer>
