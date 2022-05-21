@@ -11,7 +11,8 @@ import { ServerSideRowModelModule } from '@ag-grid-enterprise/server-side-row-mo
 
 import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
 import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
-import GridOptions from "../../shared/components/grid-options.component";
+import GridActionMenu from "../../shared/components/grid-action-menu.component";
+
 import AuthService from "../../services/auth.service";
 import GridService from "../../services/grid.service";
 
@@ -291,7 +292,7 @@ const ContactList = () => {
             filter={false}
             pinned="right"
             lockPinned={true}
-            cellRenderer={GridOptions}
+            cellRenderer={GridActionMenu}
           ></AgGridColumn>
         </AgGridReact>
       </div>

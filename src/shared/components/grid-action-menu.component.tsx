@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const ITEM_HEIGHT = 48;
-const GridOptions = (props) => {
+const GridActionMenu = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const handleClick = (event) => {
@@ -72,4 +72,4 @@ const GridOptions = (props) => {
   );
 };
 
-export default GridOptions;
+export default GridActionMenu;

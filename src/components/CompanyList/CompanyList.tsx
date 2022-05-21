@@ -9,12 +9,13 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import 'ag-grid-enterprise';
 import { ModuleRegistry, GetRowIdFunc } from '@ag-grid-community/core';
 
-import GridOptions from "../../shared/components/grid-options.component";
+import GridActionMenu from "../../shared/components/grid-action-menu.component";
 import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
+import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
+
 import AuthService from "../../services/auth.service";
 import GridService from "../../services/grid.service";
 import CompanyService from "../../services/company.service";
-import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
 
 import toast from "../../utils/toast.util";
 
@@ -139,6 +140,7 @@ const CompanyList = () => {
             floatingFilterComponentParams={{
               suppressFilterButton: true,
             }}
+            cellRenderer={({data}) => <Link to={`/app/company/${data?.id}/edit`}>{data?.name}</Link>}
           ></AgGridColumn>
 
           <AgGridColumn
@@ -330,7 +332,7 @@ const CompanyList = () => {
             filter={false}
             pinned="right"
             lockPinned={true}
-            cellRenderer={GridOptions}
+            cellRenderer={GridActionMenu}
             cellRendererParams={OptionsList}
           ></AgGridColumn>
         </AgGridReact>
