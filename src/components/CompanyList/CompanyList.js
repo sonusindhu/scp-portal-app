@@ -10,19 +10,75 @@ import GridOptions from "../../shared/components/grid-options.component";
 import GridTextFilterComponent from "../../shared/components/grid-filters/grid-text-filter.component/grid-text-filter.component";
 import AuthService from "../../services/auth.service";
 import GridService from "../../services/grid.service";
+import CompanyService from "../../services/company.service";
 import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
+
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const CompanyList = () => {
   let navigate = useNavigate();
   const gridRef = useRef(null);
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
+  const [toastConfig, setToastConfig] = useState(false);
 
   const onGridReady = (params) => {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
     var datasource = GridService.ServerSideDatasource("company/list");
     params.api.setServerSideDatasource(datasource);
+  };
+
+  const onCloseToast = () => {
+    setToastConfig({ open: false });
+  };
+
+  const deleteCompany = ($event) => {
+    const id = $event.data.id;
+    CompanyService.deleteCompanies([id])
+      .then(() => {
+        gridApi.refreshServerSideStore();
+        const alertConfig = {
+          message: "Company has been deleted successfully.",
+          type: "success",
+          open: true,
+        };
+        console.log(gridApi);
+        setToastConfig(alertConfig);
+      })
+      .catch((error) => {
+        const alertConfig = {
+          message: error?.message,
+          type: "error",
+          open: true,
+        };
+        setToastConfig(alertConfig);
+      });
+  };
+
+  const editCompany = ($event) => {
+    console.log($event);
+    navigate(`/app/company/${$event.data.id}/edit`);
+    return;
+  };
+
+  const OptionsList = {
+    menus: [
+      {
+        key: "edit",
+        title: "Edit",
+        action: editCompany,
+      },
+      {
+        key: "delete",
+        title: "Delete",
+        action: deleteCompany,
+      },
+    ],
   };
 
   const user = AuthService.getCurrentUser();
@@ -53,6 +109,7 @@ const CompanyList = () => {
         <AgGridReact
           ref={gridRef}
           rowSelection="multiple"
+          suppressCellSelection={true}
           suppressRowClickSelection={true}
           pagination={true}
           paginationPageSize={10}
@@ -67,8 +124,6 @@ const CompanyList = () => {
             customTextFloatingFilter: GridTextFilterComponent,
           }}
           rowModelType={"serverSide"}
-          serverSideStoreType={"partial"}
-          cacheBlockSize={10}
           animateRows={false}
           onGridReady={onGridReady}
         >
@@ -76,8 +131,6 @@ const CompanyList = () => {
             field="name"
             sortable={true}
             filter="agTextColumnFilter"
-            headerCheckboxSelection={true}
-            headerCheckboxSelectionFilteredOnly={true}
             checkboxSelection={true}
             headerComponentFramework={GridHeaderCheckbox}
             pinned="left"
@@ -279,9 +332,25 @@ const CompanyList = () => {
             pinned="right"
             lockPinned={true}
             cellRendererFramework={GridOptions}
+            cellRendererParams={OptionsList}
           ></AgGridColumn>
         </AgGridReact>
       </div>
+
+      <Snackbar
+        open={toastConfig.open}
+        autoHideDuration={5000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        onClose={onCloseToast}
+      >
+        <Alert
+          onClose={onCloseToast}
+          severity={toastConfig.type}
+          sx={{ width: "100%" }}
+        >
+          {toastConfig.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

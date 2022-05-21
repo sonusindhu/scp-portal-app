@@ -65,7 +65,6 @@ const AppHeader = (props) => {
               component={NavLink}
               to="/app/company/list"
               sx={{ my: 2, color: "white", display: "block" }}
-              activeClassName="active"
             >
               Companies
             </Button>
@@ -73,7 +72,6 @@ const AppHeader = (props) => {
               component={NavLink}
               to="/app/contact/list"
               sx={{ my: 2, color: "white", display: "block" }}
-              activeClassName="active"
             >
               Contacts
             </Button>
@@ -81,7 +79,6 @@ const AppHeader = (props) => {
               component={NavLink}
               to="/app/inventory/list"
               sx={{ my: 2, color: "white", display: "block" }}
-              activeClassName="active"
             >
               Inventories
             </Button>
@@ -123,7 +120,6 @@ const AppHeader = (props) => {
                 onClick={handleCloseNavMenu}
                 component={NavLink}
                 to="/app/company/list"
-                activeClassName="active"
               >
                 <Typography textAlign="center">Companies</Typography>
               </MenuItem>
@@ -131,7 +127,6 @@ const AppHeader = (props) => {
                 onClick={handleCloseNavMenu}
                 component={NavLink}
                 to="/app/contact/list"
-                activeClassName="active"
               >
                 <Typography textAlign="center">Contacts</Typography>
               </MenuItem>
@@ -139,7 +134,6 @@ const AppHeader = (props) => {
                 onClick={handleCloseNavMenu}
                 component={NavLink}
                 to="/app/inventory/list"
-                activeClassName="active"
               >
                 <Typography textAlign="center">Inventories</Typography>
               </MenuItem>

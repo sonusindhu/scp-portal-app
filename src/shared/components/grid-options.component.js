@@ -15,6 +15,17 @@ const GridOptions = (props) => {
     setOpen(false);
   };
 
+  const actionEvent = (event, menu) => {
+    const data = props.data;
+    const eventData = {
+      event,
+      data,
+      menu,
+    };
+    setOpen(false);
+    menu?.action(eventData);
+  };
+
   return (
     <span>
       <IconButton
@@ -24,31 +35,39 @@ const GridOptions = (props) => {
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
         onClick={handleClick}
+        disabled={!props.menus || props.menus.length == 0 || props.disabled}
       >
         <MoreVertIcon />
       </IconButton>
-      <Menu
-        id="long-menu"
-        MenuListProps={{
-          "aria-labelledby": "long-button",
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            maxHeight: ITEM_HEIGHT * 4.5,
-            width: "20ch",
-          },
-        }}
-      >
-        <MenuItem key="edit" onClick={handleClose}>
-          Edit
-        </MenuItem>
-        <MenuItem key="delete" onClick={handleClose}>
-          Delete
-        </MenuItem>
-      </Menu>
+
+      {props.menus && props.menus.length > 0 ? (
+        <Menu
+          id="long-menu"
+          MenuListProps={{
+            "aria-labelledby": "long-button",
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            style: {
+              maxHeight: ITEM_HEIGHT * 4.5,
+              width: "20ch",
+            },
+          }}
+        >
+          {props.menus.map((menu) => (
+            <MenuItem
+              key={menu.key}
+              onClick={($event) => actionEvent($event, menu)}
+            >
+              {menu.title}
+            </MenuItem>
+          ))}
+        </Menu>
+      ) : (
+        ""
+      )}
     </span>
   );
 };
