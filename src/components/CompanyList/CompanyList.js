@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, Fragment } from "react";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import { ServerSideRowModelModule } from "@ag-grid-enterprise/server-side-row-model";
 import { Button } from "@mui/material";
@@ -13,19 +13,13 @@ import GridService from "../../services/grid.service";
 import CompanyService from "../../services/company.service";
 import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
 
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import toast from "../../utils/toast.util";
 
 const CompanyList = () => {
   let navigate = useNavigate();
   const gridRef = useRef(null);
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
-  const [toastConfig, setToastConfig] = useState(false);
-
   const onGridReady = (params) => {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
@@ -33,37 +27,35 @@ const CompanyList = () => {
     params.api.setServerSideDatasource(datasource);
   };
 
-  const onCloseToast = () => {
-    setToastConfig({ open: false });
+  const deleteAction = (ids) => (
+    <Fragment>
+      <Button onClick={() => confirmDelete(ids)}>Confirm</Button>
+      <Button onClick={() => toast.close()}>Close</Button>
+    </Fragment>
+  );
+
+  const confirmDelete = (ids) => {
+    toast.close();
+    CompanyService.deleteCompanies(ids)
+      .then((response) => {
+        gridApi.refreshServerSideStore();
+        const message = "Company has been deleted successfully.";
+        toast.success(message);
+      })
+      .catch((error) => {
+        toast.success(error?.message);
+      });
   };
 
   const deleteCompany = ($event) => {
     const id = $event.data.id;
-    CompanyService.deleteCompanies([id])
-      .then(() => {
-        gridApi.refreshServerSideStore();
-        const alertConfig = {
-          message: "Company has been deleted successfully.",
-          type: "success",
-          open: true,
-        };
-        console.log(gridApi);
-        setToastConfig(alertConfig);
-      })
-      .catch((error) => {
-        const alertConfig = {
-          message: error?.message,
-          type: "error",
-          open: true,
-        };
-        setToastConfig(alertConfig);
-      });
+    toast.warning("Are you sure, you want to delete?", {
+      action: () => deleteAction([id]),
+    });
   };
 
   const editCompany = ($event) => {
-    console.log($event);
     navigate(`/app/company/${$event.data.id}/edit`);
-    return;
   };
 
   const OptionsList = {
@@ -124,6 +116,8 @@ const CompanyList = () => {
             customTextFloatingFilter: GridTextFilterComponent,
           }}
           rowModelType={"serverSide"}
+          serverSideStoreType={"partial"}
+          cacheBlockSize={10}
           animateRows={false}
           onGridReady={onGridReady}
         >
@@ -336,21 +330,6 @@ const CompanyList = () => {
           ></AgGridColumn>
         </AgGridReact>
       </div>
-
-      <Snackbar
-        open={toastConfig.open}
-        autoHideDuration={5000}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        onClose={onCloseToast}
-      >
-        <Alert
-          onClose={onCloseToast}
-          severity={toastConfig.type}
-          sx={{ width: "100%" }}
-        >
-          {toastConfig.message}
-        </Alert>
-      </Snackbar>
     </div>
   );
 };

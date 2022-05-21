@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Stack, Alert } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import {
   FormContainer,
   TextFieldElement,
   SelectElement,
 } from "react-hook-form-mui";
+
 import AuthService from "../../services/auth.service";
 import CompanyService from "../../services/company.service";
+import toast from "../../utils/toast.util";
 
 const EditCompany = (props) => {
   let { id: companyId } = useParams();
   const navigate = useNavigate();
-  const [showError, setShowError] = useState("");
-  const [showSuccess, setShowSuccess] = useState("");
-
   const formContext = useForm({
     defaultValues: {},
   });
@@ -28,14 +27,14 @@ const EditCompany = (props) => {
     CompanyService.update(payload)
       .then((response) => {
         if (response.status) {
-          setShowSuccess(response.message);
-          reset();
+          toast.success(response.message);
+          reset(response.result);
         } else {
-          setShowError(response.message);
+          toast.error(response.message);
         }
       })
-      .catch((error) => {
-        setShowError(error.response.data);
+      .catch(({ response }) => {
+        toast.error(response.data);
       });
   };
 
@@ -236,18 +235,6 @@ const EditCompany = (props) => {
             >
               Cancel
             </Button>
-
-            {showError != "" ? (
-              <Alert severity="error">{showError}</Alert>
-            ) : (
-              <></>
-            )}
-
-            {showSuccess != "" ? (
-              <Alert severity="success">{showSuccess}</Alert>
-            ) : (
-              <></>
-            )}
           </Stack>
         </div>
       </FormContainer>

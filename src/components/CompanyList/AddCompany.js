@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Stack, Alert } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import {
   FormContainer,
@@ -8,16 +8,12 @@ import {
   SelectElement,
 } from "react-hook-form-mui";
 
-import axios from "../../config";
 import AuthService from "../../services/auth.service";
-
-const API_URL = process.env.REACT_APP_API_ENDPOINT;
+import CompanyService from "../../services/company.service";
+import toast from "../../utils/toast.util";
 
 const AddCompany = () => {
   const navigate = useNavigate();
-  const [showError, setShowError] = useState("");
-  const [showSuccess, setShowSuccess] = useState("");
-
   const formContext = useForm({
     defaultValues: {},
   });
@@ -29,19 +25,17 @@ const AddCompany = () => {
   const handleSubmitForm = (e) => {
     if (!e.email || !e.name) return;
     const payload = { ...e };
-    axios
-      .post(API_URL + "company/create", payload)
-      .then(({ data }) => data)
+    CompanyService.create(payload)
       .then((response) => {
         if (response.status) {
-          setShowSuccess(response.message);
+          toast.success(response.message);
           reset();
         } else {
-          setShowError(response.message);
+          toast.error(response.message);
         }
       })
-      .catch((error) => {
-        setShowError(error.response.data);
+      .catch(({ response }) => {
+        toast.error(response.message);
       });
   };
 
@@ -232,18 +226,6 @@ const AddCompany = () => {
             >
               Cancel
             </Button>
-
-            {showError != "" ? (
-              <Alert severity="error">{showError}</Alert>
-            ) : (
-              <></>
-            )}
-
-            {showSuccess != "" ? (
-              <Alert severity="success">{showSuccess}</Alert>
-            ) : (
-              <></>
-            )}
           </Stack>
         </div>
       </FormContainer>
