@@ -1,6 +1,5 @@
 import axios from "../utils/config.util";
 import { format } from "date-fns";
-const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const ServerSideDatasource = (listUrl) => {
   return {
@@ -17,7 +16,7 @@ const ServerSideDatasource = (listUrl) => {
       });
       const payload = {
         skip: params.request.startRow,
-        take: 10,
+        take: 20,
         group: [],
         sort,
         filter: {
@@ -26,7 +25,7 @@ const ServerSideDatasource = (listUrl) => {
         },
       };
       axios
-        .post(API_URL + listUrl, payload)
+        .post(listUrl, payload)
         .then(({ data }) => {
           params.success({
             rowData: data.result || [],
