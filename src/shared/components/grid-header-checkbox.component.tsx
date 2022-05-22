@@ -1,13 +1,12 @@
 import { Checkbox } from "@mui/material";
 import React, { useState } from "react";
-// import { Component } from "ag-grid-community";
 
 const GridHeaderCheckbox = (props) => {
   const [state, setState] = useState(false);
 
   const selectAllRows = (bool) => {
     props.api.forEachNode((row) => {
-      props.api.getRowNode(row.id).selectThisNode(bool);
+      props.api.getRowNode(row.id).setSelected(bool);
     });
   };
 
