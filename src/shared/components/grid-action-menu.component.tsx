@@ -23,19 +23,20 @@ const GridActionMenu = (props) => {
       menu,
     };
     setOpen(false);
-    menu?.action(eventData);
+    props?.menuCallback(eventData);
   };
 
   return (
-    <span>
+    <span className={props.className}>
       <IconButton
         aria-label="more"
         id="long-button"
         aria-controls={open ? "long-menu" : undefined}
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
+        className="action-icon"
         onClick={handleClick}
-        disabled={!props.menus || props.menus.length == 0 || props.disabled}
+        disabled={!props.menus || props.menus.length === 0 || props.disabled}
       >
         <MoreVertIcon />
       </IconButton>
@@ -58,6 +59,7 @@ const GridActionMenu = (props) => {
         >
           {props.menus.map((menu) => (
             <MenuItem
+              disabled={menu.disabled}
               key={menu.key}
               onClick={($event) => actionEvent($event, menu)}
             >
