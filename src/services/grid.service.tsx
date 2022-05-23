@@ -24,20 +24,25 @@ const ServerSideDatasource = (listUrl) => {
           filters: filters,
         },
       };
+      params.api.showLoadingOverlay();
       axios
         .post(listUrl, payload)
-        .then(({ data }) => {
-          params.success({
-            rowData: data.result || [],
-            rowCount: data.total,
-          });
+        .then(({ data }) => data)
+        .then(({ result, total }) => {
+          const lastRow =
+            result.length <= params.request.endRow ? result.length : -1;
+          params.successCallback(result, total);
+
+          params.api.hideOverlay();
+          if (result.length) {
+            params.api.hideOverlay();
+          } else {
+            params.api.showNoRowsOverlay();
+          }
         })
         .catch((error) => {
-          params.success({
-            rowData: [],
-            rowCount: 0,
-          });
-          // params.fail();
+          params.api.showNoRowsOverlay();
+          params.successCallback([], 0);
         });
     },
   };

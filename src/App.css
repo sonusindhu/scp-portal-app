@@ -53,3 +53,7 @@ header .heading {
 header .MuiContainer-root {
   max-width: 100%;
 }
+
+.ag-full-width-container .ag-theme-alpine .ag-loading {
+  display: none;
+}

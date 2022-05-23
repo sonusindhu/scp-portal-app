@@ -137,6 +137,13 @@ const CompanyList = () => {
           rowModelType={"serverSide"}
           serverSideStoreType={"partial"}
           animateRows={false}
+          maxBlocksInCache={0}
+          overlayLoadingTemplate={
+            '<span className="ag-overlay-loading-center">Please wait while your rows are loading...</span>'
+          }
+          overlayNoRowsTemplate={
+            '<span className="ag-overlay-loading-center">No data found to display.</span>'
+          }
           onGridReady={onGridReady}
           columnDefs={columnDefs}
         ></AgGridReact>
