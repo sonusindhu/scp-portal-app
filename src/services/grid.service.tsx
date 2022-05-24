@@ -5,8 +5,11 @@ const ServerSideDatasource = (listUrl) => {
   return {
     getRows: function (params) {
       const sort = params.request.sortModel.map((item) => {
-        return { [`${item.colId}`]: item.sort };
+        return `${item.colId}  ${item.sort}`;
       });
+      // const sort = params.request.sortModel.map((item) => {
+      //   return { [`${item.colId}`]: item.sort };
+      // });
       const filters = Object.keys(params.request.filterModel).map((key) => {
         const item = params.request.filterModel[key];
         return {
