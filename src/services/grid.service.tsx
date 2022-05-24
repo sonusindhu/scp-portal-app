@@ -1,6 +1,5 @@
 import axios from "../utils/config.util";
 import { format } from "date-fns";
-const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const ServerSideDatasource = (listUrl) => {
   return {
@@ -17,7 +16,7 @@ const ServerSideDatasource = (listUrl) => {
       });
       const payload = {
         skip: params.request.startRow,
-        take: 10,
+        take: 20,
         group: [],
         sort,
         filter: {
@@ -25,20 +24,25 @@ const ServerSideDatasource = (listUrl) => {
           filters: filters,
         },
       };
+      params.api.showLoadingOverlay();
       axios
-        .post(API_URL + listUrl, payload)
-        .then(({ data }) => {
-          params.success({
-            rowData: data.result || [],
-            rowCount: data.total,
-          });
+        .post(listUrl, payload)
+        .then(({ data }) => data)
+        .then(({ result, total }) => {
+          const lastRow =
+            result.length <= params.request.endRow ? result.length : -1;
+          params.successCallback(result, total);
+
+          params.api.hideOverlay();
+          if (result.length) {
+            params.api.hideOverlay();
+          } else {
+            params.api.showNoRowsOverlay();
+          }
         })
         .catch((error) => {
-          params.success({
-            rowData: [],
-            rowCount: 0,
-          });
-          // params.fail();
+          params.api.showNoRowsOverlay();
+          params.successCallback([], 0);
         });
     },
   };

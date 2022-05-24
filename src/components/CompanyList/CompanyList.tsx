@@ -49,7 +49,6 @@ const CompanyList = () => {
       if (!menu.alwaysEnable) menu.disabled = selectedRows.length === 0;
       return menu;
     });
-    console.log(menus);
     setMainMenus(menus);
   };
 
@@ -130,7 +129,7 @@ const CompanyList = () => {
           onSelectionChanged={onSelectionChanged}
           getRowId={getRowId}
           pagination={true}
-          paginationPageSize={10}
+          paginationPageSize={20}
           defaultColDef={CompanyConfig.defaultColDef}
           components={{
             GridTextFilterComponent,
@@ -138,6 +137,13 @@ const CompanyList = () => {
           rowModelType={"serverSide"}
           serverSideStoreType={"partial"}
           animateRows={false}
+          maxBlocksInCache={0}
+          overlayLoadingTemplate={
+            '<span className="ag-overlay-loading-center">Please wait while your rows are loading...</span>'
+          }
+          overlayNoRowsTemplate={
+            '<span className="ag-overlay-loading-center">No data found to display.</span>'
+          }
           onGridReady={onGridReady}
           columnDefs={columnDefs}
         ></AgGridReact>
