@@ -15,7 +15,7 @@ const columnDefs = [
     width: 40,
   },
   {
-    field: "name",
+    field: "fullName",
     sortable: true,
     filter: "agTextColumnFilter",
     pinned: "left",
@@ -26,8 +26,19 @@ const columnDefs = [
       suppressFilterButton: true,
     },
     cellRenderer: ({ data }) => (
-      <Link to={`/app/company/${data?.id}/edit`}>{data?.name}</Link>
+      <Link to={`/app/contact/${data?.id}/edit`}>{data?.fullName}</Link>
     ),
+  },
+  {
+    field: "companyName",
+    sortable: true,
+    filter: true,
+    lockPinned: true,
+    suppressMenu: true,
+    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponentParams: {
+      suppressFilterButton: true,
+    },
   },
   {
     field: "status",
@@ -75,7 +86,7 @@ const columnDefs = [
     },
   },
   {
-    field: "revenue",
+    field: "department",
     sortable: true,
     filter: true,
     lockPinned: true,
@@ -86,7 +97,7 @@ const columnDefs = [
     },
   },
   {
-    field: "employeesCount",
+    field: "jobTitle",
     sortable: true,
     filter: true,
     lockPinned: true,
@@ -109,17 +120,6 @@ const columnDefs = [
   },
   {
     field: "address2",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
-  },
-  {
-    field: "type",
     sortable: true,
     filter: true,
     lockPinned: true,
@@ -157,6 +157,18 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
+    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponentParams: {
+      suppressFilterButton: true,
+    },
+  },
+  {
+    field: "birthDate",
+    sortable: true,
+    filter: true,
+    lockPinned: true,
+    suppressMenu: true,
+    valueFormatter: GridService.dateFormatter,
     floatingFilterComponent: "GridTextFilterComponent",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
