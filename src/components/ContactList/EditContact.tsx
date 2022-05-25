@@ -4,20 +4,21 @@ import {
   TextFieldElement,
   SelectElement,
 } from "react-hook-form-mui";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import axios from "../../utils/config.util";
 import AuthService from "../../services/auth.service";
-
 import ContactService from "../../services/contact.service";
 import PageHeading from "../../shared/components/PageHeading";
+
 import toast from "../../utils/toast.util";
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const AddContact = () => {
+  let { id } = useParams();
   const navigate = useNavigate();
   const [companies, setCompanies] = useState([]);
 
@@ -28,19 +29,19 @@ const AddContact = () => {
   const handleClearForm = () => reset();
 
   const handleSubmitForm = (e) => {
-    if (!e.email || !e.name) return;
+    if (!e.email || !e.fullName) return;
     const payload = { ...e };
-    ContactService.create(payload)
+    ContactService.update(payload)
       .then((response) => {
         if (response.status) {
           toast.success(response.message);
-          reset();
+          reset(response.result);
         } else {
           toast.error(response.message);
         }
       })
       .catch(({ response }) => {
-        toast.error(response.message);
+        toast.error(response.data);
       });
   };
 
@@ -74,13 +75,23 @@ const AddContact = () => {
   // check if user is authenticated, if not redirect to login page
   const user = AuthService.getCurrentUser();
   useEffect(() => {
-    if (!user) navigate("/auth/login");
+    if (user && id) {
+      ContactService.find(+id)
+        .then(({ result }) => {
+          reset(result);
+        })
+        .catch((error) => {
+          navigate("/app/contact/list");
+        });
+    } else {
+      navigate("/auth/login");
+    }
   }, []);
   if (!user) return <></>;
 
   return (
     <div className="container-fluid">
-      <PageHeading title="Add Contact" />
+      <PageHeading title="Edit Contact" />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <div>
