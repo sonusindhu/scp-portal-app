@@ -18,7 +18,7 @@ const ServerSideDatasource = (listUrl) => {
         };
       });
       const payload = {
-        skip: params.request.startRow,
+        skip: params.request.startRow || 0,
         take: 20,
         group: [],
         sort,
