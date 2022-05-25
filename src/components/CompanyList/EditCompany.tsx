@@ -11,6 +11,7 @@ import {
 import AuthService from "../../services/auth.service";
 import CompanyService from "../../services/company.service";
 import toast from "../../utils/toast.util";
+import PageHeading from "../../shared/components/PageHeading";
 
 const EditCompany = (props) => {
   let { id } = useParams();
@@ -57,11 +58,7 @@ const EditCompany = (props) => {
 
   return (
     <div className="container-fluid">
-      <header className="jumbotron">
-        <h3>
-          <span>Edit Company</span>
-        </h3>
-      </header>
+      <PageHeading title="Edit Company" />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <div>
