@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
 import GridActionMenu from "../../shared/components/grid-action-menu.component";
+import GridService from "../../services/grid.service";
 
 const columnDefs = [
   {
@@ -162,7 +163,8 @@ const columnDefs = [
     },
   },
   {
-    field: "createdBy",
+    field: "createdByName",
+    headerName: "Created By",
     sortable: true,
     filter: true,
     lockPinned: true,
@@ -179,13 +181,15 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
+    valueFormatter: GridService.dateFormatter,
     floatingFilterComponent: "GridTextFilterComponent",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
   },
   {
-    field: "updatedBy",
+    field: "updatedByName",
+    headerName: "Updated By",
     sortable: true,
     filter: true,
     lockPinned: true,
@@ -202,6 +206,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
+    valueFormatter: GridService.dateFormatter,
     floatingFilterComponent: "GridTextFilterComponent",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
