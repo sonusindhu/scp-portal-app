@@ -1,19 +1,18 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { AgGridReact } from "@ag-grid-community/react";
 
 import GridListView from "../../shared/components/GridListView";
-
 import PageHeading from "../../shared/components/PageHeading";
-
 import AuthService from "../../services/auth.service";
 import ContactService from "../../services/contact.service";
-
 import toast from "../../utils/toast.util";
 import ContactConfig from "./contact.config";
 
 const ContactList = () => {
   let navigate = useNavigate();
+  const gridRed = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<any[]>(ContactConfig.mainMenus);
   const [selectedIds, setSelectedIds] = useState<any[]>([]);
 
@@ -26,12 +25,13 @@ const ContactList = () => {
 
   const confirmDelete = (ids) => {
     toast.close();
-    ContactService.deleteCompanies(ids)
+    ContactService.deleteContacts(ids)
       .then((response) => {
         toast.success(response.message);
+        gridRed.current?.api?.refreshServerSideStore();
       })
       .catch((error) => {
-        toast.success(error?.message);
+        toast.error(error?.message);
       });
   };
 
@@ -61,11 +61,6 @@ const ContactList = () => {
           if (!menu.alwaysEnable) menu.disabled = data.length === 0;
           return menu;
         });
-
-        // console.log(event);
-        // const noOfselected = data.length;
-        // const noOfRecords = event.api.getRowNode.length;
-
         setMainMenus(menus);
         break;
     }
@@ -85,7 +80,11 @@ const ContactList = () => {
         menuCallback={menuCallbackFun}
       />
 
-      <GridListView options={ContactConfig} callbackFun={menuCallbackFun} />
+      <GridListView
+        innerRef={gridRed}
+        options={ContactConfig}
+        callbackFun={menuCallbackFun}
+      />
     </Fragment>
   );
 };

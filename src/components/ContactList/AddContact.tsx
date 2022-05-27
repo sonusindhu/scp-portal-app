@@ -28,7 +28,7 @@ const AddContact = () => {
   const handleClearForm = () => reset();
 
   const handleSubmitForm = (e) => {
-    if (!e.email || !e.name) return;
+    if (!e.email) return;
     const payload = { ...e };
     ContactService.create(payload)
       .then((response) => {

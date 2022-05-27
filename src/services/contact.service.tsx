@@ -1,8 +1,10 @@
 import axios from "../utils/config.util";
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
-const deleteCompanies = (ids: number[]) => {
-  return axios.post(`${API_URL}company/deleteRange`, { ids });
+const deleteContacts = (ids: number[]) => {
+  return axios
+    .post(`${API_URL}contact/deleteRange`, { ids })
+    .then(({ data }) => data);
 };
 
 const find = (id: number) => {
@@ -25,7 +27,7 @@ const CompanyService = {
   create,
   update,
   find,
-  deleteCompanies,
+  deleteContacts,
 };
 
 export default CompanyService;
