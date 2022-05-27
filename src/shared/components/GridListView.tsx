@@ -13,7 +13,7 @@ import GridService from "../../services/grid.service";
 ModuleRegistry.registerModules([ServerSideRowModelModule]);
 
 const GridListView = (props) => {
-  const gridRef = useRef<any>(null);
+  const gridRef = useRef<any>(props);
   const [gridApi, setGridApi] = useState<any>(null);
   const [gridColumnApi, setGridColumnApi] = useState<any>(null);
   const [columnDefs, setColumnDefs] = useState<any>(props.options.columnDefs);
@@ -55,7 +55,7 @@ const GridListView = (props) => {
   return (
     <div className="ag-theme-alpine" style={{ height: "79vh" }}>
       <AgGridReact
-        ref={gridRef}
+        ref={props.innerRef}
         rowSelection="multiple"
         suppressCellFocus={true}
         suppressRowClickSelection={true}
