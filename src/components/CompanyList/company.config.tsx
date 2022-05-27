@@ -255,10 +255,13 @@ const mainMenus = [
   },
 ];
 
+const listUrl = "company/list";
+
 const CompanyConfig = {
   columnDefs,
   defaultColDef,
   mainMenus,
+  listUrl,
 };
 
 export default CompanyConfig;

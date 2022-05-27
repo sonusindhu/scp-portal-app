@@ -9,6 +9,10 @@ const columnDefs = [
   {
     checkboxSelection: true,
     headerComponent: GridHeaderCheckbox,
+    headerComponentParams: {
+      selectAll: false,
+      indeterminate: false,
+    },
     pinned: "left",
     lockPinned: true,
     suppressMenu: true,
@@ -267,10 +271,13 @@ const mainMenus = [
   },
 ];
 
+const listUrl = "contact/list";
+
 const CompanyConfig = {
   columnDefs,
   defaultColDef,
   mainMenus,
+  listUrl,
 };
 
 export default CompanyConfig;
