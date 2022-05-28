@@ -1,6 +1,7 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@material-ui/core";
+import { AgGridReact } from "@ag-grid-community/react";
 
 import PageHeading from "../../shared/components/PageHeading";
 import AuthService from "../../services/auth.service";
@@ -9,10 +10,14 @@ import InventoryService from "../../services/inventory.service";
 import toast from "../../utils/toast.util";
 import InventoryConfig from "./inventory.config";
 import GridListView from "../../shared/components/GridListView";
+import { MenuItem } from "../../shared/models/MenuList.model";
 
 const InventoryList = () => {
   let navigate = useNavigate();
-  const [mainMenus, setMainMenus] = useState<any[]>(InventoryConfig.mainMenus);
+  const gridRed = useRef<AgGridReact>(null);
+  const [mainMenus, setMainMenus] = useState<MenuItem[]>(
+    InventoryConfig.mainMenus
+  );
   const [selectedIds, setSelectedIds] = useState<any[]>([]);
 
   const deleteAction = (ids) => (
@@ -26,8 +31,8 @@ const InventoryList = () => {
     toast.close();
     InventoryService.deleteCompanies(ids)
       .then((response) => {
-        const message = "Inventory has been deleted successfully.";
-        toast.success(message);
+        toast.success(response.message);
+        gridRed.current?.api?.refreshServerSideStore();
       })
       .catch((error) => toast.success(error?.message));
   };
@@ -50,6 +55,7 @@ const InventoryList = () => {
         selectedIds.length && deleteInventory(selectedIds);
         break;
       case "edit":
+        break;
       case "selectRow":
         setSelectedIds(data);
         const menus = mainMenus.map((menu) => {
@@ -75,7 +81,11 @@ const InventoryList = () => {
         menuCallback={menuCallbackFun}
       />
 
-      <GridListView options={InventoryConfig} callbackFun={menuCallbackFun} />
+      <GridListView
+        innerRef={gridRed}
+        options={InventoryConfig}
+        callbackFun={menuCallbackFun}
+      />
     </Fragment>
   );
 };
