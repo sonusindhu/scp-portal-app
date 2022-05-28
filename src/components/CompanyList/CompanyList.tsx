@@ -1,19 +1,18 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { AgGridReact } from "@ag-grid-community/react";
 
 import GridListView from "../../shared/components/GridListView";
-
 import PageHeading from "../../shared/components/PageHeading";
-
 import AuthService from "../../services/auth.service";
 import CompanyService from "../../services/company.service";
-
 import toast from "../../utils/toast.util";
 import CompanyConfig from "./company.config";
 
 const CompanyList = () => {
   let navigate = useNavigate();
+  const gridRed = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<any[]>(CompanyConfig.mainMenus);
   const [selectedIds, setSelectedIds] = useState<any[]>([]);
 
@@ -29,6 +28,7 @@ const CompanyList = () => {
     CompanyService.deleteCompanies(ids)
       .then((response) => {
         toast.success(response.message);
+        gridRed.current?.api?.refreshServerSideStore();
       })
       .catch((error) => {
         toast.success(error?.message);
@@ -80,7 +80,11 @@ const CompanyList = () => {
         menuCallback={menuCallbackFun}
       />
 
-      <GridListView options={CompanyConfig} callbackFun={menuCallbackFun} />
+      <GridListView
+        innerRef={gridRed}
+        options={CompanyConfig}
+        callbackFun={menuCallbackFun}
+      />
     </Fragment>
   );
 };

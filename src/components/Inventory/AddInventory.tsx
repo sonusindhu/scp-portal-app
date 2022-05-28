@@ -80,7 +80,11 @@ const AddContact = () => {
     },
   ];
 
+  // check if user is authenticated, if not redirect to login page
+  const user = AuthService.getCurrentUser();
   useEffect(() => {
+    if (!user) navigate("/auth/login");
+
     axios
       .get(API_URL + "company/listOfNames")
       .then(({ data }) => data)
@@ -90,12 +94,6 @@ const AddContact = () => {
       .catch((error) => {
         setCompanies([]);
       });
-  }, []);
-
-  // check if user is authenticated, if not redirect to login page
-  const user = AuthService.getCurrentUser();
-  useEffect(() => {
-    if (!user) navigate("/auth/login");
   }, []);
   if (!user) return <></>;
 
