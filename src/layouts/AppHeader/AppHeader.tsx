@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -81,6 +81,13 @@ const AppHeader = (props) => {
             >
               Inventories
             </Button>
+            <Button
+              component={NavLink}
+              to="/app/quote/list"
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Quotes
+            </Button>
           </Box>
 
           {/* MAIN MENU START DESKTOP END */}
@@ -135,6 +142,13 @@ const AppHeader = (props) => {
                 to="/app/inventory/list"
               >
                 <Typography textAlign="center">Inventories</Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={handleCloseNavMenu}
+                component={NavLink}
+                to="/app/quote/list"
+              >
+                <Typography textAlign="center">Quotes</Typography>
               </MenuItem>
             </Menu>
           </Box>

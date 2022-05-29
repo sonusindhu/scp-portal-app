@@ -57,3 +57,39 @@ header .MuiContainer-root {
 .ag-full-width-container .ag-theme-alpine .ag-loading {
   display: none;
 }
+
+header.MuiPaper-root.drawer-header {
+  position: fixed;
+  width: 100%;
+  right: inherit;
+  top: 0;
+}
+
+header.MuiPaper-root.drawer-header .close-icon {
+  cursor: pointer;
+}
+
+.drawer-content {
+  margin-top: 80px;
+  margin-bottom: 80px;
+}
+
+.drawer-footer {
+  position: fixed;
+  bottom: 0px;
+  padding-bottom: 10px;
+  width: 100%;
+  background: #f7f5f5;
+  border-top: 1px solid #c2c2c2;
+  z-index: 1;
+}
+
+ul.MuiList-root.MuiList-padding.MuiMenu-list {
+  max-height: 200px;
+}
+
+.quote-datepicker .MuiFormControl-root {
+  width: 375px;
+  margin-left: 8px;
+  margin-top: 8px;
+}
