@@ -1,25 +1,23 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import { CircularProgress, Container } from "@material-ui/core";
+
 import "./App.css";
 
 import AuthService from "./services/auth.service";
 import Login from "./components/Login/Login";
-
-// import Home from "./components/Home";
-// import CompanyList from "./components/CompanyList/CompanyList";
 
 import Profile from "./components/Profile";
 import AddCompany from "./components/CompanyList/AddCompany";
 import EditCompany from "./components/CompanyList/EditCompany";
 
 import EventBus from "./common/EventBus";
-// import ContactList from "./components/ContactList/ContactList";
 import AddContact from "./components/ContactList/AddContact";
 import EditContact from "./components/ContactList/EditContact";
 import AppHeader from "./layouts/AppHeader/AppHeader";
-// import InventoryList from "./components/Inventory/InventoryList";
 import AddInventory from "./components/Inventory/AddInventory";
-import { CircularProgress, Container } from "@material-ui/core";
+
+import AddQuote from "./components/QuoteList/AddQuote";
 
 const Home = lazy(() => import("./components/Home"));
 const CompanyList = lazy(() => import("./components/CompanyList/CompanyList"));
@@ -27,6 +25,7 @@ const InventoryList = lazy(
   () => import("./components/Inventory/InventoryList")
 );
 const ContactList = lazy(() => import("./components/ContactList/ContactList"));
+const QuoteList = lazy(() => import("./components/QuoteList/QuoteList"));
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -72,6 +71,9 @@ const App = () => {
 
             <Route path="/app/inventory/list" element={<InventoryList />} />
             <Route path="/app/inventory/create" element={<AddInventory />} />
+
+            <Route path="/app/quote/list" element={<QuoteList />} />
+            <Route path="/app/quote/create" element={<AddQuote />} />
           </Routes>
         </Suspense>
       </Container>
