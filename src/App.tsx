@@ -18,6 +18,7 @@ import AppHeader from "./layouts/AppHeader/AppHeader";
 import AddInventory from "./components/Inventory/AddInventory";
 
 import AddQuote from "./components/QuoteList/AddQuote";
+import QuoteDetails from "./components/QuoteList/QuoteDetails";
 
 const Home = lazy(() => import("./components/Home"));
 const CompanyList = lazy(() => import("./components/CompanyList/CompanyList"));
@@ -74,6 +75,7 @@ const App = () => {
 
             <Route path="/app/quote/list" element={<QuoteList />} />
             <Route path="/app/quote/create" element={<AddQuote />} />
+            <Route path="/app/quote/:id/details" element={<QuoteDetails />} />
           </Routes>
         </Suspense>
       </Container>
