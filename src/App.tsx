@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import { CircularProgress, Container } from "@material-ui/core";
 
 import "./App.css";
@@ -18,7 +18,11 @@ import AppHeader from "./layouts/AppHeader/AppHeader";
 import AddInventory from "./components/Inventory/AddInventory";
 
 import AddQuote from "./components/QuoteList/AddQuote";
-import QuoteDetails from "./components/QuoteList/QuoteDetails";
+import QuoteDetails from "./components/QuoteList/QuoteForm/QuoteDetails";
+import QuoteForm from "./components/QuoteList/QuoteForm/QuoteForm";
+import QuoteNotes from "./components/QuoteList/QuoteForm/QuoteNotes";
+import QuoteEmails from "./components/QuoteList/QuoteForm/QuoteEmails";
+import QuoteTasks from "./components/QuoteList/QuoteForm/QuoteTasks";
 
 const Home = lazy(() => import("./components/Home"));
 const CompanyList = lazy(() => import("./components/CompanyList/CompanyList"));
@@ -75,7 +79,17 @@ const App = () => {
 
             <Route path="/app/quote/list" element={<QuoteList />} />
             <Route path="/app/quote/create" element={<AddQuote />} />
-            <Route path="/app/quote/:id/details" element={<QuoteDetails />} />
+
+            {/* <Route path="/app/quote/:id/details" element={<QuoteDetails />} /> */}
+
+            <Route path="/app/quote/:id" element={<QuoteForm />}>
+              <Route path="details" element={<QuoteDetails />} />
+
+              <Route path="notes" element={<QuoteNotes />} />
+              <Route path="emails" element={<QuoteEmails />} />
+              <Route path="tasks" element={<QuoteTasks />} />
+              <Route path="*" element={<Navigate to="details" replace />} />
+            </Route>
           </Routes>
         </Suspense>
       </Container>
