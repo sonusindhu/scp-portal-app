@@ -27,7 +27,7 @@ const columnDefs = [
       suppressFilterButton: true,
     },
     cellRenderer: ({ data }) => (
-      <Link to={`/app/quote/${data?.id}/edit`}>{data?.quoteNumber}</Link>
+      <Link to={`/app/quote/${data?.id}/details`}>{data?.quoteNumber}</Link>
     ),
   },
   {
