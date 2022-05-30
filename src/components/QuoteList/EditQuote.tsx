@@ -21,20 +21,18 @@ const EditQuote = (props) => {
   const [contacts, setContacts] = useState([]);
 
   const formContext = useForm({
-    defaultValues: {},
+    defaultValues: props.quote || {},
   });
-  const onCloseDrawer = () => {
-    props.onCloseDrawer && props.onCloseDrawer();
-  };
 
   const handleSubmitForm = (e) => {
-    const payload = { ...e };
+    const payload = {
+      ...e,
+      id: props.quote.id,
+    };
     QuoteService.create(payload)
       .then((response) => {
         if (response.status) {
           toast.success(response.message);
-          props.onAddSuccess && props.onAddSuccess();
-          onCloseDrawer();
         } else {
           toast.error(response.message);
         }
@@ -104,7 +102,7 @@ const EditQuote = (props) => {
           sx={{ m: 1, width: 375 }}
           required
           options={companies}
-          name={"companyId"}
+          name={"company"}
           label="Company"
           valueKey="id"
           labelKey="name"
@@ -115,7 +113,7 @@ const EditQuote = (props) => {
           sx={{ m: 1, width: 375 }}
           required
           options={contacts}
-          name={"contactId"}
+          name={"contact"}
           label="Contact"
           valueKey="id"
           labelKey="fullName"

@@ -14,19 +14,26 @@ import QuoteService from "../../../services/quote.service";
 import PageHeading from "../../../shared/components/PageHeading";
 
 import toast from "../../../utils/toast.util";
-import { Box, Drawer, Tab, Tabs, Typography } from "@material-ui/core";
+import {
+  Box,
+  CircularProgress,
+  Drawer,
+  Tab,
+  Tabs,
+  Typography,
+} from "@material-ui/core";
 import EditQuote from "../EditQuote";
 
 const drawerWidth = 240;
 
 const QuoteForm = (props) => {
-  console.log(useParams());
   let { id } = useParams();
+  let [isLoading, setIsLoading] = useState<boolean>(true);
   let [selectedTab, setSelectedTab] = useState<string>("details");
+  let [quote, setQuote] = useState<any>({});
   const navigate = useNavigate();
 
   const handleChangeTab = (event, tab: string) => {
-    console.log(tab);
     setSelectedTab(tab);
     navigate(tab);
   };
@@ -34,8 +41,23 @@ const QuoteForm = (props) => {
   // check if user is authenticated, if not redirect to login page
   const user = AuthService.getCurrentUser();
   useEffect(() => {
-    console.log(user);
     if (user && id) {
+      setIsLoading(true);
+      QuoteService.find(+id)
+        .then((response) => {
+          if (response.status) {
+            response.result.transportMode =
+              response.result.transportMode.split(",");
+            setQuote(response.result);
+          } else {
+            navigate("/app/quote/list");
+          }
+          setIsLoading(false);
+        })
+        .catch(() => {
+          navigate("/app/quote/list");
+          setIsLoading(false);
+        });
     } else {
       navigate("/auth/login");
     }
@@ -46,7 +68,13 @@ const QuoteForm = (props) => {
     <div className="container-fluid">
       <Box sx={{ display: "flex" }}>
         <Box sx={{ overflow: "auto", flexGrow: 1, p: 1, width: 400 }}>
-          <EditQuote />
+          {isLoading ? (
+            <Box sx={{ display: "flex" }}>
+              <CircularProgress />
+            </Box>
+          ) : (
+            <EditQuote quote={quote} />
+          )}
         </Box>
         <Box component="main" sx={{ flexGrow: 1, p: 2, width: 850 }}>
           <Tabs value={selectedTab} onChange={handleChangeTab}>
