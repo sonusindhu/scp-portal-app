@@ -42,19 +42,14 @@ const EditCompany = (props) => {
   // check if user is authenticated, if not redirect to login page
   const user = AuthService.getCurrentUser();
   useEffect(() => {
-    if (user && id) {
-      CompanyService.find(+id)
-        .then((response) => {
-          reset(response.result);
-        })
-        .catch((error) => {
-          navigate("/app/company/list");
-        });
-    } else {
-      navigate("/auth/login");
-    }
+    CompanyService.find(id)
+      .then((response) => {
+        reset(response.result);
+      })
+      .catch((error) => {
+        navigate("/app/company/list");
+      });
   }, []);
-  if (!user) return <></>;
 
   return (
     <div className="container-fluid">

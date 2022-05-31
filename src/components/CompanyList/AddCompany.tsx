@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import {
@@ -8,12 +7,10 @@ import {
   SelectElement,
 } from "react-hook-form-mui";
 
-import AuthService from "../../services/auth.service";
 import CompanyService from "../../services/company.service";
 import toast from "../../utils/toast.util";
 
 const AddCompany = () => {
-  const navigate = useNavigate();
   const formContext = useForm({
     defaultValues: {},
   });
@@ -38,13 +35,6 @@ const AddCompany = () => {
         toast.error(response.message);
       });
   };
-
-  // check if user is authenticated, if not redirect to login page
-  const user = AuthService.getCurrentUser();
-  useEffect(() => {
-    if (!user) navigate("/auth/login");
-  }, []);
-  if (!user) return <></>;
 
   return (
     <div className="container-fluid">

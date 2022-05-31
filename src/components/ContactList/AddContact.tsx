@@ -4,12 +4,10 @@ import {
   TextFieldElement,
   SelectElement,
 } from "react-hook-form-mui";
-import { useNavigate } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import axios from "../../utils/config.util";
-import AuthService from "../../services/auth.service";
 
 import ContactService from "../../services/contact.service";
 import PageHeading from "../../shared/components/PageHeading";
@@ -18,7 +16,6 @@ import toast from "../../utils/toast.util";
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const AddContact = () => {
-  const navigate = useNavigate();
   const [companies, setCompanies] = useState([]);
 
   const formContext = useForm({
@@ -70,13 +67,6 @@ const AddContact = () => {
         setCompanies([]);
       });
   }, []);
-
-  // check if user is authenticated, if not redirect to login page
-  const user = AuthService.getCurrentUser();
-  useEffect(() => {
-    if (!user) navigate("/auth/login");
-  }, []);
-  if (!user) return <></>;
 
   return (
     <div className="container-fluid">
