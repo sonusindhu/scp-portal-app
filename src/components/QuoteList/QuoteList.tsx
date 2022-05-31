@@ -1,10 +1,9 @@
-import React, { useState, useEffect, Fragment, useRef } from "react";
+import React, { useState, Fragment, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Drawer } from "@material-ui/core";
 import { AgGridReact } from "@ag-grid-community/react";
 
 import PageHeading from "../../shared/components/PageHeading";
-import AuthService from "../../services/auth.service";
 import QuoteService from "../../services/quote.service";
 
 import toast from "../../utils/toast.util";
@@ -15,7 +14,6 @@ import { MenuItem } from "../../shared/models/MenuList.model";
 import AddQuote from "./AddQuote";
 
 const QuoteList = () => {
-  let navigate = useNavigate();
   const gridRed = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(QuoteConfig.mainMenus);
   const [selectedIds, setSelectedIds] = useState<any[]>([]);
@@ -77,12 +75,6 @@ const QuoteList = () => {
         break;
     }
   };
-
-  const user = AuthService.getCurrentUser();
-  useEffect(() => {
-    if (!user) navigate("/auth/login");
-  }, []);
-  if (!user) return <></>;
 
   return (
     <Fragment>

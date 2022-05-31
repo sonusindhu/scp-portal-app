@@ -1,10 +1,9 @@
-import React, { useState, useEffect, Fragment, useRef } from "react";
+import React, { useState, Fragment, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { AgGridReact } from "@ag-grid-community/react";
 
 import PageHeading from "../../shared/components/PageHeading";
-import AuthService from "../../services/auth.service";
 import InventoryService from "../../services/inventory.service";
 
 import toast from "../../utils/toast.util";
@@ -66,12 +65,6 @@ const InventoryList = () => {
         break;
     }
   };
-
-  const user = AuthService.getCurrentUser();
-  useEffect(() => {
-    if (!user) navigate("/auth/login");
-  }, []);
-  if (!user) return <></>;
 
   return (
     <Fragment>
