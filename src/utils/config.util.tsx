@@ -7,7 +7,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(
-  function (config) {
+  function (config: any) {
     const user = AuthService.getCurrentUser();
     if (user) {
       config.headers.common["token"] = user.token;
