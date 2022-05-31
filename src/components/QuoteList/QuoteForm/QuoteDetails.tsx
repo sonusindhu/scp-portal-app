@@ -24,14 +24,7 @@ const QuoteDetails = () => {
   const navigate = useNavigate();
 
   // check if user is authenticated, if not redirect to login page
-  const user = AuthService.getCurrentUser();
-  useEffect(() => {
-    if (user && id) {
-    } else {
-      navigate("/auth/login");
-    }
-  }, []);
-  if (!user) return <></>;
+  useEffect(() => {}, []);
 
   return (
     <div className="container-fluid">

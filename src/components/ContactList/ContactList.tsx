@@ -5,7 +5,6 @@ import { AgGridReact } from "@ag-grid-community/react";
 
 import GridListView from "../../shared/components/GridListView";
 import PageHeading from "../../shared/components/PageHeading";
-import AuthService from "../../services/auth.service";
 import ContactService from "../../services/contact.service";
 import toast from "../../utils/toast.util";
 import ContactConfig from "./contact.config";
@@ -65,12 +64,6 @@ const ContactList = () => {
         break;
     }
   };
-
-  const user = AuthService.getCurrentUser();
-  useEffect(() => {
-    if (!user) navigate("/auth/login");
-  }, []);
-  if (!user) return <></>;
 
   return (
     <Fragment>

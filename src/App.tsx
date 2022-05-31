@@ -23,6 +23,7 @@ import QuoteForm from "./components/QuoteList/QuoteForm/QuoteForm";
 import QuoteNotes from "./components/QuoteList/QuoteForm/QuoteNotes";
 import QuoteEmails from "./components/QuoteList/QuoteForm/QuoteEmails";
 import QuoteTasks from "./components/QuoteList/QuoteForm/QuoteTasks";
+import AuthWrapper from "./layouts/AuthWrapper/AuthWrapper";
 
 const Home = lazy(() => import("./components/Home"));
 const CompanyList = lazy(() => import("./components/CompanyList/CompanyList"));
@@ -65,30 +66,33 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/auth/login" element={<Login />} />
-            <Route path="/app/profile" element={<Profile />} />
-            <Route path="/app/company/list" element={<CompanyList />} />
-            <Route path="/app/company/create" element={<AddCompany />} />
-            <Route path="/app/company/:id/edit" element={<EditCompany />} />
 
-            <Route path="/app/contact/list" element={<ContactList />} />
-            <Route path="/app/contact/create" element={<AddContact />} />
-            <Route path="/app/contact/:id/edit" element={<EditContact />} />
+            <Route element={<AuthWrapper />}>
+              <Route path="/app/profile" element={<Profile />} />
+              <Route path="/app/company/list" element={<CompanyList />} />
+              <Route path="/app/company/create" element={<AddCompany />} />
+              <Route path="/app/company/:id/edit" element={<EditCompany />} />
 
-            <Route path="/app/inventory/list" element={<InventoryList />} />
-            <Route path="/app/inventory/create" element={<AddInventory />} />
+              <Route path="/app/contact/list" element={<ContactList />} />
+              <Route path="/app/contact/create" element={<AddContact />} />
+              <Route path="/app/contact/:id/edit" element={<EditContact />} />
 
-            <Route path="/app/quote/list" element={<QuoteList />} />
-            <Route path="/app/quote/create" element={<AddQuote />} />
+              <Route path="/app/inventory/list" element={<InventoryList />} />
+              <Route path="/app/inventory/create" element={<AddInventory />} />
 
-            {/* <Route path="/app/quote/:id/details" element={<QuoteDetails />} /> */}
+              <Route path="/app/quote/list" element={<QuoteList />} />
+              <Route path="/app/quote/create" element={<AddQuote />} />
 
-            <Route path="/app/quote/:id" element={<QuoteForm />}>
-              <Route path="details" element={<QuoteDetails />} />
+              {/* <Route path="/app/quote/:id/details" element={<QuoteDetails />} /> */}
 
-              <Route path="notes" element={<QuoteNotes />} />
-              <Route path="emails" element={<QuoteEmails />} />
-              <Route path="tasks" element={<QuoteTasks />} />
-              <Route path="*" element={<Navigate to="details" replace />} />
+              <Route path="/app/quote/:id" element={<QuoteForm />}>
+                <Route path="details" element={<QuoteDetails />} />
+
+                <Route path="notes" element={<QuoteNotes />} />
+                <Route path="emails" element={<QuoteEmails />} />
+                <Route path="tasks" element={<QuoteTasks />} />
+                <Route path="*" element={<Navigate to="details" replace />} />
+              </Route>
             </Route>
           </Routes>
         </Suspense>
