@@ -7,7 +7,7 @@ const deleteCompanies = (ids: number[]) => {
     .then(({ data }) => data);
 };
 
-const find = (id: number) => {
+const find = (id?) => {
   return axios.get(`${API_URL}company/find/${id}`).then(({ data }) => data);
 };
 

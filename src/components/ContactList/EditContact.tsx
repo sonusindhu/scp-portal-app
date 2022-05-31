@@ -75,7 +75,7 @@ const AddContact = () => {
   // check if user is authenticated, if not redirect to login page
   const user = AuthService.getCurrentUser();
   useEffect(() => {
-    if (user && id) {
+    if (id) {
       ContactService.find(+id)
         .then(({ result }) => {
           reset(result);
@@ -83,11 +83,8 @@ const AddContact = () => {
         .catch((error) => {
           navigate("/app/contact/list");
         });
-    } else {
-      navigate("/auth/login");
     }
   }, []);
-  if (!user) return <></>;
 
   return (
     <div className="container-fluid">

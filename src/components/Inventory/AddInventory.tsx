@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "../../utils/config.util";
 import { Button, Stack, Alert } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import AuthService from "../../services/auth.service";
 import {
   FormContainer,
   TextFieldElement,
@@ -14,7 +12,6 @@ import {
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const AddContact = () => {
-  const navigate = useNavigate();
   const [showError, setShowError] = useState("");
   const [showSuccess, setShowSuccess] = useState("");
   const [companies, setCompanies] = useState([]);
@@ -81,10 +78,7 @@ const AddContact = () => {
   ];
 
   // check if user is authenticated, if not redirect to login page
-  const user = AuthService.getCurrentUser();
   useEffect(() => {
-    if (!user) navigate("/auth/login");
-
     axios
       .get(API_URL + "company/listOfNames")
       .then(({ data }) => data)
@@ -95,7 +89,6 @@ const AddContact = () => {
         setCompanies([]);
       });
   }, []);
-  if (!user) return <></>;
 
   return (
     <div className="container-fluid">
