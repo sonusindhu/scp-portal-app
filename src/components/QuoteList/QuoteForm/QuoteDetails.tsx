@@ -14,7 +14,15 @@ import QuoteService from "../../../services/quote.service";
 import PageHeading from "../../../shared/components/PageHeading";
 
 import toast from "../../../utils/toast.util";
-import { Box, Drawer, Typography } from "@material-ui/core";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@material-ui/core";
 import EditQuote from "../EditQuote";
 
 const drawerWidth = 240;
@@ -28,34 +36,38 @@ const QuoteDetails = () => {
 
   return (
     <div className="container-fluid">
-      <Typography paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus
-        non enim praesent elementum facilisis leo vel. Risus at ultrices mi
-        tempus imperdiet. Semper risus in hendrerit gravida rutrum quisque non
-        tellus. Convallis convallis tellus id interdum velit laoreet id donec
-        ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl
-        suscipit adipiscing bibendum est ultricies integer quis. Cursus euismod
-        quis viverra nibh cras. Metus vulputate eu scelerisque felis imperdiet
-        proin fermentum leo. Mauris commodo quis imperdiet massa tincidunt. Cras
-        tincidunt lobortis feugiat vivamus at augue. At augue eget arcu dictum
-        varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt.
-        Lorem donec massa sapien faucibus et molestie ac.
-      </Typography>
-      <Typography paragraph>
-        Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-        ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar elementum
-        integer enim neque volutpat ac tincidunt. Ornare suspendisse sed nisi
-        lacus sed viverra tellus. Purus sit amet volutpat consequat mauris.
-        Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-        vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra
-        accumsan in. In hendrerit gravida rutrum quisque non tellus orci ac.
-        Pellentesque nec nam aliquam sem et tortor. Habitant morbi tristique
-        senectus et. Adipiscing elit duis tristique sollicitudin nibh sit.
-        Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra
-        maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin
-        aliquam ultrices sagittis orci a.
-      </Typography>
+      <TableContainer component={Paper}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>LaneID</TableCell>
+              <TableCell align="right">Equipment</TableCell>
+              <TableCell align="right">Commodity</TableCell>
+              <TableCell align="right">Weight(lb)</TableCell>
+              <TableCell align="right">Cargo Value</TableCell>
+              <TableCell align="right">Origin</TableCell>
+              <TableCell align="right">Destination</TableCell>
+              <TableCell align="right">Total</TableCell>
+              <TableCell align="right">Status</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow key={1}>
+              <TableCell component="th" scope="row">
+                Test
+              </TableCell>
+              <TableCell align="right">LTL-2101111</TableCell>
+              <TableCell align="right">VAN</TableCell>
+              <TableCell align="right">Al</TableCell>
+              <TableCell align="right">120</TableCell>
+              <TableCell align="right">Miami</TableCell>
+              <TableCell align="right">New York</TableCell>
+              <TableCell align="right">$2100</TableCell>
+              <TableCell align="right">In Progress</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };
