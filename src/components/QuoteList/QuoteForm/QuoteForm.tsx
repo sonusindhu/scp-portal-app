@@ -24,8 +24,6 @@ import {
 } from "@material-ui/core";
 import EditQuote from "../EditQuote";
 
-const drawerWidth = 240;
-
 const QuoteForm = (props) => {
   let { id } = useParams();
   let [isLoading, setIsLoading] = useState<boolean>(true);
@@ -67,7 +65,7 @@ const QuoteForm = (props) => {
   return (
     <div className="container-fluid">
       <Box sx={{ display: "flex" }}>
-        <Box sx={{ overflow: "auto", flexGrow: 1, p: 1, width: 400 }}>
+        <Box sx={{ overflow: "auto", flexGrow: 1, p: 1, maxWidth: 400 }}>
           {isLoading ? (
             <Box sx={{ display: "flex" }}>
               <CircularProgress />
@@ -76,8 +74,34 @@ const QuoteForm = (props) => {
             <EditQuote quote={quote} />
           )}
         </Box>
-        <Box component="main" sx={{ flexGrow: 1, p: 2, width: 850 }}>
-          <Tabs value={selectedTab} onChange={handleChangeTab}>
+
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: "flex",
+          }}
+        >
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            value={selectedTab}
+            onChange={handleChangeTab}
+            aria-label="Vertical tabs example"
+          >
+            <Tab value="details" label="Quote" />
+            <Tab value="notes" label="Notes" />
+            <Tab value="emails" label="Emails" />
+            <Tab value="tasks" label="Tasks" />
+          </Tabs>
+          <Outlet />
+        </Box>
+
+        {/* <Box component="main" sx={{ flexGrow: 1, p: 2, width: 850 }}>
+          <Tabs
+            value={selectedTab}
+            onChange={handleChangeTab}
+            orientation="vertical"
+          >
             <Tab value="details" label="Quote" />
             <Tab value="notes" label="Notes" />
             <Tab value="emails" label="Emails" />
@@ -85,7 +109,7 @@ const QuoteForm = (props) => {
           </Tabs>
 
           <Outlet />
-        </Box>
+        </Box> */}
       </Box>
     </div>
   );

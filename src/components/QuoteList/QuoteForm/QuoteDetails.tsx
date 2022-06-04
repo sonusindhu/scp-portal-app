@@ -41,29 +41,29 @@ const QuoteDetails = () => {
           <TableHead>
             <TableRow>
               <TableCell>LaneID</TableCell>
-              <TableCell align="right">Equipment</TableCell>
-              <TableCell align="right">Commodity</TableCell>
-              <TableCell align="right">Weight(lb)</TableCell>
-              <TableCell align="right">Cargo Value</TableCell>
-              <TableCell align="right">Origin</TableCell>
-              <TableCell align="right">Destination</TableCell>
-              <TableCell align="right">Total</TableCell>
-              <TableCell align="right">Status</TableCell>
+              <TableCell align="left">Equipment</TableCell>
+              <TableCell align="left">Commodity</TableCell>
+              <TableCell align="left">Weight(lb)</TableCell>
+              <TableCell align="left">Cargo Value</TableCell>
+              <TableCell align="left">Origin</TableCell>
+              <TableCell align="left">Destination</TableCell>
+              <TableCell align="left">Total</TableCell>
+              <TableCell align="left">Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow key={1}>
               <TableCell component="th" scope="row">
-                Test
+                LTL-2101111
               </TableCell>
-              <TableCell align="right">LTL-2101111</TableCell>
-              <TableCell align="right">VAN</TableCell>
-              <TableCell align="right">Al</TableCell>
-              <TableCell align="right">120</TableCell>
-              <TableCell align="right">Miami</TableCell>
-              <TableCell align="right">New York</TableCell>
-              <TableCell align="right">$2100</TableCell>
-              <TableCell align="right">In Progress</TableCell>
+              <TableCell align="left">VAN</TableCell>
+              <TableCell align="left">Al</TableCell>
+              <TableCell align="left">120</TableCell>
+              <TableCell align="left">$12000</TableCell>
+              <TableCell align="left">Miami</TableCell>
+              <TableCell align="left">New York</TableCell>
+              <TableCell align="left">$2100</TableCell>
+              <TableCell align="left">In Progress</TableCell>
             </TableRow>
           </TableBody>
         </Table>
