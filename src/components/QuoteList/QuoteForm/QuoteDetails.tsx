@@ -24,6 +24,7 @@ import {
   TableRow,
 } from "@material-ui/core";
 import EditQuote from "../EditQuote";
+import LaneList from "./LaneList/LaneList";
 
 const drawerWidth = 240;
 
@@ -36,7 +37,8 @@ const QuoteDetails = () => {
 
   return (
     <div className="container-fluid">
-      <TableContainer component={Paper}>
+      <LaneList />
+      {/* <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -67,7 +69,7 @@ const QuoteDetails = () => {
             </TableRow>
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
     </div>
   );
 };
