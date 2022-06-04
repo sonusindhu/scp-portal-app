@@ -18,6 +18,7 @@ import {
   Box,
   CircularProgress,
   Drawer,
+  Grid,
   Tab,
   Tabs,
   Typography,
@@ -64,8 +65,8 @@ const QuoteForm = (props) => {
 
   return (
     <div className="container-fluid">
-      <Box sx={{ display: "flex" }}>
-        <Box sx={{ overflow: "auto", flexGrow: 1, p: 1, maxWidth: 400 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
           {isLoading ? (
             <Box sx={{ display: "flex" }}>
               <CircularProgress />
@@ -73,17 +74,9 @@ const QuoteForm = (props) => {
           ) : (
             <EditQuote quote={quote} />
           )}
-        </Box>
-
-        <Box
-          sx={{
-            flexGrow: 1,
-            display: "flex",
-          }}
-        >
+        </Grid>
+        <Grid item xs={9}>
           <Tabs
-            orientation="vertical"
-            variant="scrollable"
             value={selectedTab}
             onChange={handleChangeTab}
             aria-label="Vertical tabs example"
@@ -94,23 +87,8 @@ const QuoteForm = (props) => {
             <Tab value="tasks" label="Tasks" />
           </Tabs>
           <Outlet />
-        </Box>
-
-        {/* <Box component="main" sx={{ flexGrow: 1, p: 2, width: 850 }}>
-          <Tabs
-            value={selectedTab}
-            onChange={handleChangeTab}
-            orientation="vertical"
-          >
-            <Tab value="details" label="Quote" />
-            <Tab value="notes" label="Notes" />
-            <Tab value="emails" label="Emails" />
-            <Tab value="tasks" label="Tasks" />
-          </Tabs>
-
-          <Outlet />
-        </Box> */}
-      </Box>
+        </Grid>
+      </Grid>
     </div>
   );
 };

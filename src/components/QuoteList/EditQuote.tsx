@@ -74,14 +74,14 @@ const EditQuote = (props) => {
     <Box>
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <TextFieldElement
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 300 }}
           name={"name"}
           label="Quote Name"
           variant="outlined"
           margin={"dense"}
         />
         <SelectElement
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 300 }}
           required
           options={serviceList}
           name={"service"}
@@ -90,7 +90,7 @@ const EditQuote = (props) => {
           labelKey="name"
         ></SelectElement>
         <MultiSelectElement
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 300 }}
           required
           menuItems={transportModes}
           name={"transportMode"}
@@ -99,7 +99,7 @@ const EditQuote = (props) => {
         ></MultiSelectElement>
 
         <SelectElement
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 300 }}
           required
           options={companies}
           name={"company"}
@@ -110,7 +110,7 @@ const EditQuote = (props) => {
         ></SelectElement>
 
         <SelectElement
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 300 }}
           required
           options={contacts}
           name={"contact"}
