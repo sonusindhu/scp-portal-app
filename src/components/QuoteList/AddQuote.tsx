@@ -45,7 +45,7 @@ const AddQuote = (props) => {
   };
 
   const serviceList = [{ id: "transportation", name: "Transportation" }];
-  const transportModes = ["FTL", "LTL", "IM"];
+  const transportModes = [{ id: "FTL", name: "FTL" }, { id: "LTL", name: "LTL" }];
 
   // check if user is authenticated, if not redirect to login page
   useEffect(() => {
@@ -106,14 +106,24 @@ const AddQuote = (props) => {
             valueKey="id"
             labelKey="name"
           ></SelectElement>
-          <MultiSelectElement
+          
+          <SelectElement
+            sx={{ m: 1, width: 375 }}
+            required
+            options={transportModes}
+            name={"transportMode"}
+            label="Transport Mode"
+            valueKey="id"
+            labelKey="name"
+          ></SelectElement>
+          {/* <MultiSelectElement
             sx={{ m: 1, width: 375 }}
             required
             menuItems={transportModes}
             name={"transportMode"}
             label="Transport Mode"
             showCheckbox={true}
-          ></MultiSelectElement>
+          ></MultiSelectElement> */}
 
           <SelectElement
             sx={{ m: 1, width: 375 }}
