@@ -66,7 +66,7 @@ const QuoteForm = (props) => {
   return (
     <div className="container-fluid">
       <Grid container spacing={2}>
-        <Grid item xs={3}>
+        {/* <Grid item xs={3}>
           {isLoading ? (
             <Box sx={{ display: "flex" }}>
               <CircularProgress />
@@ -74,8 +74,8 @@ const QuoteForm = (props) => {
           ) : (
             <EditQuote quote={quote} />
           )}
-        </Grid>
-        <Grid item xs={9}>
+        </Grid> */}
+        <Grid item xs={12}>
           <Tabs
             value={selectedTab}
             onChange={handleChangeTab}
