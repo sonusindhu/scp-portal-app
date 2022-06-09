@@ -7,7 +7,7 @@ const deleteRange = (ids: number[]) => {
     .then(({ data }) => data);
 };
 
-const find = (id: number) => {
+const find = (id) => {
   return axios.get(`${API_URL}quote/find/${id}`).then(({ data }) => data);
 };
 
