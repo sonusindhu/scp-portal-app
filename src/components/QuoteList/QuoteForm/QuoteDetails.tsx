@@ -1,7 +1,7 @@
 import { Button } from "@material-ui/core";
 import { Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { FormContainer, SelectElement, TextFieldElement } from "react-hook-form-mui";
 import { useNavigate, useParams } from "react-router-dom";
 import QuoteService from "../../../services/quote.service";
@@ -18,10 +18,25 @@ const QuoteDetails = () => {
   const navigate = useNavigate();
   const [companies, setCompanies] = useState([]);
 
-  const formContext = useForm({
+  const formContext = useForm<any>({
     defaultValues: {},
   });
-  const { reset } = formContext;
+  const { reset, control, getValues } = formContext;
+
+  const { 
+    fields: accesorials, 
+    append: appendAcc, 
+    prepend: prependAcc, 
+    remove: removeAcc, 
+    swap: swapAcc, 
+    move: moveAcc, 
+    insert: insertAcc,
+    replace: replaceAcc
+  } = useFieldArray({
+    control,
+    name: "accesorials", // unique name for your Field Array
+  });
+
   const handleClearForm = () => reset();
 
   const handleSubmitForm = (e) => {
@@ -32,6 +47,7 @@ const QuoteDetails = () => {
         if (response.status) {
           toast.success(response.message);
           reset(response.result);
+
         } else {
           toast.error(response.message);
         }
@@ -70,17 +86,40 @@ const QuoteDetails = () => {
     },
   ];
 
+  const onAddAcc = (index) => {
+
+  };
+  const onRemoveAcc = (index) => {
+    const acc = getValues('accessorils')
+    console.log(acc);
+  };
+
+  const onUpdateRateQuanity = ($event, index) => {
+    console.log($event, index);
+    const acc = getValues('accessorils');
+    console.log(acc);    
+  }
+
+  const handleChange = ($event) => {
+    console.log($event);
+  }
+
   // check if user is authenticated, if not redirect to login page
   useEffect(() => {
-    console.log(id);
+    let isMounted = true;
     QuoteService.find(id)
       .then(({ result }) => {
-        reset(result);
+        if (isMounted) {
+          reset(result);
+          const accessorials = result.accessorials || [];
+          replaceAcc(accessorials);
+        }
       })
       .catch((error) => {
-        console.log(error)
         // navigate("/app/quote/list");
       });
+
+      return () => { isMounted = false };
   }, []);
 
   return (
@@ -283,48 +322,59 @@ const QuoteDetails = () => {
         
         {/* Accessorials Details Start */}
         <h3>Accessorials Details</h3>
-        <div>
-          <TextFieldElement
-            sx={{ m: 0.9, }}
-            required
-            name={"name"}
-            label="Name"
-            variant="outlined"
-            margin={"dense"}
-          />
-          <TextFieldElement
-            sx={{ m: 0.9, }}
-            required
-            name={"quantity"}
-            label="Quantity"
-            variant="outlined"
-            margin={"dense"}
-          />
-          <TextFieldElement
-            sx={{ m: 0.9, }}
-            required
-            name={"rate"}
-            label="Rate"
-            margin={"dense"}
-            variant="outlined"
-          />
-          <TextFieldElement
-            sx={{ m: 0.9, }}
-            disabled={true}
-            name={"totalRate"}
-            label="Total Rate"
-            margin={"dense"}
-            variant="outlined"
-          />
 
-          <IconButton color="primary" size="large" aria-label="Add Accessorial">
-            <AddCircleOutlinedIcon fontSize="large" />
-          </IconButton>
+        {accesorials.map((field, index) => (
           
-          <IconButton color="primary" size="large" aria-label="Add Accessorial">
-            <RemoveCircleOutlinedIcon fontSize="large" />
-          </IconButton>
-        </div>
+          <div  key={field.id}>
+            <TextFieldElement
+              sx={{ m: 0.9, }}
+              required
+              onChange={ () => handleChange('name')}
+              name={`accesorials.${index}.name`}
+              label="Name"
+              variant="outlined"
+              margin={"dense"}
+            />
+            <TextFieldElement
+              sx={{ m: 0.9, }}
+              required
+              name={`accesorials.${index}.quantity`}
+              onChange={($event) => onUpdateRateQuanity($event, index)}
+              label="Quantity"
+              variant="outlined"
+              margin={"dense"}
+            />
+            <TextFieldElement
+              sx={{ m: 0.9, }}
+              required
+              name={`accesorials.${index}.rate`}
+              onChange={($event) => onUpdateRateQuanity($event, index)}
+              label="Rate"
+              margin={"dense"}
+              variant="outlined"
+            />
+            <TextFieldElement
+              sx={{ m: 0.9, }}
+              disabled={true}
+              name={`accesorials.${index}.totalRate`}
+              label="Total Rate"
+              margin={"dense"}
+              variant="outlined"
+            />
+
+            <IconButton color="primary" size="large" aria-label="Add Accessorial"
+              onClick={() => onAddAcc(index)}>
+              <AddCircleOutlinedIcon fontSize="large" />
+            </IconButton>
+            
+            <IconButton color="primary" size="large" aria-label="Add Accessorial"
+              onClick={ () => onRemoveAcc(index) }>
+              <RemoveCircleOutlinedIcon fontSize="large" />
+            </IconButton>
+          </div>
+
+        ))}
+
         
         {/* Accessorials Details End */}
 
