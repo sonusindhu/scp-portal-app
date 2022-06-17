@@ -23,7 +23,7 @@ import {
   Tabs,
   Typography,
 } from "@material-ui/core";
-import EditQuote from "../EditQuote";
+import EditQuote from "./QuoteDetail/QuoteEdit";
 
 const QuoteForm = (props) => {
   let { id } = useParams();

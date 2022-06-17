@@ -15,7 +15,6 @@ import PageHeading from "../../../shared/components/PageHeading";
 
 import toast from "../../../utils/toast.util";
 import { Box, Drawer, Typography } from "@material-ui/core";
-import EditQuote from "../EditQuote";
 
 const drawerWidth = 240;
 
