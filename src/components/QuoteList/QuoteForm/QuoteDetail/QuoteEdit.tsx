@@ -182,7 +182,7 @@ const QuoteEdit = (props) => {
         {/* Cargo Details End */}
 
         {/* Routing Details Start */}
-        <h3>Routing Details</h3>
+        {/* <h3>Routing Details</h3>
           <QuoteRoutes 
             {...{
               control,
@@ -192,7 +192,7 @@ const QuoteEdit = (props) => {
               getValues,
               setValue
             }} 
-          />
+          /> */}
 
         {/* Routing Details End */}
         
