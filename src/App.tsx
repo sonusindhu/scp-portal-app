@@ -18,7 +18,7 @@ import AppHeader from "./layouts/AppHeader/AppHeader";
 import AddInventory from "./components/Inventory/AddInventory";
 
 import AddQuote from "./components/QuoteList/AddQuote";
-import QuoteDetails from "./components/QuoteList/QuoteForm/QuoteDetails";
+import QuoteDetails from "./components/QuoteList/QuoteForm/QuoteDetail";
 import QuoteForm from "./components/QuoteList/QuoteForm/QuoteForm";
 import QuoteNotes from "./components/QuoteList/QuoteForm/QuoteNotes";
 import QuoteEmails from "./components/QuoteList/QuoteForm/QuoteEmails";
