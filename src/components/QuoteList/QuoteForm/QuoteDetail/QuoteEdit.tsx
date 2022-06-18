@@ -13,9 +13,14 @@ import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
 import toast from "../../../../utils/toast.util";
 import QuoteAccessorials from "./QuoteAccessorials";
 import QuoteRoutes from "./QuoteRoutes";
+import QuoteCargoDetail from "./QuoteCargoDetail";
 
 const QuoteEdit = (props) => {  
   const defaultValues = props.quote;
+  console.log(props.quote);
+
+  const formContext = useForm({ defaultValues });
+
   const {
     control,
     register,
@@ -24,28 +29,7 @@ const QuoteEdit = (props) => {
     setValue,
     watch,
     reset
-  } = useForm({
-    defaultValues
-  });
-
-  // const formContext = useForm<any>({
-  //   defaultValues: props.quote,
-  // });
-  // const { reset, control, getValues } = formContext;
-
-  // const { 
-  //   fields: accesorials, 
-  //   append: appendAcc, 
-  //   prepend: prependAcc, 
-  //   remove: removeAcc, 
-  //   swap: swapAcc, 
-  //   move: moveAcc, 
-  //   insert: insertAcc,
-  //   replace: replaceAcc
-  // } = useFieldArray({
-  //   control,
-  //   name: "accesorials", // unique name for your Field Array
-  // });
+  } = formContext;
 
   const handleClearForm = () => reset();
 
@@ -67,137 +51,40 @@ const QuoteEdit = (props) => {
       });
   };
 
-  const onAddAcc = (index) => {
-
-  };
-  const onRemoveAcc = (index) => {
-    const acc = getValues('accessorils')
-    console.log(acc);
-  };
-
-  const onUpdateRateQuanity = ($event, index) => {
-    console.log($event, index);
-    const acc = getValues('accessorils');
-    console.log(acc);    
-  }
-
-  const handleChange = ($event) => {
-    console.log($event);
-  }
-
   return (
     <div className="container-fluid">
-      <FormContainer defaultValues={defaultValues} onSuccess={handleSubmit(handleSubmitForm)}>
+      <FormContainer formContext={formContext} defaultValues={defaultValues} onSuccess={handleSubmit(handleSubmitForm)}>
         {/* Cargo Details Start */}
-        <h3>Cargo Details</h3>
-        <div>
-          <SelectElement
-            sx={{ m: 1, width: "20ch" }}
-            required
-            options={[]}
-            name={"equipmentId"}
-            label="Equipment"
-          ></SelectElement>
-          <SelectElement
-            sx={{ m: 1, width: "20ch" }}
-            required
-            options={[]}
-            name={"commodityId"}
-            label="Commodity"
-          ></SelectElement>
+        <QuoteCargoDetail 
+          {...{
+            control,
+            watch,
+            register,
+            defaultValues,
+            getValues,
+            setValue
+          }} 
+        />
 
-          <TextFieldElement
-            sx={{ m: 1, }}
-            required
-            name={"weight"}
-            label="Weight"
-            variant="outlined"
-            margin={"dense"}
-          />
-          <TextFieldElement
-            sx={{ m: 1, }}
-            required
-            name={"cargoValue"}
-            label="Cargo Value"
-            variant="outlined"
-            margin={"dense"}
-          />
-          <TextFieldElement
-            sx={{ m: 1, }}
-            name={"temperature"}
-            label="Temperature"
-            margin={"dense"}
-            variant="outlined"
-          />
-          <TextFieldElement
-            sx={{ m: 1, }}
-            name={"pieces"}
-            label="Pieces"
-            margin={"dense"}
-            variant="outlined"
-          />
-        
-          <SelectElement
-            sx={{ m: 1, width: "20ch" }}
-            required
-            options={[]}
-            name={"cargoTypeId"}
-            label="Cargo Type"
-          ></SelectElement>
-          
-          <SelectElement
-            sx={{ m: 1, width: "20ch" }}
-            required
-            options={[]}
-            name={"isHazmat"}
-            label="Hazmat"
-          ></SelectElement>
-
-          
-          <TextFieldElement
-            sx={{ m: 1 }}
-            required
-            name={"hazmatName"}
-            label="Hazmat Name"
-            variant="outlined"
-            validation={{ maxLength: 20 }}
-          />
-          <TextFieldElement
-            sx={{ m: 1 }}
-            required
-            name={"hazmatClass"}
-            label="Hazmat Class"
-            variant="outlined"
-            validation={{ maxLength: 20 }}
-          />
-          <TextFieldElement
-            sx={{ m: 1 }}
-            required
-            name={"hazmatUN"}
-            label="Hazmat UN"
-            variant="outlined"
-            validation={{ maxLength: 20 }}
-          />
-        </div>
         {/* Cargo Details End */}
 
         {/* Routing Details Start */}
-        {/* <h3>Routing Details</h3>
-          <QuoteRoutes 
-            {...{
-              control,
-              watch,
-              register,
-              defaultValues,
-              getValues,
-              setValue
-            }} 
-          /> */}
+      
+        <QuoteRoutes 
+          {...{
+            control,
+            watch,
+            register,
+            defaultValues,
+            getValues,
+            setValue
+          }} 
+        />
 
         {/* Routing Details End */}
         
         {/* Accessorials Details Start */}
-        <h3>Accessorials Details</h3>
+        
 
           <QuoteAccessorials 
             {...{
@@ -219,7 +106,6 @@ const QuoteEdit = (props) => {
               type={"submit"}
               size="large"
               variant="contained"
-              onClick={handleSubmitForm}
             >
               Save
             </Button>
