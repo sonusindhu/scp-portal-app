@@ -1,27 +1,33 @@
 import React from "react";
 import { SelectElement, TextFieldElement } from "react-hook-form-mui";
-import { useFieldArray } from "react-hook-form";
 
-const QuoteCargoDetail = ({ control }) => { 
+const QuoteCargoDetail = ({ control, equipments, commodities, cargos }) => { 
+
+  console.log(equipments)
+
+  const hazmatOptions = [{id: 1, name: 'Yes'}, {id: 2, name: 'No'}];
 
   return (
     <div className="container-fluid">  
       <h3>Cargo Details</h3>
       <div>
-
         <SelectElement
           sx={{ m: 1, width: "20ch" }}
           required
-          options={[]}
+          options={equipments}
           name={"equipmentId"}
           label="Equipment"
+          labelKey="name"
+          valueKey="id"
         ></SelectElement>
         <SelectElement
           sx={{ m: 1, width: "20ch" }}
           required
-          options={[]}
+          options={commodities}
           name={"commodityId"}
           label="Commodity"
+          labelKey="name"
+          valueKey="id"
         ></SelectElement>
 
         <TextFieldElement
@@ -58,17 +64,21 @@ const QuoteCargoDetail = ({ control }) => {
         <SelectElement
           sx={{ m: 1, width: "20ch" }}
           required
-          options={[]}
+          options={cargos}
           name={"cargoTypeId"}
           label="Cargo Type"
+          labelKey="name"
+          valueKey="id"
         ></SelectElement>
 
         <SelectElement
           sx={{ m: 1, width: "20ch" }}
           required
-          options={[]}
+          options={hazmatOptions}
           name={"cargoDetail.isHazmat"}
           label="Hazmat"
+          labelKey="name"
+          valueKey="id"
         ></SelectElement>
 
 

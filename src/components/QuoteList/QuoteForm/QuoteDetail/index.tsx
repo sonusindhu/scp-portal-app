@@ -10,6 +10,9 @@ const QuoteDetails = () => {
   let { id } = useParams<any>();
   const navigate = useNavigate();
   const [quote, setQuote] = useState<any>({});
+  const [equipments, setEquipments] = useState<any[]>([]);
+  const [commodities, setCommodities] = useState<any[]>([]);
+  const [cargos, setCargos] = useState<any[]>([]);
 
   // check if user is authenticated, if not redirect to login page
   useEffect(() => {
@@ -23,13 +26,30 @@ const QuoteDetails = () => {
       .catch((error) => {
         navigate("/app/quote/list");
       });
+    
+      QuoteService.getEquipments()
+        .then(({ result }) => {
+          setEquipments(result); 
+        });
+      QuoteService.getCommodities()
+        .then(({ result }) => {
+          setCommodities(result);
+        });
+      QuoteService.getCargos()
+        .then(({ result }) => {
+          setCargos(result);
+        });
 
       return () => { isMounted = false };
   }, []);
 
   return (
     <div className="container-fluid">
-      { quote && quote.id ? <QuoteEdit quote={quote} /> : <CircularProgress /> }      
+      { quote && quote.id ? <QuoteEdit 
+        cargos={cargos} 
+        commodities={commodities} 
+        equipments={equipments} 
+        quote={quote} /> : <CircularProgress /> }      
     </div>
   );
 };
