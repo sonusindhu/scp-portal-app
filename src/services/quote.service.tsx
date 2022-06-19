@@ -25,8 +25,18 @@ const getCompanies = () => {
 
 const getContactsByCompany = (id: number) => {
   return axios
-    .get(API_URL + `quote/getContactsByCompany/${id}`)
-    .then(({ data }) => data);
+  .get(API_URL + `quote/getContactsByCompany/${id}`)
+  .then(({ data }) => data);
+};
+
+const getEquipments = () => {
+  return axios.get(API_URL + "quote/getCompanies").then(({ data }) => data);
+};
+const getCommodities = () => {
+  return axios.get(API_URL + "quote/getCompanies").then(({ data }) => data);
+};
+const getCargos = () => {
+  return axios.get(API_URL + "quote/getCompanies").then(({ data }) => data);
 };
 
 const QuoteService = {
@@ -36,6 +46,9 @@ const QuoteService = {
   deleteRange,
   getCompanies,
   getContactsByCompany,
+  getEquipments,
+  getCommodities,
+  getCargos
 };
 
 export default QuoteService;

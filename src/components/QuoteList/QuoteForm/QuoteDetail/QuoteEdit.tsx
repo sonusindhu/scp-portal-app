@@ -17,6 +17,10 @@ import QuoteCargoDetail from "./QuoteCargoDetail";
 
 const QuoteEdit = (props) => {  
   const defaultValues = props.quote;
+  const commodities = props.commodities;
+  const equipments = props.equipments;
+  const cargos = props.cargos;
+
   console.log(props.quote);
 
   const formContext = useForm({ defaultValues });
@@ -62,8 +66,11 @@ const QuoteEdit = (props) => {
             register,
             defaultValues,
             getValues,
-            setValue
-          }} 
+            setValue,
+            equipments,
+            commodities,
+            cargos
+          }}
         />
 
         {/* Cargo Details End */}
