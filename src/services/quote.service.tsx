@@ -30,13 +30,13 @@ const getContactsByCompany = (id: number) => {
 };
 
 const getEquipments = () => {
-  return axios.get(API_URL + "quote/getCompanies").then(({ data }) => data);
+  return axios.get(API_URL + "common/getEquipments").then(({ data }) => data);
 };
 const getCommodities = () => {
-  return axios.get(API_URL + "quote/getCompanies").then(({ data }) => data);
+  return axios.get(API_URL + "common/getCommodities").then(({ data }) => data);
 };
 const getCargos = () => {
-  return axios.get(API_URL + "quote/getCompanies").then(({ data }) => data);
+  return axios.get(API_URL + "common/getCargos").then(({ data }) => data);
 };
 
 const QuoteService = {

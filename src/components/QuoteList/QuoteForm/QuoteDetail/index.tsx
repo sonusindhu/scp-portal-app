@@ -28,17 +28,11 @@ const QuoteDetails = () => {
       });
     
       QuoteService.getEquipments()
-        .then(({ result }) => {
-          setEquipments(result); 
-        });
+        .then(({ result }) =>  setEquipments(result));
       QuoteService.getCommodities()
-        .then(({ result }) => {
-          setCommodities(result);
-        });
+        .then(({ result }) => setCommodities(result));
       QuoteService.getCargos()
-        .then(({ result }) => {
-          setCargos(result);
-        });
+        .then(({ result }) => setCargos(result));
 
       return () => { isMounted = false };
   }, []);

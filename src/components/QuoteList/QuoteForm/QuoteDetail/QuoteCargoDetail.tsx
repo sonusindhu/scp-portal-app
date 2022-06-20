@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { SelectElement, TextFieldElement } from "react-hook-form-mui";
 
-const QuoteCargoDetail = ({ control, equipments, commodities, cargos }) => { 
+const QuoteCargoDetail = ({ control, resetField, equipments, commodities, cargos, watch }) => { 
 
   console.log(equipments)
 
   const hazmatOptions = [{id: 1, name: 'Yes'}, {id: 2, name: 'No'}];
+
+  const isHazmat = watch("cargoDetail.isHazmat");
+
+  useMemo(() => {
+    if(isHazmat === 2){
+      resetField("cargoDetail.hazmatName");
+      resetField("cargoDetail.hazmatClass");
+      resetField("cargoDetail.hazmatUN");
+    }
+  }, [isHazmat]);
+
 
   return (
     <div className="container-fluid">  
@@ -15,7 +26,7 @@ const QuoteCargoDetail = ({ control, equipments, commodities, cargos }) => {
           sx={{ m: 1, width: "20ch" }}
           required
           options={equipments}
-          name={"equipmentId"}
+          name={"cargoDetail.equipmentId"}
           label="Equipment"
           labelKey="name"
           valueKey="id"
@@ -24,7 +35,7 @@ const QuoteCargoDetail = ({ control, equipments, commodities, cargos }) => {
           sx={{ m: 1, width: "20ch" }}
           required
           options={commodities}
-          name={"commodityId"}
+          name={"cargoDetail.commodityId"}
           label="Commodity"
           labelKey="name"
           valueKey="id"
@@ -65,7 +76,7 @@ const QuoteCargoDetail = ({ control, equipments, commodities, cargos }) => {
           sx={{ m: 1, width: "20ch" }}
           required
           options={cargos}
-          name={"cargoTypeId"}
+          name={"cargoDetail.cargoTypeId"}
           label="Cargo Type"
           labelKey="name"
           valueKey="id"
@@ -73,7 +84,6 @@ const QuoteCargoDetail = ({ control, equipments, commodities, cargos }) => {
 
         <SelectElement
           sx={{ m: 1, width: "20ch" }}
-          required
           options={hazmatOptions}
           name={"cargoDetail.isHazmat"}
           label="Hazmat"
@@ -84,7 +94,7 @@ const QuoteCargoDetail = ({ control, equipments, commodities, cargos }) => {
 
         <TextFieldElement
           sx={{ m: 1 }}
-          required
+          required={isHazmat == 1}
           name={"cargoDetail.hazmatName"}
           label="Hazmat Name"
           variant="outlined"
@@ -92,7 +102,7 @@ const QuoteCargoDetail = ({ control, equipments, commodities, cargos }) => {
         />
         <TextFieldElement
           sx={{ m: 1 }}
-          required
+          required={isHazmat == 1}
           name={"cargoDetail.hazmatClass"}
           label="Hazmat Class"
           variant="outlined"
@@ -100,7 +110,7 @@ const QuoteCargoDetail = ({ control, equipments, commodities, cargos }) => {
         />
         <TextFieldElement
           sx={{ m: 1 }}
-          required
+          required={isHazmat == 1}
           name={"cargoDetail.hazmatUN"}
           label="Hazmat UN"
           variant="outlined"

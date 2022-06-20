@@ -32,7 +32,8 @@ const QuoteEdit = (props) => {
     getValues,
     setValue,
     watch,
-    reset
+    reset,
+    resetField
   } = formContext;
 
   const handleClearForm = () => reset();
@@ -69,7 +70,8 @@ const QuoteEdit = (props) => {
             setValue,
             equipments,
             commodities,
-            cargos
+            cargos,
+            resetField
           }}
         />
 
