@@ -20,7 +20,7 @@ import AddInventory from "./components/Inventory/AddInventory";
 import AddQuote from "./components/QuoteList/AddQuote";
 import QuoteDetails from "./components/QuoteList/QuoteForm/QuoteDetail";
 import QuoteForm from "./components/QuoteList/QuoteForm/QuoteForm";
-import QuoteNotes from "./components/QuoteList/QuoteForm/QuoteNotes";
+import QuoteNotes from "./components/QuoteList/QuoteForm/QuoteNotes/QuoteNotes";
 import QuoteEmails from "./components/QuoteList/QuoteForm/QuoteEmails";
 import QuoteTasks from "./components/QuoteList/QuoteForm/QuoteTasks";
 import AuthWrapper from "./layouts/AuthWrapper/AuthWrapper";
