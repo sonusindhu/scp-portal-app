@@ -6,7 +6,6 @@ const QuoteCargoDetail = ({ control, resetField, equipments, commodities, cargos
   console.log(equipments)
 
   const hazmatOptions = [{id: 1, name: 'Yes'}, {id: 2, name: 'No'}];
-
   const isHazmat = watch("cargoDetail.isHazmat");
 
   useMemo(() => {

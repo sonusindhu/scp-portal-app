@@ -8,7 +8,22 @@ const deleteRange = (ids: number[]) => {
 };
 
 const find = (id) => {
-  return axios.get(`${API_URL}quote/find/${id}`).then(({ data }) => data);
+  return axios.get(`${API_URL}quote/find/${id}`)
+    .then(({ data }) => data)
+    .then((data) => {
+      return {
+        ...data,
+        result: {
+          ...data.result,
+          cargoDetail: {
+            ...data.result.cargoDetail,
+            cargoTypeId: data.result.cargoDetail.cargoTypeId || undefined,
+            equipmentId: data.result.cargoDetail.equipmentId || undefined,
+            commodityId: data.result.cargoDetail.commodityId || undefined,
+          }
+        }
+      }
+    });
 };
 
 const create = (payload) => {
@@ -39,6 +54,10 @@ const getCargos = () => {
   return axios.get(API_URL + "common/getCargos").then(({ data }) => data);
 };
 
+const createNote = (payload) => {
+  return axios.post(API_URL + "quote/createNote", payload).then(({ data }) => data);
+};
+
 const QuoteService = {
   create,
   update,
@@ -48,7 +67,8 @@ const QuoteService = {
   getContactsByCompany,
   getEquipments,
   getCommodities,
-  getCargos
+  getCargos,
+  createNote
 };
 
 export default QuoteService;
