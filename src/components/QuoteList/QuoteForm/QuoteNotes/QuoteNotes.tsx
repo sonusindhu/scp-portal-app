@@ -2,27 +2,18 @@ import React, { useEffect, useState } from "react";
 import {
   FormContainer,
   TextFieldElement,
-  SelectElement,
   CheckboxElement,
 } from "react-hook-form-mui";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import axios from "../../../../utils/config.util";
-import AuthService from "../../../../services/auth.service";
 import QuoteService from "../../../../services/quote.service";
-import PageHeading from "../../../../shared/components/PageHeading";
-
 import toast from "../../../../utils/toast.util";
-import { Box, Drawer, Typography } from "@material-ui/core";
-
-const drawerWidth = 240;
 
 const QuoteNotes = () => {
   let { id } = useParams();
   const navigate = useNavigate();
-
   const formContext = useForm({ defaultValues: {} });
 
   const {
@@ -39,19 +30,41 @@ const QuoteNotes = () => {
   const handleClearForm = () => reset();
 
   const handleSubmitForm = (e) => {
-    if (!e.email || !e.fullName) return;
-    const payload = { ...e };
+    if (!e.title || !e.message) return;
+    const payload = { 
+      ...e,
+      isCritical: e.isCritical || false,
+      quoteId: id
+    };
+    QuoteService.createNote(payload)
+      .then((response) => {
+        if (response.status) {
+          toast.success(response.message);
+          reset({ isCritical: false, title: '', message: '' });
+        } else {
+          toast.error(response.message);
+        }
+      })
+      .catch(({ response }) => {
+        toast.error(response.message);
+      });
   };
 
-  // check if user is authenticated, if not redirect to login page
-  const user = AuthService.getCurrentUser();
+
   useEffect(() => {
-    if (user && id) {
-    } else {
-      navigate("/auth/login");
-    }
+    // QuoteService.getNotes(payload)
+    //   .then((response) => {
+    //     if (response.status) {
+    //       toast.success(response.message);
+    //       reset({ isCritical: false, title: '', message: '' });
+    //     } else {
+    //       toast.error(response.message);
+    //     }
+    //   })
+    //   .catch(({ response }) => {
+    //     toast.error(response.message);
+    //   });
   }, []);
-  if (!user) return <></>;
 
   return (
     <div className="container-fluid">
@@ -59,9 +72,20 @@ const QuoteNotes = () => {
         
       <div>        
         <TextFieldElement
+          sx={{ m: 1, width: "100ch" }}
+          required={true}
+          name={"title"}
+          label="Note Title"
+          variant="outlined"
+          validation={{ maxLength: 100 }}
+        />      
+      </div>
+      <div>        
+        <TextFieldElement
           sx={{ m: 1, width: "180ch" }}
-          name={"note"}
-          label="Note"
+          required={true}
+          name={"message"}
+          label="Note Description"
           variant="outlined"
           validation={{ maxLength: 1000 }}
           multiline={true}
@@ -71,7 +95,7 @@ const QuoteNotes = () => {
       <div>
         <CheckboxElement 
           sx={{ m: 1 }}
-          name={"notes"} label="Mark"/>
+          name={"isCritical"} label="Mark Critical"/>
       </div>
 
         <div style={{ marginLeft: "12px", marginTop: "15px" }}>
