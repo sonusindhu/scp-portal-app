@@ -93,3 +93,25 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list {
   margin-left: 8px;
   margin-top: 8px;
 }
+
+.container-fluid div.MuiCard-root.note-card{
+  margin-top: 20px;
+  background-color: #f7f1f1;
+}
+
+.sub-header .MuiChip-root{
+  margin-left: 20px;
+}
+
+div.container-fluid.note-list{
+  overflow-y: scroll;
+  height: calc(100vh - 120px);
+}
+
+.note-list .note-card div.note-card-header{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.note-list .note-card div.note-card-content{
+  padding-top: 0;
+}
