@@ -1,6 +1,5 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:1337/api/v1/";
+import axios from "../utils/config.util";
+const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const register = (username, email, password) => {
   return axios.post(API_URL + "auth/signup", {
@@ -27,6 +26,18 @@ const login = (email, password) => {
     });
 };
 
+const getUserDetail = () => {
+  return axios
+    .get(API_URL + "user/detail")
+    .then(({ data }) => data);
+};
+
+const updateProfile = (payload) => {
+  return axios
+    .post(API_URL + "user/update", payload)
+    .then(({ data }) => data);
+};
+
 const logout = () => {
   localStorage.removeItem("user");
 };
@@ -41,5 +52,7 @@ const AuthService = {
   login,
   logout,
   getCurrentUser,
+  getUserDetail,
+  updateProfile
 };
 export default AuthService;
