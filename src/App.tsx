@@ -24,6 +24,9 @@ import QuoteNotes from "./components/QuoteList/QuoteForm/QuoteNotes/QuoteNotes";
 import QuoteEmails from "./components/QuoteList/QuoteForm/QuoteEmails";
 import QuoteTasks from "./components/QuoteList/QuoteForm/QuoteTasks";
 import AuthWrapper from "./layouts/AuthWrapper/AuthWrapper";
+import ProfileChangePassword from "./components/Profile/ProfileChangePassword";
+import ProfileIntegrations from "./components/Profile/ProfileIntegrations";
+import ProfileTemplates from "./components/Profile/ProfileTemplates";
 
 const Home = lazy(() => import("./components/Home"));
 const CompanyList = lazy(() => import("./components/CompanyList/CompanyList"));
@@ -68,7 +71,14 @@ const App = () => {
             <Route path="/auth/login" element={<Login />} />
 
             <Route element={<AuthWrapper />}>
-              <Route path="/app/profile" element={<Profile />} />
+              <Route path="/app/profile" element={<Profile />}>
+                <Route index element={<ProfileChangePassword />} />
+                <Route path="changepassword" element={<ProfileChangePassword />} />
+                <Route path="integrations" element={<ProfileIntegrations />} />
+                <Route path="templates" element={<ProfileTemplates />} />
+                <Route path="*" element={<Navigate to="changepassword" replace />} />
+              </Route>
+            
               <Route path="/app/company/list" element={<CompanyList />} />
               <Route path="/app/company/create" element={<AddCompany />} />
               <Route path="/app/company/:id/edit" element={<EditCompany />} />
@@ -87,7 +97,6 @@ const App = () => {
 
               <Route path="/app/quote/:id" element={<QuoteForm />}>
                 <Route path="details" element={<QuoteDetails />} />
-
                 <Route path="notes" element={<QuoteNotes />} />
                 <Route path="emails" element={<QuoteEmails />} />
                 <Route path="tasks" element={<QuoteTasks />} />

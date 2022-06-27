@@ -200,7 +200,7 @@ const AppHeader = (props) => {
               <MenuItem
                 onClick={handleCloseUserMenu}
                 component={Link}
-                to="/app/profile"
+                to="/app/profile/changepassword"
               >
                 <Typography textAlign="center">My Profile</Typography>
               </MenuItem>
