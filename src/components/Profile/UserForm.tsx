@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 
 import toast from "../../utils/toast.util";
 import AuthService from "../../services/auth.service";
+import UserProfileImage from "./UserProfileImage";
 
 const UserForm = (props) => {
   const user = props.user || {};
@@ -24,6 +25,10 @@ const UserForm = (props) => {
     reset,
     resetField
   } = formContext;
+
+  const onUploadImage = ($event) => {
+    console.log($event);
+  };
 
   const handleClearForm = () => reset();
 
@@ -47,9 +52,13 @@ const UserForm = (props) => {
   return (
     <FormContainer formContext={formContext} onSuccess={handleSubmit(handleSubmitForm)}>  
       <h3 style={{ marginLeft: "10px" }}>User Profile</h3>   
+      
+      <UserProfileImage />
+
       <div>        
 
-      <Button
+
+      {/* <Button
         variant="contained"
         component="label"
         >
@@ -58,8 +67,9 @@ const UserForm = (props) => {
             accept="image/*"
             type="file"
             hidden
+            onChange={onUploadImage}
         />
-        </Button>
+        </Button> */}
 
         <TextFieldElement
           sx={{ m: 1, minWidth: "48%" }}

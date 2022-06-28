@@ -115,3 +115,9 @@ div.container-fluid.note-list{
 .note-list .note-card div.note-card-content{
   padding-top: 0;
 }
+
+div.MuiAvatar-root.avatar-profile{
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
