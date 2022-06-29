@@ -121,3 +121,20 @@ div.MuiAvatar-root.avatar-profile{
   height: 100px;
   cursor: pointer;
 }
+
+.MuiDialog-container.MuiDialog-scrollPaper .MuiPaper-root{
+  max-width: 950px;
+}
+
+.MuiDialogContent-root.MuiDialogContent-dividers.user-image-dialog{
+  width: 900px;
+}
+
+
+.profile-container{
+  display: flex;
+  justify-content: space-around;
+}
+.profile-containe > div{
+  display: inline-block;
+}

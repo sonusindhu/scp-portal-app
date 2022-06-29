@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Avatar as Avat } from '@material-ui/core';
 import Avatar from 'react-avatar-edit';
+import UserService from '../../../services/user.service';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -50,14 +51,15 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 };
 
 const UserProfileImage = () => {
+  let [isLoading, setIsLoading] = useState<boolean>(true);
+
   const [open, setOpen] = React.useState(false);
 
-  const src = 'http://localhost:3000/images/2.jpg'
+  const src = '/images/2.jpg'
   const [state, setState] = useState<any>({
     preview: null,
     src
   });
-
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -67,11 +69,11 @@ const UserProfileImage = () => {
   };
 
   const onClose = () => {
-    setState({preview: null})
+    setState({ preview: null })
   }
   
   const onCrop = (preview) => {
-    setState({preview})
+    setState({ preview })
   }
 
   const onBeforeFileLoad = (elem) => {
@@ -80,18 +82,29 @@ const UserProfileImage = () => {
     };
   }
 
+  const uploadUserImage = () => {
+    console.log(state);
+    UserService.uploadUserImage(state.preview)
+      .then((response) => {
+        console.log(response)
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
+  };
+
   return (
     <div>
+      
       <Avat
         alt="Remy Sharp"
-        src="/images/2.jpg"
+        src={src}
         variant="circular"
         onClick={handleClickOpen}
         className="avatar-profile"
       />
-      {/* <Button variant="outlined" onClick={handleClickOpen}>
-        Open dialog
-      </Button> */}
+      
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
@@ -100,21 +113,29 @@ const UserProfileImage = () => {
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
           Update Profile image
         </BootstrapDialogTitle>
-        <DialogContent dividers>
+        <DialogContent dividers className='user-image-dialog'>
           
-        <Avatar
-          width={390}
-          height={295}
-          onCrop={onCrop}
-          onClose={onClose}
-          onBeforeFileLoad={onBeforeFileLoad}
-          src={state.src}
-        />
-        <img src={state.preview} alt="Preview" />
+          
+          <div className='profile-container'>
+            <Avatar
+              width={400}
+              height={400}
+              onCrop={onCrop}
+              onClose={onClose}
+              onBeforeFileLoad={onBeforeFileLoad}
+              src={state.src}
+            />
+            
+            <div>
+              <img src={state.preview} alt="Preview" />
+            </div>
+          </div>
+
+          
           
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+          <Button autoFocus onClick={uploadUserImage}>
             Save Image
           </Button>
         </DialogActions>
