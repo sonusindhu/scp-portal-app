@@ -84,7 +84,7 @@ const UserProfileImage = () => {
 
   const uploadUserImage = () => {
     console.log(state);
-    UserService.uploadUserImage(state.preview)
+    UserService.uploadUserImage(state)
       .then((response) => {
         console.log(response)
         setIsLoading(false);

@@ -18,7 +18,7 @@ const getAdminBoard = () => {
 };
 
 const uploadUserImage = (payload) => {
-  return axios.post(API_URL + "admin", payload).then( (data) => data);
+  return axios.post(API_URL + "user/uploadProfileImage", payload).then( (data) => data);
 };
 
 const UserService = {
