@@ -24,6 +24,7 @@ export interface DialogTitleProps {
   id: string;
   children?: React.ReactNode;
   onClose: () => void;
+  disabled?: boolean
 }
 
 const BootstrapDialogTitle = (props: DialogTitleProps) => {
@@ -36,6 +37,7 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
         <IconButton
           aria-label="close"
           onClick={onClose}
+          disabled={props.disabled}
           sx={{
             position: 'absolute',
             right: 8,
@@ -51,7 +53,7 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 };
 
 const UserProfileImage = () => {
-  let [isLoading, setIsLoading] = useState<boolean>(true);
+  let [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [open, setOpen] = React.useState(false);
 
@@ -83,7 +85,7 @@ const UserProfileImage = () => {
   }
 
   const uploadUserImage = () => {
-    console.log(state);
+    setIsLoading(true);
     UserService.uploadUserImage(state)
       .then((response) => {
         console.log(response)
@@ -110,11 +112,11 @@ const UserProfileImage = () => {
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+        <BootstrapDialogTitle id="customized-dialog-title" 
+          onClose={handleClose} disabled={isLoading}>
           Update Profile image
         </BootstrapDialogTitle>
-        <DialogContent dividers className='user-image-dialog'>
-          
+        <DialogContent dividers className='user-image-dialog'>          
           
           <div className='profile-container'>
             <Avatar
@@ -135,7 +137,7 @@ const UserProfileImage = () => {
           
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={uploadUserImage}>
+          <Button autoFocus onClick={uploadUserImage} disabled={isLoading}>
             Save Image
           </Button>
         </DialogActions>
