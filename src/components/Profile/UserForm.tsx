@@ -53,7 +53,7 @@ const UserForm = (props) => {
     <FormContainer formContext={formContext} onSuccess={handleSubmit(handleSubmitForm)}>  
       <h3 style={{ marginLeft: "10px" }}>User Profile</h3>   
       
-      <UserProfileImage />
+      <UserProfileImage user={user}/>
 
       <div>        
 

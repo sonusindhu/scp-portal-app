@@ -11,6 +11,11 @@ import { Avatar as Avat } from '@material-ui/core';
 import Avatar from 'react-avatar-edit';
 import UserService from '../../../services/user.service';
 
+import toast from "../../../utils/toast.util";
+
+const API_URL = process.env.REACT_APP_API_URL;
+
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -52,56 +57,89 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
   );
 };
 
-const UserProfileImage = () => {
+const UserProfileImage = (props) => {
+
+  const img = `${API_URL}user-images/${props.user?.userImage}`;
   let [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const [open, setOpen] = React.useState(false);
-
-  const src = '/images/2.jpg'
+  let [userImage, setUserImage] = useState<string>(img);
+  
+  const [open, setOpen] = React.useState(false);  
   const [state, setState] = useState<any>({
     preview: null,
-    src
+    src: null
   });
 
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
+    onClose();
     setOpen(false);
   };
 
   const onClose = () => {
-    setState({ preview: null })
+    setState({ preview: null, src: null })
   }
   
   const onCrop = (preview) => {
     setState({ preview })
   }
 
+  const getExtension = (filename: string) => {
+    const parts = filename.split('.');
+    return parts.at(-1) || '';
+  }
+
+  const isImage = (filename: string) => {
+    var ext = getExtension(filename);
+    switch (ext.toLowerCase()) {
+      case 'jpg':
+      case 'jpeg':
+      case 'gif':
+      case 'bmp':
+      case 'png':
+        return true;
+    }
+    return false;
+  }
+
   const onBeforeFileLoad = (elem) => {
-    if(elem.target.files[0].size > 71680){
+    const validSize = 5*1024*1024;
+    const fileName = elem.target.value;
+    if(elem.target.files[0].size > validSize){
+      setState({ preview: null, src: null })
       elem.target.value = "";
-    };
+      toast.error('Your image size exceeded to 5mb, please try other images');
+    } else if(!isImage(fileName)){
+      toast.error('Invalid image, allowed extension: png, jpg, jpeg, git, bmp');
+    }
   }
 
   const uploadUserImage = () => {
     setIsLoading(true);
     UserService.uploadUserImage(state)
       .then((response) => {
-        console.log(response)
-        setIsLoading(false);
+        if (response.status) {
+          const img = `${API_URL}user-images/${response.result.userImage}`;
+          setUserImage(img);
+          setIsLoading(false);
+          handleClose();
+          toast.success(response.message);
+        } else {
+          toast.error(response.message);
+        }
       })
-      .catch(() => {
+      .catch(({ response }) => {
         setIsLoading(false);
+        toast.error(response.message);
       });
   };
 
   return (
     <div>
-      
       <Avat
-        alt="Remy Sharp"
-        src={src}
+        alt={props.user.fullName}
+        src={userImage}
         variant="circular"
         onClick={handleClickOpen}
         className="avatar-profile"
@@ -125,11 +163,10 @@ const UserProfileImage = () => {
               onCrop={onCrop}
               onClose={onClose}
               onBeforeFileLoad={onBeforeFileLoad}
-              src={state.src}
             />
             
             <div>
-              <img src={state.preview} alt="Preview" />
+              { state.preview ? <img src={state.preview} alt="Preview" /> : <></> }              
             </div>
           </div>
 
@@ -137,7 +174,7 @@ const UserProfileImage = () => {
           
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={uploadUserImage} disabled={isLoading}>
+          <Button autoFocus onClick={uploadUserImage} disabled={isLoading || !state.preview}>
             Save Image
           </Button>
         </DialogActions>

@@ -137,4 +137,7 @@ div.MuiAvatar-root.avatar-profile{
 }
 .profile-containe > div{
   display: inline-block;
+  width: 400px;
+  height: 400px;
+  text-align: center;
 }
