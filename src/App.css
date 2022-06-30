@@ -141,3 +141,30 @@ div.MuiAvatar-root.avatar-profile{
   height: 400px;
   text-align: center;
 }
+
+.user-header{
+  display: flex;
+  padding: 10px 0;
+}
+
+.user-header .user-details{
+  margin-left: 20px;
+}
+
+.user-header .user-details p{
+  margin: 5px;
+}
+
+.user-header .user-details p.full-name{
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.user-header .user-details p.job-title{
+  font-size: 18;
+}
+
+.MuiGrid-root.MuiGrid-item.left-user-form{
+  border-right: 2px solid #c2c2c2;
+  margin-top: 9px;
+}

@@ -43,7 +43,7 @@ const QuoteForm = (props) => {
   return (
     <div className="container-fluid">
       <Grid container spacing={2}>        
-        <Grid item xs={4}>
+        <Grid item xs={4} className="left-user-form">
           { isLoading ? <CircularProgress /> : <UserForm user={user}/> }          
         </Grid>
 

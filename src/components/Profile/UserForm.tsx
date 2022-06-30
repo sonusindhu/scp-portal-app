@@ -51,36 +51,22 @@ const UserForm = (props) => {
 
   return (
     <FormContainer formContext={formContext} onSuccess={handleSubmit(handleSubmitForm)}>  
-      <h3 style={{ marginLeft: "10px" }}>User Profile</h3>   
+      {/* <h3 style={{ marginLeft: "10px" }}>User Profile</h3>    */}
       
       <UserProfileImage user={user}/>
 
-      <div>        
-
-
-      {/* <Button
-        variant="contained"
-        component="label"
-        >
-        Upload File
-        <input
-            accept="image/*"
-            type="file"
-            hidden
-            onChange={onUploadImage}
-        />
-        </Button> */}
-
+      <div>
         <TextFieldElement
-          sx={{ m: 1, minWidth: "48%" }}
+          sx={{ m: 1, minWidth: "47%" }}
           required={true}
           name={"firstName"}
           label="First Name"
           variant="outlined"
           validation={{ maxLength: 100 }}
         />
+      
         <TextFieldElement
-          sx={{ m: 1, minWidth: "48%" }}
+          sx={{ m: 1, minWidth: "46%" }}
           required={true}
           name={"lastName"}
           label="Last Name"
@@ -130,17 +116,15 @@ const UserForm = (props) => {
       </div>      
       <div>        
         <TextFieldElement
-          sx={{ m: 1, minWidth: "96%" }}
+          sx={{ m: 1, minWidth: "47%" }}
           required={true}
           name={"phoneNumber"}
           label="Phone Number"
           variant="outlined"
           validation={{ maxLength: 100 }}
-        />      
-      </div>      
-      <div>        
+        />
         <TextFieldElement
-          sx={{ m: 1, minWidth: "96%" }}
+          sx={{ m: 1, minWidth: "46%" }}
           required={true}
           name={"extension"}
           label="Extension"

@@ -90,17 +90,9 @@ const UserProfileImage = (props) => {
     return parts.at(-1) || '';
   }
 
-  const isImage = (filename: string) => {
-    var ext = getExtension(filename);
-    switch (ext.toLowerCase()) {
-      case 'jpg':
-      case 'jpeg':
-      case 'gif':
-      case 'bmp':
-      case 'png':
-        return true;
-    }
-    return false;
+  const isImage = (filename: string) => {    
+    const ext = getExtension(filename);    
+    return ['jpg', 'jpeg', 'gif', 'bmp', 'png'].some(i => i.includes(ext));
   }
 
   const onBeforeFileLoad = (elem) => {
@@ -137,13 +129,23 @@ const UserProfileImage = (props) => {
 
   return (
     <div>
-      <Avat
-        alt={props.user.fullName}
-        src={userImage}
-        variant="circular"
-        onClick={handleClickOpen}
-        className="avatar-profile"
-      />
+
+      <div className='user-header'>
+        <Avat
+          alt={props.user.fullName}
+          src={userImage}
+          variant="circular"
+          onClick={handleClickOpen}
+          className="avatar-profile"
+        />
+
+        <div className='user-details'>
+          <p className='full-name'> <strong>{ props.user.fullName }</strong></p>
+          <p className='job-title'>Job Title: <strong>{ props.user.jobTitle }</strong></p>
+          <p  className='department'>Department: <strong>{ props.user.department }</strong></p>
+        </div>
+
+      </div>
       
       <BootstrapDialog
         onClose={handleClose}
