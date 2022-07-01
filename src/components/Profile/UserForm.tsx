@@ -55,83 +55,89 @@ const UserForm = (props) => {
       
       <UserProfileImage user={user}/>
 
-      <div>
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "47%" }}
-          required={true}
-          name={"firstName"}
-          label="First Name"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
-        />
-      
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "46%" }}
-          required={true}
-          name={"lastName"}
-          label="Last Name"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
-        />
+      <div className="user-form">  
+        <div>
+          <TextFieldElement
+            sx={{ m: 1, minWidth: "90%" }}
+            required={true}
+            name={"firstName"}
+            label="First Name"
+            variant="outlined"
+            validation={{ maxLength: 100 }}
+          />
+        </div>
+        <div>
+          <TextFieldElement
+            sx={{ m: 1, minWidth: "90%" }}
+            required={true}
+            name={"lastName"}
+            label="Last Name"
+            variant="outlined"
+            validation={{ maxLength: 100 }}
+          />
+        </div>
+        <div>        
+          <TextFieldElement
+            sx={{ m: 1, minWidth: "90%" }}
+            required={true}
+            name={"email"}
+            label="Email"
+            variant="outlined"
+            validation={{ maxLength: 100 }}
+          />      
+        </div>      
+        <div>        
+          <TextFieldElement
+            sx={{ m: 1, minWidth: "90%" }}
+            required={true}
+            name={"jobTitle"}
+            label="Job Title"
+            variant="outlined"
+            validation={{ maxLength: 100 }}
+          />      
+        </div>      
+        <div>        
+          <TextFieldElement
+            sx={{ m: 1, minWidth: "90%" }}
+            required={true}
+            name={"department"}
+            label="Department"
+            variant="outlined"
+            validation={{ maxLength: 100 }}
+          />      
+        </div>      
+        <div>        
+          <TextFieldElement
+            sx={{ m: 1, minWidth: "90%" }}
+            required={true}
+            name={"location"}
+            label="Location"
+            variant="outlined"
+            validation={{ maxLength: 100 }}
+          />      
+        </div>      
+        <div>        
+          <TextFieldElement
+            sx={{ m: 1, minWidth: "90%" }}
+            required={true}
+            name={"phoneNumber"}
+            label="Phone Number"
+            variant="outlined"
+            validation={{ maxLength: 100 }}
+          />
+        </div>
+        <div>
+          <TextFieldElement
+            sx={{ m: 1, minWidth: "90%" }}
+            required={true}
+            name={"extension"}
+            label="Extension"
+            variant="outlined"
+            validation={{ maxLength: 100 }}
+          />      
+        </div>      
       </div>
-      <div>        
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "96%" }}
-          required={true}
-          name={"email"}
-          label="Email"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
-        />      
-      </div>      
-      <div>        
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "96%" }}
-          required={true}
-          name={"jobTitle"}
-          label="Job Title"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
-        />      
-      </div>      
-      <div>        
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "96%" }}
-          required={true}
-          name={"department"}
-          label="Department"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
-        />      
-      </div>      
-      <div>        
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "96%" }}
-          required={true}
-          name={"location"}
-          label="Location"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
-        />      
-      </div>      
-      <div>        
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "47%" }}
-          required={true}
-          name={"phoneNumber"}
-          label="Phone Number"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
-        />
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "46%" }}
-          required={true}
-          name={"extension"}
-          label="Extension"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
-        />      
-      </div>      
+
 
       <div style={{ marginLeft: "12px", marginTop: "15px" }}>
         <Stack direction="row" spacing={2}>

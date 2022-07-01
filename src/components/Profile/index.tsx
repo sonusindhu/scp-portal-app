@@ -43,19 +43,19 @@ const QuoteForm = (props) => {
   return (
     <div className="container-fluid">
       <Grid container spacing={2}>        
-        <Grid item xs={4} className="left-user-form">
+        <Grid item xs={3} className="left-user-form">
           { isLoading ? <CircularProgress /> : <UserForm user={user}/> }          
         </Grid>
 
-        <Grid item xs={8}>
+        <Grid item xs={9}>
           <Tabs
             value={selectedTab}
             onChange={handleChangeTab}
             aria-label="User Profile Tab"
           >
-            <Tab value="updatepassword" label="updatepassword" />
-            <Tab value="integrations" label="integrations" />
-            <Tab value="templates" label="templates" />
+            <Tab value="updatepassword" label="Update Password" />
+            <Tab value="integrations" label="Integrations" />
+            <Tab value="templates" label="Templates" />
           </Tabs>
           <Outlet />
         </Grid>
