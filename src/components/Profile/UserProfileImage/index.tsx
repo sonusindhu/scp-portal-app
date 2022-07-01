@@ -141,8 +141,8 @@ const UserProfileImage = (props) => {
 
         <div className='user-details'>
           <p className='full-name'> <strong>{ props.user.fullName }</strong></p>
-          <p className='job-title'>Job Title: <strong>{ props.user.jobTitle }</strong></p>
-          <p  className='department'>Department: <strong>{ props.user.department }</strong></p>
+          <p className='job-title'><strong>{ props.user.jobTitle }</strong></p>
+          <p  className='department'><strong>{ props.user.location }</strong></p>
         </div>
 
       </div>

@@ -38,6 +38,12 @@ const updateProfile = (payload) => {
     .then(({ data }) => data);
 };
 
+const updatePassword = (payload) => {
+  return axios
+    .post(API_URL + "user/updatePassword", payload)
+    .then(({ data }) => data);
+};
+
 const logout = () => {
   localStorage.removeItem("user");
 };
@@ -53,6 +59,7 @@ const AuthService = {
   logout,
   getCurrentUser,
   getUserDetail,
-  updateProfile
+  updateProfile,
+  updatePassword
 };
 export default AuthService;
