@@ -25,11 +25,11 @@ const QuoteNotes = () => {
   return (
     <Grid container spacing={2}>
       
-      <Grid item xs={5}>        
+      <Grid item xs={4}>        
         <NoteForm note={note} onSuccess={onSuccess} />
       `</Grid>
 
-      <Grid item xs={7}>
+      <Grid item xs={8}>
         <NotesList notes={notes} />
       </Grid>
 

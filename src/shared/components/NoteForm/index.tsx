@@ -74,7 +74,7 @@ const NoteForm = (props) => {
           variant="outlined"
           validation={{ maxLength: 1000 }}
           multiline={true}
-          rows={4}
+          rows={7}
         />      
       </div>
       <div style={{ marginLeft: "10px" }}>

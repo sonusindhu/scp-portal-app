@@ -28,7 +28,7 @@ const NotesList = (props) => {
 
   return (
     <div className="container-fluid note-list">
-      <h3>Note List({ props.notes.length })</h3>
+      <h3>Notes({ props.notes.length })</h3>
       { props.notes.map( (note: Note) => (
 
         <Card className="note-card">
