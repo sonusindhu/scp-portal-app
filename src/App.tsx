@@ -17,12 +17,12 @@ import EditContact from "./components/ContactList/EditContact";
 import AppHeader from "./layouts/AppHeader/AppHeader";
 import AddInventory from "./components/Inventory/AddInventory";
 
-import AddQuote from "./components/QuoteList/AddQuote";
-import QuoteDetails from "./components/QuoteList/QuoteForm/QuoteDetail";
-import QuoteForm from "./components/QuoteList/QuoteForm/QuoteForm";
-import QuoteNotes from "./components/QuoteList/QuoteForm/QuoteNotes/QuoteNotes";
-import QuoteEmails from "./components/QuoteList/QuoteForm/QuoteEmails";
-import QuoteTasks from "./components/QuoteList/QuoteForm/QuoteTasks";
+import AddQuote from "./components/Quote/QuoteList/AddQuote";
+import QuoteDetails from "./components/Quote/QuoteForm/QuoteDetail";
+import QuoteForm from "./components/Quote/QuoteForm";
+import QuoteNotes from "./components/Quote/QuoteForm/QuoteNotes/QuoteNotes";
+import QuoteEmails from "./components/Quote/QuoteForm/QuoteEmails";
+import QuoteTasks from "./components/Quote/QuoteForm/QuoteTasks";
 import AuthWrapper from "./layouts/AuthWrapper/AuthWrapper";
 import ProfileChangePassword from "./components/Profile/ProfileChangePassword";
 import ProfileIntegrations from "./components/Profile/ProfileIntegrations";
@@ -34,7 +34,7 @@ const InventoryList = lazy(
   () => import("./components/Inventory/InventoryList")
 );
 const ContactList = lazy(() => import("./components/ContactList/ContactList"));
-const QuoteList = lazy(() => import("./components/QuoteList/QuoteList"));
+const QuoteList = lazy(() => import("./components/Quote/QuoteList/QuoteList"));
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);

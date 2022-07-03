@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { Button, Drawer } from "@material-ui/core";
 import { AgGridReact } from "@ag-grid-community/react";
 
-import PageHeading from "../../shared/components/PageHeading";
-import QuoteService from "../../services/quote.service";
+import PageHeading from "../../../shared/components/PageHeading";
+import QuoteService from "../../../services/quote.service";
 
-import toast from "../../utils/toast.util";
+import toast from "../../../utils/toast.util";
 import QuoteConfig from "./quote.config";
-import GridListView from "../../shared/components/GridListView";
-import { MenuItem } from "../../shared/models/MenuList.model";
+import GridListView from "../../../shared/components/GridListView";
+import { MenuItem } from "../../../shared/models/MenuList.model";
 
 import AddQuote from "./AddQuote";
 
