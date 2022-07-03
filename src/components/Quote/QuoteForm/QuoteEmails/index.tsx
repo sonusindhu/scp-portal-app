@@ -8,14 +8,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import axios from "../../../utils/config.util";
-import AuthService from "../../../services/auth.service";
-import QuoteService from "../../../services/quote.service";
-import PageHeading from "../../../shared/components/PageHeading";
+import axios from "../../../../utils/config.util";
+import AuthService from "../../../../services/auth.service";
+import QuoteService from "../../../../services/quote.service";
+import PageHeading from "../../../../shared/components/PageHeading";
 
-import toast from "../../../utils/toast.util";
+import toast from "../../../../utils/toast.util";
 import { Box, Drawer, Typography } from "@material-ui/core";
-import EditQuote from "./QuoteDetail/QuoteEdit";
+import EditQuote from "../QuoteDetail/QuoteEdit";
 
 const drawerWidth = 240;
 
