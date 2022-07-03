@@ -3,7 +3,7 @@ import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-import toast from "../../utils/toast.util";
+import toast from "../../../utils/toast.util";
 
 import {
   FormContainer,
@@ -13,8 +13,8 @@ import {
   DatePickerElement,
 } from "react-hook-form-mui";
 import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
-import QuoteService from "../../services/quote.service";
-import DateFnsProvider from "../../utils/DateFnsProvider";
+import QuoteService from "../../../services/quote.service";
+import DateFnsProvider from "../../../utils/DateFnsProvider";
 
 const AddQuote = (props) => {
   const [companies, setCompanies] = useState([]);

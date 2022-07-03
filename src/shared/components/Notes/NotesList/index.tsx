@@ -14,7 +14,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
 
-import { Note } from "../../models/Note";
+import { Note } from "../../../models/Note";
 import { Chip } from "@material-ui/core";
 
 

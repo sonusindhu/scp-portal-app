@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import QuoteService from "../../../../services/quote.service";
-import NotesList from "../../../../shared/components/NotesList";
+import NotesList from "../../../../shared/components/Notes/NotesList";
 import { Grid } from "@material-ui/core";
-import NoteForm from "../../../../shared/components/NoteForm";
+import NoteForm from "../../../../shared/components/Notes/NoteForm";
 
 const QuoteNotes = () => {
   let { id } = useParams();

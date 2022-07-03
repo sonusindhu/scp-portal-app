@@ -8,8 +8,8 @@ import { useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import QuoteService from "../../../services/quote.service";
-import toast from "../../../utils/toast.util";
+import QuoteService from "../../../../services/quote.service";
+import toast from "../../../../utils/toast.util";
 
 const NoteForm = (props) => {
   let { id } = useParams();
