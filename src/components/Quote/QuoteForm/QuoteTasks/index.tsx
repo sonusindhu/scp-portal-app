@@ -1,40 +1,40 @@
 import React, { useEffect, useState } from "react";
-import {
-  FormContainer,
-  TextFieldElement,
-  SelectElement,
-} from "react-hook-form-mui";
-import { useNavigate, useParams } from "react-router-dom";
-import { Button, Stack } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import { Grid } from "@material-ui/core";
 
-import axios from "../../../utils/config.util";
-import AuthService from "../../../services/auth.service";
-import QuoteService from "../../../services/quote.service";
-import PageHeading from "../../../shared/components/PageHeading";
-
-import toast from "../../../utils/toast.util";
-import { Box, Drawer, Typography } from "@material-ui/core";
-const drawerWidth = 240;
+import QuoteService from "../../../../services/quote.service";
+import TasksList from "../../../../shared/components/Task/TasksList";
+import TaskForm from "../../../../shared/components/Task/TaskForm";
 
 const QuoteTasks = () => {
   let { id } = useParams();
-  const navigate = useNavigate();
+  let [tasks, setTasks] = useState<any[]>([]);
+  const task = {};
 
-  // check if user is authenticated, if not redirect to login page
-  const user = AuthService.getCurrentUser();
+  const onSuccess = (event) => {
+    const task = [event];
+    setTasks([...task, ...tasks]);
+  };
+
   useEffect(() => {
-    if (user && id) {
-    } else {
-      navigate("/auth/login");
-    }
+    QuoteService.getNotes(id)
+      .then((response) => {
+        setTasks(response);
+      });
   }, []);
-  if (!user) return <></>;
 
   return (
-    <div className="container-fluid">
-      <Typography paragraph>Tasks</Typography>
-    </div>
+    <Grid container spacing={2}>
+      
+      <Grid item xs={4}>        
+        <TaskForm task={task} onSuccess={onSuccess} />
+      `</Grid>
+
+      <Grid item xs={8}>
+        <TasksList tasks={tasks} />
+      </Grid>
+
+    </Grid>
   );
 };
 
