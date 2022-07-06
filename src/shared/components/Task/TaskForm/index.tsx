@@ -3,6 +3,8 @@ import {
   FormContainer,
   TextFieldElement,
   CheckboxElement,
+  SelectElement,
+  DatePickerElement,
 } from "react-hook-form-mui";
 import { useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
@@ -10,11 +12,42 @@ import { useForm } from "react-hook-form";
 
 import QuoteService from "../../../../services/quote.service";
 import toast from "../../../../utils/toast.util";
+import DateFnsProvider from "../../../../utils/DateFnsProvider";
 
 const TaskForm = (props) => {
   let { id } = useParams();
   const task = props.task || {};
   const formContext = useForm({ defaultValues: task });
+
+  const priorityList = [
+    { name: 1, title: 'High' },
+    { name: 2, title: 'Medium' },
+    { name: 3, title: 'Low' },
+  ];
+  
+  const categoryList = [
+    { name: 1, title: 'Call' },
+    { name: 2, title: 'Email' },
+    { name: 3, title: 'Reminder' },
+  ];
+
+  const assignedToList = [
+    { name: 1, title: 'Sonu Sindhu' },
+    { name: 2, title: 'Pulkit Kumawat' },
+    { name: 3, title: 'Tushar' },
+  ];
+  const pointOfContactList = [
+    { name: 1, title: 'Sonu Sindhu' },
+    { name: 2, title: 'Pulkit Kumawat' },
+    { name: 3, title: 'Tushar' },
+  ];
+  
+  const statusList = [
+    { name: 1, title: 'New' },
+    { name: 2, title: 'In Progress' },
+    { name: 2, title: 'Canceled' },
+    { name: 3, title: 'Completed' },
+  ];
 
   const {
     control,
@@ -30,10 +63,9 @@ const TaskForm = (props) => {
   const handleClearForm = () => reset();
 
   const handleSubmitForm = (e) => {
-    if (!e.title || !e.message) return;
+    if (!e.subject || !e.description) return;
     const payload = { 
       ...e,
-      isCritical: e.isCritical || false,
       quoteId: id,
       id: props.id || 0
     };
@@ -59,8 +91,8 @@ const TaskForm = (props) => {
         <TextFieldElement
           sx={{ m: 1, minWidth: "96%" }}
           required={true}
-          name={"title"}
-          label="Note Title"
+          name={"subject"}
+          label="Subject"
           variant="outlined"
           validation={{ maxLength: 100 }}
         />      
@@ -69,19 +101,70 @@ const TaskForm = (props) => {
         <TextFieldElement
           sx={{ m: 1, minWidth: "96%" }}
           required={true}
-          name={"message"}
-          label="Note Description"
+          name={"description"}
+          label="Description"
           variant="outlined"
           validation={{ maxLength: 1000 }}
           multiline={true}
-          rows={7}
+          rows={4}
         />      
       </div>
-      <div style={{ marginLeft: "10px" }}>
-        <CheckboxElement 
-          sx={{ m: 1 }}
-          name={"isCritical"} label="Mark Critical"/>
+      <div>        
+        <SelectElement
+          sx={{ m: 1, width: "46%" }}
+          required
+          options={priorityList}
+          name={"priority"}
+          label="Priority"
+        ></SelectElement>
+        <SelectElement
+          sx={{ m: 1, width: "47%" }}
+          required
+          options={categoryList}
+          name={"category"}
+          label="Category"
+        ></SelectElement>
       </div>
+      <div>        
+        <SelectElement
+          sx={{ m: 1, width: "46%" }}
+          required
+          options={assignedToList}
+          name={"assignedTo"}
+          label="Assigned To"
+        ></SelectElement>
+        <SelectElement
+          sx={{ m: 1, width: "47%" }}
+          required
+          options={pointOfContactList}
+          name={"pointOfContact"}
+          label="Point Of Contact"
+        ></SelectElement>
+      </div>
+
+      <div className="quote-task-datepicker">
+        <div className="due-date">
+          <DateFnsProvider>
+            <DatePickerElement label="Due Date" name={"dueDateTime"} />
+          </DateFnsProvider>
+        </div>
+        <div className="reminder-date">
+          <DateFnsProvider>
+            <DatePickerElement label="Reminder Date" name={"reminderDateTime"} />
+          </DateFnsProvider>
+        </div>
+      </div>
+
+      <div>        
+        <SelectElement
+          sx={{ m: 1, width: "46%" }}
+          required
+          options={statusList}
+          name={"status"}
+          label="Status"
+        ></SelectElement>
+      </div>
+      
 
       <div style={{ marginLeft: "12px", marginTop: "15px" }}>
         <Stack direction="row" spacing={2}>

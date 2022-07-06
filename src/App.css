@@ -173,3 +173,15 @@ div.user-form{
   height: calc(100vh - 260px);
   overflow: auto;
 }
+
+.quote-task-datepicker {
+  display: flex;
+}
+.reminder-date {
+  width: 47%;
+  margin: 8px;
+}
+.due-date {
+  width: 46%;
+  margin: 8px;
+}
