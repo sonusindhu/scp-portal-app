@@ -17,7 +17,7 @@ const QuoteTasks = () => {
   };
 
   useEffect(() => {
-    QuoteService.getNotes(id)
+    QuoteService.getTasks(id)
       .then((response) => {
         setTasks(response);
       });
