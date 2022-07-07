@@ -69,7 +69,7 @@ const TaskForm = (props) => {
       quoteId: id,
       id: props.id || 0
     };
-    QuoteService.createNote(payload)
+    QuoteService.createTask(payload)
       .then((response) => {
         if (response.status) {
           toast.success(response.message);
