@@ -43,7 +43,7 @@ const TasksList = (props) => {
                   <MoreVertIcon />
                 </IconButton>
               }
-              title={task.title}
+              title={task.subject}
               subheader={
                 <div className="sub-header">
                   <span>{ taskSubHeader(task) }</span>
@@ -55,7 +55,7 @@ const TasksList = (props) => {
           
           <CardContent className="note-card-content">
             <Typography variant="body2" color="text.secondary">
-              {task.message}
+              {task.description}
             </Typography>
           </CardContent>
           

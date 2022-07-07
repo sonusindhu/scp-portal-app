@@ -20,33 +20,33 @@ const TaskForm = (props) => {
   const formContext = useForm({ defaultValues: task });
 
   const priorityList = [
-    { name: 1, title: 'High' },
-    { name: 2, title: 'Medium' },
-    { name: 3, title: 'Low' },
+    { id: 1, value: 'High' },
+    { id: 2, value: 'Medium' },
+    { id: 3, value: 'Low' },
   ];
   
   const categoryList = [
-    { name: 1, title: 'Call' },
-    { name: 2, title: 'Email' },
-    { name: 3, title: 'Reminder' },
+    { id: 1, value: 'Call' },
+    { id: 2, value: 'Email' },
+    { id: 3, value: 'Reminder' },
   ];
 
   const assignedToList = [
-    { name: 1, title: 'Sonu Sindhu' },
-    { name: 2, title: 'Pulkit Kumawat' },
-    { name: 3, title: 'Tushar' },
+    { id: 1, value: 'Sonu Sindhu' },
+    { id: 2, value: 'Pulkit Kumawat' },
+    { id: 3, value: 'Tushar' },
   ];
   const pointOfContactList = [
-    { name: 1, title: 'Sonu Sindhu' },
-    { name: 2, title: 'Pulkit Kumawat' },
-    { name: 3, title: 'Tushar' },
+    { id: 1, value: 'Sonu Sindhu' },
+    { id: 2, value: 'Pulkit Kumawat' },
+    { id: 3, value: 'Tushar' },
   ];
   
   const statusList = [
-    { name: 1, title: 'New' },
-    { name: 2, title: 'In Progress' },
-    { name: 2, title: 'Canceled' },
-    { name: 3, title: 'Completed' },
+    { id: 1, value: 'New' },
+    { id: 2, value: 'In Progress' },
+    { id: 2, value: 'Canceled' },
+    { id: 3, value: 'Completed' },
   ];
 
   const {
@@ -111,6 +111,8 @@ const TaskForm = (props) => {
       </div>
       <div>        
         <SelectElement
+          valueKey="id"
+          labelKey="value"
           sx={{ m: 1, width: "46%" }}
           required
           options={priorityList}
@@ -118,6 +120,8 @@ const TaskForm = (props) => {
           label="Priority"
         ></SelectElement>
         <SelectElement
+          valueKey="id"
+          labelKey="value"
           sx={{ m: 1, width: "47%" }}
           required
           options={categoryList}
@@ -127,6 +131,8 @@ const TaskForm = (props) => {
       </div>
       <div>        
         <SelectElement
+          valueKey="id"
+          labelKey="value"
           sx={{ m: 1, width: "46%" }}
           required
           options={assignedToList}
@@ -134,6 +140,8 @@ const TaskForm = (props) => {
           label="Assigned To"
         ></SelectElement>
         <SelectElement
+          valueKey="id"
+          labelKey="value"
           sx={{ m: 1, width: "47%" }}
           required
           options={pointOfContactList}
@@ -157,6 +165,8 @@ const TaskForm = (props) => {
 
       <div>        
         <SelectElement
+          valueKey="id"
+          labelKey="value"
           sx={{ m: 1, width: "46%" }}
           required
           options={statusList}
