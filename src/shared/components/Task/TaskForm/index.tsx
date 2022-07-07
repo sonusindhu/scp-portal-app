@@ -73,7 +73,7 @@ const TaskForm = (props) => {
       .then((response) => {
         if (response.status) {
           toast.success(response.message);
-          reset({ isCritical: false, title: '', message: '' });
+          reset();
           props.onSuccess(response.result);
         } else {
           toast.error(response.message);

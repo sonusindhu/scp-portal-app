@@ -62,6 +62,10 @@ const getNotes = (id, filter?) => {
   return axios.post(API_URL + `quote/${id}/notes`, { ...filter }).then(({ data }) => data.result);
 };
 
+const createTask = (payload) => {
+  return axios.post(API_URL + "quote/createTask", payload).then(({ data }) => data);
+};
+
 const QuoteService = {
   create,
   update,
@@ -73,7 +77,8 @@ const QuoteService = {
   getCommodities,
   getCargos,
   createNote,
-  getNotes
+  getNotes,
+  createTask
 };
 
 export default QuoteService;
