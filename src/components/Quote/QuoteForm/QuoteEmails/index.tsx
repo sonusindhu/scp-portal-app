@@ -1,43 +1,39 @@
 import React, { useEffect, useState } from "react";
-import {
-  FormContainer,
-  TextFieldElement,
-  SelectElement,
-} from "react-hook-form-mui";
-import { useNavigate, useParams } from "react-router-dom";
-import { Button, Stack } from "@mui/material";
-import { useForm } from "react-hook-form";
-
-import axios from "../../../../utils/config.util";
-import AuthService from "../../../../services/auth.service";
+import { useParams } from "react-router-dom";
 import QuoteService from "../../../../services/quote.service";
-import PageHeading from "../../../../shared/components/PageHeading";
+import EmailList from "../../../../shared/components/Emails/EmailList";
+import { Grid } from "@material-ui/core";
+import EmailForm from "../../../../shared/components/Emails/EmailForm";
 
-import toast from "../../../../utils/toast.util";
-import { Box, Drawer, Typography } from "@material-ui/core";
-import EditQuote from "../QuoteDetail/QuoteEdit";
-
-const drawerWidth = 240;
-
-const QuoteEmails = (props) => {
-  console.log(props);
+const QuoteEmails = () => {
   let { id } = useParams();
-  const navigate = useNavigate();
+  let [emails, setEmails] = useState<any[]>([]);
+  const email = {};
 
-  // check if user is authenticated, if not redirect to login page
-  const user = AuthService.getCurrentUser();
+  const onSuccess = (event) => {
+    const email = [event];
+    setEmails([...email, ...emails]);
+  };
+
   useEffect(() => {
-    if (user && id) {
-    } else {
-      navigate("/auth/login");
-    }
+    QuoteService.getEmails(id)
+      .then((response) => {
+        setEmails(response);
+      });
   }, []);
-  if (!user) return <></>;
 
   return (
-    <div className="container-fluid">
-      <Typography paragraph>Emails</Typography>
-    </div>
+    <Grid container spacing={2}>
+      
+      <Grid item xs={4}>        
+        <EmailForm email={email} onSuccess={onSuccess} />
+      `</Grid>
+
+      <Grid item xs={8}>
+        <EmailList emails={emails} />
+      </Grid>
+
+    </Grid>
   );
 };
 
