@@ -1,4 +1,8 @@
-export interface Email {
+interface EmailListProps{
+    emails: Email[]
+}
+
+interface Email {
     companyId: number,
     contactId: number,
     createdAt: number,
@@ -11,4 +15,9 @@ export interface Email {
     type: string
     updatedAt: number,
     userId: number
+}
+
+export {
+    EmailListProps,
+    Email
 }

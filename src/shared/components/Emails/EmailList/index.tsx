@@ -11,11 +11,10 @@ import { red } from '@mui/material/colors';
 import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-import { Email } from "../../../models/Email";
+import { Email, EmailListProps } from "../../../models/Email";
 import { Chip } from "@material-ui/core";
 
-
-const EmailList = (props) => {
+const EmailList = (props: EmailListProps) => {
   
   const emailSubHeader = (email: Email) => {
     const formattedDate =  format(new Date(email.createdAt), "dd/MM/yyyy p");
