@@ -4,20 +4,21 @@ import QuoteService from "../../../../services/quote.service";
 import NotesList from "../../../../shared/components/Notes/NotesList";
 import { Grid } from "@material-ui/core";
 import NoteForm from "../../../../shared/components/Notes/NoteForm";
+import { Note } from "../../../../shared/models/Note";
 
 const QuoteNotes = () => {
   let { id } = useParams();
-  let [notes, setNotes] = useState<any[]>([]);
+  let [notes, setNotes] = useState<Note[]>([]);
   const note = {};
 
-  const onSuccess = (event) => {
+  const onSuccess = (event: Note) => {
     const note = [event];
     setNotes([...note, ...notes]);
   };
 
   useEffect(() => {
     QuoteService.getNotes(id)
-      .then((response) => {
+      .then((response: Note[]) => {
         setNotes(response);
       });
   }, []);
