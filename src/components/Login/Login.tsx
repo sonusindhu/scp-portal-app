@@ -13,7 +13,7 @@ import "./Login.css";
 
 import AuthService from "../../services/auth.service";
 
-const Login = (props) => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);

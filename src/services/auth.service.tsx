@@ -1,7 +1,7 @@
 import axios from "../utils/config.util";
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
-const register = (username, email, password) => {
+const register = (username: string, email: string, password: string) => {
   return axios.post(API_URL + "auth/signup", {
     username,
     email,
@@ -9,7 +9,7 @@ const register = (username, email, password) => {
   });
 };
 
-const login = (email, password) => {
+const login = (email: string, password: string) => {
   const payload = {
     email,
     password,
