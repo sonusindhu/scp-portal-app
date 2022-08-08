@@ -59,7 +59,7 @@ const createNote = (payload) => {
   return axios.post(API_URL + "quote/createNote", payload).then(({ data }) => data);
 };
 
-const getNotes = (id, filter?) => {
+const getNotes = (id: number, filter?) => {
   return axios.post(API_URL + `quote/${id}/notes`, { ...filter })
     .then(({ data }) => data.result);
 };
@@ -68,7 +68,7 @@ const createTask = (payload) => {
   return axios.post(API_URL + "quote/createTask", payload).then(({ data }) => data);
 };
 
-const getTasks = (id, filter?) => {
+const getTasks = (id: number, filter?) => {
   return axios.post(API_URL + `quote/${id}/tasks`, { ...filter }).then(({ data }) => data.result);
 };
 
@@ -77,11 +77,11 @@ const createEmail = (payload) => {
   return axios.post(API_URL + "quote/createEmail", payload).then(({ data }) => data);
 };
 
-const getEmails = (id, filter?) => {
+const getEmails = (id: number, filter?) => {
   return axios.post(API_URL + `quote/${id}/emails`, { ...filter }).then(({ data }) => data.result);
 };
 
-const getEmailById = (id, emailId) => {
+const getEmailById = (id: number, emailId: number) => {
   return axios.get(API_URL + `quote/${id}/getEmailById/${emailId}`).then(({ data }) => data.result);
 };
 
