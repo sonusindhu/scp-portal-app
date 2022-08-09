@@ -9,6 +9,7 @@ import {
 
 import CompanyService from "../../services/company.service";
 import toast from "../../utils/toast.util";
+import PageHeading from "../../shared/components/PageHeading";
 
 const AddCompany = () => {
   const formContext = useForm({
@@ -38,11 +39,7 @@ const AddCompany = () => {
 
   return (
     <div className="container-fluid">
-      <header className="jumbotron">
-        <h3>
-          <span>Add Company</span>
-        </h3>
-      </header>
+      <PageHeading title="Add Company" />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <div>
