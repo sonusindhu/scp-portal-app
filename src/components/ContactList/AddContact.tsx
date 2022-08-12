@@ -17,6 +17,7 @@ const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const AddContact = () => {
   const [companies, setCompanies] = useState([]);
+  const [statusList, setStatusList] = useState(ContactService.CONST.statusList);
 
   const formContext = useForm({
     defaultValues: {},
@@ -40,21 +41,6 @@ const AddContact = () => {
         toast.error(response.message);
       });
   };
-
-  const statusList = [
-    {
-      id: "",
-      title: "Select",
-    },
-    {
-      id: "active",
-      title: "Active",
-    },
-    {
-      id: "inactive",
-      title: "Inactive",
-    },
-  ];
 
   useEffect(() => {
     axios
