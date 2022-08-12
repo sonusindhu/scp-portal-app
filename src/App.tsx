@@ -37,22 +37,16 @@ const ContactList = lazy(() => import("./components/ContactList/ContactList"));
 const QuoteList = lazy(() => import("./components/Quote/QuoteList/QuoteList"));
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState(undefined);
-  let navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
-    if (user) {
-      setCurrentUser(user);
-    }
+    if (user) setCurrentUser(user)
 
-    EventBus.on("logout", () => {
-      logOut();
-    });
+    EventBus.on("logout", () => logOut());
 
-    return () => {
-      EventBus.remove("logout");
-    };
+    return () => EventBus.remove("logout");
   }, []);
 
   const logOut = () => {
