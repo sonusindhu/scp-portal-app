@@ -17,12 +17,14 @@ import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
 import { Note } from "../../../models/Note";
 import { Chip } from "@material-ui/core";
 
+interface NotesListProps {
+  notes: Note[],
+}
 
-const NotesList = (props) => {
+const NotesList = (props: NotesListProps) => {
   
   const noteSubHeader = (note: Note) => {
     const formattedDate =  format(new Date(note.createdAt), "dd/MM/yyyy p");
-    console.log(formattedDate);
     return <>{ formattedDate }</>
   };
 

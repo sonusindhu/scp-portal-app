@@ -10,8 +10,15 @@ import { useForm } from "react-hook-form";
 
 import QuoteService from "../../../../services/quote.service";
 import toast from "../../../../utils/toast.util";
+import { Note } from "../../../models/Note";
 
-const NoteForm = (props) => {
+interface NoteProps {
+  id: number,
+  note: Note,
+  onSuccess: Function
+}
+
+const NoteForm = (props: NoteProps) => {
   let { id } = useParams();
   const note = props.note || {};
   const formContext = useForm({ defaultValues: note });
