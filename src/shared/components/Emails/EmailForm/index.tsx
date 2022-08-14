@@ -16,7 +16,7 @@ import { Email, EmailFormProps } from "../../../models/Email";
 
 const EmailForm = (props: EmailFormProps) => {
   let { id } = useParams();
-  const email = props.email || {};
+  const email: Email = props.email || {};
   const formContext = useForm({ defaultValues: email });
 
   const {
