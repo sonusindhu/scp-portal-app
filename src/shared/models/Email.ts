@@ -2,6 +2,12 @@ interface EmailListProps{
     emails: Email[]
 }
 
+interface EmailFormProps {
+    id: number,
+    email: Email,
+    onSuccess: Function
+  }
+
 interface Email {
     companyId: number,
     contactId: number,
@@ -19,5 +25,6 @@ interface Email {
 
 export {
     EmailListProps,
+    EmailFormProps,
     Email
 }

@@ -10,8 +10,11 @@ import { useForm } from "react-hook-form";
 
 import QuoteService from "../../../../services/quote.service";
 import toast from "../../../../utils/toast.util";
+import { Email, EmailFormProps } from "../../../models/Email";
 
-const EmailForm = (props) => {
+
+
+const EmailForm = (props: EmailFormProps) => {
   let { id } = useParams();
   const email = props.email || {};
   const formContext = useForm({ defaultValues: email });
