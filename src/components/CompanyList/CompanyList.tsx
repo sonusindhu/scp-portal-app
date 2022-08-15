@@ -8,12 +8,13 @@ import PageHeading from "../../shared/components/PageHeading";
 import CompanyService from "../../services/company.service";
 import toast from "../../utils/toast.util";
 import CompanyConfig from "./company.config";
+import { MenuItem } from "../../shared/models/MenuItem";
 
 const CompanyList = () => {
   let navigate = useNavigate();
   const gridRed = useRef<AgGridReact>(null);
-  const [mainMenus, setMainMenus] = useState<any[]>(CompanyConfig.mainMenus);
-  const [selectedIds, setSelectedIds] = useState<any[]>([]);
+  const [mainMenus, setMainMenus] = useState<MenuItem[]>(CompanyConfig.mainMenus);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const deleteAction = (ids) => (
     <Fragment>

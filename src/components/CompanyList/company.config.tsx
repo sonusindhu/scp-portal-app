@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import GridHeaderCheckbox from "../../shared/components/grid-header-checkbox.component";
 import GridActionMenu from "../../shared/components/grid-action-menu.component";
 import GridService from "../../services/grid.service";
+import { MenuItem } from "../../shared/models/MenuItem";
 
 const columnDefs = [
   {
@@ -242,7 +243,7 @@ const defaultColDef = {
   floatingFilter: true,
 };
 
-const mainMenus = [
+const mainMenus: MenuItem[] = [
   {
     key: "create",
     title: "Create",
