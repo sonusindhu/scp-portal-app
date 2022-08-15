@@ -4,21 +4,21 @@ import { format } from "date-fns";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
 
 // import { Task } from "../../../models/Task";
 import { Chip } from "@material-ui/core";
 
+interface TaskListProps {
+  tasks: any[],
+}
 
-const TasksList = (props) => {
+const TasksList = (props: TaskListProps) => {
   
   const taskSubHeader = (task: any) => {
     const formattedDate =  format(new Date(task.createdAt), "dd/MM/yyyy p");
