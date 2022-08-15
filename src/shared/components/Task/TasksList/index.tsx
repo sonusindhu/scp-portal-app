@@ -11,16 +11,16 @@ import { red } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
 
-// import { Task } from "../../../models/Task";
 import { Chip } from "@material-ui/core";
+import { Task } from "../../../models/Task";
 
 interface TaskListProps {
-  tasks: any[],
+  tasks: Task[],
 }
 
 const TasksList = (props: TaskListProps) => {
   
-  const taskSubHeader = (task: any) => {
+  const taskSubHeader = (task: Task) => {
     const formattedDate =  format(new Date(task.createdAt), "dd/MM/yyyy p");
     return <>{ formattedDate }</>
   };
@@ -28,7 +28,7 @@ const TasksList = (props: TaskListProps) => {
   return (
     <div className="container-fluid note-list">
       <h3>Tasks({ props.tasks.length })</h3>
-      { props.tasks.map( (task: any) => (
+      { props.tasks.map( (task: Task) => (
 
         <Card className="note-card">
             <CardHeader
