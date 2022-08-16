@@ -8,12 +8,11 @@ import {
   SelectElement,
 } from "react-hook-form-mui";
 
-import AuthService from "../../services/auth.service";
 import CompanyService from "../../services/company.service";
 import toast from "../../utils/toast.util";
 import PageHeading from "../../shared/components/PageHeading";
 
-const EditCompany = (props) => {
+const EditCompany = () => {
   let { id } = useParams();
   const navigate = useNavigate();
   const formContext = useForm({
@@ -39,8 +38,6 @@ const EditCompany = (props) => {
       });
   };
 
-  // check if user is authenticated, if not redirect to login page
-  const user = AuthService.getCurrentUser();
   useEffect(() => {
     CompanyService.find(id)
       .then((response) => {
