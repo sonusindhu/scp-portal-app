@@ -1,7 +1,13 @@
 import React from "react";
 import GridActionMenu from "./grid-action-menu.component";
 
-const PageHeading = (props) => {
+interface PageHeadingModel{
+  title: string,
+  menuCallback: Function
+  menus: any[]
+}
+
+const PageHeading = (props: PageHeadingModel) => {
   return (
     <header>
       <h3 className="heading">
