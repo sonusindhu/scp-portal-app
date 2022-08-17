@@ -2,8 +2,18 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
+import { MenuItem as MenuItemModel } from "../../shared/models/MenuItem";
+
+interface GridActionMenuProps{
+  className: string,
+  menus: MenuItemModel[],
+  menuCallback: Function
+  disabled?: boolean,
+  data?: any,
+}
+
 const ITEM_HEIGHT = 48;
-const GridActionMenu = (props) => {
+const GridActionMenu = (props: GridActionMenuProps) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const handleClick = (event) => {
@@ -15,7 +25,7 @@ const GridActionMenu = (props) => {
     setOpen(false);
   };
 
-  const actionEvent = (event, menu) => {
+  const actionEvent = (event, menu: MenuItemModel) => {
     const data = props.data;
     const eventData = {
       event,
@@ -57,7 +67,7 @@ const GridActionMenu = (props) => {
             },
           }}
         >
-          {props.menus.map((menu) => (
+          {props.menus.map((menu: MenuItemModel) => (
             <MenuItem
               disabled={menu.disabled}
               key={menu.key}
