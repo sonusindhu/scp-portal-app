@@ -4,8 +4,8 @@ import GridActionMenu from "./grid-action-menu.component";
 
 interface PageHeadingModel{
   title: string,
-  menuCallback: Function
-  menus: MenuItem[]
+  menuCallback?: Function
+  menus?: MenuItem[]
 }
 
 const PageHeading = (props: PageHeadingModel) => {

@@ -7,7 +7,7 @@ import { MenuItem as MenuItemModel } from "../../shared/models/MenuItem";
 interface GridActionMenuProps{
   className: string,
   menus: MenuItemModel[],
-  menuCallback: Function
+  menuCallback?: Function
   disabled?: boolean,
   data?: any,
 }
@@ -33,7 +33,7 @@ const GridActionMenu = (props: GridActionMenuProps) => {
       menu,
     };
     setOpen(false);
-    props?.menuCallback(eventData);
+    props.menuCallback && props.menuCallback(eventData);
   };
 
   return (
