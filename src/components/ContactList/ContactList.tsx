@@ -8,12 +8,13 @@ import PageHeading from "../../shared/components/PageHeading";
 import ContactService from "../../services/contact.service";
 import toast from "../../utils/toast.util";
 import ContactConfig from "./contact.config";
+import { MenuItem } from "../../shared/models/MenuItem";
 
 const ContactList = () => {
   let navigate = useNavigate();
   const gridRed = useRef<AgGridReact>(null);
-  const [mainMenus, setMainMenus] = useState<any[]>(ContactConfig.mainMenus);
-  const [selectedIds, setSelectedIds] = useState<any[]>([]);
+  const [mainMenus, setMainMenus] = useState<MenuItem[]>(ContactConfig.mainMenus);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const deleteAction = (ids) => (
     <Fragment>
@@ -56,7 +57,7 @@ const ContactList = () => {
         break;
       case "selectRow":
         setSelectedIds(data);
-        const menus = mainMenus.map((menu) => {
+        const menus = mainMenus.map((menu: MenuItem) => {
           if (!menu.alwaysEnable) menu.disabled = data.length === 0;
           return menu;
         });
