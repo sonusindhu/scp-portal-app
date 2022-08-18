@@ -73,7 +73,6 @@ const AddContact = () => {
   }, []);
 
   // check if user is authenticated, if not redirect to login page
-  const user = AuthService.getCurrentUser();
   useEffect(() => {
     if (id) {
       ContactService.find(+id)
