@@ -9,7 +9,6 @@ import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import axios from "../../utils/config.util";
-import AuthService from "../../services/auth.service";
 import ContactService from "../../services/contact.service";
 import PageHeading from "../../shared/components/PageHeading";
 
@@ -21,6 +20,7 @@ const AddContact = () => {
   let { id } = useParams();
   const navigate = useNavigate();
   const [companies, setCompanies] = useState([]);
+  const [statusList] = useState(ContactService.CONST.statusList);
 
   const formContext = useForm({
     defaultValues: {},
@@ -44,21 +44,6 @@ const AddContact = () => {
         toast.error(response.data);
       });
   };
-
-  const statusList = [
-    {
-      id: "",
-      title: "Select",
-    },
-    {
-      id: "active",
-      title: "Active",
-    },
-    {
-      id: "inactive",
-      title: "Inactive",
-    },
-  ];
 
   useEffect(() => {
     axios

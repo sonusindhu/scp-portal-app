@@ -2,7 +2,12 @@ import axios from "../utils/config.util";
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 
-const statusList = [
+interface statusListModel {
+  id: string,
+  title: string
+}
+
+const statusList: statusListModel[] = [
   {
     id: "",
     title: "Select",
