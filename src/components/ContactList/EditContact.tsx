@@ -8,13 +8,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import axios from "../../utils/config.util";
 import ContactService from "../../services/contact.service";
 import PageHeading from "../../shared/components/PageHeading";
-
 import toast from "../../utils/toast.util";
-
-const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const AddContact = () => {
   let { id } = useParams();
@@ -45,28 +41,18 @@ const AddContact = () => {
       });
   };
 
-  useEffect(() => {
-    axios
-      .get(API_URL + "company/listOfNames")
-      .then(({ data }) => data)
-      .then(({ result }) => {
-        setCompanies(result);
-      })
-      .catch((error) => {
-        setCompanies([]);
-      });
-  }, []);
+  const getCompanies = async () => {
+    const result = await ContactService.getCompanies();
+    setCompanies(result);
+  }
 
   // check if user is authenticated, if not redirect to login page
-  useEffect(() => {
+  useEffect(() => {    
+    getCompanies();
     if (id) {
       ContactService.find(+id)
-        .then(({ result }) => {
-          reset(result);
-        })
-        .catch((error) => {
-          navigate("/app/contact/list");
-        });
+        .then(({ result }) =>  reset(result))
+        .catch(() => navigate("/app/contact/list"));
     }
   }, []);
 

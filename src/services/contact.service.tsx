@@ -35,7 +35,8 @@ const find = (id: number) => {
 const create = (payload) => {
   return axios
     .post(API_URL + "contact/create", payload)
-    .then(({ data }) => data);
+    .then(({ data }) => data)
+    .catch(() => [])
 };
 
 const update = (payload) => {
@@ -44,12 +45,19 @@ const update = (payload) => {
     .then(({ data }) => data);
 };
 
-const CompanyService = {
+const getCompanies = () => {
+  return axios
+    .get(API_URL + "company/listOfNames")
+    .then(({ data }) => data)
+};
+
+const ContactService = {
   create,
   update,
   find,
   deleteContacts,
+  getCompanies,
   CONST: { statusList }
 };
 
-export default CompanyService;
+export default ContactService;
