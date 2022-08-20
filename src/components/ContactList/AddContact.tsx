@@ -7,17 +7,13 @@ import {
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import axios from "../../utils/config.util";
-
 import ContactService from "../../services/contact.service";
 import PageHeading from "../../shared/components/PageHeading";
 import toast from "../../utils/toast.util";
 
-const API_URL = process.env.REACT_APP_API_ENDPOINT;
-
 const AddContact = () => {
   const [companies, setCompanies] = useState([]);
-  const [statusList, setStatusList] = useState(ContactService.CONST.statusList);
+  const [statusList] = useState(ContactService.CONST.statusList);
 
   const formContext = useForm({
     defaultValues: {},
@@ -43,9 +39,7 @@ const AddContact = () => {
   };
 
   useEffect(() => {
-    axios
-      .get(API_URL + "company/listOfNames")
-      .then(({ data }) => data)
+    ContactService.getCompanies()
       .then(({ result }) => {
         setCompanies(result);
       })

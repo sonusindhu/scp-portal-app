@@ -18,7 +18,7 @@ const EditCompany = () => {
   const formContext = useForm({
     defaultValues: {},
   });
-  const { reset, formState } = formContext;
+  const { reset } = formContext;
   const handleClearForm = () => reset();
 
   const handleSubmitForm = (e) => {
