@@ -11,6 +11,11 @@ const find = (id: number) => {
   return axios.get(`${API_URL}inventory/find/${id}`).then(({ data }) => data);
 };
 
+const getCompanies = () => {
+  return axios.get(API_URL + "company/listOfNames")
+  .then(({ data }) => data)
+};
+
 const create = (payload) => {
   return axios
     .post(API_URL + "inventory/create", payload)
@@ -23,11 +28,47 @@ const update = (payload) => {
     .then(({ data }) => data);
 };
 
-const CompanyService = {
+const statusList: { id: string, title: string }[] = [
+    {
+      id: "",
+      title: "Select",
+    },
+    {
+      id: "active",
+      title: "Active",
+    },
+    {
+      id: "inactive",
+      title: "Inactive",
+    },
+  ];
+  const packages: { id: string, title: string }[] = [
+    {
+      id: "",
+      title: "Select",
+    },
+    {
+      id: "parcel",
+      title: "Parcel",
+    },
+    {
+      id: "pallet",
+      title: "Pallet",
+    },
+    {
+      id: "bale",
+      title: "bale",
+    },
+  ];
+
+
+const InventoryService = {
   create,
   update,
   find,
   deleteCompanies,
+  getCompanies,
+  data: { statusList, packages }
 };
 
-export default CompanyService;
+export default InventoryService;

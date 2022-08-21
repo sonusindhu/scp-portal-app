@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../../utils/config.util";
-import { Button, Stack, Alert } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import {
@@ -9,13 +8,13 @@ import {
   SelectElement,
 } from "react-hook-form-mui";
 import PageHeading from "../../shared/components/PageHeading";
-
-const API_URL = process.env.REACT_APP_API_ENDPOINT;
+import toast from "../../utils/toast.util";
+import InventoryService from "../../services/inventory.service";
 
 const AddContact = () => {
-  const [showError, setShowError] = useState("");
-  const [showSuccess, setShowSuccess] = useState("");
   const [companies, setCompanies] = useState([]);
+  const [statusList] = useState(InventoryService.data.statusList);
+  const [packages] = useState(InventoryService.data.packages);
 
   const formContext = useForm({
     defaultValues: {},
@@ -25,62 +24,23 @@ const AddContact = () => {
 
   const handleSubmitForm = (e) => {
     const payload = { ...e };
-    axios
-      .post(API_URL + "inventory/create", payload)
-      .then(({ data }) => data)
+    InventoryService.create(payload)
       .then((response) => {
-        console.log(response);
         if (response.status) {
-          setShowSuccess(response.message);
+          toast.success(response.message);
           reset();
         } else {
-          setShowError(response.message);
+          toast.error(response.message);
         }
       })
       .catch((error) => {
-        console.log(error);
-        setShowError(error.response);
+        toast.error(error.message);
       });
   };
 
-  const statusList = [
-    {
-      id: "",
-      title: "Select",
-    },
-    {
-      id: "active",
-      title: "Active",
-    },
-    {
-      id: "inactive",
-      title: "Inactive",
-    },
-  ];
-  const packages = [
-    {
-      id: "",
-      title: "Select",
-    },
-    {
-      id: "parcel",
-      title: "Parcel",
-    },
-    {
-      id: "pallet",
-      title: "Pallet",
-    },
-    {
-      id: "bale",
-      title: "bale",
-    },
-  ];
-
   // check if user is authenticated, if not redirect to login page
   useEffect(() => {
-    axios
-      .get(API_URL + "company/listOfNames")
-      .then(({ data }) => data)
+    InventoryService.getCompanies()
       .then(({ result }) => {
         setCompanies(result);
       })
@@ -203,14 +163,6 @@ const AddContact = () => {
             >
               Cancel
             </Button>
-
-            {showError ? <Alert severity="error">{showError}</Alert> : <></>}
-
-            {showSuccess ? (
-              <Alert severity="success">{showSuccess}</Alert>
-            ) : (
-              <></>
-            )}
           </Stack>
         </div>
       </FormContainer>
