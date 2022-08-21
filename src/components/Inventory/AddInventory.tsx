@@ -8,6 +8,7 @@ import {
   TextFieldElement,
   SelectElement,
 } from "react-hook-form-mui";
+import PageHeading from "../../shared/components/PageHeading";
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
@@ -20,9 +21,7 @@ const AddContact = () => {
     defaultValues: {},
   });
   const { reset } = formContext;
-  const handleClearForm = () => {
-    reset();
-  };
+  const handleClearForm = () => reset();
 
   const handleSubmitForm = (e) => {
     const payload = { ...e };
@@ -92,9 +91,7 @@ const AddContact = () => {
 
   return (
     <div className="container-fluid">
-      <header className="jumbotron">
-        <h3>Add Inventory</h3>
-      </header>
+      <PageHeading title="Add Inventory" />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <div>
