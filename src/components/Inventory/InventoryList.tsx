@@ -17,16 +17,16 @@ const InventoryList = () => {
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(
     InventoryConfig.mainMenus
   );
-  const [selectedIds, setSelectedIds] = useState<any[]>([]);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
-  const deleteAction = (ids) => (
+  const deleteAction = (ids: number[]) => (
     <Fragment>
       <Button onClick={() => confirmDelete(ids)}>Confirm</Button>
       <Button onClick={() => toast.close()}>Close</Button>
     </Fragment>
   );
 
-  const confirmDelete = (ids) => {
+  const confirmDelete = (ids: number[]) => {
     toast.close();
     InventoryService.deleteCompanies(ids)
       .then((response) => {
@@ -36,7 +36,7 @@ const InventoryList = () => {
       .catch((error) => toast.success(error?.message));
   };
 
-  const deleteInventory = (ids) => {
+  const deleteInventory = (ids: number[]) => {
     toast.warning("Are you sure, you want to delete?", {
       action: () => deleteAction(ids),
     });
