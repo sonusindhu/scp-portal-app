@@ -15,6 +15,7 @@ import toast from "../../../utils/toast.util";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
+const VALID_SIZE_LIMIT = 5*1024*1024;
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -57,6 +58,11 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
   );
 };
 
+interface ImageState{
+  preview: string | null,
+  src?: string | null
+}
+
 const UserProfileImage = (props) => {
 
   const img = `${API_URL}user-images/${props.user?.userImage}`;
@@ -64,7 +70,7 @@ const UserProfileImage = (props) => {
   let [userImage, setUserImage] = useState<string>(img);
   
   const [open, setOpen] = React.useState(false);  
-  const [state, setState] = useState<any>({
+  const [state, setState] = useState<ImageState>({
     preview: null,
     src: null
   });
@@ -81,7 +87,7 @@ const UserProfileImage = (props) => {
     setState({ preview: null, src: null })
   }
   
-  const onCrop = (preview) => {
+  const onCrop = (preview: string) => {
     setState({ preview })
   }
 
@@ -96,9 +102,8 @@ const UserProfileImage = (props) => {
   }
 
   const onBeforeFileLoad = (elem) => {
-    const validSize = 5*1024*1024;
     const fileName = elem.target.value;
-    if(elem.target.files[0].size > validSize){
+    if(elem.target.files[0].size > VALID_SIZE_LIMIT){
       setState({ preview: null, src: null })
       elem.target.value = "";
       toast.error('Your image size exceeded to 5mb, please try other images');
