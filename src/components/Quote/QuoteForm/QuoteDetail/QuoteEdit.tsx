@@ -1,14 +1,9 @@
 import { Button } from "@material-ui/core";
 import { Stack } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
-import { FormContainer, SelectElement, TextFieldElement } from "react-hook-form-mui";
-import { useNavigate, useParams } from "react-router-dom";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { FormContainer } from "react-hook-form-mui";
 import QuoteService from "../../../../services/quote.service";
-
-import IconButton from '@mui/material/IconButton';
-import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
-import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
 
 import toast from "../../../../utils/toast.util";
 import QuoteAccessorials from "./QuoteAccessorials";
@@ -20,9 +15,6 @@ const QuoteEdit = (props) => {
   const commodities = props.commodities;
   const equipments = props.equipments;
   const cargos = props.cargos;
-
-  console.log(props.quote);
-
   const formContext = useForm({ defaultValues });
 
   const {
