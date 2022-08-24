@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { SelectElement, TextFieldElement } from "react-hook-form-mui";
+import PageHeading from "../../../../shared/components/PageHeading";
 
 const QuoteCargoDetail = ({ control, resetField, equipments, commodities, cargos, watch }) => { 
 
@@ -18,8 +19,8 @@ const QuoteCargoDetail = ({ control, resetField, equipments, commodities, cargos
 
 
   return (
-    <div className="container-fluid">  
-      <h3>Cargo Details</h3>
+    <div className="container-fluid">
+      <PageHeading title="Cargo Details" />
       <div>
         <SelectElement
           sx={{ m: 1, width: "20ch" }}

@@ -4,6 +4,7 @@ import { useFieldArray } from "react-hook-form";
 import { IconButton } from "@material-ui/core";
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
+import PageHeading from "../../../../shared/components/PageHeading";
 
 
 const QuoteAccessorials = ({ control }) => { 
@@ -30,7 +31,7 @@ const QuoteAccessorials = ({ control }) => {
 
   return (
     <div className="container-fluid">
-      <h3>Accessorials Details</h3>
+      <PageHeading title="Accessorials Details" />
       <div>
         { fields.map((item: any, index) => {
           return (    

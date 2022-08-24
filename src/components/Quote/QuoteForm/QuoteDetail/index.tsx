@@ -7,7 +7,7 @@ import QuoteEdit from "./QuoteEdit";
 
 const QuoteDetails = () => {  
 
-  let { id } = useParams<any>();
+  let { id } = useParams();
   const navigate = useNavigate();
   const [quote, setQuote] = useState<any>({});
   const [equipments, setEquipments] = useState<any[]>([]);
