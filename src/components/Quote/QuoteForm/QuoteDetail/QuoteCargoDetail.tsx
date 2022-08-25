@@ -2,9 +2,7 @@ import React, { useMemo } from "react";
 import { SelectElement, TextFieldElement } from "react-hook-form-mui";
 import PageHeading from "../../../../shared/components/PageHeading";
 
-const QuoteCargoDetail = ({ control, resetField, equipments, commodities, cargos, watch }) => { 
-
-  console.log(equipments)
+const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }) => { 
 
   const hazmatOptions = [{id: 1, name: 'Yes'}, {id: 2, name: 'No'}];
   const isHazmat = watch("cargoDetail.isHazmat");
