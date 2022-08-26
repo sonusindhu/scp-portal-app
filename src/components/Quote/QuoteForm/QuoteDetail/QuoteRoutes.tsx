@@ -1,10 +1,11 @@
 import React from "react";
 import { TextFieldElement } from "react-hook-form-mui";
 import { useFieldArray } from "react-hook-form";
+import PageHeading from "../../../../shared/components/PageHeading";
 
 const QuoteRoutes = ({ control }) => { 
 
-  const { fields, remove, insert } = useFieldArray({
+  const { fields } = useFieldArray({
     control,
     name: "stops",
     keyName: 'key'
@@ -12,7 +13,7 @@ const QuoteRoutes = ({ control }) => {
 
   return (
     <div className="container-fluid">
-      <h3>Routing Details</h3>
+      <PageHeading title="Routing Details" />
       <div>
         { fields.map((item, index) => {
           return (    
