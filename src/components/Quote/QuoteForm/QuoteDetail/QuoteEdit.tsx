@@ -10,7 +10,14 @@ import QuoteAccessorials from "./QuoteAccessorials";
 import QuoteRoutes from "./QuoteRoutes";
 import QuoteCargoDetail from "./QuoteCargoDetail";
 
-const QuoteEdit = (props) => {  
+interface QuoteEditProps{
+  quote: any[],
+  commodities: any[],
+  equipments: any[],
+  cargos: any[],
+}
+
+const QuoteEdit = (props: QuoteEditProps) => {  
   const defaultValues = props.quote;
   const commodities = props.commodities;
   const equipments = props.equipments;
