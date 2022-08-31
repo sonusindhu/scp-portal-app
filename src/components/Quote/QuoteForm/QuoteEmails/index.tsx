@@ -4,13 +4,14 @@ import QuoteService from "../../../../services/quote.service";
 import EmailList from "../../../../shared/components/Emails/EmailList";
 import { Grid } from "@material-ui/core";
 import EmailForm from "../../../../shared/components/Emails/EmailForm";
+import { Email } from "../../../../shared/models/Email";
 
 const QuoteEmails = () => {
   let { id } = useParams();
-  let [emails, setEmails] = useState<any[]>([]);
-  const email = {};
+  let [emails, setEmails] = useState<Email[]>([]);
+  let email: Email;
 
-  const onSuccess = (event) => {
+  const onSuccess = (event: Email) => {
     const email = [event];
     setEmails([...email, ...emails]);
   };
