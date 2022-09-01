@@ -13,8 +13,8 @@ import toast from "../../../../utils/toast.util";
 import { Note } from "../../../models/Note";
 
 interface NoteProps {
-  id: number,
-  note: Note,
+  id?: number,
+  note: Note | any,
   onSuccess: Function
 }
 
