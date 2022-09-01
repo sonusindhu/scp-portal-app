@@ -20,18 +20,12 @@ interface NoteProps {
 
 const NoteForm = (props: NoteProps) => {
   let { id } = useParams();
-  const note = props.note || {};
+  const note: Note = props.note;
   const formContext = useForm({ defaultValues: note });
 
   const {
-    control,
-    register,
     handleSubmit,
-    getValues,
-    setValue,
-    watch,
     reset,
-    resetField
   } = formContext;
 
   const handleClearForm = () => reset();

@@ -17,10 +17,12 @@ const QuoteNotes = () => {
   };
 
   useEffect(() => {
-    QuoteService.getNotes(id)
-      .then((response: Note[]) => {
-        setNotes(response);
-      });
+    if(id){
+      QuoteService.getNotes(+id)
+        .then((response: Note[]) => {
+          setNotes(response);
+        });
+    }
   }, []);
 
   return (
