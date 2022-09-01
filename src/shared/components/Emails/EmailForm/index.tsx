@@ -11,8 +11,7 @@ import { useForm } from "react-hook-form";
 import QuoteService from "../../../../services/quote.service";
 import toast from "../../../../utils/toast.util";
 import { Email, EmailFormProps } from "../../../models/Email";
-
-
+import PageHeading from "../../PageHeading";
 
 const EmailForm = (props: EmailFormProps) => {
   let { id } = useParams();
@@ -20,14 +19,8 @@ const EmailForm = (props: EmailFormProps) => {
   const formContext = useForm({ defaultValues: email });
 
   const {
-    control,
-    register,
     handleSubmit,
-    getValues,
-    setValue,
-    watch,
-    reset,
-    resetField
+    reset
   } = formContext;
 
   const handleClearForm = () => reset();
@@ -57,7 +50,7 @@ const EmailForm = (props: EmailFormProps) => {
 
   return (
     <FormContainer formContext={formContext} onSuccess={handleSubmit(handleSubmitForm)}>  
-      <h3 style={{ marginLeft: "10px" }}>New Email</h3>   
+      <PageHeading title="New Email" /> 
       <div>        
         <TextFieldElement
           sx={{ m: 1, minWidth: "96%" }}
