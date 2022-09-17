@@ -1,10 +1,11 @@
 import React from "react";
+import PageHeading from "../../../shared/components/PageHeading";
 
 const ProfileIntegrations = () => {
   
   return (
     <div className="container-fluid">
-      <h3>Integrations</h3>
+      <PageHeading title="Integrations" />
     </div>
   );
 };
