@@ -1,6 +1,9 @@
 import axios from "../utils/config.util";
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
-
+interface ListItem{
+  id: string, 
+  title: string
+}
 const deleteCompanies = (ids: number[]) => {
   return axios
     .post(`${API_URL}inventory/deleteRange`, { ids })
@@ -28,7 +31,7 @@ const update = (payload) => {
     .then(({ data }) => data);
 };
 
-const statusList: { id: string, title: string }[] = [
+const statusList: ListItem[] = [
     {
       id: "",
       title: "Select",
