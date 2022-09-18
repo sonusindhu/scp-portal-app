@@ -13,6 +13,8 @@ import "./Login.css";
 
 import AuthService from "../../services/auth.service";
 
+const REDIRECT_AFTER_LOGIN = "/app/company/list";
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +40,7 @@ const Login = () => {
     AuthService.login(username, password).then(
       (response) => {
         if (response.status) {
-          window.location.href = "/app/company/list";
+          window.location.href = REDIRECT_AFTER_LOGIN;
         } else {
           setLoading(false);
           setMessage(response.message);
