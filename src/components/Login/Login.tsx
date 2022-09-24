@@ -10,9 +10,7 @@ import {
   Toolbar,
 } from "@material-ui/core";
 import "./Login.css";
-
 import AuthService from "../../services/auth.service";
-
 const REDIRECT_AFTER_LOGIN = "/app/company/list";
 
 const Login = () => {
@@ -22,12 +20,12 @@ const Login = () => {
   const [message, setMessage] = useState("");
 
   const onChangeUsername = (e) => {
-    const username = e.target.value;
+    const username: string = e.target.value;
     setUsername(username);
   };
 
   const onChangePassword = (e) => {
-    const password = e.target.value;
+    const password: string = e.target.value;
     setPassword(password);
   };
 
