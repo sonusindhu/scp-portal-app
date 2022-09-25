@@ -24,16 +24,16 @@ const AddContact = () => {
   const handleSubmitForm = (e) => {
     const payload = { ...e };
     InventoryService.create(payload)
-      .then((response) => {
-        if (response.status) {
-          toast.success(response.message);
+      .then(({ status, message }) => {
+        if (status) {
+          toast.success(message);
           reset();
         } else {
-          toast.error(response.message);
+          toast.error(message);
         }
       })
-      .catch((error) => {
-        toast.error(error.message);
+      .catch(({ message }) => {
+        toast.error(message);
       });
   };
 
@@ -43,9 +43,7 @@ const AddContact = () => {
       .then(({ result }) => {
         setCompanies(result);
       })
-      .catch((error) => {
-        setCompanies([]);
-      });
+      .catch(() => setCompanies([]));
   }, []);
 
   return (
