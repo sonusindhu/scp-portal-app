@@ -20,7 +20,6 @@ const AddContact = () => {
     defaultValues: {},
   });
   const { reset } = formContext;
-  const handleClearForm = () => reset();
 
   const handleSubmitForm = (e) => {
     const payload = { ...e };
@@ -159,7 +158,7 @@ const AddContact = () => {
               size="large"
               variant="outlined"
               type="button"
-              onClick={handleClearForm}
+              onClick={reset}
             >
               Cancel
             </Button>
