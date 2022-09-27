@@ -25,12 +25,12 @@ const AddContact = () => {
     if (!e.email) return;
     const payload = { ...e };
     ContactService.create(payload)
-      .then((response) => {
-        if (response.status) {
-          toast.success(response.message);
+      .then(({ status, message }) => {
+        if (status) {
+          toast.success(message);
           reset();
         } else {
-          toast.error(response.message);
+          toast.error(message);
         }
       })
       .catch(({ response }) => {

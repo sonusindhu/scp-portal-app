@@ -26,12 +26,12 @@ const ContactList = () => {
   const confirmDelete = (ids) => {
     toast.close();
     ContactService.deleteContacts(ids)
-      .then((response) => {
-        toast.success(response.message);
+      .then(({ message }) => {
+        toast.success(message);
         gridRed.current?.api?.refreshServerSideStore();
       })
-      .catch((error) => {
-        toast.error(error?.message);
+      .catch(({ message }) => {
+        toast.error(message);
       });
   };
 
