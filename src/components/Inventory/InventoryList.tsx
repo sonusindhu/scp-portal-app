@@ -29,11 +29,11 @@ const InventoryList = () => {
   const confirmDelete = (ids: number[]) => {
     toast.close();
     InventoryService.deleteCompanies(ids)
-      .then((response) => {
-        toast.success(response.message);
+      .then(({ message }) => {
+        toast.success(message);
         gridRed.current?.api?.refreshServerSideStore();
       })
-      .catch((error) => toast.success(error?.message));
+      .catch(({ message }) => toast.success(message));
   };
 
   const deleteInventory = (ids: number[]) => {
