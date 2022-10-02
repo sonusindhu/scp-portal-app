@@ -16,14 +16,14 @@ const ContactList = () => {
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(ContactConfig.mainMenus);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
-  const deleteAction = (ids) => (
+  const deleteAction = (ids: number[]) => (
     <Fragment>
       <Button onClick={() => confirmDelete(ids)}>Confirm</Button>
       <Button onClick={() => toast.close()}>Close</Button>
     </Fragment>
   );
 
-  const confirmDelete = (ids) => {
+  const confirmDelete = (ids: number[]) => {
     toast.close();
     ContactService.deleteContacts(ids)
       .then(({ message }) => {
@@ -35,7 +35,7 @@ const ContactList = () => {
       });
   };
 
-  const deleteContact = (ids) => {
+  const deleteContact = (ids: number[]) => {
     toast.warning("Are you sure, you want to delete?", {
       action: () => deleteAction(ids),
     });
