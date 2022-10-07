@@ -28,12 +28,12 @@ const AddContact = () => {
     if (!e.email || !e.fullName) return;
     const payload = { ...e };
     ContactService.update(payload)
-      .then((response) => {
-        if (response.status) {
-          toast.success(response.message);
-          reset(response.result);
+      .then(({status, message, result}) => {
+        if (status) {
+          toast.success(message);
+          reset(result);
         } else {
-          toast.error(response.message);
+          toast.error(message);
         }
       })
       .catch(({ response }) => {
