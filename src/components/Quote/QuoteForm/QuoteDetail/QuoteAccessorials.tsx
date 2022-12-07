@@ -23,7 +23,6 @@ const QuoteAccessorials = ({ control }) => {
       totalRate: null,
       description: null
     });
-    console.log(fields);
   };
   const onRemoveAcc = (index) => {
     remove(index);
