@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import "./Login.css";
 import AuthService from "../../services/auth.service";
+import { ResponseModel } from "../../models/common.model";
 const REDIRECT_AFTER_LOGIN = "/app/company/list";
 
 const Login = () => {
@@ -29,6 +30,26 @@ const Login = () => {
     setPassword(password);
   };
 
+  const handleSuccess = (response: ResponseModel) => {
+    if (response.status) {
+      window.location.href = REDIRECT_AFTER_LOGIN;
+    } else {
+      setLoading(false);
+      setMessage(response.message);
+    }
+  }
+
+  const handleError = (error) => {
+    setLoading(false);
+    let errprMessage = error.message;
+    if (error.response) {
+      errprMessage = error.response.data;
+    } else if (error.request) {
+      errprMessage = error.request;
+    }
+    setMessage(errprMessage);
+  }
+
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -36,24 +57,8 @@ const Login = () => {
     setLoading(true);
 
     AuthService.login(username, password).then(
-      (response) => {
-        if (response.status) {
-          window.location.href = REDIRECT_AFTER_LOGIN;
-        } else {
-          setLoading(false);
-          setMessage(response.message);
-        }
-      },
-      (error) => {
-        setLoading(false);
-        let errprMessage = error.message;
-        if (error.response) {
-          errprMessage = error.response.data;
-        } else if (error.request) {
-          errprMessage = error.request;
-        }
-        setMessage(errprMessage);
-      }
+      (response) => handleSuccess(response),
+      (error) => handleError(error)
     );
   };
 
