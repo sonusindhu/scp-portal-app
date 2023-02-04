@@ -9,9 +9,11 @@ import toast from "../../../../utils/toast.util";
 import QuoteAccessorials from "./QuoteAccessorials";
 import QuoteRoutes from "./QuoteRoutes";
 import QuoteCargoDetail from "./QuoteCargoDetail";
+import { Quote } from "../../../../shared/models/Quote";
+import { ResponseModel } from "../../../../models/common.model";
 
 interface QuoteEditProps{
-  quote: any[],
+  quote: Quote[],
   commodities: any[],
   equipments: any[],
   cargos: any[],
@@ -37,19 +39,20 @@ const QuoteEdit = (props: QuoteEditProps) => {
 
   const handleClearForm = () => reset();
 
+  const handleSave = (response: ResponseModel) => {
+    if (response.status) {
+      toast.success(response.message);
+      reset(response.result);
+    } else {
+      toast.error(response.message);
+    }
+  }
+
   const handleSubmitForm = (e) => {
     if (!e.email || !e.fullName) return;
     const payload = { ...e };
     QuoteService.update(payload)
-      .then((response) => {
-        if (response.status) {
-          toast.success(response.message);
-          reset(response.result);
-
-        } else {
-          toast.error(response.message);
-        }
-      })
+      .then((response) => handleSave(response))
       .catch(({ response }) => {
         toast.error(response.data);
       });
