@@ -45,7 +45,7 @@ const statusList: ListItem[] = [
       title: "Inactive",
     },
   ];
-  const packages: { id: string, title: string }[] = [
+  const packages: ListItem[] = [
     {
       id: "",
       title: "Select",
