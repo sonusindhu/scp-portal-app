@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import ContactService from "../../services/contact.service";
 import PageHeading from "../../shared/components/PageHeading";
 import toast from "../../utils/toast.util";
+import { ResponseModel } from "../../models/common.model";
 
 const AddContact = () => {
   const [companies, setCompanies] = useState([]);
@@ -21,31 +22,27 @@ const AddContact = () => {
   const { reset } = formContext;
   const handleClearForm = () => reset();
 
+  const handleSuccess = (response: ResponseModel) => {
+    if (response.status) {
+      toast.success(response.message);
+      reset();
+    } else {
+      toast.error(response.message);
+    }
+  }
+
   const handleSubmitForm = (e) => {
     if (!e.email) return;
     const payload = { ...e };
     ContactService.create(payload)
-      .then(({ status, message }) => {
-        if (status) {
-          toast.success(message);
-          reset();
-        } else {
-          toast.error(message);
-        }
-      })
-      .catch(({ response }) => {
-        toast.error(response.message);
-      });
+      .then((response) => handleSuccess(response))
+      .catch(({ response }) => toast.error(response.message));
   };
 
   useEffect(() => {
     ContactService.getCompanies()
-      .then(({ result }) => {
-        setCompanies(result);
-      })
-      .catch((error) => {
-        setCompanies([]);
-      });
+      .then(({ result }) => setCompanies(result))
+      .catch(() => setCompanies([]));
   }, []);
 
   return (

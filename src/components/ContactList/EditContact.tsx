@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import ContactService from "../../services/contact.service";
 import PageHeading from "../../shared/components/PageHeading";
 import toast from "../../utils/toast.util";
+import { ResponseModel } from "../../models/common.model";
 
 const AddContact = () => {
   let { id } = useParams();
@@ -24,18 +25,20 @@ const AddContact = () => {
   const { reset } = formContext;
   const handleClearForm = () => reset();
 
+  const handleSuccess = (response: ResponseModel) => {
+    if (response.status) {
+      toast.success(response.message);
+      reset(response.result);
+    } else {
+      toast.error(response.message);
+    }
+  }
+
   const handleSubmitForm = (e) => {
     if (!e.email || !e.fullName) return;
     const payload = { ...e };
     ContactService.update(payload)
-      .then(({status, message, result}) => {
-        if (status) {
-          toast.success(message);
-          reset(result);
-        } else {
-          toast.error(message);
-        }
-      })
+      .then((response) => handleSuccess(response))
       .catch(({ response }) => {
         toast.error(response.data);
       });
