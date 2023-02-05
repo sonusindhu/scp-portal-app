@@ -10,6 +10,7 @@ import {
 import PageHeading from "../../shared/components/PageHeading";
 import toast from "../../utils/toast.util";
 import InventoryService from "../../services/inventory.service";
+import { ResponseModel } from "../../models/common.model";
 
 const AddContact = () => {
   const [companies, setCompanies] = useState([]);
@@ -21,28 +22,26 @@ const AddContact = () => {
   });
   const { reset } = formContext;
 
+  const handleSuccess = (response: ResponseModel) => {
+    if (response.status) {
+      toast.success(response.message);
+      reset();
+    } else {
+      toast.error(response.message);
+    }
+  }
+
   const handleSubmitForm = (e) => {
     const payload = { ...e };
     InventoryService.create(payload)
-      .then(({ status, message }) => {
-        if (status) {
-          toast.success(message);
-          reset();
-        } else {
-          toast.error(message);
-        }
-      })
-      .catch(({ message }) => {
-        toast.error(message);
-      });
+      .then((response) => handleSuccess(response))
+      .catch(({ message }) => toast.error(message));
   };
 
   // check if user is authenticated, if not redirect to login page
   useEffect(() => {
     InventoryService.getCompanies()
-      .then(({ result }) => {
-        setCompanies(result);
-      })
+      .then(({ result }) => setCompanies(result))
       .catch(() => setCompanies([]));
   }, []);
 
