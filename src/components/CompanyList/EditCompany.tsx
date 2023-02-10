@@ -11,6 +11,7 @@ import {
 import CompanyService from "../../services/company.service";
 import toast from "../../utils/toast.util";
 import PageHeading from "../../shared/components/PageHeading";
+import { ResponseModel } from "../../models/common.model";
 
 const EditCompany = () => {
   let { id } = useParams();
@@ -21,21 +22,21 @@ const EditCompany = () => {
   const { reset } = formContext;
   const handleClearForm = () => reset();
 
+  const handleSuccess = (response: ResponseModel) => {
+    if (response.status) {
+      toast.success(response.message);
+      reset();
+    } else {
+      toast.error(response.message);
+    }
+  }
+
   const handleSubmitForm = (e) => {
     if (!e.email || !e.name) return;
     const payload = { ...e };
     CompanyService.update(payload)
-      .then((response) => {
-        if (response.status) {
-          toast.success(response.message);
-          reset(response.result);
-        } else {
-          toast.error(response.message);
-        }
-      })
-      .catch(({ response }) => {
-        toast.error(response.data);
-      });
+      .then((response) => handleSuccess(response))
+      .catch(({ response }) => toast.error(response.data));
   };
 
   useEffect(() => {
