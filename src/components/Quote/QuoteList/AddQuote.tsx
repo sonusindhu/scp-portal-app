@@ -15,6 +15,7 @@ import {
 import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
 import QuoteService from "../../../services/quote.service";
 import DateFnsProvider from "../../../utils/DateFnsProvider";
+import { ResponseModel } from "../../../models/common.model";
 
 const AddQuote = (props) => {
   const [companies, setCompanies] = useState([]);
@@ -27,21 +28,21 @@ const AddQuote = (props) => {
     props.onCloseDrawer && props.onCloseDrawer();
   };
 
+  const handleSuccess = (response: ResponseModel) => {
+    if (response.status) {
+      toast.success(response.message);
+      props.onAddSuccess && props.onAddSuccess();
+      onCloseDrawer();
+    } else {
+      toast.error(response.message);
+    }
+  }
+
   const handleSubmitForm = (e) => {
     const payload = { ...e };
     QuoteService.create(payload)
-      .then((response) => {
-        if (response.status) {
-          toast.success(response.message);
-          props.onAddSuccess && props.onAddSuccess();
-          onCloseDrawer();
-        } else {
-          toast.error(response.message);
-        }
-      })
-      .catch(({ response }) => {
-        toast.error(response.message);
-      });
+      .then((response) => handleSuccess(response))
+      .catch(({ response }) => toast.error(response.message));
   };
 
   const serviceList = [{ id: "transportation", name: "Transportation" }];
@@ -57,7 +58,7 @@ const AddQuote = (props) => {
           setCompanies([]);
         }
       })
-      .catch(({ response }) => setCompanies([]));
+      .catch(() => setCompanies([]));
   }, []);
 
   const onChangeCompany = (e: number) => {
