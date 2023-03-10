@@ -15,7 +15,7 @@ const QuoteAccessorials = ({ control }) => {
     keyName: 'key'
   });
   
-  const onAddAcc = (index) => {
+  const onAddAcc = (index: number) => {
     insert(index + 1, {
       name: '',
       rate: null,

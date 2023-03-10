@@ -117,14 +117,6 @@ const AddQuote = (props) => {
             valueKey="id"
             labelKey="name"
           ></SelectElement>
-          {/* <MultiSelectElement
-            sx={{ m: 1, width: 375 }}
-            required
-            menuItems={transportModes}
-            name={"transportMode"}
-            label="Transport Mode"
-            showCheckbox={true}
-          ></MultiSelectElement> */}
 
           <SelectElement
             sx={{ m: 1, width: 375 }}

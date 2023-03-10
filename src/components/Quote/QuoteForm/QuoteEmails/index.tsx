@@ -17,10 +17,9 @@ const QuoteEmails = () => {
   };
 
   useEffect(() => {
-    QuoteService.getEmails(id)
-      .then((response) => {
-        setEmails(response);
-      });
+    if(id){
+      QuoteService.getEmails(+id).then((response) => setEmails(response));
+    }
   }, []);
 
   return (

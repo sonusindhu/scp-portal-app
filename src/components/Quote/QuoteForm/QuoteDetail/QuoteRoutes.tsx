@@ -58,13 +58,6 @@ const QuoteRoutes = ({ control }) => {
                 margin={"dense"}
                 variant="outlined"
               />
-              {/* <TextFieldElement
-                sx={{ m: 0.9, }}
-                name={"Miles"}
-                label="Miles"
-                margin={"dense"}
-                variant="outlined"
-              /> */}
             </div> 
           );  
         })}
