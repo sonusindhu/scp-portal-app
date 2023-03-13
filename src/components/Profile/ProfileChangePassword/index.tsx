@@ -5,10 +5,24 @@ import { useForm } from "react-hook-form";
 
 import toast from "../../../utils/toast.util";
 import AuthService from "../../../services/auth.service";
+import { ResponseModel } from "../../../models/common.model";
 
 const ProfileChangePassword = () => {
   const formContext = useForm({ defaultValues: {} });
   const { handleSubmit, reset } = formContext;
+
+  const handleResponse = (response: ResponseModel) => {
+    if (response.status) {
+      toast.success(response.message);
+      reset({
+        currentPassword: '',
+        password: '',
+        confirmPassword: '',
+      })
+    } else {
+      toast.error(response.message);
+    }
+  }
 
   const handleClearForm = () => reset();
 
@@ -16,21 +30,8 @@ const ProfileChangePassword = () => {
     if (!e.currentPassword || !e.password || !e.confirmPassword) return;
     const payload = { ...e };
     AuthService.updatePassword(payload)
-      .then((response) => {
-        if (response.status) {
-          toast.success(response.message);
-          reset({
-            currentPassword: '',
-            password: '',
-            confirmPassword: '',
-          })
-        } else {
-          toast.error(response.message);
-        }
-      })
-      .catch(({ response }) => {
-        toast.error(response.message);
-      });
+      .then((response) => handleResponse)
+      .catch(({ response }) => toast.error(response.message));
   };
 
   return (
