@@ -30,7 +30,7 @@ const ProfileChangePassword = () => {
     if (!e.currentPassword || !e.password || !e.confirmPassword) return;
     const payload = { ...e };
     AuthService.updatePassword(payload)
-      .then((response) => handleResponse)
+      .then((response) => handleResponse(response))
       .catch(({ response }) => toast.error(response.message));
   };
 
