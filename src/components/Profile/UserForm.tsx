@@ -1,52 +1,42 @@
 import React from "react";
 import {
   FormContainer,
-  TextFieldElement,
-  CheckboxElement,
+  TextFieldElement
 } from "react-hook-form-mui";
-import { useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import toast from "../../utils/toast.util";
 import AuthService from "../../services/auth.service";
 import UserProfileImage from "./UserProfileImage";
+import { ResponseModel } from "../../models/common.model";
 
 const UserForm = (props) => {
   const user = props.user || {};
   const formContext = useForm({ defaultValues: user });
   const {
-    control,
-    register,
     handleSubmit,
-    getValues,
-    setValue,
-    watch,
-    reset,
-    resetField
+    reset
   } = formContext;
 
-  const onUploadImage = ($event) => {
-    console.log($event);
-  };
-
   const handleClearForm = () => reset();
+
+
+  const handleSuccess = (response: ResponseModel) => {
+    if (response.status) {
+      toast.success(response.message);
+      reset({ ...response.result })
+    } else {
+      toast.error(response.message);
+    }
+  }
 
   const handleSubmitForm = (e) => {
     if (!e.firstName || !e.lastName || !e.email) return;
     const payload = { ...e };
     AuthService.updateProfile(payload)
-      .then((response) => {
-        if (response.status) {
-          toast.success(response.message);
-          reset({ ...response.result })
-        } else {
-          toast.error(response.message);
-        }
-      })
-      .catch(({ response }) => {
-        toast.error(response.message);
-      });
+      .then((response) => handleSuccess(response))
+      .catch(({ response }) => toast.error(response.message));
   };
 
   return (
