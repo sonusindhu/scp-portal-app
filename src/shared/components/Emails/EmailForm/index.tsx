@@ -15,7 +15,7 @@ import PageHeading from "../../PageHeading";
 
 const EmailForm = (props: EmailFormProps) => {
   let { id } = useParams();
-  const email: Email = props.email || {};
+  const email: Partial<Email> = props.email || {};
   const formContext = useForm({ defaultValues: email });
 
   const {

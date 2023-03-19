@@ -3,8 +3,8 @@ interface EmailListProps{
 }
 
 interface EmailFormProps {
-    id: number,
-    email: Email,
+    id?: number,
+    email: Partial<Email>,
     onSuccess: Function
   }
 
@@ -12,7 +12,7 @@ interface Email {
     companyId: number,
     contactId: number,
     createdAt: number,
-    id: number,
+    id?: number,
     inventoryId: number,
     isCritical: boolean,
     message: string,

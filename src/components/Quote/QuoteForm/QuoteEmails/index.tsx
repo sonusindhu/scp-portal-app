@@ -9,7 +9,7 @@ import { Email } from "../../../../shared/models/Email";
 const QuoteEmails = () => {
   let { id } = useParams();
   let [emails, setEmails] = useState<Email[]>([]);
-  let email: Email;
+  let [email, setEmail] = useState<Partial<Email>>({});
 
   const onSuccess = (event: Email) => {
     const email = [event];
