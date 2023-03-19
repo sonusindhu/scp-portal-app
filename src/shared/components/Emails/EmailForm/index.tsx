@@ -12,6 +12,7 @@ import QuoteService from "../../../../services/quote.service";
 import toast from "../../../../utils/toast.util";
 import { Email, EmailFormProps } from "../../../models/Email";
 import PageHeading from "../../PageHeading";
+import { ResponseModel } from "../../../../models/common.model";
 
 const EmailForm = (props: EmailFormProps) => {
   let { id } = useParams();
@@ -25,6 +26,16 @@ const EmailForm = (props: EmailFormProps) => {
 
   const handleClearForm = () => reset();
 
+  const handleSuccess = (response: ResponseModel) => {
+    if (response.status) {
+      toast.success(response.message);
+      reset({ isCritical: false, title: '', message: '' });
+      props.onSuccess(response.result);
+    } else {
+      toast.error(response.message);
+    }
+  }
+
   const handleSubmitForm = (e) => {
     if (!e.title || !e.message) return;
     const payload = { 
@@ -34,18 +45,8 @@ const EmailForm = (props: EmailFormProps) => {
       id: props.id || 0
     };
     QuoteService.createEmail(payload)
-      .then((response) => {
-        if (response.status) {
-          toast.success(response.message);
-          reset({ isCritical: false, title: '', message: '' });
-          props.onSuccess(response.result);
-        } else {
-          toast.error(response.message);
-        }
-      })
-      .catch(({ response }) => {
-        toast.error(response.message);
-      });
+      .then((response) => handleSuccess(response))
+      .catch(({ response }) => toast.error(response.message));
   };
 
   return (
