@@ -17,10 +17,10 @@ const QuoteTasks = () => {
   };
 
   useEffect(() => {
-    QuoteService.getTasks(id)
-      .then((response) => {
-        setTasks(response);
-      });
+    if(id){
+      QuoteService.getTasks(id)
+        .then((response) => setTasks(response));
+    }
   }, []);
 
   return (

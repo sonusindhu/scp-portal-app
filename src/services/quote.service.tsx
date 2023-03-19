@@ -67,7 +67,7 @@ const createTask = (payload) => {
   return axios.post(API_URL + "quote/createTask", payload).then(({ data }) => data);
 };
 
-const getTasks = (id: number, filter?) => {
+const getTasks = (id: string, filter?) => {
   return axios.post(API_URL + `quote/${id}/tasks`, { ...filter }).then(({ data }) => data.result);
 };
 

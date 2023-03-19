@@ -92,7 +92,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
 
         <TextFieldElement
           sx={{ m: 1 }}
-          required={isHazmat == 1}
+          required={isHazmat === 1}
           name={"cargoDetail.hazmatName"}
           label="Hazmat Name"
           variant="outlined"
@@ -100,7 +100,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
         />
         <TextFieldElement
           sx={{ m: 1 }}
-          required={isHazmat == 1}
+          required={isHazmat === 1}
           name={"cargoDetail.hazmatClass"}
           label="Hazmat Class"
           variant="outlined"
@@ -108,7 +108,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
         />
         <TextFieldElement
           sx={{ m: 1 }}
-          required={isHazmat == 1}
+          required={isHazmat === 1}
           name={"cargoDetail.hazmatUN"}
           label="Hazmat UN"
           variant="outlined"
