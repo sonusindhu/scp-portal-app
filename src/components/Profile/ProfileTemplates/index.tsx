@@ -1,10 +1,11 @@
 import React from "react";
+import PageHeading from "../../../shared/components/PageHeading";
 
 const ProfileTemplates = () => {
   
   return (
     <div className="container-fluid">
-      <h3>Templates</h3>
+      <PageHeading title="Templates" />
     </div>
   );
 };
