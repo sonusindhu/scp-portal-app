@@ -13,10 +13,11 @@ import { useForm } from "react-hook-form";
 import QuoteService from "../../../../services/quote.service";
 import toast from "../../../../utils/toast.util";
 import DateFnsProvider from "../../../../utils/DateFnsProvider";
-
-const TaskForm = (props) => {
+import { Task } from "../../../models/Task";
+type TaskProps ={ task: Partial<Task>, onSuccess: Function, id?:number };
+const TaskForm = (props: TaskProps) => {
   let { id } = useParams();
-  const task = props.task || {};
+  const task: Partial<Task> = props.task;
   const formContext = useForm({ defaultValues: task });
 
   const priorityList = [

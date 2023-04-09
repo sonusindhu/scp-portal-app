@@ -5,11 +5,13 @@ import { Grid } from "@material-ui/core";
 import QuoteService from "../../../../services/quote.service";
 import TasksList from "../../../../shared/components/Task/TasksList";
 import TaskForm from "../../../../shared/components/Task/TaskForm";
+import { Task } from "../../../../shared/models/Task";
 
 const QuoteTasks = () => {
   let { id } = useParams();
-  let [tasks, setTasks] = useState<any[]>([]);
-  const task = {};
+  let [tasks, setTasks] = useState<Task[]>([]);
+  let [task, setTask] = useState<Partial<Task>>({});
+  // let task: Partial<Task>;
 
   const onSuccess = (event) => {
     const task = [event];
@@ -28,7 +30,7 @@ const QuoteTasks = () => {
       
       <Grid item xs={4}>        
         <TaskForm task={task} onSuccess={onSuccess} />
-      `</Grid>
+      </Grid>
 
       <Grid item xs={8}>
         <TasksList tasks={tasks} />
