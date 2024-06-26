@@ -185,3 +185,14 @@ div.user-form{
   width: 46%;
   margin: 8px;
 }
+.add-remove-btn{
+  width: 110px;
+  display: inline-flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: row;
+  position: relative;
+}
+.add-remove-btn .MuiIconButton-colorPrimary{
+  width: 35px;
+}
