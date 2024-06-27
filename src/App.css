@@ -1,7 +1,22 @@
 body {
   padding: 0;
   margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+header a:hover {
+  color: white;
+}
+
 header.MuiAppBar-root a:hover,
 header.MuiAppBar-root a.active {
   color: white;
@@ -94,82 +109,81 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list {
   margin-top: 8px;
 }
 
-.container-fluid div.MuiCard-root.note-card{
+.container-fluid div.MuiCard-root.note-card {
   margin-top: 20px;
   background-color: #f7f1f1;
 }
 
-.sub-header .MuiChip-root{
+.sub-header .MuiChip-root {
   margin-left: 20px;
 }
 
-div.container-fluid.note-list{
+div.container-fluid.note-list {
   overflow-y: scroll;
   height: calc(100vh - 120px);
 }
 
-.note-list .note-card div.note-card-header{
+.note-list .note-card div.note-card-header {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.note-list .note-card div.note-card-content{
+.note-list .note-card div.note-card-content {
   padding-top: 0;
 }
 
-div.MuiAvatar-root.avatar-profile{
+div.MuiAvatar-root.avatar-profile {
   width: 100px;
   height: 100px;
   cursor: pointer;
 }
 
-.MuiDialog-container.MuiDialog-scrollPaper .MuiPaper-root{
+.MuiDialog-container.MuiDialog-scrollPaper .MuiPaper-root {
   max-width: 950px;
 }
 
-.MuiDialogContent-root.MuiDialogContent-dividers.user-image-dialog{
+.MuiDialogContent-root.MuiDialogContent-dividers.user-image-dialog {
   width: 900px;
 }
 
-
-.profile-container{
+.profile-container {
   display: flex;
   justify-content: space-around;
 }
-.profile-containe > div{
+.profile-containe > div {
   display: inline-block;
   width: 400px;
   height: 400px;
   text-align: center;
 }
 
-.user-header{
+.user-header {
   display: flex;
   padding: 10px 0;
 }
 
-.user-header .user-details{
+.user-header .user-details {
   margin-left: 20px;
 }
 
-.user-header .user-details p{
+.user-header .user-details p {
   margin: 5px;
 }
 
-.user-header .user-details p.full-name{
+.user-header .user-details p.full-name {
   font-size: 22px;
   font-weight: bold;
 }
 
-.user-header .user-details p.job-title{
+.user-header .user-details p.job-title {
   font-size: 18;
 }
 
-.MuiGrid-root.MuiGrid-item.left-user-form{
+.MuiGrid-root.MuiGrid-item.left-user-form {
   border-right: 2px solid #c2c2c2;
   margin-top: 9px;
 }
 
-div.user-form{
+div.user-form {
   height: calc(100vh - 260px);
   overflow: auto;
 }
@@ -185,7 +199,7 @@ div.user-form{
   width: 46%;
   margin: 8px;
 }
-.add-remove-btn{
+.add-remove-btn {
   width: 110px;
   display: inline-flex;
   -webkit-flex-direction: column;
@@ -193,6 +207,20 @@ div.user-form{
   flex-direction: row;
   position: relative;
 }
-.add-remove-btn .MuiIconButton-colorPrimary{
+.add-remove-btn .MuiIconButton-colorPrimary {
   width: 35px;
+}
+button.m-r-20 {
+  margin-right: 20px;
+}
+button.blue-btn {
+  background-color: #1976d2;
+  color: #fff;
+}
+button.blue-btn:hover {
+  background-color: #154e87;
+  color: #fff;
+}
+.MuiAppBar-colorPrimary {
+  background-color: #1976d2;
 }

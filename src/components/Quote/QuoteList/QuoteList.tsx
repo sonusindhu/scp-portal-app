@@ -51,12 +51,12 @@ const QuoteList = () => {
     gridRed.current?.api?.refreshServerSideStore();
   };
 
+  const onCreate = () => {
+    setAddDrawer(true);
+  };
+
   const menuCallbackFun = ({ event, data, menu }) => {
     switch (menu?.key) {
-      case "create":
-        setAddDrawer(true);
-        // navigate(`/app/quote/create`);
-        break;
       case "delete":
         deleteQuote([data.id]);
         break;
@@ -82,7 +82,17 @@ const QuoteList = () => {
         title="Quote List"
         menus={mainMenus}
         menuCallback={menuCallbackFun}
-      />
+      >
+        <Button
+          className="blue-btn m-r-20"
+          type="button"
+          size="large"
+          variant="contained"
+          onClick={onCreate}
+        >
+          Create
+        </Button>
+      </PageHeading>
 
       <GridListView
         innerRef={gridRed}

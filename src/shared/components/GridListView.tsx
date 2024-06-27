@@ -1,11 +1,11 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
-
+import "ag-grid-enterprise";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ServerSideRowModelModule } from "@ag-grid-enterprise/server-side-row-model";
 import { ModuleRegistry, GetRowIdFunc } from "@ag-grid-community/core";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import "ag-grid-enterprise";
+
 
 import GridTextFilterComponent from "./grid-filters/grid-text-filter.component/grid-text-filter.component";
 import GridService from "../../services/grid.service";

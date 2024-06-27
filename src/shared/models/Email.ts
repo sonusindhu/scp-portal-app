@@ -1,14 +1,14 @@
-interface EmailListProps{
+export interface EmailListProps{
     emails: Email[]
 }
 
-interface EmailFormProps {
+export interface EmailFormProps {
     id?: number,
     email: Partial<Email>,
     onSuccess: Function
   }
 
-interface Email {
+export interface Email {
     companyId: number,
     contactId: number,
     createdAt: number,
@@ -21,10 +21,4 @@ interface Email {
     type: string
     updatedAt: number,
     userId: number
-}
-
-export {
-    EmailListProps,
-    EmailFormProps,
-    Email
 }

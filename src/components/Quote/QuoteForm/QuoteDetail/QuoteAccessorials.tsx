@@ -85,7 +85,7 @@ const QuoteAccessorials = ({ control }) => {
 
                 <IconButton
                   color="primary"
-                  aria-label="Add Accessorial"
+                  aria-label="Remove Accessorial"
                   disabled={fields.length === 1}
                   onClick={() => onRemoveAcc(index)}
                 >

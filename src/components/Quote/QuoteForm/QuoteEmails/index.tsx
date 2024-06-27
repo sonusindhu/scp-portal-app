@@ -18,7 +18,7 @@ const QuoteEmails = () => {
 
   useEffect(() => {
     if(id){
-      QuoteService.getEmails(+id).then((response) => setEmails(response));
+      QuoteService.getEmails(+id).then((response: Email[]) => setEmails(response));
     }
   }, []);
 
