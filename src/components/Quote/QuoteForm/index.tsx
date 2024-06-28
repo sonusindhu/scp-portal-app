@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import axios from "../../../utils/config.util";
 import AuthService from "../../../services/auth.service";
 import QuoteService from "../../../services/quote.service";
-import PageHeading from "../../../shared/components/PageHeading";
+import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 
 import toast from "../../../utils/toast.util";
 import {

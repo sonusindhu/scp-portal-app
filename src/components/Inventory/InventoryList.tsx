@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { AgGridReact } from "@ag-grid-community/react";
 
-import PageHeading from "../../shared/components/PageHeading";
+import PageHeading from "../../shared/components/PageHeading/PageHeading";
 import InventoryService from "../../services/inventory.service";
 
 import toast from "../../utils/toast.util";

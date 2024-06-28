@@ -1,7 +1,7 @@
 import React from "react";
 import { TextFieldElement } from "react-hook-form-mui";
 import { useFieldArray } from "react-hook-form";
-import PageHeading from "../../../../shared/components/PageHeading";
+import PageHeading from "../../../../shared/components/PageHeading/PageHeading";
 
 const QuoteRoutes = ({ control }) => { 
 

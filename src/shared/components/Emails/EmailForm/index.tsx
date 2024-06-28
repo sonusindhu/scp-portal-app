@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import QuoteService from "../../../../services/quote.service";
 import toast from "../../../../utils/toast.util";
 import { Email, EmailFormProps } from "../../../models/Email";
-import PageHeading from "../../PageHeading";
+import PageHeading from "../../PageHeading/PageHeading";
 import { ResponseModel } from "../../../../models/common.model";
 
 const EmailForm = (props: EmailFormProps) => {

@@ -7,7 +7,7 @@ import {
   TextFieldElement,
   SelectElement,
 } from "react-hook-form-mui";
-import PageHeading from "../../shared/components/PageHeading";
+import PageHeading from "../../shared/components/PageHeading/PageHeading";
 import toast from "../../utils/toast.util";
 import InventoryService from "../../services/inventory.service";
 import { ResponseModel } from "../../models/common.model";

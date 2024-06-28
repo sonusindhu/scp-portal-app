@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { SelectElement, TextFieldElement } from "react-hook-form-mui";
-import PageHeading from "../../../../shared/components/PageHeading";
+import PageHeading from "../../../../shared/components/PageHeading/PageHeading";
 const hazmatOptions = [{id: 1, name: 'Yes'}, {id: 2, name: 'No'}];
 
 const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }) => { 

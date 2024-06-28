@@ -10,7 +10,7 @@ import {
 
 import CompanyService from "../../services/company.service";
 import toast from "../../utils/toast.util";
-import PageHeading from "../../shared/components/PageHeading";
+import PageHeading from "../../shared/components/PageHeading/PageHeading";
 import { ResponseModel } from "../../models/common.model";
 
 const EditCompany = () => {

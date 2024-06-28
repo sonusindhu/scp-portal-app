@@ -4,7 +4,7 @@ import { useFieldArray } from "react-hook-form";
 import { IconButton } from "@material-ui/core";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import RemoveCircleOutlinedIcon from "@mui/icons-material/RemoveCircleOutlined";
-import PageHeading from "../../../../shared/components/PageHeading";
+import PageHeading from "../../../../shared/components/PageHeading/PageHeading";
 
 const QuoteAccessorials = ({ control }) => {
   const { fields, remove, insert } = useFieldArray({

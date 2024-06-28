@@ -1,5 +1,5 @@
 import React from "react";
-import PageHeading from "../../../shared/components/PageHeading";
+import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 
 const ProfileIntegrations = () => {
   

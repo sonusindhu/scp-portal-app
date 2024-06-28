@@ -8,7 +8,7 @@ import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import ContactService from "../../services/contact.service";
-import PageHeading from "../../shared/components/PageHeading";
+import PageHeading from "../../shared/components/PageHeading/PageHeading";
 import toast from "../../utils/toast.util";
 import { ResponseModel } from "../../models/common.model";
 

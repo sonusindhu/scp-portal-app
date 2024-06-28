@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AgGridReact } from "@ag-grid-community/react";
 
 import GridListView from "../../shared/components/GridListView";
-import PageHeading from "../../shared/components/PageHeading";
+import PageHeading from "../../shared/components/PageHeading/PageHeading";
 import ContactService from "../../services/contact.service";
 import toast from "../../utils/toast.util";
 import ContactConfig from "./contact.config";
