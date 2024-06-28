@@ -7,7 +7,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 
-import GridTextFilterComponent from "../grid-filters/grid-text-filter.component/grid-text-filter.component";
+import GridTextFilterComponent from "./GridFilters/GridTextFilter/GridTextFilter";
 import GridService from "../../../services/grid.service";
 
 ModuleRegistry.registerModules([ServerSideRowModelModule]);

@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import GridHeaderCheckbox from "../../../shared/components/grid-header-checkbox.component";
-import GridActionMenu from "../../../shared/components/grid-action-menu.component";
+import GridHeaderCheckbox from "../../../shared/components/GridList/GridHeaderCheckbox";
+import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 import GridService from "../../../services/grid.service";
 import { MenuItem } from "../../../shared/models/MenuList.model";
 
