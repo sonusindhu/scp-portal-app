@@ -1,8 +1,6 @@
-# Getting Started with Create React App
+# Supply Chain Portal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-# run API Project for the backend APIs
+To run the application we need backend APIs, below are the repo you can clone for the APIs
 
 [APIs Project](https://github.com/sonusindhu/sc-portal-api)
 
