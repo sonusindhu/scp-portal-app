@@ -8,7 +8,7 @@ import InventoryService from "../../services/inventory.service";
 
 import toast from "../../utils/toast.util";
 import InventoryConfig from "./inventory.config";
-import GridListView from "../../shared/components/GridListView";
+import GridListView from "../../shared/components/GridList/GridListView";
 import { MenuItem } from "../../shared/models/MenuList.model";
 
 const InventoryList = () => {

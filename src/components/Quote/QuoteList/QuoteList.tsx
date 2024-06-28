@@ -8,7 +8,7 @@ import QuoteService from "../../../services/quote.service";
 
 import toast from "../../../utils/toast.util";
 import QuoteConfig from "./quote.config";
-import GridListView from "../../../shared/components/GridListView";
+import GridListView from "../../../shared/components/GridList/GridListView";
 import { MenuItem } from "../../../shared/models/MenuList.model";
 
 import AddQuote from "./AddQuote";

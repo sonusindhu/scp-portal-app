@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { AgGridReact } from "@ag-grid-community/react";
 
-import GridListView from "../../shared/components/GridListView";
+import GridListView from "../../shared/components/GridList/GridListView";
 import PageHeading from "../../shared/components/PageHeading/PageHeading";
 import CompanyService from "../../services/company.service";
 import toast from "../../utils/toast.util";
