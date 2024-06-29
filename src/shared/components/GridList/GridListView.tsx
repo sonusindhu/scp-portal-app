@@ -6,9 +6,9 @@ import { ModuleRegistry, GetRowIdFunc } from "@ag-grid-community/core";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
-
-import GridTextFilterComponent from "./GridFilters/GridTextFilter/GridTextFilter";
+import GridTextFilter from "./GridFilters/GridTextFilter/GridTextFilter";
 import GridService from "../../../services/grid.service";
+import GridMultiSelectFilter from "./GridFilters/GridMultiSelectFilter/GridMultiSelectFilter";
 
 ModuleRegistry.registerModules([ServerSideRowModelModule]);
 
@@ -40,7 +40,7 @@ const GridListView = (props) => {
   const overlayNoRowsTemplate = `<span className="ag-overlay-loading-center">No data found to display.</span>`;
 
   useEffect(() => {
-    let columns = columnDefs.map((item: any) => {
+    let columns = columnDefs.map((item) => {
       if (item.headerName === "Action") {
         item.cellRendererParams = {
           ...item.cellRendererParams,
@@ -65,7 +65,8 @@ const GridListView = (props) => {
         paginationPageSize={20}
         defaultColDef={props.options.defaultColDef}
         components={{
-          GridTextFilterComponent,
+          GridTextFilter,
+          GridMultiSelectFilter
         }}
         rowModelType={"serverSide"}
         serverSideStoreType={"partial"}

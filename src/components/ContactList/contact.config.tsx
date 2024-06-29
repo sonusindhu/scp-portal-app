@@ -25,7 +25,7 @@ const columnDefs = [
     pinned: "left",
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -39,7 +39,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -50,7 +50,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -61,7 +61,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -73,7 +73,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -84,7 +84,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -95,7 +95,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -106,7 +106,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -117,7 +117,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -128,7 +128,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -139,7 +139,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -150,7 +150,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -161,7 +161,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -173,7 +173,7 @@ const columnDefs = [
     lockPinned: true,
     suppressMenu: true,
     valueFormatter: GridService.dateFormatter,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -185,7 +185,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -198,7 +198,7 @@ const columnDefs = [
     lockPinned: true,
     suppressMenu: true,
     valueFormatter: GridService.dateFormatter,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -210,7 +210,7 @@ const columnDefs = [
     filter: true,
     lockPinned: true,
     suppressMenu: true,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
@@ -223,7 +223,7 @@ const columnDefs = [
     lockPinned: true,
     suppressMenu: true,
     valueFormatter: GridService.dateFormatter,
-    floatingFilterComponent: "GridTextFilterComponent",
+    floatingFilterComponent: "GridTextFilter",
     floatingFilterComponentParams: {
       suppressFilterButton: true,
     },
