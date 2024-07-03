@@ -224,3 +224,20 @@ button.blue-btn:hover {
 .MuiAppBar-colorPrimary {
   background-color: #1976d2;
 }
+.ag-header-row .ag-header-cell{
+  padding: 7px;
+}
+.ag-header-row .ag-header-cell .text-filter{
+  height: 24px;
+  padding-left: 10px;
+}
+.multi-select-filter.MuiInput-underline:hover:not(.Mui-disabled):before{
+  border-bottom: 1px solid rgb(118, 118, 118);
+}
+.multi-select-filter{
+  width: 93px;
+  border: 1px solid rgb(118, 118, 118);
+}
+.multi-select-filter .MuiSelect-select{
+  padding-left: 10px;
+}

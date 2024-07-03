@@ -224,13 +224,13 @@ const mainMenus: MenuItem[] = [
   },
 ];
 
-const listUrl: string = "quote/list";
+const listUrl = "quote/list";
 
-const InventoryConfig = {
+const QuoteListConfig = {
   columnDefs,
   defaultColDef,
   mainMenus,
   listUrl,
 };
 
-export default InventoryConfig;
+export default QuoteListConfig;

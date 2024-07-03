@@ -56,7 +56,7 @@ export default forwardRef((props: any, ref) => {
         value={currentValue}
         onChange={onChanged}
         displayEmpty
-        style={style}
+        className="multi-select-filter"
       >
         <MenuItem value="">Select</MenuItem>
         {props.column?.colDef?.dropdownData?.map((item) => (

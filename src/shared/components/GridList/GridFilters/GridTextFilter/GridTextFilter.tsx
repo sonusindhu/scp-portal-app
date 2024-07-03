@@ -51,6 +51,8 @@ export default forwardRef((props: any, ref) => {
         ref={inputRef}
         style={style}
         type="text"
+        className="text-filter"
+        placeholder="Search"
         onInput={onInputBoxChanged}
       />
     </Fragment>
