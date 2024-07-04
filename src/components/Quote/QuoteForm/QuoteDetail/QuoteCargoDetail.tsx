@@ -21,7 +21,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
       <PageHeading title="Cargo Details" />
       <div>
         <SelectElement
-          sx={{ m: 1, width: "20ch" }}
+          sx={{ m: 1, width: "15%" }}
           required
           options={equipments}
           name={"cargoDetail.equipmentId"}
@@ -30,7 +30,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
           valueKey="id"
         ></SelectElement>
         <SelectElement
-          sx={{ m: 1, width: "20ch" }}
+          sx={{ m: 1, width: "15%" }}
           required
           options={commodities}
           name={"cargoDetail.commodityId"}
@@ -40,7 +40,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
         ></SelectElement>
 
         <TextFieldElement
-          sx={{ m: 1, }}
+          sx={{ m: 1, width: "15%" }}
           required
           name={"cargoDetail.weight"}
           label="Weight"
@@ -48,7 +48,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
           margin={"dense"}
         />
         <TextFieldElement
-          sx={{ m: 1, }}
+          sx={{ m: 1, width: "15%" }}
           required
           name={"cargoDetail.cargoValue"}
           label="Cargo Value"
@@ -56,14 +56,14 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
           margin={"dense"}
         />
         <TextFieldElement
-          sx={{ m: 1, }}
+          sx={{ m: 1, width: "15%" }}
           name={"cargoDetail.temperature"}
           label="Temperature"
           margin={"dense"}
           variant="outlined"
         />
         <TextFieldElement
-          sx={{ m: 1, }}
+          sx={{ m: 1, width: "15%" }}
           name={"cargoDetail.pieces"}
           label="Pieces"
           margin={"dense"}
@@ -71,7 +71,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
         />
 
         <SelectElement
-          sx={{ m: 1, width: "20ch" }}
+          sx={{ m: 1, width: "15%" }}
           required
           options={cargos}
           name={"cargoDetail.cargoTypeId"}
@@ -81,7 +81,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
         ></SelectElement>
 
         <SelectElement
-          sx={{ m: 1, width: "20ch" }}
+          sx={{ m: 1, width: "15%" }}
           options={hazmatOptions}
           name={"cargoDetail.isHazmat"}
           label="Hazmat"
@@ -91,7 +91,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
 
 
         <TextFieldElement
-          sx={{ m: 1 }}
+          sx={{ m: 1, width: "15%" }}
           required={isHazmat === 1}
           name={"cargoDetail.hazmatName"}
           label="Hazmat Name"
@@ -99,7 +99,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
           validation={{ maxLength: 20 }}
         />
         <TextFieldElement
-          sx={{ m: 1 }}
+          sx={{ m: 1, width: "15%" }}
           required={isHazmat === 1}
           name={"cargoDetail.hazmatClass"}
           label="Hazmat Class"
@@ -107,7 +107,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
           validation={{ maxLength: 20 }}
         />
         <TextFieldElement
-          sx={{ m: 1 }}
+          sx={{ m: 1, width: "15%" }}
           required={isHazmat === 1}
           name={"cargoDetail.hazmatUN"}
           label="Hazmat UN"
