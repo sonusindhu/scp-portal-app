@@ -13,7 +13,9 @@ import { MenuItem } from "../../shared/models/MenuItem";
 const CompanyList = () => {
   let navigate = useNavigate();
   const gridRef = useRef<AgGridReact>(null);
-  const [mainMenus, setMainMenus] = useState<MenuItem[]>(CompanyConfig.mainMenus);
+  const [mainMenus, setMainMenus] = useState<MenuItem[]>(
+    CompanyConfig.mainMenus
+  );
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const deleteAction = (ids: number[]) => (
@@ -39,6 +41,10 @@ const CompanyList = () => {
     toast.warning("Are you sure, you want to delete?", {
       action: () => deleteAction(ids),
     });
+  };
+
+  const onCreate = () => {
+    navigate(`/app/company/create`);
   };
 
   const menuCallbackFun = ({ event, data, menu }) => {
@@ -72,7 +78,17 @@ const CompanyList = () => {
         title="Company List"
         menus={mainMenus}
         menuCallback={menuCallbackFun}
-      />
+      >
+        <Button
+          className="blue-btn m-r-20"
+          type="button"
+          size="large"
+          variant="contained"
+          onClick={onCreate}
+        >
+          Create
+        </Button>
+      </PageHeading>
 
       <GridListView
         innerRef={gridRef}
