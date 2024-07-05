@@ -259,11 +259,11 @@ const defaultColDef = {
 };
 
 const mainMenus = [
-  {
-    key: "create",
-    title: "Create",
-    alwaysEnable: true,
-  },
+  // {
+  //   key: "create",
+  //   title: "Create",
+  //   alwaysEnable: true,
+  // },
   {
     key: "deletes",
     title: "Delete",

@@ -13,7 +13,9 @@ import { MenuItem } from "../../shared/models/MenuItem";
 const ContactList = () => {
   let navigate = useNavigate();
   const gridRed = useRef<AgGridReact>(null);
-  const [mainMenus, setMainMenus] = useState<MenuItem[]>(ContactConfig.mainMenus);
+  const [mainMenus, setMainMenus] = useState<MenuItem[]>(
+    ContactConfig.mainMenus
+  );
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const deleteAction = (ids: number[]) => (
@@ -66,13 +68,27 @@ const ContactList = () => {
     }
   };
 
+  const onCreate = () => {
+    navigate(`/app/company/create`);
+  };
+
   return (
     <Fragment>
       <PageHeading
         title="Contact List"
         menus={mainMenus}
         menuCallback={menuCallbackFun}
-      />
+      >
+        <Button
+          className="blue-btn m-r-20"
+          type="button"
+          size="large"
+          variant="contained"
+          onClick={onCreate}
+        >
+          Create
+        </Button>
+      </PageHeading>
 
       <GridListView
         innerRef={gridRed}
