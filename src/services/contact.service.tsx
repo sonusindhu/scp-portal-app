@@ -48,7 +48,7 @@ const update = (payload) => {
 const getCompanies = () => {
   return axios
     .get(API_URL + "company/listOfNames")
-    .then(({ data }) => data)
+    .then(({ data }) => data.result)
 };
 
 const ContactService = {
