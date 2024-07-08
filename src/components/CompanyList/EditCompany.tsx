@@ -56,7 +56,7 @@ const EditCompany = () => {
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <div>
           <TextFieldElement
-            sx={{ m: 1.1, width: "52ch" }}
+            sx={{ m: 1.1, width: "31%" }}
             required
             name={"name"}
             label="Name"
@@ -64,7 +64,7 @@ const EditCompany = () => {
             margin={"dense"}
           />
           <TextFieldElement
-            sx={{ m: 1.1, width: "52ch" }}
+            sx={{ m: 1.1, width: "31%" }}
             required
             type={"email"}
             name={"email"}
@@ -74,7 +74,7 @@ const EditCompany = () => {
           />
 
           <SelectElement
-            sx={{ m: 1.1, width: "52ch" }}
+            sx={{ m: 1.1, width: "31%" }}
             required
             options={[
               {
@@ -97,7 +97,7 @@ const EditCompany = () => {
 
         <div>
           <SelectElement
-            sx={{ m: 1.1, width: "52ch" }}
+            sx={{ m: 1.1, width: "31%" }}
             required
             options={[
               {
@@ -118,7 +118,7 @@ const EditCompany = () => {
           ></SelectElement>
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "52ch" }}
+            sx={{ m: 1.1, width: "31%" }}
             required
             name={"revenue"}
             label="Revenue"
@@ -128,7 +128,7 @@ const EditCompany = () => {
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "52ch" }}
+            sx={{ m: 1.1, width: "31%" }}
             required
             name={"employeesCount"}
             label="Employees Count"
@@ -139,7 +139,7 @@ const EditCompany = () => {
         </div>
         <div>
           <TextFieldElement
-            sx={{ m: 1.1, width: "52ch" }}
+            sx={{ m: 1.1, width: "31%" }}
             required
             name={"address1"}
             label="Address1"
@@ -147,14 +147,14 @@ const EditCompany = () => {
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "52ch" }}
+            sx={{ m: 1.1, width: "31%" }}
             name={"address2"}
             label="Address2"
             variant="outlined"
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "52ch" }}
+            sx={{ m: 1.1, width: "31%" }}
             required
             name={"city"}
             label="City"
@@ -163,7 +163,7 @@ const EditCompany = () => {
         </div>
         <div>
           <TextFieldElement
-            sx={{ m: 1.1, width: "52ch" }}
+            sx={{ m: 1.1, width: "31%" }}
             required
             name={"state"}
             label="State"
@@ -171,7 +171,7 @@ const EditCompany = () => {
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "52ch" }}
+            sx={{ m: 1.1, width: "31%" }}
             required
             name={"country"}
             label="Country"
@@ -179,7 +179,7 @@ const EditCompany = () => {
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "52ch" }}
+            sx={{ m: 1.1, width: "31%" }}
             required
             name={"zipcode"}
             label="Zipcode"
@@ -189,7 +189,7 @@ const EditCompany = () => {
 
         <div>
           <TextFieldElement
-            sx={{ m: 1.1, width: "52ch" }}
+            sx={{ m: 1.1, width: "31%" }}
             required
             name={"phone"}
             label="Phone"
@@ -198,7 +198,7 @@ const EditCompany = () => {
           />
 
           <TextFieldElement
-            sx={{ m: 1.1, width: "52ch" }}
+            sx={{ m: 1.1, width: "31%" }}
             name={"extension"}
             label="Extension"
             validation={{ maxLength: 6 }}
