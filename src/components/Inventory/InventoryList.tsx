@@ -42,6 +42,10 @@ const InventoryList = () => {
     });
   };
 
+  const onCreate = () => {
+    navigate(`/app/inventory/create`);
+  };
+
   const menuCallbackFun = ({ event, data, menu }) => {
     switch (menu?.key) {
       case "create":
@@ -72,7 +76,17 @@ const InventoryList = () => {
         title="Inventory List"
         menus={mainMenus}
         menuCallback={menuCallbackFun}
-      />
+        >
+        <Button
+          className="blue-btn m-r-20"
+          type="button"
+          size="large"
+          variant="contained"
+          onClick={onCreate}
+        >
+          Create
+        </Button>
+      </PageHeading>
 
       <GridListView
         innerRef={gridRed}
