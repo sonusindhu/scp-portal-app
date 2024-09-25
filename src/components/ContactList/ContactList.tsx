@@ -69,7 +69,7 @@ const ContactList = () => {
   };
 
   const onCreate = () => {
-    navigate(`/app/company/create`);
+    navigate(`/app/contact/create`);
   };
 
   return (
