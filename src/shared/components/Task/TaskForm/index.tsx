@@ -114,7 +114,7 @@ const TaskForm = (props: TaskProps) => {
         <SelectElement
           valueKey="id"
           labelKey="value"
-          sx={{ m: 1, width: "46%" }}
+          sx={{ m: 1, width: "45%" }}
           required
           options={priorityList}
           name={"priority"}
@@ -123,7 +123,7 @@ const TaskForm = (props: TaskProps) => {
         <SelectElement
           valueKey="id"
           labelKey="value"
-          sx={{ m: 1, width: "47%" }}
+          sx={{ m: 1, width: "45%" }}
           required
           options={categoryList}
           name={"category"}
@@ -134,7 +134,7 @@ const TaskForm = (props: TaskProps) => {
         <SelectElement
           valueKey="id"
           labelKey="value"
-          sx={{ m: 1, width: "46%" }}
+          sx={{ m: 1, width: "45%" }}
           required
           options={assignedToList}
           name={"assignedTo"}
@@ -143,7 +143,7 @@ const TaskForm = (props: TaskProps) => {
         <SelectElement
           valueKey="id"
           labelKey="value"
-          sx={{ m: 1, width: "47%" }}
+          sx={{ m: 1, width: "45%" }}
           required
           options={pointOfContactList}
           name={"pointOfContact"}
