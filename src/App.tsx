@@ -92,7 +92,7 @@ const App = () => {
               <Route path="/app/quote/create" element={<AddQuote />} />
 
               <Route path="/app/company/:id" element={<CompanyForm />}>
-                <Route path="details" element={<EditContact />} />
+                <Route path="details" element={<EditCompany />} />
                 <Route path="notes" element={<CompanyNotes />} />
                 <Route path="emails" element={<CompanyEmails />} />
                 <Route path="tasks" element={<CompanyTasks />} />
