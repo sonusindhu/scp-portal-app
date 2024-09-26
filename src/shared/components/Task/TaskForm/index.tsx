@@ -14,40 +14,41 @@ import QuoteService from "../../../../services/quote.service";
 import toast from "../../../../utils/toast.util";
 import DateFnsProvider from "../../../../utils/DateFnsProvider";
 import { Task } from "../../../models/Task";
-type TaskProps ={ task: Partial<Task>, onSuccess: Function, id?:number };
+import TaskService from "../../../../services/task.service";
+type TaskProps = { task: Partial<Task>; onSuccess: Function; id?: number };
 const TaskForm = (props: TaskProps) => {
-  let { id } = useParams();
+  // let { id } = useParams();
   const task: Partial<Task> = props.task;
   const formContext = useForm({ defaultValues: task });
 
   const priorityList = [
-    { id: 1, value: 'High' },
-    { id: 2, value: 'Medium' },
-    { id: 3, value: 'Low' },
+    { id: 1, value: "High" },
+    { id: 2, value: "Medium" },
+    { id: 3, value: "Low" },
   ];
-  
+
   const categoryList = [
-    { id: 1, value: 'Call' },
-    { id: 2, value: 'Email' },
-    { id: 3, value: 'Reminder' },
+    { id: 1, value: "Call" },
+    { id: 2, value: "Email" },
+    { id: 3, value: "Reminder" },
   ];
 
   const assignedToList = [
-    { id: 1, value: 'Sonu Sindhu' },
-    { id: 2, value: 'Pulkit Kumawat' },
-    { id: 3, value: 'Tushar' },
+    { id: 1, value: "Sonu Sindhu" },
+    { id: 2, value: "Pulkit Kumawat" },
+    { id: 3, value: "Tushar" },
   ];
   const pointOfContactList = [
-    { id: 1, value: 'Sonu Sindhu' },
-    { id: 2, value: 'Pulkit Kumawat' },
-    { id: 3, value: 'Tushar' },
+    { id: 1, value: "Sonu Sindhu" },
+    { id: 2, value: "Pulkit Kumawat" },
+    { id: 3, value: "Tushar" },
   ];
-  
+
   const statusList = [
-    { id: 1, value: 'New' },
-    { id: 2, value: 'In Progress' },
-    { id: 2, value: 'Canceled' },
-    { id: 3, value: 'Completed' },
+    { id: 1, value: "New" },
+    { id: 2, value: "In Progress" },
+    { id: 2, value: "Canceled" },
+    { id: 3, value: "Completed" },
   ];
 
   const {
@@ -58,19 +59,14 @@ const TaskForm = (props: TaskProps) => {
     setValue,
     watch,
     reset,
-    resetField
+    resetField,
   } = formContext;
 
   const handleClearForm = () => reset();
 
   const handleSubmitForm = (e) => {
     if (!e.subject || !e.description) return;
-    const payload = { 
-      ...e,
-      quoteId: id,
-      id: props.id || 0
-    };
-    QuoteService.createTask(payload)
+    TaskService.create(e)
       .then((response) => {
         if (response.status) {
           toast.success(response.message);
@@ -86,9 +82,12 @@ const TaskForm = (props: TaskProps) => {
   };
 
   return (
-    <FormContainer formContext={formContext} onSuccess={handleSubmit(handleSubmitForm)}>  
-      <h3 style={{ marginLeft: "10px" }}>New Task</h3>   
-      <div>        
+    <FormContainer
+      formContext={formContext}
+      onSuccess={handleSubmit(handleSubmitForm)}
+    >
+      <h3 style={{ marginLeft: "10px" }}>New Task</h3>
+      <div>
         <TextFieldElement
           sx={{ m: 1, minWidth: "96%" }}
           required={true}
@@ -96,9 +95,9 @@ const TaskForm = (props: TaskProps) => {
           label="Subject"
           variant="outlined"
           validation={{ maxLength: 100 }}
-        />      
+        />
       </div>
-      <div>        
+      <div>
         <TextFieldElement
           sx={{ m: 1, minWidth: "96%" }}
           required={true}
@@ -108,9 +107,9 @@ const TaskForm = (props: TaskProps) => {
           validation={{ maxLength: 1000 }}
           multiline={true}
           rows={4}
-        />      
+        />
       </div>
-      <div>        
+      <div>
         <SelectElement
           valueKey="id"
           labelKey="value"
@@ -130,7 +129,7 @@ const TaskForm = (props: TaskProps) => {
           label="Category"
         ></SelectElement>
       </div>
-      <div>        
+      <div>
         <SelectElement
           valueKey="id"
           labelKey="value"
@@ -159,12 +158,15 @@ const TaskForm = (props: TaskProps) => {
         </div>
         <div className="reminder-date">
           <DateFnsProvider>
-            <DatePickerElement label="Reminder Date" name={"reminderDateTime"} />
+            <DatePickerElement
+              label="Reminder Date"
+              name={"reminderDateTime"}
+            />
           </DateFnsProvider>
         </div>
       </div>
 
-      <div>        
+      <div>
         <SelectElement
           valueKey="id"
           labelKey="value"
@@ -175,15 +177,10 @@ const TaskForm = (props: TaskProps) => {
           label="Status"
         ></SelectElement>
       </div>
-      
 
       <div style={{ marginLeft: "12px", marginTop: "15px" }}>
         <Stack direction="row" spacing={2}>
-          <Button
-            type={"submit"}
-            size="large"
-            variant="contained"
-          >
+          <Button type={"submit"} size="large" variant="contained">
             Save
           </Button>
           <Button
@@ -196,7 +193,7 @@ const TaskForm = (props: TaskProps) => {
           </Button>
         </Stack>
       </div>
-    </FormContainer>        
+    </FormContainer>
   );
 };
 

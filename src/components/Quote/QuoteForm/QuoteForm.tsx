@@ -1,34 +1,17 @@
 import React, { useEffect, useState } from "react";
-import {
-  FormContainer,
-  TextFieldElement,
-  SelectElement,
-} from "react-hook-form-mui";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
-import { Button, Stack } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 
-import axios from "../../../utils/config.util";
 import AuthService from "../../../services/auth.service";
 import QuoteService from "../../../services/quote.service";
-import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 
-import toast from "../../../utils/toast.util";
-import {
-  Box,
-  CircularProgress,
-  Drawer,
-  Grid,
-  Tab,
-  Tabs,
-  Typography,
-} from "@material-ui/core";
-import EditQuote from "./QuoteDetail/QuoteEdit";
+import { Grid, Tab, Tabs } from "@material-ui/core";
 
 const QuoteForm = (props) => {
+  const location = useLocation();
+  const pathname = location.pathname.split("/").pop();
   let { id } = useParams();
   let [isLoading, setIsLoading] = useState<boolean>(true);
-  let [selectedTab, setSelectedTab] = useState<string>("details");
+  let [selectedTab, setSelectedTab] = useState<string>(pathname ?? "details");
   let [quote, setQuote] = useState<any>({});
   const navigate = useNavigate();
 
@@ -66,15 +49,6 @@ const QuoteForm = (props) => {
   return (
     <div className="container-fluid">
       <Grid container spacing={2}>
-        {/* <Grid item xs={3}>
-          {isLoading ? (
-            <Box sx={{ display: "flex" }}>
-              <CircularProgress />
-            </Box>
-          ) : (
-            <EditQuote quote={quote} />
-          )}
-        </Grid> */}
         <Grid item xs={12}>
           <Tabs
             value={selectedTab}

@@ -59,7 +59,7 @@ const CompanyList = () => {
         selectedIds.length && deleteCompany(selectedIds);
         break;
       case "edit":
-        navigate(`/app/company/${data.id}/edit`);
+        navigate(`/app/company/${data.id}/details`);
         break;
       case "selectRow":
         setSelectedIds(data);

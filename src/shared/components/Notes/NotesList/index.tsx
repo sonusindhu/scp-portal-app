@@ -33,7 +33,7 @@ const NotesList = (props: NotesListProps) => {
       <h3>Notes({ props.notes.length })</h3>
       { props.notes.map( (note: Note) => (
 
-        <Card className="note-card">
+        <Card className="note-card" key={note.id}>
             <CardHeader
               className="note-card-header"
               avatar={

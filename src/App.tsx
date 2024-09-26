@@ -19,7 +19,7 @@ import AddInventory from "./components/Inventory/AddInventory";
 
 import AddQuote from "./components/Quote/QuoteList/AddQuote";
 import QuoteDetails from "./components/Quote/QuoteForm/QuoteDetail";
-import QuoteForm from "./components/Quote/QuoteForm";
+import QuoteForm from "./components/Quote/QuoteForm/QuoteForm";
 import QuoteNotes from "./components/Quote/QuoteForm/QuoteNotes";
 import QuoteEmails from "./components/Quote/QuoteForm/QuoteEmails";
 import QuoteTasks from "./components/Quote/QuoteForm/QuoteTasks";
@@ -27,6 +27,10 @@ import AuthWrapper from "./layouts/AuthWrapper/AuthWrapper";
 import ProfileChangePassword from "./components/Profile/ProfileChangePassword";
 import ProfileIntegrations from "./components/Profile/ProfileIntegrations";
 import ProfileTemplates from "./components/Profile/ProfileTemplates";
+import CompanyForm from "./components/CompanyList/CompanyForm/CompanyForm";
+import CompanyNotes from "./components/CompanyList/CompanyForm/CompanyNotes";
+import CompanyEmails from "./components/CompanyList/CompanyForm/CompanyEmails";
+import CompanyTasks from "./components/CompanyList/CompanyForm/CompanyTasks";
 
 const Home = lazy(() => import("./components/Home"));
 const CompanyList = lazy(() => import("./components/CompanyList/CompanyList"));
@@ -75,7 +79,7 @@ const App = () => {
             
               <Route path="/app/company/list" element={<CompanyList />} />
               <Route path="/app/company/create" element={<AddCompany />} />
-              <Route path="/app/company/:id/edit" element={<EditCompany />} />
+              {/* <Route path="/app/company/:id/edit" element={<EditCompany />} /> */}
 
               <Route path="/app/contact/list" element={<ContactList />} />
               <Route path="/app/contact/create" element={<AddContact />} />
@@ -87,7 +91,13 @@ const App = () => {
               <Route path="/app/quote/list" element={<QuoteList />} />
               <Route path="/app/quote/create" element={<AddQuote />} />
 
-              {/* <Route path="/app/quote/:id/details" element={<QuoteDetails />} /> */}
+              <Route path="/app/company/:id" element={<CompanyForm />}>
+                <Route path="details" element={<EditContact />} />
+                <Route path="notes" element={<CompanyNotes />} />
+                <Route path="emails" element={<CompanyEmails />} />
+                <Route path="tasks" element={<CompanyTasks />} />
+                <Route path="*" element={<Navigate to="details" replace />} />
+              </Route>
 
               <Route path="/app/quote/:id" element={<QuoteForm />}>
                 <Route path="details" element={<QuoteDetails />} />
