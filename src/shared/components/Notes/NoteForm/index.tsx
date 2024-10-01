@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import QuoteService from "../../../../services/quote.service";
 import toast from "../../../../utils/toast.util";
 import { Note } from "../../../models/Note";
+import NoteService from "../../../../services/note.service";
 
 interface NoteProps {
   id?: number,
@@ -35,14 +36,22 @@ const NoteForm = (props: NoteProps) => {
     const payload = { 
       ...e,
       isCritical: e.isCritical || false,
-      quoteId: id,
-      id: props.id || 0
+      // quoteId: id,
+      id: props.id,
+      type: note?.type,
+      companyId: note?.companyId,
     };
-    QuoteService.createNote(payload)
+    NoteService.create(payload)
       .then((response) => {
         if (response.status) {
           toast.success(response.message);
-          reset({ isCritical: false, title: '', message: '' });
+          reset({ 
+            isCritical: false, 
+            title: '',
+            message: '',
+            type: note?.type,
+            companyId: note?.companyId,
+          });
           props.onSuccess(response.result);
         } else {
           toast.error(response.message);
