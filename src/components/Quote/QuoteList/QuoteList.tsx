@@ -17,7 +17,7 @@ const QuoteList = () => {
   const gridRed = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(QuoteConfig.mainMenus);
   const [selectedIds, setSelectedIds] = useState<any[]>([]);
-
+  let navigate = useNavigate();
   const [addDrawer, setAddDrawer] = useState(false);
 
   const deleteAction = (ids) => (
@@ -64,6 +64,7 @@ const QuoteList = () => {
         selectedIds.length && deleteQuote(selectedIds);
         break;
       case "edit":
+        navigate(`/app/quote/${data.id}/details`);
         break;
       case "selectRow":
         setSelectedIds(data);

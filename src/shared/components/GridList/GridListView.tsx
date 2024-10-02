@@ -27,6 +27,7 @@ const GridListView = (props) => {
   };
 
   const onSelectionChanged = ($event) => {
+    
     const selectedRows = gridApi.getSelectedRows().map((item) => item.id);
     const data = {
       event: $event,
