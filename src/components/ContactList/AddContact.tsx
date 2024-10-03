@@ -41,7 +41,9 @@ const AddContact = () => {
 
   useEffect(() => {
     ContactService.getCompanies()
-      .then(({ result }) => setCompanies(result))
+      .then((companies) => {
+        setCompanies(companies)
+      })
       .catch(() => setCompanies([]));
   }, []);
 

@@ -40,6 +40,7 @@ const CompanyForm = (props) => {
             <Tab value="notes" label="Notes" />
             <Tab value="emails" label="Emails" />
             <Tab value="tasks" label="Tasks" />
+            <Tab value="contacts" label="Contacts" />
           </Tabs>
           <Outlet />
         </Grid>

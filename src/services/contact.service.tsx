@@ -32,6 +32,10 @@ const find = (id: number) => {
   return axios.get(`${API_URL}contact/find/${id}`).then(({ data }) => data);
 };
 
+const get = (fitlers = {}) => {
+  return axios.post(`${API_URL}contact/get`, fitlers).then(({ data }) => data);
+};
+
 const create = (payload) => {
   return axios
     .post(API_URL + "contact/create", payload)
@@ -52,6 +56,7 @@ const getCompanies = () => {
 };
 
 const ContactService = {
+  get,
   create,
   update,
   find,
