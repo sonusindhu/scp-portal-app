@@ -1,7 +1,7 @@
 import axios from "../utils/config.util";
 import { format } from "date-fns";
 
-const ServerSideDatasource = (listUrl) => {
+const ServerSideDatasource = (listUrl, defaultFilters = null) => {
   return {
     getRows: function (params) {
       const sort = params.request.sortModel.map((item) => {
@@ -10,6 +10,7 @@ const ServerSideDatasource = (listUrl) => {
       // const sort = params.request.sortModel.map((item) => {
       //   return { [`${item.colId}`]: item.sort };
       // });
+
       const filters = Object.keys(params.request.filterModel).map((key) => {
         const item = params.request.filterModel[key];
         return {
@@ -17,6 +18,14 @@ const ServerSideDatasource = (listUrl) => {
           filters: [{ field: key, operator: item.type, value: item.filter }],
         };
       });
+
+      if (defaultFilters) {
+        filters.push({
+          logic: "and",
+          filters: defaultFilters,
+        });
+      }
+
       const payload = {
         skip: params.request.startRow || 0,
         take: 20,

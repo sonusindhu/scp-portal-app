@@ -22,7 +22,8 @@ const GridListView = (props) => {
   const onGridReady = (params) => {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
-    var datasource = GridService.ServerSideDatasource(props.options.listUrl);
+    const defaultFilter = props.defaultFilters;
+    var datasource = GridService.ServerSideDatasource(props.options.listUrl, defaultFilter);
     params.api.setServerSideDatasource(datasource);
   };
 
