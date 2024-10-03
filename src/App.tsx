@@ -31,6 +31,7 @@ import CompanyForm from "./components/CompanyList/CompanyForm/CompanyForm";
 import CompanyNotes from "./components/CompanyList/CompanyForm/CompanyNotes";
 import CompanyEmails from "./components/CompanyList/CompanyForm/CompanyEmails";
 import CompanyTasks from "./components/CompanyList/CompanyForm/CompanyTasks";
+import CompanyContactList from "./components/CompanyList/CompanyForm/CompanyContacts";
 
 const Home = lazy(() => import("./components/Home"));
 const CompanyList = lazy(() => import("./components/CompanyList/CompanyList"));
@@ -96,6 +97,7 @@ const App = () => {
                 <Route path="notes" element={<CompanyNotes />} />
                 <Route path="emails" element={<CompanyEmails />} />
                 <Route path="tasks" element={<CompanyTasks />} />
+                <Route path="contacts" element={<CompanyContactList />} />
                 <Route path="*" element={<Navigate to="details" replace />} />
               </Route>
 
