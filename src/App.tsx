@@ -92,6 +92,7 @@ const App = () => {
               <Route path="/app/quote/list" element={<QuoteList />} />
               <Route path="/app/quote/create" element={<AddQuote />} />
 
+              {/* Company Form Routings */}
               <Route path="/app/company/:id" element={<CompanyForm />}>
                 <Route path="details" element={<EditCompany />} />
                 <Route path="notes" element={<CompanyNotes />} />
@@ -101,6 +102,7 @@ const App = () => {
                 <Route path="*" element={<Navigate to="details" replace />} />
               </Route>
 
+              {/* Quote Form Routings */}
               <Route path="/app/quote/:id" element={<QuoteForm />}>
                 <Route path="details" element={<QuoteDetails />} />
                 <Route path="notes" element={<QuoteNotes />} />
