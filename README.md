@@ -1,10 +1,13 @@
 # Supply Chain Portal
 
+
+[Frontend App](https://github.com/sonusindhu/scp-portal-app/tree/master/web-api)
+
 To run the application we need backend APIs, below are the repo you can clone for the APIs
 
-[APIs Project](https://github.com/sonusindhu/sc-portal-api)
+[Backend Rest APIs](https://github.com/sonusindhu/scp-portal-app/tree/master/web-app)
 
-## Available Scripts
+## Available Scripts for Front-end
 
 In the project directory, you can run this command to install the dependencies:
 ### `npm install`
@@ -14,20 +17,13 @@ Runs the app in the development mode.
 
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## Available Scripts for Back-end
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+In the project directory, you can run this command to install the dependencies:
+### `npm install`
 
-### `npm run build`
+Runs the app in the development mode.
+### `sails lift`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Open [http://localhost:1337](http://localhost:1337) to view it in your browser.
