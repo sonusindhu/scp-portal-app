@@ -17,6 +17,8 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 const VALID_SIZE_LIMIT = 5*1024*1024;
 
+const VALID_IMG_EXT = ['jpg', 'jpeg', 'gif', 'bmp', 'png'];
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -98,7 +100,7 @@ const UserProfileImage = (props) => {
 
   const isImage = (filename: string) => {    
     const ext = getExtension(filename);    
-    return ['jpg', 'jpeg', 'gif', 'bmp', 'png'].some(i => i.includes(ext));
+    return VALID_IMG_EXT.some(i => i.includes(ext));
   }
 
   const onBeforeFileLoad = (elem) => {
