@@ -7,7 +7,6 @@ import { Grid, Tab, Tabs } from "@material-ui/core";
 const CompanyForm = (props) => {
   const location = useLocation();
   const pathname = location.pathname.split('/').pop();
-  console.log(pathname)
   let { id } = useParams();
   let [selectedTab, setSelectedTab] = useState<string>(pathname ?? 'details');
   const navigate = useNavigate();

@@ -7,16 +7,17 @@ import {
 import { useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
-
-import QuoteService from "../../../../services/quote.service";
+import CancelIcon from "@mui/icons-material/Cancel";
 import toast from "../../../../utils/toast.util";
 import { Note } from "../../../models/Note";
 import NoteService from "../../../../services/note.service";
+import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
 
 interface NoteProps {
-  id?: number,
-  note: Note | any,
-  onSuccess: Function
+  id?: number;
+  note: Note | any;
+  onSuccess: Function;
+  onCloseDrawer: Function;
 }
 
 const NoteForm = (props: NoteProps) => {
@@ -24,19 +25,18 @@ const NoteForm = (props: NoteProps) => {
   const note: Note = props.note;
   const formContext = useForm({ defaultValues: note });
 
-  const {
-    handleSubmit,
-    reset,
-  } = formContext;
+  const { handleSubmit, reset } = formContext;
 
-  const handleClearForm = () => reset();
+  const handleClearForm = () => {
+    reset();
+    onCloseDrawer();
+  };
 
   const handleSubmitForm = (e) => {
     if (!e.title || !e.message) return;
-    const payload = { 
+    const payload = {
       ...e,
       isCritical: e.isCritical || false,
-      // quoteId: id,
       id: props.id,
       type: note?.type,
       companyId: note?.companyId,
@@ -45,10 +45,10 @@ const NoteForm = (props: NoteProps) => {
       .then((response) => {
         if (response.status) {
           toast.success(response.message);
-          reset({ 
-            isCritical: false, 
-            title: '',
-            message: '',
+          reset({
+            isCritical: false,
+            title: "",
+            message: "",
             type: note?.type,
             companyId: note?.companyId,
           });
@@ -62,57 +62,77 @@ const NoteForm = (props: NoteProps) => {
       });
   };
 
-  return (
-    <FormContainer formContext={formContext} onSuccess={handleSubmit(handleSubmitForm)}>  
-      <h3 style={{ marginLeft: "10px" }}>New Note</h3>   
-      <div>        
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "96%" }}
-          required={true}
-          name={"title"}
-          label="Note Title"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
-        />      
-      </div>
-      <div>        
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "96%" }}
-          required={true}
-          name={"message"}
-          label="Note Description"
-          variant="outlined"
-          validation={{ maxLength: 1000 }}
-          multiline={true}
-          rows={7}
-        />      
-      </div>
-      <div style={{ marginLeft: "10px" }}>
-        <CheckboxElement 
-          sx={{ m: 1 }}
-          name={"isCritical"} label="Mark Critical"/>
-      </div>
+  const onCloseDrawer = () => {
+    props.onCloseDrawer && props.onCloseDrawer();
+  };
 
-      <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-        <Stack direction="row" spacing={2}>
-          <Button
-            type={"submit"}
-            size="large"
-            variant="contained"
-          >
-            Save
-          </Button>
-          <Button
-            size="large"
+  return (
+    <Box sx={{ width: 400 }}>
+      <AppBar position="absolute" className="drawer-header">
+        <Toolbar>
+          <Box sx={{ width: 335 }}>
+            <Typography variant="inherit" color="inherit" noWrap>
+              Add Quote
+            </Typography>
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }} className="close-icon">
+            <CancelIcon onClick={onCloseDrawer} />
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <FormContainer
+        formContext={formContext}
+        onSuccess={handleSubmit(handleSubmitForm)}
+      >
+        <h3 style={{ marginLeft: "10px" }}>New Note</h3>
+        <div>
+          <TextFieldElement
+            sx={{ m: 1, minWidth: "96%" }}
+            required={true}
+            name={"title"}
+            label="Note Title"
             variant="outlined"
-            type="button"
-            onClick={handleClearForm}
-          >
-            Cancel
-          </Button>
-        </Stack>
-      </div>
-    </FormContainer>        
+            validation={{ maxLength: 100 }}
+          />
+        </div>
+        <div>
+          <TextFieldElement
+            sx={{ m: 1, minWidth: "96%" }}
+            required={true}
+            name={"message"}
+            label="Note Description"
+            variant="outlined"
+            validation={{ maxLength: 1000 }}
+            multiline={true}
+            rows={7}
+          />
+        </div>
+        <div style={{ marginLeft: "10px" }}>
+          <CheckboxElement
+            sx={{ m: 1 }}
+            name={"isCritical"}
+            label="Mark Critical"
+          />
+        </div>
+
+        <div style={{ marginLeft: "12px", marginTop: "15px" }}>
+          <Stack direction="row" spacing={2}>
+            <Button type={"submit"} size="large" variant="contained">
+              Save
+            </Button>
+            <Button
+              size="large"
+              variant="outlined"
+              type="button"
+              onClick={handleClearForm}
+            >
+              Cancel
+            </Button>
+          </Stack>
+        </div>
+      </FormContainer>
+    </Box>
   );
 };
 

@@ -7,7 +7,7 @@ const deleteRange = (ids: number[]) => {
     .then(({ data }) => data);
 };
 
-const get = (filters: {}) => {
+const get = (filters = {}) => {
   return axios.post(`${API_URL}note/list`, filters).then(({ data }) => data);
 };
 
