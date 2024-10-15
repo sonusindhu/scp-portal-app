@@ -117,11 +117,11 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list {
 .sub-header .MuiChip-root {
   margin-left: 20px;
 }
-
+/* 
 div.container-fluid.note-list {
   overflow-y: scroll;
   height: calc(100vh - 120px);
-}
+} */
 
 .note-list .note-card div.note-card-header {
   padding-top: 10px;
