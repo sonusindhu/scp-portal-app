@@ -18,7 +18,7 @@ interface TaskListProps {
   tasks: Task[],
 }
 
-const TasksList = (props: TaskListProps) => {
+const TasksListView = (props: TaskListProps) => {
   
   const taskSubHeader = (task: Task) => {
     const formattedDate =  format(new Date(task.createdAt), "dd/MM/yyyy p");
@@ -66,4 +66,4 @@ const TasksList = (props: TaskListProps) => {
   );
 };
 
-export default TasksList;
+export default TasksListView;
