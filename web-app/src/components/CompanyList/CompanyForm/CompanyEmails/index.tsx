@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import EmailList from "../../../../shared/components/Emails/EmailList";
+import EmailListView from "../../../../shared/components/Emails/EmailList/EmailListView";
 import { Grid } from "@material-ui/core";
 import EmailForm from "../../../../shared/components/Emails/EmailForm";
 import { Email } from "../../../../shared/models/Email";
@@ -35,7 +35,7 @@ const CompanyEmails = () => {
       </Grid>
 
       <Grid item xs={8}>
-        <EmailList emails={emails} />
+        <EmailListView emails={emails} />
       </Grid>
     </Grid>
   );

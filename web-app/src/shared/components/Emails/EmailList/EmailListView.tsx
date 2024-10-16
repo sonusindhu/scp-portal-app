@@ -14,7 +14,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Email, EmailListProps } from "../../../models/Email";
 import { Chip } from "@material-ui/core";
 
-const EmailList = (props: EmailListProps) => {
+const EmailListView = (props: EmailListProps) => {
   
   const emailSubHeader = (email: Email) => {
     const formattedDate =  format(new Date(email.createdAt), "dd/MM/yyyy p");
@@ -61,4 +61,4 @@ const EmailList = (props: EmailListProps) => {
   );
 };
 
-export default EmailList;
+export default EmailListView;
