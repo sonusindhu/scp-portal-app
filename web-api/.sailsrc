@@ -7,7 +7,8 @@
     "sails-generate": "2.0.6"
   },
   "hooks": {
-    "grunt": false
+    "grunt": false,
+    "sockets" : false
   },
   "paths": {
     "tmp": "assets",
