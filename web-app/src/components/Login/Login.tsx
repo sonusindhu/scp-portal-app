@@ -56,10 +56,12 @@ const Login = () => {
     setMessage("");
     setLoading(true);
 
-    AuthService.login(username, password).then(
-      (response) => handleSuccess(response),
-      (error) => handleError(error)
-    );
+    AuthService.login(username, password)
+      .then(
+        (response) => handleSuccess(response),
+        (error) => handleError(error)
+      )
+      .catch((error) => handleError(error));
   };
 
   return (
