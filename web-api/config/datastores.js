@@ -45,7 +45,7 @@ module.exports.datastores = {
      *    (See https://sailsjs.com/config/datastores for help.)                 *
      *                                                                          *
      ***************************************************************************/
-    adapter: "sails-mysql",
-    url: "mysql://root@localhost:3306/sails_scpapi",
+    adapter: process.env.DB_ADAPTER || "sails-mysql",
+    url: process.env.DB_URL || "mysql://root@localhost:3306/sails_scpapi",
   },
 };

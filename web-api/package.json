@@ -14,7 +14,8 @@
     "sails-hook-orm": "^4.0.0",
     "sails-hook-sockets": "^2.0.0",
     "sails-hook-swagger-generator": "^3.3.0",
-    "sails-mysql": "^2.0.0"
+    "sails-mysql": "^2.0.0",
+    "sails-postgresql": "^5.0.1"
   },
   "devDependencies": {
     "eslint": "5.16.0"
