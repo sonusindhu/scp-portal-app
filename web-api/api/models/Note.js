@@ -19,7 +19,7 @@ module.exports = {
     message: {
       type: "string",
       maxLength: 5000,
-      columnType: "longtext",
+      columnType: "text",
     },
     isCritical: {
       type: "boolean",

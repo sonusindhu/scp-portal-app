@@ -19,17 +19,17 @@ module.exports = {
     message: {
       type: "string",
       maxLength: 5000,
-      columnType: "longtext",
+      columnType: "text",
     },
-    to: {
+    toEmail: {
       type: "string",
       maxLength: 5000,
-      columnType: "longtext",
+      columnType: "text",
     },
-    from: {
+    fromEmail: {
       type: "string",
       maxLength: 5000,
-      columnType: "longtext",
+      columnType: "text",
     },
     isCritical: {
       type: "boolean",

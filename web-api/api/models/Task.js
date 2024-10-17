@@ -19,18 +19,18 @@ module.exports = {
     description: {
       type: "string",
       maxLength: 5000,
-      columnType: "longtext",
+      columnType: "text",
     },
     priority: {
       type: "string",
     },
     dueDateTime: {
       type: "ref",
-      columnType: "datetime",
+      columnType: "timestamp",
     },
     reminderDateTime: {
       type: "ref",
-      columnType: "datetime",
+      columnType: "timestamp",
     },
     category: {
       type: "string",
