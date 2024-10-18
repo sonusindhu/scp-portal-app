@@ -26,11 +26,11 @@ module.exports = {
     },
     dueDateTime: {
       type: "ref",
-      columnType: "timestamp",
+      columnType: "datetime",
     },
     reminderDateTime: {
       type: "ref",
-      columnType: "timestamp",
+      columnType: "datetime",
     },
     category: {
       type: "string",

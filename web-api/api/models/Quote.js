@@ -39,7 +39,7 @@ module.exports = {
     },
     expiryDate: {
       type: "ref",
-      columnType: "timestamp",
+      columnType: "datetime",
     },
     totalMiles: {
       type: "number",
