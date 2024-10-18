@@ -66,7 +66,7 @@ const Login = () => {
 
   return (
     <div>
-      <AppBar position="static" color="primary">
+      {/* <AppBar position="static" color="primary">
         <Toolbar>
           <Grid container justifyContent="center" wrap="wrap">
             <Grid item>
@@ -74,7 +74,7 @@ const Login = () => {
             </Grid>
           </Grid>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <Grid container spacing={0} justifyContent="center" direction="row">
         <Grid item>
           <Grid
