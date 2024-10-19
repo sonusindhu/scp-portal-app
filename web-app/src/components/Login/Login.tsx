@@ -90,8 +90,12 @@ const Login = () => {
               className="login-background"
             >
               <Grid item>
+                <Typography component="h1" variant="h5" className="app-title">
+                  SCP APP
+                </Typography>
+
                 <Typography component="h1" variant="h5" className="login-title">
-                  Sign in
+                  Login
                 </Typography>
               </Grid>
               <Grid item>
