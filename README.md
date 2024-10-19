@@ -15,18 +15,21 @@ Welcome to the SCP Portal App! This project consists of two main components: a f
 
 ## Overview
 
-The SCP Portal App is designed to [brief description of the app's purpose, features, and functionality].
+The SCP Portal App is designed to learn the basic concept of the React, salisjs(Nodejs). This application includes following modules and keep involving more...
+1. Companies
+2. Contacts
+3. Inventories
+4. Quotes
+5. User Profile
 
 ## Directory Structure
 
 ```plaintext
 scp-portal-app/
 │
-├── web-app/          # Frontend application
+├── web-app/      # Frontend application
 │
-└── web-api/          # Backend API
-│
-└── db/import.sql     # Sql to Import
+└── web-api/      # Backend API
 ```
 
 
@@ -42,9 +45,6 @@ scp-portal-app/
 
 ### Database:
 - MySQL/MariaDB
-
-### Other Tools:
-- [Any additional tools or libraries]
 
 ## Getting Started
 
@@ -94,10 +94,7 @@ To set up the project locally, follow these steps:
 
 The API provides endpoints for various functionalities. Below are some key endpoints:
 
-- **GET** `/api/example`: Retrieve example data.
-- **POST** `/api/example`: Create a new example entry.
-- **PUT** `/api/example/:id`: Update an existing example entry.
-- **DELETE** `/api/example/:id`: Delete an example entry.
+To review the APIs, go to routing settings in the backend configuration file. under `web-api/config/routes.js`
 
 ## Database Setup
 
@@ -109,6 +106,11 @@ The API provides endpoints for various functionalities. Below are some key endpo
    ```bash
    adapter: process.env.DB_ADAPTER || "sails-mysql",
    url: process.env.DB_URL || "mysql://root@localhost:3306/sails_scpapi",
+    ```
+5. Update the database model settings in the backend configuration file. under `web-api/config/model.js`, after the migration is done, just make it `migrate: "safe"`
+   
+   ```bash
+   migrate: "alter"
     ```
 
 ## Contributing
