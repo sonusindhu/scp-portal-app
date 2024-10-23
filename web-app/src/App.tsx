@@ -15,7 +15,7 @@ import EventBus from "./common/EventBus";
 import AddContact from "./components/ContactList/AddContact";
 import EditContact from "./components/ContactList/EditContact";
 import AppHeader from "./layouts/AppHeader/AppHeader";
-import AddInventory from "./components/Inventory/AddInventory";
+import AddInventory from "./components/Inventory/InventoryList/AddInventory";
 
 import AddQuote from "./components/Quote/QuoteList/AddQuote";
 import QuoteDetails from "./components/Quote/QuoteForm/QuoteDetail";
@@ -36,7 +36,7 @@ import CompanyContactList from "./components/CompanyList/CompanyForm/CompanyCont
 const Home = lazy(() => import("./components/Home"));
 const CompanyList = lazy(() => import("./components/CompanyList/CompanyList"));
 const InventoryList = lazy(
-  () => import("./components/Inventory/InventoryList")
+  () => import("./components/Inventory/InventoryList/InventoryList")
 );
 const ContactList = lazy(() => import("./components/ContactList/ContactList"));
 const QuoteList = lazy(() => import("./components/Quote/QuoteList/QuoteList"));

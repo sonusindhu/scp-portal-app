@@ -241,3 +241,7 @@ button.blue-btn:hover {
 .multi-select-filter .MuiSelect-select{
   padding-left: 10px;
 }
+.form-container form{
+  padding-top: 75px;
+  padding-bottom: 80px;
+}
