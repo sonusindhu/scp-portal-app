@@ -1,15 +1,16 @@
 import React, { useState, Fragment, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import { Button, Drawer } from "@material-ui/core";
 import { AgGridReact } from "@ag-grid-community/react";
 
-import PageHeading from "../../shared/components/PageHeading/PageHeading";
-import InventoryService from "../../services/inventory.service";
+import PageHeading from "../../../shared/components/PageHeading/PageHeading";
+import InventoryService from "../../../services/inventory.service";
 
-import toast from "../../utils/toast.util";
+import toast from "../../../utils/toast.util";
 import InventoryConfig from "./inventory.config";
-import GridListView from "../../shared/components/GridList/GridListView";
-import { MenuItem } from "../../shared/models/MenuList.model";
+import GridListView from "../../../shared/components/GridList/GridListView";
+import { MenuItem } from "../../../shared/models/MenuList.model";
+import AddInventory from "./AddInventory";
 
 const InventoryList = () => {
   let navigate = useNavigate();
@@ -18,6 +19,7 @@ const InventoryList = () => {
     InventoryConfig.mainMenus
   );
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [addDrawer, setAddDrawer] = useState(false);
 
   const deleteAction = (ids: number[]) => (
     <Fragment>
@@ -42,8 +44,17 @@ const InventoryList = () => {
     });
   };
 
+  const closeDrawer = () => {
+    setAddDrawer(false);
+  };
+
+  const onAddSuccess = () => {
+    gridRed.current?.api?.refreshServerSideStore();
+  };
+
   const onCreate = () => {
-    navigate(`/app/inventory/create`);
+    setAddDrawer(true);
+    // navigate(`/app/inventory/create`);
   };
 
   const menuCallbackFun = ({ event, data, menu }) => {
@@ -93,6 +104,15 @@ const InventoryList = () => {
         options={InventoryConfig}
         callbackFun={menuCallbackFun}
       />
+
+      <Drawer
+        anchor="right"
+        open={addDrawer}
+        onClose={closeDrawer}
+        ModalProps={{ disableEnforceFocus: true }}
+      >
+        <AddInventory onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
+      </Drawer>
     </Fragment>
   );
 };
