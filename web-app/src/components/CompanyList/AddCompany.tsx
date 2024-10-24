@@ -1,6 +1,9 @@
 import React from "react";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
+import CancelIcon from "@mui/icons-material/Cancel";
+
 import {
   FormContainer,
   TextFieldElement,
@@ -9,10 +12,9 @@ import {
 
 import CompanyService from "../../services/company.service";
 import toast from "../../utils/toast.util";
-import PageHeading from "../../shared/components/PageHeading/PageHeading";
 import { ResponseModel } from "../../models/common.model";
 
-const AddCompany = () => {
+const AddCompany = (props) => {
   const formContext = useForm({
     defaultValues: {},
   });
@@ -21,14 +23,20 @@ const AddCompany = () => {
     reset();
   };
 
+  const onCloseDrawer = () => {
+    props.onCloseDrawer && props.onCloseDrawer();
+  };
+
   const handleSuccess = (response: ResponseModel) => {
     if (response.status) {
       toast.success(response.message);
+      props.onAddSuccess && props.onAddSuccess();
+      onCloseDrawer();
       reset();
     } else {
       toast.error(response.message);
     }
-  }
+  };
 
   const handleSubmitForm = (e) => {
     if (!e.email || !e.name) return;
@@ -39,185 +47,190 @@ const AddCompany = () => {
   };
 
   return (
-    <div className="container-fluid">
-      <PageHeading title="Add Company" />
+    <Box sx={{ width: 400 }} className="form-container">
+      <AppBar position="absolute" className="drawer-header">
+        <Toolbar>
+          <Box sx={{ width: 335 }}>
+            <Typography variant="inherit" color="inherit" noWrap>
+              Add Company
+            </Typography>
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }} className="close-icon">
+            <CancelIcon onClick={onCloseDrawer} />
+          </Box>
+        </Toolbar>
+      </AppBar>
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
-        <div>
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"name"}
-            label="Name"
-            variant="outlined"
-            margin={"dense"}
-          />
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            type={"email"}
-            name={"email"}
-            label="Email"
-            margin={"dense"}
-            variant="outlined"
-          />
+        <TextFieldElement
+          sx={{ m: 1, width: 375 }}
+          required
+          name={"name"}
+          label="Name"
+          variant="outlined"
+          margin={"dense"}
+        />
+        <TextFieldElement
+          sx={{ m: 1, width: 375 }}
+          required
+          type={"email"}
+          name={"email"}
+          label="Email"
+          margin={"dense"}
+          variant="outlined"
+        />
 
-          <SelectElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            options={[
-              {
-                id: "",
-                title: "Select",
-              },
-              {
-                id: "active",
-                title: "active",
-              },
-              {
-                id: "active",
-                title: "Inactive",
-              },
-            ]}
-            name={"status"}
-            label="Status"
-          ></SelectElement>
-        </div>
+        <SelectElement
+          sx={{ m: 1, width: 375 }}
+          required
+          options={[
+            {
+              id: "",
+              title: "Select",
+            },
+            {
+              id: "active",
+              title: "active",
+            },
+            {
+              id: "active",
+              title: "Inactive",
+            },
+          ]}
+          name={"status"}
+          label="Status"
+        ></SelectElement>
 
-        <div>
-          <SelectElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            options={[
-              {
-                id: "",
-                title: "Select",
-              },
-              {
-                id: "customer",
-                title: "Customer",
-              },
-              {
-                id: "carrier",
-                title: "Carrier",
-              },
-            ]}
-            name={"type"}
-            label="Type"
-          ></SelectElement>
+        <SelectElement
+          sx={{ m: 1, width: 375 }}
+          required
+          options={[
+            {
+              id: "",
+              title: "Select",
+            },
+            {
+              id: "customer",
+              title: "Customer",
+            },
+            {
+              id: "carrier",
+              title: "Carrier",
+            },
+          ]}
+          name={"type"}
+          label="Type"
+        ></SelectElement>
 
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"revenue"}
-            label="Revenue"
-            variant="outlined"
-            validation={{ maxLength: 10 }}
-            type={"number"}
-          />
+        <TextFieldElement
+          sx={{ m: 1, width: 375 }}
+          required
+          name={"revenue"}
+          label="Revenue"
+          variant="outlined"
+          validation={{ maxLength: 10 }}
+          type={"number"}
+        />
 
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"employeesCount"}
-            label="Employees Count"
-            variant="outlined"
-            validation={{ maxLength: 5 }}
-            type={"number"}
-          />
-        </div>
-        <div>
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"address1"}
-            label="Address1"
-            variant="outlined"
-          />
+        <TextFieldElement
+          sx={{ m: 1, width: 375 }}
+          required
+          name={"employeesCount"}
+          label="Employees Count"
+          variant="outlined"
+          validation={{ maxLength: 5 }}
+          type={"number"}
+        />
 
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            name={"address2"}
-            label="Address2"
-            variant="outlined"
-          />
+        <TextFieldElement
+          sx={{ m: 1, width: 375 }}
+          required
+          name={"address1"}
+          label="Address1"
+          variant="outlined"
+        />
 
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"city"}
-            label="City"
-            variant="outlined"
-          />
-        </div>
-        <div>
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"state"}
-            label="State"
-            variant="outlined"
-          />
+        <TextFieldElement
+          sx={{ m: 1, width: 375 }}
+          name={"address2"}
+          label="Address2"
+          variant="outlined"
+        />
 
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"country"}
-            label="Country"
-            variant="outlined"
-          />
+        <TextFieldElement
+          sx={{ m: 1, width: 375 }}
+          required
+          name={"city"}
+          label="City"
+          variant="outlined"
+        />
 
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"zipcode"}
-            label="Zipcode"
-            variant="outlined"
-          />
-        </div>
+        <TextFieldElement
+          sx={{ m: 1, width: 375 }}
+          required
+          name={"state"}
+          label="State"
+          variant="outlined"
+        />
 
-        <div>
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"phone"}
-            label="Phone"
-            validation={{ maxLength: 15, minLength: 8 }}
-            variant="outlined"
-          />
+        <TextFieldElement
+          sx={{ m: 1, width: 375 }}
+          required
+          name={"country"}
+          label="Country"
+          variant="outlined"
+        />
 
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            name={"extension"}
-            label="Extension"
-            validation={{ maxLength: 6 }}
-            type={"number"}
-            variant="outlined"
-          />
-        </div>
+        <TextFieldElement
+          sx={{ m: 1, width: 375 }}
+          required
+          name={"zipcode"}
+          label="Zipcode"
+          variant="outlined"
+        />
 
-        <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-          <Stack direction="row" spacing={2}>
-            <Button
-              type={"submit"}
-              size="large"
-              variant="contained"
-              onClick={handleSubmitForm}
-            >
-              Save
-            </Button>
-            <Button
-              size="large"
-              variant="outlined"
-              type="button"
-              onClick={handleClearForm}
-            >
-              Cancel
-            </Button>
-          </Stack>
+        <TextFieldElement
+          sx={{ m: 1, width: 375 }}
+          required
+          name={"phone"}
+          label="Phone"
+          validation={{ maxLength: 15, minLength: 8 }}
+          variant="outlined"
+        />
+
+        <TextFieldElement
+          sx={{ m: 1, width: 375 }}
+          name={"extension"}
+          label="Extension"
+          validation={{ maxLength: 6 }}
+          type={"number"}
+          variant="outlined"
+        />
+        <div className="drawer-footer">
+          <div style={{ marginLeft: "12px", marginTop: "15px" }}>
+            <Stack direction="row" spacing={2}>
+              <Button
+                type={"submit"}
+                size="large"
+                variant="contained"
+                onClick={handleSubmitForm}
+              >
+                Save
+              </Button>
+              <Button
+                size="large"
+                variant="outlined"
+                type="button"
+                onClick={onCloseDrawer}
+              >
+                Close
+              </Button>
+            </Stack>
+          </div>
         </div>
       </FormContainer>
-    </div>
+    </Box>
   );
 };
 

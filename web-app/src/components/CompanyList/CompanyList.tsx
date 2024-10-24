@@ -1,5 +1,5 @@
 import React, { useState, Fragment, useRef } from "react";
-import { Button } from "@mui/material";
+import { Button, Drawer } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { AgGridReact } from "@ag-grid-community/react";
 
@@ -9,6 +9,7 @@ import CompanyService from "../../services/company.service";
 import toast from "../../utils/toast.util";
 import CompanyConfig from "./company.config";
 import { MenuItem } from "../../shared/models/MenuItem";
+import AddCompany from "./AddCompany";
 
 const CompanyList = () => {
   let navigate = useNavigate();
@@ -17,6 +18,7 @@ const CompanyList = () => {
     CompanyConfig.mainMenus
   );
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [addDrawer, setAddDrawer] = useState(false);
 
   const deleteAction = (ids: number[]) => (
     <Fragment>
@@ -44,7 +46,16 @@ const CompanyList = () => {
   };
 
   const onCreate = () => {
-    navigate(`/app/company/create`);
+    setAddDrawer(true);
+    // navigate(`/app/company/create`);
+  };
+
+  const closeDrawer = () => {
+    setAddDrawer(false);
+  };
+
+  const onAddSuccess = () => {
+    gridRef.current?.api?.refreshServerSideStore();
   };
 
   const menuCallbackFun = ({ event, data, menu }) => {
@@ -95,6 +106,16 @@ const CompanyList = () => {
         options={CompanyConfig}
         callbackFun={menuCallbackFun}
       />
+
+      <Drawer
+        anchor="right"
+        open={addDrawer}
+        onClose={closeDrawer}
+        ModalProps={{ disableEnforceFocus: true }}
+      >
+        <AddCompany onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
+      </Drawer>
+
     </Fragment>
   );
 };
