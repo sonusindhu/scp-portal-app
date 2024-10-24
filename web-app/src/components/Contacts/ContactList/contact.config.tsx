@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import GridHeaderCheckbox from "../../shared/components/GridList/GridHeaderCheckbox/GridHeaderCheckbox";
-import GridActionMenu from "../../shared/components/GridList/GridActionMenu/GridActionMenu";
-import GridService from "../../services/grid.service";
+import GridHeaderCheckbox from "../../../shared/components/GridList/GridHeaderCheckbox/GridHeaderCheckbox";
+import GridActionMenu from "../../../shared/components/GridList/GridActionMenu/GridActionMenu";
+import GridService from "../../../services/grid.service";
 
 const columnDefs = [
   {

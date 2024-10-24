@@ -1,22 +1,24 @@
 import React, { useState, useEffect, Fragment, useRef } from "react";
-import { Button } from "@mui/material";
+import { Button, Drawer } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { AgGridReact } from "@ag-grid-community/react";
 
-import GridListView from "../../shared/components/GridList/GridListView";
-import PageHeading from "../../shared/components/PageHeading/PageHeading";
-import ContactService from "../../services/contact.service";
-import toast from "../../utils/toast.util";
+import GridListView from "../../../shared/components/GridList/GridListView";
+import PageHeading from "../../../shared/components/PageHeading/PageHeading";
+import ContactService from "../../../services/contact.service";
+import toast from "../../../utils/toast.util";
 import ContactConfig from "./contact.config";
-import { MenuItem } from "../../shared/models/MenuItem";
+import { MenuItem } from "../../../shared/models/MenuItem";
+import AddContact from "../AddContact";
 
 const ContactList = () => {
   let navigate = useNavigate();
-  const gridRed = useRef<AgGridReact>(null);
+  const gridRef = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(
     ContactConfig.mainMenus
   );
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [addDrawer, setAddDrawer] = useState(false);
 
   const deleteAction = (ids: number[]) => (
     <Fragment>
@@ -30,7 +32,7 @@ const ContactList = () => {
     ContactService.deleteContacts(ids)
       .then(({ message }) => {
         toast.success(message);
-        gridRed.current?.api?.refreshServerSideStore();
+        gridRef.current?.api?.refreshServerSideStore();
       })
       .catch(({ message }) => {
         toast.error(message);
@@ -69,7 +71,16 @@ const ContactList = () => {
   };
 
   const onCreate = () => {
-    navigate(`/app/contact/create`);
+    setAddDrawer(true);
+    // navigate(`/app/contact/create`);
+  };
+
+  const closeDrawer = () => {
+    setAddDrawer(false);
+  };
+
+  const onAddSuccess = () => {
+    gridRef.current?.api?.refreshServerSideStore();
   };
 
   return (
@@ -91,10 +102,19 @@ const ContactList = () => {
       </PageHeading>
 
       <GridListView
-        innerRef={gridRed}
+        innerRef={gridRef}
         options={ContactConfig}
         callbackFun={menuCallbackFun}
       />
+
+      <Drawer
+        anchor="right"
+        open={addDrawer}
+        onClose={closeDrawer}
+        ModalProps={{ disableEnforceFocus: true }}
+      >
+        <AddContact onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
+      </Drawer>
     </Fragment>
   );
 };

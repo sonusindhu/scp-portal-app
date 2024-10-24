@@ -12,8 +12,8 @@ import AddCompany from "./components/CompanyList/AddCompany";
 import EditCompany from "./components/CompanyList/EditCompany";
 
 import EventBus from "./common/EventBus";
-import AddContact from "./components/ContactList/AddContact";
-import EditContact from "./components/ContactList/EditContact";
+import AddContact from "./components/Contacts/AddContact";
+import EditContact from "./components/Contacts/EditContact";
 import AppHeader from "./layouts/AppHeader/AppHeader";
 import AddInventory from "./components/Inventory/InventoryList/AddInventory";
 
@@ -38,7 +38,7 @@ const CompanyList = lazy(() => import("./components/CompanyList/CompanyList"));
 const InventoryList = lazy(
   () => import("./components/Inventory/InventoryList/InventoryList")
 );
-const ContactList = lazy(() => import("./components/ContactList/ContactList"));
+const ContactList = lazy(() => import("./components/Contacts/ContactList/ContactList"));
 const QuoteList = lazy(() => import("./components/Quote/QuoteList/QuoteList"));
 
 const App = () => {
