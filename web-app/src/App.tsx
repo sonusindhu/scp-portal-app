@@ -8,16 +8,12 @@ import AuthService from "./services/auth.service";
 import Login from "./components/Login/Login";
 
 import Profile from "./components/Profile";
-import AddCompany from "./components/CompanyList/AddCompany";
 import EditCompany from "./components/CompanyList/EditCompany";
 
 import EventBus from "./common/EventBus";
-import AddContact from "./components/Contacts/AddContact";
 import EditContact from "./components/Contacts/EditContact";
 import AppHeader from "./layouts/AppHeader/AppHeader";
-import AddInventory from "./components/Inventory/InventoryList/AddInventory";
 
-import AddQuote from "./components/Quote/QuoteList/AddQuote";
 import QuoteDetails from "./components/Quote/QuoteForm/QuoteDetail";
 import QuoteForm from "./components/Quote/QuoteForm/QuoteForm";
 import QuoteNotes from "./components/Quote/QuoteForm/QuoteNotes";
@@ -78,21 +74,14 @@ const App = () => {
                 <Route path="*" element={<Navigate to="changepassword" replace />} />
               </Route>
             
-              <Route path="/app/company/list" element={<CompanyList />} />
-              <Route path="/app/company/create" element={<AddCompany />} />
-              {/* <Route path="/app/company/:id/edit" element={<EditCompany />} /> */}
 
               <Route path="/app/contact/list" element={<ContactList />} />
-              <Route path="/app/contact/create" element={<AddContact />} />
               <Route path="/app/contact/:id/edit" element={<EditContact />} />
 
               <Route path="/app/inventory/list" element={<InventoryList />} />
-              <Route path="/app/inventory/create" element={<AddInventory />} />
-
-              <Route path="/app/quote/list" element={<QuoteList />} />
-              <Route path="/app/quote/create" element={<AddQuote />} />
 
               {/* Company Form Routings */}
+              <Route path="/app/company/list" element={<CompanyList />} />
               <Route path="/app/company/:id" element={<CompanyForm />}>
                 <Route path="details" element={<EditCompany />} />
                 <Route path="notes" element={<CompanyNotes />} />
@@ -103,6 +92,7 @@ const App = () => {
               </Route>
 
               {/* Quote Form Routings */}
+              <Route path="/app/quote/list" element={<QuoteList />} />
               <Route path="/app/quote/:id" element={<QuoteForm />}>
                 <Route path="details" element={<QuoteDetails />} />
                 <Route path="notes" element={<QuoteNotes />} />
