@@ -9,7 +9,7 @@ import ContactService from "../../../services/contact.service";
 import toast from "../../../utils/toast.util";
 import ContactConfig from "./contact.config";
 import { MenuItem } from "../../../shared/models/MenuItem";
-import AddContact from "../AddContact";
+import AddContact from "./AddContact";
 
 const ContactList = () => {
   let navigate = useNavigate();

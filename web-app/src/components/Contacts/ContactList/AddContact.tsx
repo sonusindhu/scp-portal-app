@@ -8,9 +8,9 @@ import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
 import CancelIcon from "@mui/icons-material/Cancel";
-import ContactService from "../../services/contact.service";
-import toast from "../../utils/toast.util";
-import { ResponseModel } from "../../models/common.model";
+import ContactService from "../../../services/contact.service";
+import toast from "../../../utils/toast.util";
+import { ResponseModel } from "../../../models/common.model";
 
 const AddContact = (props) => {
   const [companies, setCompanies] = useState([]);
