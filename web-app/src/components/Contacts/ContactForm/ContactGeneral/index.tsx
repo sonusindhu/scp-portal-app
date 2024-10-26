@@ -8,12 +8,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import ContactService from "../../services/contact.service";
-import PageHeading from "../../shared/components/PageHeading/PageHeading";
-import toast from "../../utils/toast.util";
-import { ResponseModel } from "../../models/common.model";
+import ContactService from "../../../../services/contact.service";
+import PageHeading from "../../../../shared/components/PageHeading/PageHeading";
+import toast from "../../../../utils/toast.util";
+import { ResponseModel } from "../../../../models/common.model";
 
-const AddContact = () => {
+const ContactGeneral = () => {
   let { id } = useParams();
   const navigate = useNavigate();
   const [companies, setCompanies] = useState([]);
@@ -222,4 +222,4 @@ const AddContact = () => {
   );
 };
 
-export default AddContact;
+export default ContactGeneral;

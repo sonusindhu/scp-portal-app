@@ -57,7 +57,7 @@ const ContactList = () => {
         selectedIds.length && deleteContact(selectedIds);
         break;
       case "edit":
-        navigate(`/app/contact/${data.id}/edit`);
+        navigate(`/app/contact/${data.id}/general`);
         break;
       case "selectRow":
         setSelectedIds(data);

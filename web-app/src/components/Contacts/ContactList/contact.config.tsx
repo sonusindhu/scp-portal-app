@@ -30,7 +30,7 @@ const columnDefs = [
       suppressFilterButton: true,
     },
     cellRenderer: ({ data }) => (
-      <Link to={`/app/contact/${data?.id}/edit`}>{data?.fullName}</Link>
+      <Link to={`/app/contact/${data?.id}/general`}>{data?.fullName}</Link>
     ),
   },
   {
