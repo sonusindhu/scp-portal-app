@@ -11,7 +11,7 @@ import Profile from "./components/Profile";
 import EditCompany from "./components/CompanyList/EditCompany";
 
 import EventBus from "./common/EventBus";
-import EditContact from "./components/Contacts/EditContact";
+import EditContact from "./components/Contacts/ContactForm/ContactGeneral";
 import AppHeader from "./layouts/AppHeader/AppHeader";
 
 import QuoteDetails from "./components/Quote/QuoteForm/QuoteDetail";
@@ -28,6 +28,9 @@ import CompanyNotes from "./components/CompanyList/CompanyForm/CompanyNotes";
 import CompanyEmails from "./components/CompanyList/CompanyForm/CompanyEmails";
 import CompanyTasks from "./components/CompanyList/CompanyForm/CompanyTasks";
 import CompanyContactList from "./components/CompanyList/CompanyForm/CompanyContacts";
+import ContactNotes from "./components/Contacts/ContactForm/ContactNotes";
+import ContactTasks from "./components/Contacts/ContactForm/ContactTasks";
+import ContactForm from "./components/Contacts/ContactForm/ContactForm";
 
 const Home = lazy(() => import("./components/Home"));
 const CompanyList = lazy(() => import("./components/CompanyList/CompanyList"));
@@ -74,10 +77,6 @@ const App = () => {
                 <Route path="*" element={<Navigate to="changepassword" replace />} />
               </Route>
             
-
-              <Route path="/app/contact/list" element={<ContactList />} />
-              <Route path="/app/contact/:id/edit" element={<EditContact />} />
-
               <Route path="/app/inventory/list" element={<InventoryList />} />
 
               {/* Company Form Routings */}
@@ -88,6 +87,15 @@ const App = () => {
                 <Route path="emails" element={<CompanyEmails />} />
                 <Route path="tasks" element={<CompanyTasks />} />
                 <Route path="contacts" element={<CompanyContactList />} />
+                <Route path="*" element={<Navigate to="details" replace />} />
+              </Route>
+              
+              {/* Contact Form Routings */}
+              <Route path="/app/contact/list" element={<ContactList />} />
+              <Route path="/app/contact/:id" element={<ContactForm />}>
+                <Route path="details" element={<EditContact />} />
+                <Route path="notes" element={<ContactNotes />} />
+                <Route path="tasks" element={<ContactTasks />} />
                 <Route path="*" element={<Navigate to="details" replace />} />
               </Route>
 
