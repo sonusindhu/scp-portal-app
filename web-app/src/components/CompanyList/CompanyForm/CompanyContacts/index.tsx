@@ -1,23 +1,24 @@
 import React, { useState, useEffect, Fragment, useRef } from "react";
-import { Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { AgGridReact } from "@ag-grid-community/react";
-
+import { Button, Drawer } from "@mui/material";
 import GridListView from "../../../../shared/components/GridList/GridListView";
 import PageHeading from "../../../../shared/components/PageHeading/PageHeading";
 import ContactService from "../../../../services/contact.service";
 import toast from "../../../../utils/toast.util";
 import ContactConfig from "../../../Contacts/ContactList/contact.config";
 import { MenuItem } from "../../../../shared/models/MenuItem";
+import AddContact from "../../../Contacts/ContactList/AddContact";
 
 const CompanyContactList = () => {
   const { id } = useParams();
   let navigate = useNavigate();
-  const gridRed = useRef<AgGridReact>(null);
+  const gridRef = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(
     ContactConfig.mainMenus
   );
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [addDrawer, setAddDrawer] = useState(false);
 
   // const defaultFilters = undefined; 
   const defaultFilters = [{ field: 'companyId', operator: 'contains', value: id }];
@@ -34,7 +35,7 @@ const CompanyContactList = () => {
     ContactService.deleteContacts(ids)
       .then(({ message }) => {
         toast.success(message);
-        gridRed.current?.api?.refreshServerSideStore();
+        gridRef.current?.api?.refreshServerSideStore();
       })
       .catch(({ message }) => {
         toast.error(message);
@@ -73,7 +74,16 @@ const CompanyContactList = () => {
   };
 
   const onCreate = () => {
-    navigate(`/app/contact/create`);
+    setAddDrawer(true);
+    // navigate(`/app/contact/create`);
+  };
+
+  const closeDrawer = () => {
+    setAddDrawer(false);
+  };
+
+  const onAddSuccess = () => {
+    gridRef.current?.api?.refreshServerSideStore();
   };
 
   return (
@@ -95,11 +105,20 @@ const CompanyContactList = () => {
       </PageHeading>
 
       <GridListView
-        innerRef={gridRed}
+        innerRef={gridRef}
         options={ContactConfig}
         defaultFilters={defaultFilters}
         callbackFun={menuCallbackFun}
       />
+
+      <Drawer
+        anchor="right"
+        open={addDrawer}
+        onClose={closeDrawer}
+        ModalProps={{ disableEnforceFocus: true }}
+      >
+        <AddContact onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
+      </Drawer>
     </Fragment>
   );
 };

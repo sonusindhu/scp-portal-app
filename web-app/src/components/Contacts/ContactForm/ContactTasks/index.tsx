@@ -12,7 +12,7 @@ const ContactTasks = () => {
   let [tasks, setTasks] = useState<Task[]>([]);
   let [task, setTask] = useState<Partial<Task>>({
     type: "contact",
-    contactId: +`${id}`,
+    pointOfContact: +`${id}`,
   });
   // let task: Partial<Task>;
 
@@ -24,7 +24,7 @@ const ContactTasks = () => {
   useEffect(() => {
     if (id) {
       const payload = {
-        contactId: id,
+        pointOfContact: id,
       };
       TaskService.get(payload).then((response) => setTasks(response.result));
     }

@@ -1,6 +1,6 @@
 export interface Task {
     companyId: number,
-    contactId: number,
+    pointOfContact: number,
     createdAt: number,
     id: number,
     inventoryId: number,
