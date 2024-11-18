@@ -6,8 +6,8 @@ import { Grid } from "@material-ui/core";
 const InventoryNotes = () => {
   let { id } = useParams();
   const options = {
-    type: "company",
-    companyId: id,
+    type: "inventory",
+    inventoryId: id,
   };
 
   return (

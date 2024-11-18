@@ -11,8 +11,8 @@ const InventoryTasks = () => {
   let { id } = useParams();
   let [tasks, setTasks] = useState<Task[]>([]);
   let [task, setTask] = useState<Partial<Task>>({
-    type: "company",
-    companyId: +`${id}`,
+    type: "inventory",
+    inventoryId: +`${id}`,
   });
   // let task: Partial<Task>;
 

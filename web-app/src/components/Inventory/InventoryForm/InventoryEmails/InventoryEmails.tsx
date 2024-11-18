@@ -10,8 +10,8 @@ const InventoryEmails = () => {
   let { id } = useParams();
   let [emails, setEmails] = useState<Email[]>([]);
   let [email, setEmail] = useState<Partial<Email>>({
-    type: "company",
-    companyId: id ? +id : undefined,
+    type: "inventory",
+    inventoryId: id ? +id : undefined,
   });
 
   const onSuccess = (event: Email) => {
