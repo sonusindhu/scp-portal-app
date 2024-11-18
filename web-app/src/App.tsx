@@ -31,6 +31,11 @@ import CompanyContactList from "./components/CompanyList/CompanyForm/CompanyCont
 import ContactNotes from "./components/Contacts/ContactForm/ContactNotes";
 import ContactTasks from "./components/Contacts/ContactForm/ContactTasks";
 import ContactForm from "./components/Contacts/ContactForm/ContactForm";
+import InventoryForm from "./components/Inventory/InventoryForm/InventoryForm";
+import InventoryGeneral from "./components/Inventory/InventoryForm/InventoryGeneral/InventoryGeneral";
+import InventoryNotes from "./components/Inventory/InventoryForm/InventoryNotes/InventoryNotes";
+import InventoryEmails from "./components/Inventory/InventoryForm/InventoryEmails/InventoryEmails";
+import InventoryTasks from "./components/Inventory/InventoryForm/InventoryTasks/InventoryTasks";
 
 const Home = lazy(() => import("./components/Home"));
 const CompanyList = lazy(() => import("./components/CompanyList/CompanyList"));
@@ -77,7 +82,15 @@ const App = () => {
                 <Route path="*" element={<Navigate to="changepassword" replace />} />
               </Route>
             
+              {/* Inventory Form Routings */}
               <Route path="/app/inventory/list" element={<InventoryList />} />
+              <Route path="/app/inventory/:id" element={<InventoryForm />}>
+                <Route path="details" element={<InventoryGeneral />} />
+                <Route path="notes" element={<InventoryNotes />} />
+                <Route path="emails" element={<InventoryEmails />} />
+                <Route path="tasks" element={<InventoryTasks />} />
+                <Route path="*" element={<Navigate to="details" replace />} />
+              </Route>
 
               {/* Company Form Routings */}
               <Route path="/app/company/list" element={<CompanyList />} />
