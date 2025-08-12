@@ -49,9 +49,7 @@
     ]
   },
   "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not op_mini all"
+    "last 2 versions"
   ],
   "devDependencies": {
     "eslint-plugin-import": "^2.25.3"
