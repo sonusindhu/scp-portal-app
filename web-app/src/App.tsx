@@ -7,35 +7,35 @@ import "./App.css";
 import AuthService from "./services/auth.service";
 import Login from "./components/Login/Login";
 
-import Profile from "./components/Profile";
-import EditCompany from "./components/CompanyList/EditCompany";
-
 import EventBus from "./common/EventBus";
-import EditContact from "./components/Contacts/ContactForm/ContactGeneral";
 import AppHeader from "./layouts/AppHeader/AppHeader";
-
-import QuoteDetails from "./components/Quote/QuoteForm/QuoteDetail";
-import QuoteForm from "./components/Quote/QuoteForm/QuoteForm";
-import QuoteNotes from "./components/Quote/QuoteForm/QuoteNotes";
-import QuoteEmails from "./components/Quote/QuoteForm/QuoteEmails";
-import QuoteTasks from "./components/Quote/QuoteForm/QuoteTasks";
 import AuthWrapper from "./layouts/AuthWrapper/AuthWrapper";
-import ProfileChangePassword from "./components/Profile/ProfileChangePassword";
-import ProfileIntegrations from "./components/Profile/ProfileIntegrations";
-import ProfileTemplates from "./components/Profile/ProfileTemplates";
-import CompanyForm from "./components/CompanyList/CompanyForm/CompanyForm";
-import CompanyNotes from "./components/CompanyList/CompanyForm/CompanyNotes";
-import CompanyEmails from "./components/CompanyList/CompanyForm/CompanyEmails";
-import CompanyTasks from "./components/CompanyList/CompanyForm/CompanyTasks";
-import CompanyContactList from "./components/CompanyList/CompanyForm/CompanyContacts";
-import ContactNotes from "./components/Contacts/ContactForm/ContactNotes";
-import ContactTasks from "./components/Contacts/ContactForm/ContactTasks";
-import ContactForm from "./components/Contacts/ContactForm/ContactForm";
-import InventoryForm from "./components/Inventory/InventoryForm/InventoryForm";
-import InventoryGeneral from "./components/Inventory/InventoryForm/InventoryGeneral/InventoryGeneral";
-import InventoryNotes from "./components/Inventory/InventoryForm/InventoryNotes/InventoryNotes";
-import InventoryEmails from "./components/Inventory/InventoryForm/InventoryEmails/InventoryEmails";
-import InventoryTasks from "./components/Inventory/InventoryForm/InventoryTasks/InventoryTasks";
+
+// Lazy load form components for better code splitting
+const Profile = lazy(() => import("./components/Profile"));
+const EditCompany = lazy(() => import("./components/CompanyList/EditCompany"));
+const EditContact = lazy(() => import("./components/Contacts/ContactForm/ContactGeneral"));
+const QuoteDetails = lazy(() => import("./components/Quote/QuoteForm/QuoteDetail"));
+const QuoteForm = lazy(() => import("./components/Quote/QuoteForm/QuoteForm"));
+const QuoteNotes = lazy(() => import("./components/Quote/QuoteForm/QuoteNotes"));
+const QuoteEmails = lazy(() => import("./components/Quote/QuoteForm/QuoteEmails"));
+const QuoteTasks = lazy(() => import("./components/Quote/QuoteForm/QuoteTasks"));
+const ProfileChangePassword = lazy(() => import("./components/Profile/ProfileChangePassword"));
+const ProfileIntegrations = lazy(() => import("./components/Profile/ProfileIntegrations"));
+const ProfileTemplates = lazy(() => import("./components/Profile/ProfileTemplates"));
+const CompanyForm = lazy(() => import("./components/CompanyList/CompanyForm/CompanyForm"));
+const CompanyNotes = lazy(() => import("./components/CompanyList/CompanyForm/CompanyNotes"));
+const CompanyEmails = lazy(() => import("./components/CompanyList/CompanyForm/CompanyEmails"));
+const CompanyTasks = lazy(() => import("./components/CompanyList/CompanyForm/CompanyTasks"));
+const CompanyContactList = lazy(() => import("./components/CompanyList/CompanyForm/CompanyContacts"));
+const ContactNotes = lazy(() => import("./components/Contacts/ContactForm/ContactNotes"));
+const ContactTasks = lazy(() => import("./components/Contacts/ContactForm/ContactTasks"));
+const ContactForm = lazy(() => import("./components/Contacts/ContactForm/ContactForm"));
+const InventoryForm = lazy(() => import("./components/Inventory/InventoryForm/InventoryForm"));
+const InventoryGeneral = lazy(() => import("./components/Inventory/InventoryForm/InventoryGeneral/InventoryGeneral"));
+const InventoryNotes = lazy(() => import("./components/Inventory/InventoryForm/InventoryNotes/InventoryNotes"));
+const InventoryEmails = lazy(() => import("./components/Inventory/InventoryForm/InventoryEmails/InventoryEmails"));
+const InventoryTasks = lazy(() => import("./components/Inventory/InventoryForm/InventoryTasks/InventoryTasks"));
 
 const Home = lazy(() => import("./components/Home"));
 const CompanyList = lazy(() => import("./components/CompanyList/CompanyList"));
@@ -51,12 +51,13 @@ const App = () => {
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
-    if (user) setCurrentUser(user)
+    if (user) setCurrentUser(user);
 
-    EventBus.on("logout", () => logOut());
+    const handleLogout = () => logOut();
+    EventBus.on("logout", handleLogout);
 
-    return () => EventBus.remove("logout");
-  }, []);
+    return () => EventBus.remove("logout", handleLogout);
+  }, [navigate]); // Add navigate to dependency array
 
   const logOut = () => {
     AuthService.logout();
@@ -68,7 +69,18 @@ const App = () => {
     <div>
       {currentUser ? <AppHeader onLogout={logOut} /> : <></>}
       <Container maxWidth="xl">
-        <Suspense fallback={<CircularProgress />}>
+        <Suspense 
+          fallback={
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              alignItems: 'center', 
+              height: '50vh' 
+            }}>
+              <CircularProgress size={60} />
+            </div>
+          }
+        >
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/auth/login" element={<Login />} />
