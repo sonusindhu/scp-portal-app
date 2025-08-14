@@ -84,7 +84,7 @@ const TaskForm = (props: TaskProps) => {
   return (
     <FormContainer
       formContext={formContext}
-      onSuccess={handleSubmit(handleSubmitForm)}
+      onSuccess={() => handleSubmit(handleSubmitForm)}
     >
       <h3 style={{ marginLeft: "10px" }}>New Task</h3>
       <div>

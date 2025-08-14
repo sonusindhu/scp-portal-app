@@ -1,12 +1,11 @@
 import React, { FC } from "react";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider, {
-  LocalizationProviderProps,
-} from "@mui/lab/LocalizationProvider";
+
+import { LocalizationProvider, LocalizationProviderProps } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 export type DateFnsProviderProps = FC<
-  Omit<LocalizationProviderProps, "dateAdapter"> & {
-    utils?: any;
+  Omit<LocalizationProviderProps<any, any>, "dateAdapter"> & {
+    utils?: any; // Optional override for legacy or compatibility
   }
 >;
 

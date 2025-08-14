@@ -83,7 +83,7 @@ const NoteForm = (props: NoteProps) => {
       </AppBar>
       <FormContainer
         formContext={formContext}
-        onSuccess={handleSubmit(handleSubmitForm)}
+        onSuccess={() => handleSubmit(handleSubmitForm)}
       >
         <h3 style={{ marginLeft: "10px" }}>New Note</h3>
         <div>
