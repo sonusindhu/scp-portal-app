@@ -3,7 +3,7 @@ import "ag-grid-enterprise";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ServerSideRowModelModule } from "@ag-grid-enterprise/server-side-row-model";
 import { ModuleRegistry, GetRowIdFunc } from "@ag-grid-community/core";
-import "ag-grid-community/dist/styles/ag-grid.css";
+import "~ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 import GridTextFilter from "./GridFilters/GridTextFilter/GridTextFilter";

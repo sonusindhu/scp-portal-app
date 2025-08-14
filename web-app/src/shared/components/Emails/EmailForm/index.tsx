@@ -48,7 +48,7 @@ const EmailForm = (props: EmailFormProps) => {
   return (
     <FormContainer
       formContext={formContext}
-      onSuccess={handleSubmit(handleSubmitForm)}
+      onSuccess={() => handleSubmit(handleSubmitForm)}
     >
       <PageHeading title="New Email" />
       <div>

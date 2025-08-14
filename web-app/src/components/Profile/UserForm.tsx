@@ -40,7 +40,7 @@ const UserForm = (props) => {
   };
 
   return (
-    <FormContainer formContext={formContext} onSuccess={handleSubmit(handleSubmitForm)}>  
+    <FormContainer formContext={formContext} onSuccess={() => handleSubmit(handleSubmitForm)}>  
       {/* <h3 style={{ marginLeft: "10px" }}>User Profile</h3>    */}
       
       <UserProfileImage user={user}/>
