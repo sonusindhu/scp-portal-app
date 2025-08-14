@@ -1,0 +1,257 @@
+/* AppHeader Styles */
+.app-header {
+  background-color: #1976d2;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+}
+
+/* Brand Styles */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-icon {
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.brand-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  margin-right: 24px;
+}
+
+.brand-text:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.mobile-brand {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.brand-text-mobile {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.3rem;
+  margin-left: 8px;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  gap: 16px;
+  flex-grow: 1;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  color: white;
+}
+
+.nav-link.active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Mobile Menu */
+.mobile-menu-container {
+  position: relative;
+}
+
+.mobile-menu-button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  min-width: 200px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 8px 0;
+  z-index: 1000;
+}
+
+.mobile-nav-link {
+  display: block;
+  color: #333;
+  text-decoration: none;
+  padding: 12px 16px;
+  transition: background-color 0.2s;
+}
+
+.mobile-nav-link:hover {
+  background-color: #f5f5f5;
+  text-decoration: none;
+  color: #333;
+}
+
+.mobile-nav-link.active {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+/* User Menu */
+.user-menu {
+  position: relative;
+}
+
+.user-menu-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-fallback {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 8px 0;
+  z-index: 1000;
+}
+
+.user-dropdown-link {
+  display: block;
+  color: #333;
+  text-decoration: none;
+  padding: 12px 16px;
+  transition: background-color 0.2s;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.user-dropdown-link:hover {
+  background-color: #f5f5f5;
+  text-decoration: none;
+  color: #333;
+}
+
+.logout-button {
+  border-top: 1px solid #eee;
+  margin-top: 4px;
+  padding-top: 12px;
+}
+
+/* Responsive Design */
+.desktop-only {
+  display: flex;
+}
+
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+  
+  .mobile-only {
+    display: flex;
+  }
+  
+  .header-container {
+    padding: 0 8px;
+  }
+  
+  .navbar {
+    min-height: 56px;
+  }
+}
+
+/* Click outside overlay for mobile menu */
+.mobile-menu::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}

@@ -1,218 +1,171 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import "./AppHeader.css";
 
 const AppHeader = (props) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const logOut = (event) => {
     props.onLogout(event);
   };
 
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+    setMobileMenuOpen(!mobileMenuOpen);
   };
+
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+    setUserMenuOpen(!userMenuOpen);
   };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+    setMobileMenuOpen(false);
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    setUserMenuOpen(false);
   };
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          {/* MAIN MENU START DESKTOP START */}
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/app/company/list"
-            sx={{
-              mr: 3,
-              display: { xs: "none", md: "flex" },
-              fontWeight: 700,
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Supply Chain Portal
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Button
-              component={NavLink}
-              to="/app/company/list"
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
+    <header className="app-header">
+      <div className="header-container">
+        <nav className="navbar">
+          {/* Desktop Logo and Brand */}
+          <div className="navbar-brand desktop-only">
+            <div className="brand-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </div>
+            <a href="/app/company/list" className="brand-text">
+              Supply Chain Portal
+            </a>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="nav-links desktop-only">
+            <NavLink to="/app/company/list" className="nav-link">
               Companies
-            </Button>
-            <Button
-              component={NavLink}
-              to="/app/contact/list"
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
+            </NavLink>
+            <NavLink to="/app/contact/list" className="nav-link">
               Contacts
-            </Button>
-            <Button
-              component={NavLink}
-              to="/app/inventory/list"
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
+            </NavLink>
+            <NavLink to="/app/inventory/list" className="nav-link">
               Inventories
-            </Button>
-            <Button
-              component={NavLink}
-              to="/app/quote/list"
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
+            </NavLink>
+            <NavLink to="/app/quote/list" className="nav-link">
               Quotes
-            </Button>
-          </Box>
+            </NavLink>
+          </div>
 
-          {/* MAIN MENU START DESKTOP END */}
-
-          {/* MAIN MENU START MOBILE START */}
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
+          {/* Mobile Menu Button */}
+          <div className="mobile-menu-container mobile-only">
+            <button 
+              className="mobile-menu-button"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              aria-label="Toggle mobile menu"
             >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+              </svg>
+            </button>
+            
+            {/* Mobile Navigation Menu */}
+            {mobileMenuOpen && (
+              <div className="mobile-menu">
+                <NavLink 
+                  to="/app/company/list" 
+                  className="mobile-nav-link"
+                  onClick={handleCloseNavMenu}
+                >
+                  Companies
+                </NavLink>
+                <NavLink 
+                  to="/app/contact/list" 
+                  className="mobile-nav-link"
+                  onClick={handleCloseNavMenu}
+                >
+                  Contacts
+                </NavLink>
+                <NavLink 
+                  to="/app/inventory/list" 
+                  className="mobile-nav-link"
+                  onClick={handleCloseNavMenu}
+                >
+                  Inventories
+                </NavLink>
+                <NavLink 
+                  to="/app/quote/list" 
+                  className="mobile-nav-link"
+                  onClick={handleCloseNavMenu}
+                >
+                  Quotes
+                </NavLink>
+              </div>
+            )}
+          </div>
+
+          {/* Mobile Brand */}
+          <div className="mobile-brand mobile-only">
+            <div className="brand-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </div>
+            <span className="brand-text-mobile">SCP</span>
+          </div>
+
+          {/* User Profile Menu */}
+          <div className="user-menu">
+            <button 
+              className="user-menu-button"
+              onClick={handleOpenUserMenu}
+              title="Open user menu"
             >
-              <MenuItem
-                onClick={handleCloseNavMenu}
-                component={NavLink}
-                to="/app/company/list"
-              >
-                <Typography textAlign="center">Companies</Typography>
-              </MenuItem>
-              <MenuItem
-                onClick={handleCloseNavMenu}
-                component={NavLink}
-                to="/app/contact/list"
-              >
-                <Typography textAlign="center">Contacts</Typography>
-              </MenuItem>
-              <MenuItem
-                onClick={handleCloseNavMenu}
-                component={NavLink}
-                to="/app/inventory/list"
-              >
-                <Typography textAlign="center">Inventories</Typography>
-              </MenuItem>
-              <MenuItem
-                onClick={handleCloseNavMenu}
-                component={NavLink}
-                to="/app/quote/list"
-              >
-                <Typography textAlign="center">Quotes</Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            SCP
-          </Typography>
-
-          {/* MAIN MENU START MOBILE END */}
-
-          {/* USER PROFILE MENU START */}
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem
-                onClick={handleCloseUserMenu}
-                component={Link}
-                to="/app/profile/changepassword"
-              >
-                <Typography textAlign="center">My Profile</Typography>
-              </MenuItem>
-              <MenuItem onClick={logOut}>
-                <Typography textAlign="center">Logout</Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
-          {/* USER PROFILE MENU END */}
-        </Toolbar>
-      </Container>
-    </AppBar>
+              <div className="user-avatar">
+                <img 
+                  src="/static/images/avatar/2.jpg" 
+                  alt="User Avatar"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    const fallback = target.nextElementSibling as HTMLElement;
+                    target.style.display = 'none';
+                    if (fallback) fallback.style.display = 'flex';
+                  }}
+                />
+                <div className="avatar-fallback">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                  </svg>
+                </div>
+              </div>
+            </button>
+            
+            {/* User Dropdown Menu */}
+            {userMenuOpen && (
+              <div className="user-dropdown">
+                <Link 
+                  to="/app/profile/changepassword" 
+                  className="user-dropdown-link"
+                  onClick={handleCloseUserMenu}
+                >
+                  My Profile
+                </Link>
+                <button 
+                  className="user-dropdown-link logout-button"
+                  onClick={logOut}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </nav>
+      </div>
+    </header>
   );
 };
+
 export default AppHeader;
