@@ -5,9 +5,7 @@ import AuthService from "../../services/auth.service";
 import toast from "../../utils/toast.util";
 import {
   Box,
-  CircularProgress,
   Drawer,
-  Grid,
   Tab,
   Tabs,
   Typography,
@@ -42,12 +40,16 @@ const QuoteForm = (props) => {
 
   return (
     <div className="container-fluid">
-      <Grid container spacing={2}>        
-        <Grid item xs={3} className="left-user-form">
-          { isLoading ? <CircularProgress /> : <UserForm user={user}/> }          
-        </Grid>
+      <div className="grid-layout-sidebar">        
+        <div className="grid-sidebar-left left-user-form">
+          { isLoading ? (
+            <div className="loading-spinner">
+              <div className="spinner"></div>
+            </div>
+          ) : <UserForm user={user}/> }          
+        </div>
 
-        <Grid item xs={9}>
+        <div className="grid-main-content">
           <Tabs
             value={selectedTab}
             onChange={handleChangeTab}
@@ -58,9 +60,9 @@ const QuoteForm = (props) => {
             <Tab value="templates" label="Templates" />
           </Tabs>
           <Outlet />
-        </Grid>
+        </div>
 
-      </Grid>
+      </div>
     </div>
   );
 };

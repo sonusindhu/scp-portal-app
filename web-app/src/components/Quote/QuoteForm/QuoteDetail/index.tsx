@@ -1,4 +1,3 @@
-import { CircularProgress } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -43,7 +42,11 @@ const QuoteDetails = () => {
         cargos={cargos} 
         commodities={commodities} 
         equipments={equipments} 
-        quote={quote} /> : <CircularProgress /> }      
+        quote={quote} /> : (
+          <div className="loading-spinner">
+            <div className="spinner"></div>
+          </div>
+        ) }      
     </div>
   );
 };

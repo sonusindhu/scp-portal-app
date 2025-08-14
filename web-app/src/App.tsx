@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
-import { CircularProgress, Container } from "@material-ui/core";
 
 import "./App.css";
 
@@ -68,16 +67,11 @@ const App = () => {
   return (
     <div>
       {currentUser ? <AppHeader onLogout={logOut} /> : <></>}
-      <Container maxWidth="xl">
+      <div className="app-container">
         <Suspense 
           fallback={
-            <div style={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
-              alignItems: 'center', 
-              height: '50vh' 
-            }}>
-              <CircularProgress size={60} />
+            <div className="loading-spinner">
+              <div className="spinner"></div>
             </div>
           }
         >
@@ -136,7 +130,7 @@ const App = () => {
             </Route>
           </Routes>
         </Suspense>
-      </Container>
+      </div>
     </div>
   );
 };

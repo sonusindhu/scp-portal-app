@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import NotesCardView from "../../../../shared/components/Notes/NotesList/NotesCardView";
-import { Grid } from "@material-ui/core";
 
 const CompanyNotes = () => {
   let { id } = useParams();
@@ -11,11 +10,11 @@ const CompanyNotes = () => {
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
+    <div className="grid-container">
+      <div className="grid-full-width">
         <NotesCardView options={options} />
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 };
 
