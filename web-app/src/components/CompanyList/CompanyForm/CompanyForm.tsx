@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import AuthService from "../../../services/auth.service";
-import { Grid, Tab, Tabs } from "@material-ui/core";
+import { Tab, Tabs } from "@material-ui/core";
 
 const CompanyForm = (props) => {
   const location = useLocation();
@@ -28,8 +28,8 @@ const CompanyForm = (props) => {
 
   return (
     <div className="container-fluid">
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
+      <div className="company-form-container">
+        <div className="company-form-content">
           <Tabs
             value={selectedTab}
             onChange={handleChangeTab}
@@ -42,8 +42,8 @@ const CompanyForm = (props) => {
             <Tab value="contacts" label="Contacts" />
           </Tabs>
           <Outlet />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </div>
   );
 };

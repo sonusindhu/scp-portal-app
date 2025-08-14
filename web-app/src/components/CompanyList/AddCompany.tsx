@@ -40,10 +40,11 @@ const AddCompany = (props) => {
 
   const handleSubmitForm = (e) => {
     if (!e.email || !e.name) return;
+    debugger
     const payload = { ...e };
     CompanyService.create(payload)
       .then((response) => handleSuccess(response))
-      .catch(({ response }) => toast.error(response.message));
+      .catch(({ response, error }) => toast.error(response?.message ?? error?.message ?? "An error occurred while creating the company"));
   };
 
   return (

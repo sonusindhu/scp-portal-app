@@ -1,0 +1,106 @@
+/* Generic Grid System CSS - Replaces Material-UI Grid */
+
+/* Container Classes */
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; /* spacing={2} equivalent */
+  margin-top: 16px;
+}
+
+.grid-container-no-gap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Grid Item Classes */
+.grid-item {
+  box-sizing: border-box;
+}
+
+/* Width Classes - Based on 12 column system */
+.grid-xs-1 { flex: 0 0 8.333%; max-width: 8.333%; }
+.grid-xs-2 { flex: 0 0 16.667%; max-width: 16.667%; }
+.grid-xs-3 { flex: 0 0 25%; max-width: 25%; }
+.grid-xs-4 { flex: 0 0 33.333%; max-width: 33.333%; }
+.grid-xs-5 { flex: 0 0 41.667%; max-width: 41.667%; }
+.grid-xs-6 { flex: 0 0 50%; max-width: 50%; }
+.grid-xs-7 { flex: 0 0 58.333%; max-width: 58.333%; }
+.grid-xs-8 { flex: 0 0 66.667%; max-width: 66.667%; }
+.grid-xs-9 { flex: 0 0 75%; max-width: 75%; }
+.grid-xs-10 { flex: 0 0 83.333%; max-width: 83.333%; }
+.grid-xs-11 { flex: 0 0 91.667%; max-width: 91.667%; }
+.grid-xs-12 { flex: 0 0 100%; max-width: 100%; }
+
+/* Common Layout Patterns */
+.grid-layout-sidebar {
+  display: flex;
+  gap: 16px;
+}
+
+.grid-sidebar-left {
+  flex: 0 0 25%; /* xs={3} equivalent */
+  max-width: 25%;
+}
+
+.grid-main-content {
+  flex: 0 0 75%; /* xs={9} equivalent */
+  max-width: 75%;
+}
+
+.grid-form-column {
+  flex: 0 0 33.333%; /* xs={4} equivalent */
+  max-width: 33.333%;
+}
+
+.grid-list-column {
+  flex: 0 0 66.667%; /* xs={8} equivalent */
+  max-width: 66.667%;
+}
+
+.grid-full-width {
+  flex: 0 0 100%; /* xs={12} equivalent */
+  max-width: 100%;
+}
+
+/* Full Width Layout - No grid container spacing */
+.full-width-layout {
+  width: 100%;
+  display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .grid-container,
+  .grid-layout-sidebar {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .grid-sidebar-left,
+  .grid-main-content,
+  .grid-form-column,
+  .grid-list-column,
+  .grid-xs-1,
+  .grid-xs-2,
+  .grid-xs-3,
+  .grid-xs-4,
+  .grid-xs-5,
+  .grid-xs-6,
+  .grid-xs-7,
+  .grid-xs-8,
+  .grid-xs-9,
+  .grid-xs-10,
+  .grid-xs-11,
+  .grid-xs-12 {
+    flex: 1;
+    max-width: 100%;
+  }
+}
+
+/* Additional spacing utilities */
+.grid-spacing-0 { gap: 0; }
+.grid-spacing-1 { gap: 8px; }
+.grid-spacing-2 { gap: 16px; }
+.grid-spacing-3 { gap: 24px; }
+.grid-spacing-4 { gap: 32px; }

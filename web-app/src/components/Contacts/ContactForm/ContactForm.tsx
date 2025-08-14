@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import AuthService from "../../../services/auth.service";
-import { Grid, Tab, Tabs } from "@material-ui/core";
+import { Tab, Tabs } from "@material-ui/core";
 
 const ContactForm = (props) => {
   const location = useLocation();
@@ -28,20 +28,18 @@ const ContactForm = (props) => {
 
   return (
     <div className="container-fluid">
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Tabs
-            value={selectedTab}
-            onChange={handleChangeTab}
-            aria-label="Vertical tabs example"
-          >
-            <Tab value="details" label="General" />
-            <Tab value="notes" label="Notes" />
-            <Tab value="tasks" label="Tasks" />
-          </Tabs>
-          <Outlet />
-        </Grid>
-      </Grid>
+      <div className="full-width-layout">
+        <Tabs
+          value={selectedTab}
+          onChange={handleChangeTab}
+          aria-label="Vertical tabs example"
+        >
+          <Tab value="details" label="General" />
+          <Tab value="notes" label="Notes" />
+          <Tab value="tasks" label="Tasks" />
+        </Tabs>
+        <Outlet />
+      </div>
     </div>
   );
 };

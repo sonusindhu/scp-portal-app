@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Grid } from "@material-ui/core";
 
 import TasksListView from "../../../../shared/components/Task/TasksList/TasksListView";
 import TaskForm from "../../../../shared/components/Task/TaskForm";
@@ -31,15 +30,15 @@ const ContactTasks = () => {
   }, []);
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={4}>
+    <div className="grid-container">
+      <div className="grid-form-column">
         <TaskForm task={task} onSuccess={onSuccess} />
-      </Grid>
+      </div>
 
-      <Grid item xs={8}>
+      <div className="grid-list-column">
         <TasksListView tasks={tasks} />
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 };
 
