@@ -12,6 +12,7 @@ module.exports = function (sails) {
     initialize: function (next) {
       sails.after("hook:orm:loaded", async function () {
         const company_view = `
+        CREATE OR REPLACE VIEW view_company_list as
           SELECT 
               c.id,
               MAX(c.name) AS name,
