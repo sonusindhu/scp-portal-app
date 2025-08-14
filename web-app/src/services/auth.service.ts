@@ -23,9 +23,6 @@ const login = (email: string, password: string) => {
         localStorage.setItem("user", JSON.stringify(userData));
       }
       return response;
-    })
-    .catch(() => {
-      localStorage.setItem("user", JSON.stringify({ id: 1, username: "test", email: "test@example.com" }));
     });
 };
 

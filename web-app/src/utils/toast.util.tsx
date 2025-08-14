@@ -1,24 +1,25 @@
-import { OptionsObject, SnackbarKey, useSnackbar, WithSnackbarProps } from 'notistack'
-import React from 'react'
+import { OptionsObject, SnackbarKey, useSnackbar } from 'notistack';
+import React from 'react';
 
-let useSnackbarRef: WithSnackbarProps
+let useSnackbarRef: ReturnType<typeof useSnackbar>;
+
 export const SnackbarUtilConfig: React.FC = () => {
-  useSnackbarRef = useSnackbar()
-  return null
-}
+  useSnackbarRef = useSnackbar();
+  return null;
+};
 
 const toastService = {
   success(msg: string, options?: OptionsObject) {
-    this.toast(msg, { ...options, variant: "success" });
+    this.toast(msg, { ...options, variant: 'success' });
   },
   warning(msg: string, options?: OptionsObject) {
-    this.toast(msg, { ...options, variant: "warning", persist: true });
+    this.toast(msg, { ...options, variant: 'warning', persist: true });
   },
   info(msg: string, options?: OptionsObject) {
-    this.toast(msg, { ...options, variant: "info" });
+    this.toast(msg, { ...options, variant: 'info' });
   },
   error(msg: string, options?: OptionsObject) {
-    this.toast(msg, { ...options, variant: "error" });
+    this.toast(msg, { ...options, variant: 'error' });
   },
   toast(msg: string, options?: OptionsObject) {
     useSnackbarRef?.enqueueSnackbar(msg, options);
