@@ -7,11 +7,11 @@ import {
 import { useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
-import CancelIcon from "@mui/icons-material/Cancel";
 import toast from "../../../../utils/toast.util";
 import { Note } from "../../../models/Note";
 import NoteService from "../../../../services/note.service";
 import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
+import HeaderWithTitle from "../../HeaderWithTitle";
 
 interface NoteProps {
   id?: number;
@@ -68,19 +68,8 @@ const NoteForm = (props: NoteProps) => {
 
   return (
     <Box sx={{ width: 400 }}>
-      <AppBar position="absolute" className="drawer-header">
-        <Toolbar>
-          <Box sx={{ width: 335 }}>
-            <Typography variant="inherit" color="inherit" noWrap>
-              Add Quote
-            </Typography>
-          </Box>
+      <HeaderWithTitle title="Add Quote" onCloseDrawer={onCloseDrawer} />
 
-          <Box sx={{ flexGrow: 0 }} className="close-icon">
-            <CancelIcon onClick={onCloseDrawer} />
-          </Box>
-        </Toolbar>
-      </AppBar>
       <FormContainer
         formContext={formContext}
         onSuccess={() => handleSubmit(handleSubmitForm)}

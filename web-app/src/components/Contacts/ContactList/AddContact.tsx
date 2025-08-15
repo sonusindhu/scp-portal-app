@@ -7,10 +7,10 @@ import {
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
-import CancelIcon from "@mui/icons-material/Cancel";
 import ContactService from "../../../services/contact.service";
 import toast from "../../../utils/toast.util";
 import { ResponseModel } from "../../../models/common.model";
+import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
 
 const AddContact = (props) => {
   const [companies, setCompanies] = useState([]);
@@ -55,19 +55,7 @@ const AddContact = (props) => {
 
   return (
     <Box sx={{ width: 450 }} className="form-container">
-      <AppBar position="absolute" className="drawer-header">
-        <Toolbar>
-          <Box sx={{ width: 335 }}>
-            <Typography variant="inherit" color="inherit" noWrap>
-              Add Contact
-            </Typography>
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }} className="close-icon">
-            <CancelIcon onClick={onCloseDrawer} />
-          </Box>
-        </Toolbar>
-      </AppBar>
+      <HeaderWithTitle title="Add Contact" onCloseDrawer={onCloseDrawer} />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <TextFieldElement

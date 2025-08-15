@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
-import CancelIcon from "@mui/icons-material/Cancel";
 
 import toast from "../../../utils/toast.util";
 
@@ -13,6 +12,7 @@ import {
 import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
 import QuoteService from "../../../services/quote.service";
 import { ResponseModel } from "../../../models/common.model";
+import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
 
 const AddQuote = (props) => {
   const [companies, setCompanies] = useState([]);
@@ -72,20 +72,8 @@ const AddQuote = (props) => {
 
   return (
     <Box className="quote-form" sx={{ width: 400 }}>
-      <AppBar position="absolute" className="drawer-header">
-        <Toolbar>
-          <Box sx={{ width: 335 }}>
-            <Typography variant="inherit" color="inherit" noWrap>
-              Add Quote
-            </Typography>
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }} className="close-icon">
-            <CancelIcon onClick={onCloseDrawer} />
-          </Box>
-        </Toolbar>
-      </AppBar>
-
+      <HeaderWithTitle title="Add Quote" onCloseDrawer={onCloseDrawer} />
+      
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <div className="drawer-content">
           <TextFieldElement
