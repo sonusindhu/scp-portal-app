@@ -2,13 +2,13 @@ import React, { useState, useEffect, Fragment, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AgGridReact } from "@ag-grid-community/react";
 import { Button, Drawer } from "@mui/material";
-import GridListView from "../../../../shared/components/GridList/GridListView";
-import PageHeading from "../../../../shared/components/PageHeading/PageHeading";
-import ContactService from "../../../../services/contact.service";
-import toast from "../../../../utils/toast.util";
-import ContactConfig from "../../../Contacts/ContactList/contact.config";
-import { MenuItem } from "../../../../shared/models/MenuItem";
-import AddContact from "../../../Contacts/ContactList/AddContact";
+import GridListView from "../../../shared/components/GridList/GridListView";
+import PageHeading from "../../../shared/components/PageHeading/PageHeading";
+import ContactService from "../../../services/contact.service";
+import toast from "../../../utils/toast.util";
+import ContactConfig from "../../Contacts/ContactList/contact.config";
+import { MenuItem } from "../../../shared/models/MenuItem";
+import AddContact from "../../Contacts/ContactList/AddContact";
 
 const CompanyContactList = () => {
   const { id } = useParams();

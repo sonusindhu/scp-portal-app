@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import TasksListView from "../../../../shared/components/Task/TasksListView";
-import TaskForm from "../../../../shared/components/Task/TaskForm";
-import { Task } from "../../../../shared/models/Task";
-import TaskService from "../../../../services/task.service";
+import TasksListView from "../../../shared/components/Task/TasksListView";
+import TaskForm from "../../../shared/components/Task/TaskForm";
+import { Task } from "../../../shared/models/Task";
+import TaskService from "../../../services/task.service";
 
-const CompanyTasks = () => {
+const ContactTasks = () => {
   let { id } = useParams();
   let [tasks, setTasks] = useState<Task[]>([]);
   let [task, setTask] = useState<Partial<Task>>({
-    type: "company",
-    companyId: +`${id}`,
+    type: "contact",
+    pointOfContact: +`${id}`,
   });
   // let task: Partial<Task>;
 
@@ -23,7 +23,7 @@ const CompanyTasks = () => {
   useEffect(() => {
     if (id) {
       const payload = {
-        companyId: id,
+        pointOfContact: id,
       };
       TaskService.get(payload).then((response) => setTasks(response.result));
     }
@@ -42,4 +42,4 @@ const CompanyTasks = () => {
   );
 };
 
-export default CompanyTasks;
+export default ContactTasks;

@@ -3,17 +3,17 @@ import { Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { AgGridReact } from "@ag-grid-community/react";
 
-import GridListView from "../../../../shared/components/GridList/GridListView";
-import PageHeading from "../../../../shared/components/PageHeading/PageHeading";
-import ContactService from "../../../../services/contact.service";
-import toast from "../../../../utils/toast.util";
-import ContactConfig from "../../../Contacts/ContactList/contact.config";
-import { MenuItem } from "../../../../shared/models/MenuItem";
+import GridListView from "../../../shared/components/GridList/GridListView";
+import PageHeading from "../../../shared/components/PageHeading/PageHeading";
+import ContactService from "../../../services/contact.service";
+import toast from "../../../utils/toast.util";
+import ContactConfig from "../../Contacts/ContactList/contact.config";
+import { MenuItem } from "../../../shared/models/MenuItem";
 
 const CompanyContactList = () => {
   const { id } = useParams();
   let navigate = useNavigate();
-  const gridRed = useRef<AgGridReact>(null);
+  const gridRef = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(
     ContactConfig.mainMenus
   );
@@ -34,7 +34,7 @@ const CompanyContactList = () => {
     ContactService.deleteContacts(ids)
       .then(({ message }) => {
         toast.success(message);
-        gridRed.current?.api?.refreshServerSideStore();
+        gridRef.current?.api?.refreshServerSideStore();
       })
       .catch(({ message }) => {
         toast.error(message);
@@ -95,7 +95,7 @@ const CompanyContactList = () => {
       </PageHeading>
 
       <GridListView
-        innerRef={gridRed}
+        innerRef={gridRef}
         options={ContactConfig}
         defaultFilters={defaultFilters}
         callbackFun={menuCallbackFun}

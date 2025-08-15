@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import NotesCardView from "../../../../shared/components/Notes/NotesCardView";
+import NotesCardView from "../../../shared/components/Notes/NotesCardView";
 
 const CompanyNotes = () => {
   let { id } = useParams();
