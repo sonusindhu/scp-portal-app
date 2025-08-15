@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 
 import QuoteService from "../../../services/quote.service";
 import TasksList from "../../../shared/components/Task/TasksListView";

@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import NotesCardView from "../../../shared/components/Notes/NotesCardView";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 
 const InventoryNotes = () => {
   let { id } = useParams();

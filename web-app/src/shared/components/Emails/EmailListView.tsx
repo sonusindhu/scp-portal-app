@@ -12,7 +12,7 @@ import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { Email, EmailListProps } from "../../models/Email";
-import { Chip } from "@material-ui/core";
+import { Chip } from "@mui/material";
 
 const EmailListView = (props: EmailListProps) => {
   

@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Avatar as Avat } from '@material-ui/core';
+import { Avatar as Avat } from '@mui/material';
 import Avatar from 'react-avatar-edit';
 import UserService from '../../services/user.service';
 
