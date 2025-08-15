@@ -8,23 +8,27 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
-import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
 
-import { Email, EmailListProps } from "../../../models/Email";
 import { Chip } from "@material-ui/core";
+import { Task } from "../../models/Task";
 
-const EmailListView = (props: EmailListProps) => {
+interface TaskListProps {
+  tasks: Task[],
+}
+
+const TasksListView = (props: TaskListProps) => {
   
-  const emailSubHeader = (email: Email) => {
-    const formattedDate =  format(new Date(email.createdAt), "dd/MM/yyyy p");
+  const taskSubHeader = (task: Task) => {
+    const formattedDate =  format(new Date(task.createdAt), "dd/MM/yyyy p");
     return <>{ formattedDate }</>
   };
 
   return (
     <div className="container-fluid note-list">
-      <h3>Emails({ props.emails.length })</h3>
-      { props.emails.map( (email: Email) => (
+      <h3>Tasks({ props.tasks.length })</h3>
+      { props.tasks.map( (task: Task) => (
 
         <Card className="note-card">
             <CardHeader
@@ -39,26 +43,27 @@ const EmailListView = (props: EmailListProps) => {
                   <MoreVertIcon />
                 </IconButton>
               }
-              title={email.title}
+              title={task.subject}
               subheader={
                 <div className="sub-header">
-                  <span>{ emailSubHeader(email) }</span>
-
-                  { email.isCritical && <Chip icon={<WarningOutlinedIcon color="error"  />} label="Critical" /> }
-                                    
+                  <span>{ taskSubHeader(task) }</span>
+                  { task.isCritical && <Chip icon={<WarningOutlinedIcon color="error"  />} label="Critical" /> }                  
+                  
                 </div>
               }
             />
           
           <CardContent className="note-card-content">
             <Typography variant="body2" color="text.secondary">
-              {email.message}
+              {task.description}
             </Typography>
           </CardContent>
+          
           </Card>
+
       )) }
     </div>
   );
 };
 
-export default EmailListView;
+export default TasksListView;

@@ -7,11 +7,11 @@ import {
 import { useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
-import toast from "../../../../utils/toast.util";
-import { Note } from "../../../models/Note";
-import NoteService from "../../../../services/note.service";
+import toast from "../../../utils/toast.util";
+import { Note } from "../../models/Note";
+import NoteService from "../../../services/note.service";
 import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
-import HeaderWithTitle from "../../HeaderWithTitle";
+import HeaderWithTitle from "../HeaderWithTitle";
 
 interface NoteProps {
   id?: number;
@@ -32,7 +32,7 @@ const NoteForm = (props: NoteProps) => {
     onCloseDrawer();
   };
 
-  const handleSubmitForm = (e) => {
+  const handleSubmitForm = async (e) => {
     if (!e.title || !e.message) return;
     const payload = {
       ...e,
@@ -68,11 +68,11 @@ const NoteForm = (props: NoteProps) => {
 
   return (
     <Box sx={{ width: 400 }}>
-      <HeaderWithTitle title="Add Quote" onCloseDrawer={onCloseDrawer} />
+      <HeaderWithTitle title="Add Note" onCloseDrawer={onCloseDrawer} />
 
       <FormContainer
         formContext={formContext}
-        onSuccess={() => handleSubmit(handleSubmitForm)}
+        onSuccess={handleSubmitForm}
       >
         <h3 style={{ marginLeft: "10px" }}>New Note</h3>
         <div>

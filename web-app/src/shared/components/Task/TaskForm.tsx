@@ -7,9 +7,9 @@ import {
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import toast from "../../../../utils/toast.util";
-import { Task } from "../../../models/Task";
-import TaskService from "../../../../services/task.service";
+import toast from "../../../utils/toast.util";
+import { Task } from "../../models/Task";
+import TaskService from "../../../services/task.service";
 type TaskProps = { task: Partial<Task>; onSuccess: Function; id?: number };
 const TaskForm = (props: TaskProps) => {
   // let { id } = useParams();
@@ -79,7 +79,7 @@ const TaskForm = (props: TaskProps) => {
   return (
     <FormContainer
       formContext={formContext}
-      onSuccess={() => handleSubmit(handleSubmitForm)}
+      onSuccess={handleSubmitForm}
     >
       <h3 style={{ marginLeft: "10px" }}>New Task</h3>
       <div>

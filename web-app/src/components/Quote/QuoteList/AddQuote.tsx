@@ -36,6 +36,7 @@ const AddQuote = (props) => {
   }
 
   const handleSubmitForm = (e) => {
+    debugger
     const payload = { ...e };
     QuoteService.create(payload)
       .then((response) => handleSuccess(response))
@@ -71,7 +72,7 @@ const AddQuote = (props) => {
   };
 
   return (
-    <Box className="quote-form" sx={{ width: 400 }}>
+    <Box className="quote-form" sx={{ width: 450 }}>
       <HeaderWithTitle title="Add Quote" onCloseDrawer={onCloseDrawer} />
       
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>

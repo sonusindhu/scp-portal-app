@@ -2,7 +2,7 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-import { MenuItem as MenuItemModel } from "../../../models/MenuItem";
+import { MenuItem as MenuItemModel } from "../../models/MenuItem";
 
 interface GridActionMenuProps{
   className: string,

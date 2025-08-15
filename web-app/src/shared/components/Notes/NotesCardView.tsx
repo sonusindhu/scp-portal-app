@@ -14,14 +14,14 @@ import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import WarningOutlinedIcon from "@mui/icons-material/WarningOutlined";
 
-import { Note } from "../../../models/Note";
+import { Note } from "../../models/Note";
 import { Button, Chip, Drawer } from "@material-ui/core";
-import PageHeading from "../../PageHeading/PageHeading";
-import { MenuItem } from "../../../models/MenuItem";
+import PageHeading from "../PageHeading/PageHeading";
+import { MenuItem } from "../../models/MenuItem";
 import { useParams } from "react-router-dom";
-import NoteService from "../../../../services/note.service";
-import NoteForm from "../NoteForm";
-import { NotesMainMenu } from "../../../const/notes.conts";
+import NoteService from "../../../services/note.service";
+import NoteForm from "./NoteForm";
+import { NotesMainMenu } from "../../const/notes.conts";
 
 interface NotesListProps {
   options: any;

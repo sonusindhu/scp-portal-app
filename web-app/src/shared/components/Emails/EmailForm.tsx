@@ -8,11 +8,11 @@ import { useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import toast from "../../../../utils/toast.util";
-import { Email, EmailFormProps } from "../../../models/Email";
-import PageHeading from "../../PageHeading/PageHeading";
-import { ResponseModel } from "../../../../models/common.model";
-import EmailService from "../../../../services/email.service";
+import toast from "../../../utils/toast.util";
+import { Email, EmailFormProps } from "../../models/Email";
+import PageHeading from "../PageHeading/PageHeading";
+import { ResponseModel } from "../../../models/common.model";
+import EmailService from "../../../services/email.service";
 
 const EmailForm = (props: EmailFormProps) => {
   let { id } = useParams();
@@ -48,7 +48,7 @@ const EmailForm = (props: EmailFormProps) => {
   return (
     <FormContainer
       formContext={formContext}
-      onSuccess={() => handleSubmit(handleSubmitForm)}
+      onSuccess={handleSubmitForm}
     >
       <PageHeading title="New Email" />
       <div>

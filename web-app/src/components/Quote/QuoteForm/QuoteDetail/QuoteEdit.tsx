@@ -60,7 +60,7 @@ const QuoteEdit = (props: QuoteEditProps) => {
 
   return (
     <div className="container-fluid">
-      <FormContainer formContext={formContext} defaultValues={defaultValues} onSuccess={() => handleSubmit(handleSubmitForm)}>
+      <FormContainer formContext={formContext} defaultValues={defaultValues} onSuccess={handleSubmitForm}>
         {/* Cargo Details Start */}
         <QuoteCargoDetail 
           {...{

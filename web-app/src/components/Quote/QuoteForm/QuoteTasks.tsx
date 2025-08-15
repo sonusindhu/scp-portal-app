@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 
-import QuoteService from "../../../../services/quote.service";
-import TasksList from "../../../../shared/components/Task/TasksList/TasksListView";
-import TaskForm from "../../../../shared/components/Task/TaskForm";
-import { Task } from "../../../../shared/models/Task";
+import QuoteService from "../../../services/quote.service";
+import TasksList from "../../../shared/components/Task/TasksListView";
+import TaskForm from "../../../shared/components/Task/TaskForm";
+import { Task } from "../../../shared/models/Task";
 
 const QuoteTasks = () => {
   let { id } = useParams();

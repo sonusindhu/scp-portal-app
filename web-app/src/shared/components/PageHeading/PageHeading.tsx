@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { MenuItem } from "../../models/MenuItem";
-import GridActionMenu from "../GridList/GridActionMenu/GridActionMenu";
+import GridActionMenu from "../GridList/GridActionMenu";
 
 interface PageHeadingModel {
   title: string;

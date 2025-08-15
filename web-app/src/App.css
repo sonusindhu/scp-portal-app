@@ -115,7 +115,6 @@ header .MuiContainer-root {
 }
 
 header.MuiPaper-root.drawer-header {
-  position: fixed;
   width: 100%;
   right: inherit;
   top: 0;
@@ -288,7 +287,7 @@ button.blue-btn:hover {
 }
 
 .MuiDrawer-modal .MuiPaper-root{
-  max-width: 450px;
+  width: 450px;
 }
 
 .MuiDrawer-modal .drawer-header .MuiToolbar-root{
