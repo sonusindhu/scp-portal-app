@@ -54,7 +54,7 @@ const AddInventory = (props) => {
   }, []);
 
   return (
-    <Box sx={{ width: 400 }} className="form-container">
+    <Box sx={{ width: 450 }} className="form-container">
       <AppBar position="absolute" className="drawer-header">
         <Toolbar>
           <Box sx={{ width: 335 }}>
@@ -73,7 +73,7 @@ const AddInventory = (props) => {
         formContext={formContext} 
         onSuccess={handleSubmitForm}>
         <TextFieldElement
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 410 }}
           required
           name={"trackingNumber"}
           label="Tracking Number"
@@ -81,14 +81,14 @@ const AddInventory = (props) => {
           margin={"dense"}
         />
         <SelectElement
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 410 }}
           required
           options={statusList}
           name={"status"}
           label="Status"
         ></SelectElement>
         <SelectElement
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 410 }}
           required
           options={packages}
           name={"type"}
@@ -96,7 +96,7 @@ const AddInventory = (props) => {
         ></SelectElement>
 
         <SelectElement
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 410 }}
           required
           options={companies}
           name={"companyId"}
@@ -104,7 +104,7 @@ const AddInventory = (props) => {
           labelKey="name"
         ></SelectElement>
         <TextFieldElement
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 410 }}
           name={"location"}
           label="Location"
           variant="outlined"
@@ -112,7 +112,7 @@ const AddInventory = (props) => {
           multiline={true}
         />
         <TextFieldElement
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 410 }}
           required
           name={"length"}
           label="Length"
@@ -121,7 +121,7 @@ const AddInventory = (props) => {
         />
 
         <TextFieldElement
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 410 }}
           required
           name={"width"}
           label="Width"
@@ -130,7 +130,7 @@ const AddInventory = (props) => {
         />
 
         <TextFieldElement
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 410 }}
           required
           name={"height"}
           label="Height"
@@ -140,7 +140,7 @@ const AddInventory = (props) => {
 
         <TextFieldElement
           required
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 410 }}
           name={"weight"}
           label="Weight"
           variant="outlined"
@@ -148,7 +148,7 @@ const AddInventory = (props) => {
         />
 
         <TextFieldElement
-          sx={{ m: 1, width: 375 }}
+          sx={{ m: 1, width: 410 }}
           name={"notes"}
           label="Notes"
           variant="outlined"

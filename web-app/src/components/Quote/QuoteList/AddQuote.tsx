@@ -9,12 +9,9 @@ import {
   FormContainer,
   TextFieldElement,
   SelectElement,
-  MultiSelectElement,
-  DatePickerElement,
 } from "react-hook-form-mui";
 import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
 import QuoteService from "../../../services/quote.service";
-import DateFnsProvider from "../../../utils/DateFnsProvider";
 import { ResponseModel } from "../../../models/common.model";
 
 const AddQuote = (props) => {
@@ -74,7 +71,7 @@ const AddQuote = (props) => {
   };
 
   return (
-    <Box sx={{ width: 400 }}>
+    <Box className="quote-form" sx={{ width: 400 }}>
       <AppBar position="absolute" className="drawer-header">
         <Toolbar>
           <Box sx={{ width: 335 }}>
@@ -92,14 +89,14 @@ const AddQuote = (props) => {
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <div className="drawer-content">
           <TextFieldElement
-            sx={{ m: 1, width: 375 }}
+            sx={{ m: 1, width: 410 }}
             name={"name"}
             label="Quote Name"
             variant="outlined"
             margin={"dense"}
           />
           <SelectElement
-            sx={{ m: 1, width: 375 }}
+            sx={{ m: 1, width: 410 }}
             required
             options={serviceList}
             name={"service"}
@@ -109,7 +106,7 @@ const AddQuote = (props) => {
           ></SelectElement>
           
           <SelectElement
-            sx={{ m: 1, width: 375 }}
+            sx={{ m: 1, width: 410 }}
             required
             options={transportModes}
             name={"transportMode"}
@@ -119,7 +116,7 @@ const AddQuote = (props) => {
           ></SelectElement>
 
           <SelectElement
-            sx={{ m: 1, width: 375 }}
+            sx={{ m: 1, width: 410 }}
             required
             options={companies}
             name={"companyId"}
@@ -130,7 +127,7 @@ const AddQuote = (props) => {
           ></SelectElement>
 
           <SelectElement
-            sx={{ m: 1, width: 375 }}
+            sx={{ m: 1, width: 410 }}
             required
             options={contacts}
             name={"contactId"}
@@ -139,11 +136,12 @@ const AddQuote = (props) => {
             labelKey="fullName"
           ></SelectElement>
 
-          <div className="quote-datepicker">
-            <DateFnsProvider>
-              <DatePickerElement label="Date Picker" name={"expiryDate"} />
-            </DateFnsProvider>
-          </div>
+          <TextFieldElement
+              sx={{ m: 1, minWidth: 410 }}
+              name={"expiryDate"}
+              variant="outlined"
+              type="date"
+            />
         </div>
 
         <div className="drawer-footer">

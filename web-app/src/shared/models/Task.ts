@@ -10,5 +10,7 @@ export interface Task {
     subject: string,
     type: string
     updatedAt: number,
-    userId: number
+    userId: number,
+    reminderDateTime?: string,
+    dueDateTime?: string
 }
