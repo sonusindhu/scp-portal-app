@@ -3,9 +3,9 @@ import { FormContainer, TextFieldElement } from "react-hook-form-mui";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import toast from "../../../utils/toast.util";
-import AuthService from "../../../services/auth.service";
-import { ResponseModel } from "../../../models/common.model";
+import toast from "../../utils/toast.util";
+import AuthService from "../../services/auth.service";
+import { ResponseModel } from "../../models/common.model";
 
 const ProfileChangePassword = () => {
   const formContext = useForm({ defaultValues: {} });

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 
-import TasksListView from "../../../../shared/components/Task/TasksListView";
-import TaskForm from "../../../../shared/components/Task/TaskForm";
-import { Task } from "../../../../shared/models/Task";
-import TaskService from "../../../../services/task.service";
+import TasksListView from "../../../shared/components/Task/TasksListView";
+import TaskForm from "../../../shared/components/Task/TaskForm";
+import { Task } from "../../../shared/models/Task";
+import TaskService from "../../../services/task.service";
 
 const InventoryTasks = () => {
   let { id } = useParams();

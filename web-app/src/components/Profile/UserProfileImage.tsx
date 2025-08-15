@@ -9,9 +9,9 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Avatar as Avat } from '@material-ui/core';
 import Avatar from 'react-avatar-edit';
-import UserService from '../../../services/user.service';
+import UserService from '../../services/user.service';
 
-import toast from "../../../utils/toast.util";
+import toast from "../../utils/toast.util";
 
 const API_URL = process.env.REACT_APP_API_URL;
 

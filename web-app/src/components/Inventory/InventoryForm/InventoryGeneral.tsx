@@ -6,11 +6,11 @@ import {
   TextFieldElement,
   SelectElement,
 } from "react-hook-form-mui";
-import toast from "../../../../utils/toast.util";
-import InventoryService from "../../../../services/inventory.service";
-import { ResponseModel } from "../../../../models/common.model";
+import toast from "../../../utils/toast.util";
+import InventoryService from "../../../services/inventory.service";
+import { ResponseModel } from "../../../models/common.model";
 import { useNavigate, useParams } from "react-router-dom";
-import PageHeading from "../../../../shared/components/PageHeading/PageHeading";
+import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 
 const InventoryGeneral = () => {
   let { id } = useParams();

@@ -11,7 +11,7 @@ import AppHeader from "./layouts/AppHeader/AppHeader";
 import AuthWrapper from "./layouts/AuthWrapper/AuthWrapper";
 
 // Lazy load form components for better code splitting
-const Profile = lazy(() => import("./components/Profile"));
+const Profile = lazy(() => import("./components/Profile/ProfileChangePassword"));
 const EditCompany = lazy(() => import("./components/CompanyList/EditCompany"));
 const EditContact = lazy(() => import("./components/Contacts/ContactForm/ContactGeneral"));
 const QuoteDetails = lazy(() => import("./components/Quote/QuoteForm/QuoteDetail/QuoteDetail"));
@@ -31,10 +31,10 @@ const ContactNotes = lazy(() => import("./components/Contacts/ContactForm/Contac
 const ContactTasks = lazy(() => import("./components/Contacts/ContactForm/ContactTasks"));
 const ContactForm = lazy(() => import("./components/Contacts/ContactForm/ContactForm"));
 const InventoryForm = lazy(() => import("./components/Inventory/InventoryForm/InventoryForm"));
-const InventoryGeneral = lazy(() => import("./components/Inventory/InventoryForm/InventoryGeneral/InventoryGeneral"));
-const InventoryNotes = lazy(() => import("./components/Inventory/InventoryForm/InventoryNotes/InventoryNotes"));
-const InventoryEmails = lazy(() => import("./components/Inventory/InventoryForm/InventoryEmails/InventoryEmails"));
-const InventoryTasks = lazy(() => import("./components/Inventory/InventoryForm/InventoryTasks/InventoryTasks"));
+const InventoryGeneral = lazy(() => import("./components/Inventory/InventoryForm/InventoryGeneral"));
+const InventoryNotes = lazy(() => import("./components/Inventory/InventoryForm/InventoryNotes"));
+const InventoryEmails = lazy(() => import("./components/Inventory/InventoryForm/InventoryEmails"));
+const InventoryTasks = lazy(() => import("./components/Inventory/InventoryForm/InventoryTasks"));
 
 const Home = lazy(() => import("./components/Home"));
 const CompanyList = lazy(() => import("./components/CompanyList/CompanyList"));
