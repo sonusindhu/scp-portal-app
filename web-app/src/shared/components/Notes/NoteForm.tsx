@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import toast from "../../../utils/toast.util";
 import { Note } from "../../models/Note";
 import NoteService from "../../../services/note.service";
-import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import HeaderWithTitle from "../HeaderWithTitle";
 
 interface NoteProps {

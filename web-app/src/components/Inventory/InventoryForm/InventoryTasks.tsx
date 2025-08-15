@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 
 import TasksListView from "../../../shared/components/Task/TasksListView";
 import TaskForm from "../../../shared/components/Task/TaskForm";

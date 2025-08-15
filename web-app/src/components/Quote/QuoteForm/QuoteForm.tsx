@@ -4,7 +4,7 @@ import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
 import QuoteService from "../../../services/quote.service";
 
-import { Grid, Tab, Tabs } from "@material-ui/core";
+import { Grid, Tab, Tabs } from "@mui/material";
 
 const QuoteForm = (props) => {
   const location = useLocation();

@@ -1,7 +1,7 @@
 import React from "react";
 import { TextFieldElement } from "react-hook-form-mui";
 import { useFieldArray } from "react-hook-form";
-import { IconButton } from "@material-ui/core";
+import { IconButton } from "@mui/material";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import RemoveCircleOutlinedIcon from "@mui/icons-material/RemoveCircleOutlined";
 import PageHeading from "../../../../shared/components/PageHeading/PageHeading";

@@ -9,7 +9,7 @@ import {
   TextFieldElement,
   SelectElement,
 } from "react-hook-form-mui";
-import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import QuoteService from "../../../services/quote.service";
 import { ResponseModel } from "../../../models/common.model";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";

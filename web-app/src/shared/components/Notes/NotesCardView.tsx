@@ -15,7 +15,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import WarningOutlinedIcon from "@mui/icons-material/WarningOutlined";
 
 import { Note } from "../../models/Note";
-import { Button, Chip, Drawer } from "@material-ui/core";
+import { Button, Chip, Drawer } from "@mui/material";
 import PageHeading from "../PageHeading/PageHeading";
 import { MenuItem } from "../../models/MenuItem";
 import { useParams } from "react-router-dom";

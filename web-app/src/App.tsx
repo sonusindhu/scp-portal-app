@@ -11,7 +11,7 @@ import AppHeader from "./layouts/AppHeader/AppHeader";
 import AuthWrapper from "./layouts/AuthWrapper/AuthWrapper";
 
 // Lazy load form components for better code splitting
-const Profile = lazy(() => import("./components/Profile/ProfileChangePassword"));
+const Profile = lazy(() => import("./components/Profile/Profile"));
 const EditCompany = lazy(() => import("./components/CompanyList/EditCompany"));
 const EditContact = lazy(() => import("./components/Contacts/ContactForm/ContactGeneral"));
 const QuoteDetails = lazy(() => import("./components/Quote/QuoteForm/QuoteDetail"));

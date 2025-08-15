@@ -6,7 +6,7 @@ import {
 } from "react-hook-form-mui";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import ContactService from "../../../services/contact.service";
 import toast from "../../../utils/toast.util";
 import { ResponseModel } from "../../../models/common.model";
