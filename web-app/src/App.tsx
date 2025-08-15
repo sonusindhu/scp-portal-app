@@ -14,7 +14,7 @@ import AuthWrapper from "./layouts/AuthWrapper/AuthWrapper";
 const Profile = lazy(() => import("./components/Profile/ProfileChangePassword"));
 const EditCompany = lazy(() => import("./components/CompanyList/EditCompany"));
 const EditContact = lazy(() => import("./components/Contacts/ContactForm/ContactGeneral"));
-const QuoteDetails = lazy(() => import("./components/Quote/QuoteForm/QuoteDetail/QuoteDetail"));
+const QuoteDetails = lazy(() => import("./components/Quote/QuoteForm/QuoteDetail"));
 const QuoteForm = lazy(() => import("./components/Quote/QuoteForm/QuoteForm"));
 const QuoteNotes = lazy(() => import("./components/Quote/QuoteForm/QuoteNotes"));
 const QuoteEmails = lazy(() => import("./components/Quote/QuoteForm/QuoteEmails"));
