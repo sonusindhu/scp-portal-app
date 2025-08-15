@@ -99,6 +99,8 @@ const ContactGeneral = () => {
             options={statusList}
             name={"status"}
             label="Status"
+            labelKey="title"
+            valueKey="id"
           ></SelectElement>
 
           <SelectElement
@@ -108,6 +110,7 @@ const ContactGeneral = () => {
             name={"companyId"}
             label="Company"
             labelKey="name"
+            valueKey="id"
           ></SelectElement>
 
           <TextFieldElement

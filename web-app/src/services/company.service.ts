@@ -1,5 +1,5 @@
 import axios from "../utils/config.util";
-const API_URL = "https://scp-portal-api.onrender.com/api/v1/app/"; //process.env.REACT_APP_API_ENDPOINT;
+const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const deleteCompanies = (ids: number[]) => {
   return axios

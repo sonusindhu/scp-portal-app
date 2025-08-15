@@ -92,6 +92,8 @@ const EditCompany = () => {
             ]}
             name={"status"}
             label="Status"
+            labelKey="title"
+            valueKey="id"
           ></SelectElement>
         </div>
 
@@ -115,6 +117,8 @@ const EditCompany = () => {
             ]}
             name={"type"}
             label="Type"
+            labelKey="title"
+            valueKey="id"
           ></SelectElement>
 
           <TextFieldElement

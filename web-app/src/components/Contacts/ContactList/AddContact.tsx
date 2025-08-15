@@ -90,6 +90,8 @@ const AddContact = (props) => {
           options={statusList}
           name={"status"}
           label="Status"
+          labelKey="title"
+          valueKey="id"
         ></SelectElement>
 
         <SelectElement
@@ -99,6 +101,7 @@ const AddContact = (props) => {
           name={"companyId"}
           label="Company"
           labelKey="name"
+          valueKey="id"
         ></SelectElement>
 
         <TextFieldElement

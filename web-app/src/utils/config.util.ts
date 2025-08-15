@@ -1,6 +1,6 @@
 import axios from "axios";
 import AuthService from "../services/auth.service";
-const API_URL = "https://scp-portal-api.onrender.com/api/v1/app/"; //process.env.REACT_APP_API_ENDPOINT;
+const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const instance = axios.create({
   baseURL: API_URL,
