@@ -12,18 +12,7 @@ module.exports = function (sails) {
     initialize: function (next) {
       sails.after("hook:orm:loaded", async function () {
         const company_view = `
-        CREATE OR REPLACE VIEW view_company_list as
-          SELECT 
-              c.id,
-              MAX(c.name) AS name,
-              MAX(uc.fullName) AS createdByName,
-              MAX(up.fullName) AS updatedByName,
-              MAX(cn.fullName) AS mainContactName
-          FROM companies AS c 
-          LEFT JOIN users uc ON uc.id = c.createdBy 
-          LEFT JOIN users up ON up.id = c.updatedBy 
-          LEFT JOIN contacts cn ON cn.id = c.mainContact
-          GROUP BY c.id;
+        CREATE OR REPLACE VIEW view_company_list as select c.*, uc.fullName AS createdByName,up.fullName AS updatedByName, cn.fullName as mainContactName from companies as c left join users uc on uc.id = c.createdBy left join users up on uc.id = c.updatedBy left join contacts cn on cn.id = c.mainContact GROUP BY c.id;
         `;
 
         const contact_view = `
