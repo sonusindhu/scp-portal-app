@@ -31,23 +31,35 @@ module.exports = {
   },
 
   listView: async (req, res) => {
-    const payload = req.body;
-    const sortMap = payload.sort.join(",");
-    const sort = sortMap || `createdAt desc`;
-    const filterQuery = GridService.mapListFilterSql(payload.filter);
-    const query = `SELECT * FROM view_quote_list ${filterQuery} ORDER BY ${sort} LIMIT ${payload.skip}, ${payload.take}`;
-    const data = await sails.sendNativeQuery(query).intercept((err) => {
+    const { sort: payloadSort = [], filter, take, skip } = req.body;
+        
+      // Default sort
+      const sort = payloadSort.length ? payloadSort : [{ id: "asc" }];
+  
+      // Build filter query for the view
+      let filterQuery;
+      if (filter?.filters?.length) {
+        filterQuery = GridService.prepareWaterlineFilter(filter);
+      }
+  
+      // Query the view instead of Company
+      let quotes = await ViewQuoteList.find(filterQuery ? { where: filterQuery } : {})
+        .sort(sort)
+        .limit(take)
+        .skip(skip);
+  
+      // Total count
+      const total = filterQuery
+        ? await ViewQuoteList.count({ where: filterQuery })
+        : await ViewQuoteList.count();
+  
+      // Send response
       return res.send({
-        status: false,
-        message: err?.raw?.error?.sqlMessage || err.code,
+        status: true,
+        message: "Quote list fetched successfully.",
+        result: quotes,
+        total,
       });
-    });
-    return res.send({
-      status: true,
-      message: `Quote list fetched successfully.`,
-      result: data?.rows || [],
-      total: data?.rows?.length,
-    });
   },
 
   create: async (req, res) => {

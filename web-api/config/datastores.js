@@ -46,7 +46,7 @@ module.exports.datastores = {
      *                                                                          *
      ***************************************************************************/
     adapter: process.env.DB_ADAPTER || "sails-mysql",
-    url: process.env.DB_URL || "mysql://root@localhost:3306/sails_scpapi",
+    url: process.env.DB_URL || "mysql://root:123456@localhost:3306/scp_db",
     // adapter: process.env.DB_ADAPTER || "sails-postgresql",
     // url: process.env.DB_URL || "postgresql://postgres:100NuCyz12@localhost:5432/scp_main",
   },

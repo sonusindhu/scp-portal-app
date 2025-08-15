@@ -85,5 +85,41 @@ module.exports = {
     return mainQuery;
   },
 
+  prepareWaterlineFilter: (filter) => {
+    
+    if (!filter) return {};
+    
+
+    if (filter.field && filter.operator && filter.value !== undefined) {
+      // Single field filter
+      switch (filter.operator.toLowerCase()) {
+        case "contains":
+          return { [filter.field]: { contains: filter.value } };
+        case "startswith":
+          return { [filter.field]: { startsWith: filter.value } };
+        case "endswith":
+          return { [filter.field]: { endsWith: filter.value } };
+        case "eq":
+          return { [filter.field]: filter.value };
+        default:
+          return {};
+      }
+    }
+
+    if (filter.filters && filter.filters.length) {
+      // Flatten subfilters
+      const logic = filter.logic?.toLowerCase() === "or" ? "or" : "and";
+      const clauses = filter.filters.map(module.exports.prepareWaterlineFilter);
+
+      // If only one clause, no need for and/or
+      if (clauses.length === 1) return clauses[0];
+
+      return { [logic]: clauses };
+    }
+
+    return {};
+
+  },
+
   //#endregion
 };

@@ -19,71 +19,34 @@ module.exports = {
   },
 
   listView: async (req, res) => {
-    const payload = req.body;
+    const { sort: payloadSort = [], filter, take, skip } = req.body;
 
-    // const sort = payload.sort.length > 0 ? payload.sort : [{ id: "asc" }];
-    // const filter = payload.filter;
-    // let filterQuery;
-    // if (filter?.filters?.length) {
-    //   filterQuery = GridService.createQueryFromFilter(
-    //     filter.filters,
-    //     filter.logic
-    //   );
-    // }
+    // Default sort
+    const sort = payloadSort.length ? payloadSort : [{ id: "asc" }];
 
-    // let companies;
-    // if (filterQuery) {
-    //   companies = await Company.find({
-    //     where: filterQuery,
-    //   })
-    //     .sort(sort)
-    //     .limit(payload.take)
-    //     .skip(payload.skip)
-    //     .populate("createdBy")
-    //     .populate("updatedBy");
-    // } else {
-    //   companies = await Company.find()
-    //     .sort(sort)
-    //     .limit(payload.take)
-    //     .skip(payload.skip)
-    //     .populate("createdBy")
-    //     .populate("updatedBy");
-    // }
+    // Build filter query for the view
+    let filterQuery;
+    if (filter?.filters?.length) {
+      filterQuery = GridService.prepareWaterlineFilter(filter);
+    }
 
-    // if (companies && companies.length) {
-    //   companies = companies.map((company) => {
-    //     return {
-    //       ...company,
-    //       createdBy: company.createdBy?.fullName || "",
-    //       updatedBy: company.updatedBy?.fullName || "",
-    //       updatedAt: company.updatedBy?.id ? company.updatedAt : null,
-    //     };
-    //   });
-    // }
-    // const total = await Company.count();
+    // Query the view instead of Company
+    let companies = await ViewCompanyList.find(filterQuery ? { where: filterQuery } : {})
+      .sort(sort)
+      .limit(take)
+      .skip(skip);
 
-    // return res.send({
-    //   status: true,
-    //   message: `Company list fetched successfully.`,
-    //   result: companies,
-    //   total,
-    // });
+    // Total count
+    const total = filterQuery
+      ? await ViewCompanyList.count({ where: filterQuery })
+      : await ViewCompanyList.count();
 
-    const sortMap = payload.sort.join(",");
-    const sort = sortMap || `createdAt desc`;
-    const filterQuery = GridService.mapListFilterSql(payload.filter);
-    const query = `SELECT * FROM view_company_list ${filterQuery} ORDER BY ${sort} LIMIT ${payload.skip}, ${payload.take}`;
-    const data = await sails.sendNativeQuery(query).intercept((err) => {
-      return res.send({
-        status: false,
-        message: err?.raw?.error?.sqlMessage || err.code,
-      });
-    });
+    // Send response
     return res.send({
       status: true,
-      message: `Company list fetched successfully.`,
-      result: data?.rows || [],
-      total: data?.rows?.length,
+      message: "Company list fetched successfully.",
+      result: companies,
+      total,
     });
   },
 
