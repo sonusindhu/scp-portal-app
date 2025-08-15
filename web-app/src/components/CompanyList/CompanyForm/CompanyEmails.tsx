@@ -28,7 +28,7 @@ const CompanyEmails = () => {
   }, []);
 
   return (
-    <div className="grid-container">
+    <div className="grid-container" style={{ display: 'flex', flexDirection: 'row', gap: '0' }}>
       <div className="grid-form-column">
         <EmailForm email={email} onSuccess={onSuccess} />
       </div>
