@@ -2,17 +2,12 @@ import React from "react";
 import {
   FormContainer,
   TextFieldElement,
-  CheckboxElement,
   SelectElement,
-  DatePickerElement,
 } from "react-hook-form-mui";
-import { useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import QuoteService from "../../../../services/quote.service";
 import toast from "../../../../utils/toast.util";
-import DateFnsProvider from "../../../../utils/DateFnsProvider";
 import { Task } from "../../../models/Task";
 import TaskService from "../../../../services/task.service";
 type TaskProps = { task: Partial<Task>; onSuccess: Function; id?: number };
@@ -152,17 +147,23 @@ const TaskForm = (props: TaskProps) => {
 
       <div className="quote-task-datepicker">
         <div className="due-date">
-          <DateFnsProvider>
-            <DatePickerElement label="Due Date" name={"dueDateTime"} />
-          </DateFnsProvider>
+          <TextFieldElement
+            sx={{ m: 1, minWidth: "96%" }}
+            name={"dueDateTime"}
+            label="Due Date"
+            variant="outlined"
+            type="date"
+          />
         </div>
         <div className="reminder-date">
-          <DateFnsProvider>
-            <DatePickerElement
-              label="Reminder Date"
-              name={"reminderDateTime"}
-            />
-          </DateFnsProvider>
+          <TextFieldElement
+            sx={{ m: 1, minWidth: "96%" }}
+            name={"reminderDateTime"}
+            label="Reminder Date"
+            variant="outlined"
+            type="date"
+          />
+
         </div>
       </div>
 
