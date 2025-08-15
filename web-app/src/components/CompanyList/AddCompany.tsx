@@ -92,15 +92,17 @@ const AddCompany = (props) => {
             },
             {
               id: "active",
-              title: "active",
+              title: "Active",
             },
             {
-              id: "active",
+              id: "inactive",
               title: "Inactive",
             },
           ]}
           name={"status"}
           label="Status"
+          valueKey="id"
+          labelKey="title"
         ></SelectElement>
 
         <SelectElement
@@ -122,6 +124,8 @@ const AddCompany = (props) => {
           ]}
           name={"type"}
           label="Type"
+          valueKey="id"
+          labelKey="title"
         ></SelectElement>
 
         <TextFieldElement
