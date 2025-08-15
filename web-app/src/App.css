@@ -286,3 +286,12 @@ button.blue-btn:hover {
   padding-top: 75px;
   padding-bottom: 80px;
 }
+
+.MuiDrawer-modal .MuiPaper-root{
+  max-width: 450px;
+}
+
+.MuiDrawer-modal .drawer-header .MuiToolbar-root{
+  display: flex;
+  justify-content: space-between;
+}
