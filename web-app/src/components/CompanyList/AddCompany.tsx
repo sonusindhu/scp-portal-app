@@ -19,9 +19,6 @@ const AddCompany = (props) => {
     defaultValues: {},
   });
   const { reset } = formContext;
-  const handleClearForm = () => {
-    reset();
-  };
 
   const onCloseDrawer = () => {
     props.onCloseDrawer && props.onCloseDrawer();

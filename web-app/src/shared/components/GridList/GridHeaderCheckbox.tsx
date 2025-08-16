@@ -2,7 +2,7 @@ import { Checkbox } from "@mui/material";
 import React, { useState } from "react";
 
 const GridHeaderCheckbox = (props) => {
-  const [state, setState] = useState(false);
+  const [, setState] = useState(false);
 
   const selectAllRows = (bool) => {
     props.api.forEachNode((row) => {

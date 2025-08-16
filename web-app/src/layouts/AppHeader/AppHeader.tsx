@@ -3,8 +3,6 @@ import { Link, NavLink } from "react-router-dom";
 import "./AppHeader.css";
 
 const AppHeader = (props) => {
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 

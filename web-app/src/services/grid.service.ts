@@ -41,8 +41,7 @@ const ServerSideDatasource = (listUrl, defaultFilters = null) => {
         .post(listUrl, payload)
         .then(({ data }) => data)
         .then(({ result, total }) => {
-          const lastRow =
-            result.length <= params.request.endRow ? result.length : -1;
+          
           params.successCallback(result, total);
 
           params.api.hideOverlay();

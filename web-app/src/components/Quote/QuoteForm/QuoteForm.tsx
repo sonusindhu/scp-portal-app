@@ -6,13 +6,13 @@ import QuoteService from "../../../services/quote.service";
 
 import { Grid, Tab, Tabs } from "@mui/material";
 
-const QuoteForm = (props) => {
+const QuoteForm = () => {
   const location = useLocation();
   const pathname = location.pathname.split("/").pop();
   let { id } = useParams();
-  let [isLoading, setIsLoading] = useState<boolean>(true);
+  let [, setIsLoading] = useState<boolean>(true);
   let [selectedTab, setSelectedTab] = useState<string>(pathname ?? "details");
-  let [quote, setQuote] = useState<any>({});
+  let [, setQuote] = useState<any>({});
   const navigate = useNavigate();
 
   const handleChangeTab = (event, tab: string) => {
@@ -24,7 +24,6 @@ const QuoteForm = (props) => {
   const user = AuthService.getCurrentUser();
   useEffect(() => {
     if (user && id) {
-      setIsLoading(true);
       QuoteService.find(+id)
         .then((response) => {
           if (response.status) {
@@ -34,11 +33,9 @@ const QuoteForm = (props) => {
           } else {
             navigate("/app/quote/list");
           }
-          setIsLoading(false);
         })
         .catch(() => {
           navigate("/app/quote/list");
-          setIsLoading(false);
         });
     } else {
       navigate("/auth/login");

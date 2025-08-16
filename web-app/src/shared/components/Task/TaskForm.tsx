@@ -46,16 +46,7 @@ const TaskForm = (props: TaskProps) => {
     { id: 3, value: "Completed" },
   ];
 
-  const {
-    control,
-    register,
-    handleSubmit,
-    getValues,
-    setValue,
-    watch,
-    reset,
-    resetField,
-  } = formContext;
+  const { reset } = formContext;
 
   const handleClearForm = () => reset();
 

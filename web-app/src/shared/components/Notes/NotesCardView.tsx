@@ -4,13 +4,10 @@ import { format } from "date-fns";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import WarningOutlinedIcon from "@mui/icons-material/WarningOutlined";
 
@@ -30,9 +27,9 @@ interface NotesListProps {
 const NotesListView = (props: NotesListProps) => {
   let { id } = useParams();
   let [notes, setNotes] = useState<Note[]>([]);
-  let [note, setNote] = useState<Note>(props.options);
+  let [note] = useState<Note>(props.options);
   const [addDrawer, setAddDrawer] = useState(false);
-  const [mainMenus, setMainMenus] = useState<MenuItem[]>(NotesMainMenu.filter(i => i.key != 'switch-card'));
+  const [mainMenus] = useState<MenuItem[]>(NotesMainMenu.filter(i => i.key !== 'switch-card'));
 
   const noteSubHeader = (note: Note) => {
     const formattedDate = format(new Date(note.createdAt), "dd/MM/yyyy p");
@@ -64,7 +61,7 @@ const NotesListView = (props: NotesListProps) => {
         setNotes(response.result);
       });
     }
-  }, []);
+  }, [id, props.options]);
 
   return (
     <div className="container-fluid note-list">

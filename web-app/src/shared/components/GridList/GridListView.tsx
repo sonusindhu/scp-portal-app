@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import "ag-grid-enterprise";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ServerSideRowModelModule } from "@ag-grid-enterprise/server-side-row-model";
@@ -13,9 +13,8 @@ import GridMultiSelectFilter from "./GridFilters/GridMultiSelectFilter";
 ModuleRegistry.registerModules([ServerSideRowModelModule]);
 
 const GridListView = (props) => {
-  const gridRef = useRef<any>(props);
   const [gridApi, setGridApi] = useState<any>(null);
-  const [gridColumnApi, setGridColumnApi] = useState<any>(null);
+  const [, setGridColumnApi] = useState<any>(null);
   const [columnDefs, setColumnDefs] = useState<any>(props.options.columnDefs);
   const getRowId: GetRowIdFunc = useCallback(({ data }) => data.id, []);
 
@@ -52,7 +51,7 @@ const GridListView = (props) => {
       return item;
     });
     setColumnDefs(columns);
-  }, []);
+  }, [columnDefs, props.callbackFun]);
 
   return (
     <div className="ag-theme-alpine" style={{ height: "79vh" }}>

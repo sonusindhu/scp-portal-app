@@ -7,7 +7,7 @@ import React, {
 } from "react";
 
 export default forwardRef((props: any, ref) => {
-  const [currentValue, setCurrentValue] = useState(null);
+  const [, setCurrentValue] = useState(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // expose AG Grid Filter Lifecycle callbacks
