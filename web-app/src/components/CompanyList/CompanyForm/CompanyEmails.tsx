@@ -8,7 +8,7 @@ import EmailService from "../../../services/email.service";
 const CompanyEmails = () => {
   let { id } = useParams();
   let [emails, setEmails] = useState<Email[]>([]);
-  let [email, setEmail] = useState<Partial<Email>>({
+  let [email] = useState<Partial<Email>>({
     type: "company",
     companyId: id ? +id : undefined,
   });

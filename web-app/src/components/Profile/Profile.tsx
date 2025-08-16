@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
-import toast from "../../utils/toast.util";
 import {
-  Box,
   CircularProgress,
-  Drawer,
   Grid,
   Tab,
   Tabs,
-  Typography,
 } from "@mui/material";
 import UserForm from "./UserForm";
 
