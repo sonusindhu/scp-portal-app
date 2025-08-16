@@ -2,7 +2,6 @@ import { MenuItem, Select } from "@mui/material";
 import React, {
   forwardRef,
   Fragment,
-  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -39,14 +38,6 @@ export default forwardRef((props: any, ref) => {
     props.parentFilterInstance((instance) => {
       instance.onFloatingFilterChanged(operator, keyword);
     });
-  };
-
-  useEffect(() => {
-    console.log(props);
-  }, []);
-
-  const style = {
-    width: "93%",
   };
 
   return (

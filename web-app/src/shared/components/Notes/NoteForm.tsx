@@ -4,13 +4,12 @@ import {
   TextFieldElement,
   CheckboxElement,
 } from "react-hook-form-mui";
-import { useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import toast from "../../../utils/toast.util";
 import { Note } from "../../models/Note";
 import NoteService from "../../../services/note.service";
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import HeaderWithTitle from "../HeaderWithTitle";
 
 interface NoteProps {
@@ -21,11 +20,10 @@ interface NoteProps {
 }
 
 const NoteForm = (props: NoteProps) => {
-  let { id } = useParams();
   const note: Note = props.note;
   const formContext = useForm({ defaultValues: note });
 
-  const { handleSubmit, reset } = formContext;
+  const { reset } = formContext;
 
   const handleClearForm = () => {
     reset();
