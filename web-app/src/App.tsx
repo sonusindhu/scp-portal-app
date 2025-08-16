@@ -9,6 +9,7 @@ import Login from "./components/Login/Login";
 import EventBus from "./common/EventBus";
 import AppHeader from "./layouts/AppHeader/AppHeader";
 import AuthWrapper from "./layouts/AuthWrapper/AuthWrapper";
+import Loader from "./shared/components/Loader";
 
 // Lazy load form components for better code splitting
 const Profile = lazy(() => import("./components/Profile/Profile"));
@@ -66,14 +67,10 @@ const App = () => {
 
   return (
     <div>
-      {currentUser ? <AppHeader onLogout={logOut} /> : <></>}
+      { currentUser ? <AppHeader onLogout={logOut} /> : <></>}
       <div className="app-container">
-        <Suspense 
-          fallback={
-            <div className="loading-spinner">
-              <div className="spinner"></div>
-            </div>
-          }
+        <Suspense
+          fallback={<Loader />}
         >
           <Routes>
             <Route path="/" element={<Home />} />
