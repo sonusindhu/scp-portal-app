@@ -1,128 +1,181 @@
-# SCP Portal App
+# 🚀 SCP Portal App
 
-Welcome to the SCP Portal App! This project consists of two main components: a frontend web application and a backend API. Below is a brief overview of each component and how to set up the project.
+<div align="center">
 
-## Table of Contents
+![SCP Portal](https://img.shields.io/badge/SCP%20Portal-App-4A90E2?style=for-the-badge&logo=react&logoColor=white)
+![Version](https://img.shields.io/badge/version-1.0.0-28a745?style=for-the-badge&logo=github&logoColor=white)
+![License](https://img.shields.io/badge/license-Free%20to%20Use-ffc107?style=for-the-badge&logo=open-source-initiative&logoColor=white)
 
-- [Overview](#overview)
-- [Directory Structure](#directory-structure)
-- [Technologies Used](#technologies-used)
-- [Getting Started](#getting-started)
-- [API Documentation](#api-documentation)
-- [Database Setup](#database-setup)
-- [Contributing](#contributing)
-- [License](#license)
+*A modern, full-stack portal application built with React and Node.js*
 
-## Overview
+</div>
 
-The SCP Portal App is designed to learn the basic concept of the React, salisjs(Nodejs). This application includes following modules and keep involving more...
-1. Companies
-2. Contacts
-3. Inventories
-4. Quotes
-5. User Profile
+---
 
-## Directory Structure
+## 📖 About Application
 
-```plaintext
-scp-portal-app/
-│
-├── web-app/      # Frontend application
-│
-└── web-api/      # Backend API
+SCP Portal App is a comprehensive business management platform designed to streamline operations across multiple domains. Built with modern web technologies, it provides an intuitive interface for managing companies, contacts, tasks, emails, quotes, and inventory in one centralized system.
+
+**Tech Stack:**
+- **Frontend**: React 18.3 + TypeScript + Material-UI 5.6
+- **Backend**: Node.js + Sails.js 1.5.2 + MySQL/PostgreSQL
+- **Architecture**: RESTful API with JWT authentication
+
+## ⭐ Feature Includes
+
+- 🏢 **Company Management** - Complete company profiles and information tracking
+- 👥 **Contact Management** - Comprehensive contact database with relationships
+- ✅ **Task Management** - Task creation, assignment, and progress tracking
+- 📧 **Email System** - Integrated email functionality with templates
+- 💰 **Quote Management** - Generate, manage, and track business quotes
+- 📦 **Inventory Management** - Stock tracking and inventory control
+- 🔐 **User Authentication** - Secure login with JWT tokens
+- 📊 **Dashboard Analytics** - Business insights and reporting
+- 🎨 **Responsive Design** - Mobile-friendly interface
+- 🔍 **Advanced Search & Filtering** - Quick data retrieval
+
+## 🚀 Quick Start
+
+Get up and running in minutes:
+
+```bash
+# Clone the repository
+git clone https://github.com/sonusindhu/scp-portal-app.git
+cd scp-portal-app
+
+# Install and start frontend
+cd web-app && npm install && npm start
+
+# Install and start backend (in another terminal)
+cd web-api && npm install && npm start
 ```
 
+**Access the application:**
+- 🌐 **Frontend**: http://localhost:3000
+- 🔧 **Backend API**: http://localhost:1337
+- 📚 **API Docs**: http://localhost:1337/docs
 
-## Technologies Used
-
-### Frontend:
-- React
-- Material-UI (MUI)
-- AG Grid
-
-### Backend:
-- Sails.js (Node.js framework)
-
-### Database:
-- MySQL/MariaDB
-
-## Getting Started
-
-To set up the project locally, follow these steps:
+## 🖥️ Server Setup
 
 ### Prerequisites
+- Node.js 16+ and npm
+- MySQL or PostgreSQL database
+- Git
 
-- Node.js (for both frontend and backend)
-- MySQL/MariaDB
+### Installation Steps
 
-### Frontend Setup
-
-1. Navigate to the `web-app` directory:
-   ```bash
-   cd web-app
-    ```
-
-2. Install the dependencies:
-   ```bash
-   npm install
-    ```
-
-3. Start the development server:
-   ```bash
-   npm start
-    ```
-
-### Backend Setup
-
-1. Navigate to the `web-api` directory:
+1. **Navigate to server directory:**
    ```bash
    cd web-api
-    ```
+   ```
 
-2. Install the dependencies:
+2. **Install dependencies:**
    ```bash
    npm install
-    ```
-3. Complete [Database Setup](#database-setup):
+   ```
 
-4. Start the development server:
+3. **Configure database:**
+   - Copy `config/datastores.js.example` to `config/datastores.js`
+   - Update database connection settings
+
+4. **Set environment variables:**
    ```bash
-   sails lift
-    ```
+   cp config/env/production.js.example config/env/production.js
+   # Edit production.js with your settings
+   ```
 
-## API Documentation
-
-The API provides endpoints for various functionalities. Below are some key endpoints:
-
-To review the APIs, go to routing settings in the backend configuration file. under `web-api/config/routes.js`
-
-## Database Setup
-
-1. Ensure that MySQL/MariaDB is installed and running.
-2. Create a new database for the project.
-3. Run the database migration scripts (if applicable) to set up the schema.
-4. Update the database connection settings in the backend configuration file. under `web-api/config/datasources.js`
-   
+5. **Start the server:**
    ```bash
-   adapter: process.env.DB_ADAPTER || "sails-mysql",
-   url: process.env.DB_URL || "mysql://root@localhost:3306/sails_scpapi",
-    ```
-5. Update the database model settings in the backend configuration file. under `web-api/config/model.js`, after the migration is done, just make it `migrate: "safe"`
-   
+   npm start              # Development mode
+   NODE_ENV=production npm start  # Production mode
+   ```
+
+### Available Scripts
+- `npm start` - Start development server
+- `npm test` - Run tests
+- `npm run lint` - Code linting
+
+**Server will be available at:** http://localhost:1337
+
+## 💻 Client Setup
+
+### Prerequisites
+- Node.js 16+ and npm
+- Modern web browser
+
+### Installation Steps
+
+1. **Navigate to client directory:**
    ```bash
-   migrate: "alter"
-    ```
+   cd web-app
+   ```
 
-## Contributing
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-Contributions are welcome! Please follow these steps:
+3. **Configure environment:**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your API endpoint
+   ```
 
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Commit your changes with a descriptive message.
-4. Push to the branch.
-5. Create a pull request.
+4. **Start the application:**
+   ```bash
+   npm start              # Development mode
+   npm run build          # Production build
+   ```
 
-## License
+### Available Scripts
+- `npm start` - Start development server with hot reload
+- `npm run build` - Create production build
+- `npm test` - Run test suite
+- `npm run lint` - Code linting and formatting
 
-This project is licensed under the Free License.
+**Client will be available at:** http://localhost:3000
+
+## 🤝 Contribution
+
+We welcome contributions from the community! Here's how you can help:
+
+### Getting Started
+1. 🍴 **Fork** the repository
+2. 🌿 **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. 💻 **Make** your changes
+4. ✅ **Add** tests for your changes
+5. 🧪 **Ensure** all tests pass (`npm test`)
+6. 📝 **Commit** your changes (`git commit -m 'Add amazing feature'`)
+7. 📤 **Push** to the branch (`git push origin feature/amazing-feature`)
+8. 🔄 **Open** a Pull Request
+
+### Development Guidelines
+- Follow existing code style and conventions
+- Write clear, concise commit messages
+- Add tests for new features
+- Update documentation when necessary
+- Ensure all existing tests pass
+
+### Code Standards
+- **ESLint**: Run `npm run lint` before committing
+- **Prettier**: Use `npm run format` for code formatting
+- **TypeScript**: Maintain strict type checking
+
+### Reporting Issues
+- Use GitHub Issues for bug reports
+- Provide detailed reproduction steps
+- Include system information and screenshots when relevant
+
+## 📄 License
+
+This project is free to use for personal and commercial purposes. Feel free to modify, distribute, and use as needed.
+
+---
+
+<div align="center">
+
+**⭐ Star this repository if you find it helpful!**
+
+Made with ❤️ by [Sonu Sindhu](https://github.com/sonusindhu)
+
+</div>
