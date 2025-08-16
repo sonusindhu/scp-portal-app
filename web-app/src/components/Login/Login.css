@@ -1,16 +1,27 @@
 /* Login Container */
 .login-container {
-  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 20px;
+  z-index: 1000;
+  overflow: auto;
 }
 
 .login-wrapper {
   width: 100%;
   max-width: 400px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - 40px); /* Account for padding */
 }
 
 .login-card {
@@ -149,6 +160,10 @@
     padding: 10px;
   }
   
+  .login-wrapper {
+    min-height: calc(100vh - 20px);
+  }
+  
   .login-card {
     padding: 30px 20px;
   }
@@ -159,6 +174,17 @@
   
   .login-title {
     font-size: 20px;
+  }
+}
+
+@media (max-height: 600px) {
+  .login-wrapper {
+    min-height: auto;
+  }
+  
+  .login-container {
+    align-items: flex-start;
+    padding-top: 20px;
   }
 }
 
