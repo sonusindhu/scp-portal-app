@@ -15,7 +15,6 @@ const UserForm = (props) => {
   const user = props.user || {};
   const formContext = useForm({ defaultValues: user });
   const {
-    handleSubmit,
     reset
   } = formContext;
 

@@ -9,7 +9,7 @@ import { ResponseModel } from "../../models/common.model";
 
 const ProfileChangePassword = () => {
   const formContext = useForm({ defaultValues: {} });
-  const { handleSubmit, reset } = formContext;
+  const { reset } = formContext;
 
   const handleResponse = (response: ResponseModel) => {
     if (response.status) {
