@@ -4,7 +4,6 @@ import {
   TextFieldElement,
   CheckboxElement,
 } from "react-hook-form-mui";
-import { useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
@@ -15,11 +14,10 @@ import { ResponseModel } from "../../../models/common.model";
 import EmailService from "../../../services/email.service";
 
 const EmailForm = (props: EmailFormProps) => {
-  let { id } = useParams();
   const email: Partial<Email> = props.email || {};
   const formContext = useForm({ defaultValues: email });
 
-  const { handleSubmit, reset } = formContext;
+  const { reset } = formContext;
 
   const handleClearForm = () => reset();
 
