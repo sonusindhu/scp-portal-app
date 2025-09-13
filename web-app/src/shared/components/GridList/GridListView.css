@@ -25,6 +25,18 @@
   padding-top: 8px;
   padding-bottom: 8px;
 }
+.grid-table th.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #f5f5f5;
+}
+.grid-table td.sticky-filter-row {
+  position: sticky;
+  top: 48px;
+  z-index: 9;
+  background: #fff;
+}
 /* Sticky header columns */
 .grid-table .sticky-col-0,
 .grid-table .sticky-col-1,

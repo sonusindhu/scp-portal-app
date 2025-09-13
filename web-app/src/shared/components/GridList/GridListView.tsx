@@ -149,38 +149,41 @@ const GridListView = (props: GridListViewProps) => {
 
   return (
     <div>
-
       <header>
         <h3 className="heading">
           <span className="heading-title">{props.title}</span>
-  
           <div className="right-menu">
-           
-           <input
+            <input
               value={globalFilter}
               onChange={e => setGlobalFilter(e.target.value)}
               placeholder={ props.searchPlaceholder }
               style={{ padding: "8px", width: "220px" }}
             />
-
             { props.children }
-
           </div>
         </h3>
       </header>
-
-      <div className="grid-table-container" style={{ height: "calc(100vh - 180px)" }}>
-        <table className="grid-table" style={{ display: "block", overflowY: "auto", maxHeight: "100%", width: "100%" }}>
-          <thead style={{ display: "table", width: "100%" }}>
-            {table.getHeaderGroups().map(headerGroup => (
+      <div className="grid-table-container" style={{ maxHeight: "calc(100vh - 180px)", overflow: "auto" }}>
+        <table className="grid-table" style={{ tableLayout: "fixed", width: "100%", maxHeight: "100%"  }}>
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header, colIdx) => {
                   const width = header.column.columnDef.size;
                   return (
                     <th
                       key={header.id}
-                      className={header.column.columnDef.meta?.['className'] || ""}
-                      style={width ? { width, minWidth: width, maxWidth: width } : {}}
+                      className={header.column.columnDef.meta?.['className'] + ' sticky-header'}
+                      style={{
+                        ...(width ? { width, minWidth: width, maxWidth: width } : {}),
+                        position: 'sticky',
+                        top: 0,
+                        zIndex:
+                          header.column.columnDef.meta?.['className'] === 'sticky-col-0' ? 12 :
+                          header.column.columnDef.meta?.['className'] === 'sticky-col-1' ? 11 :
+                          10,
+                        background: '#f5f5f5'
+                      }}
                     >
                       {header.isPlaceholder ? null : (
                         <span
@@ -203,12 +206,18 @@ const GridListView = (props: GridListViewProps) => {
             <tr>
               {columns.map((col, idx) => {
                 const isActionCol = col.id === 'select' || col.header == 'Action' || col.accessorKey === undefined || col.cell === 'actions' || typeof col.cell === 'function' && col.cell.name?.toLowerCase().includes('action');
-                {isActionCol ? 'yes' : 'no'}
+                let filterZIndex =
+                  col.meta?.['className'] === 'sticky-col-0' ? 12 :
+                  col.meta?.['className'] === 'sticky-col-1' ? 11 :
+                  9;
                 return (
                   <td
                     key={col.id}
-                    className={col.meta?.['className'] || ""}
-                    style={col.size ? { width: col.size, minWidth: col.size, maxWidth: col.size } : {}}
+                    className={(col.meta?.['className'] || "") + " sticky-filter-row"}
+                    style={{
+                      ...(col.size ? { width: col.size, minWidth: col.size, maxWidth: col.size } : {}),
+                      position: 'sticky', top: 48, zIndex: filterZIndex, background: '#fff'
+                    }}
                   >
                     {col.enableFiltering !== false && col.accessorKey && !isActionCol ? (
                       <input
@@ -223,7 +232,7 @@ const GridListView = (props: GridListViewProps) => {
               })}
             </tr>
           </thead>
-          <tbody style={{ display: "table", width: "100%" }}>
+          <tbody>
             {data.length === 0 ? (
               <tr><td className="grid-table-empty" colSpan={columns.length}>No data found to display.</td></tr>
             ) : (
@@ -246,13 +255,13 @@ const GridListView = (props: GridListViewProps) => {
             )}
           </tbody>
         </table>
-        <div style={{ marginTop: 8 }}>
-          <button onClick={() => table.setPageIndex(0)} disabled={pagination.pageIndex === 0}>First</button>
-          <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>Previous</button>
-          <span> Page {pagination.pageIndex + 1} of {pageCount} </span>
-          <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>Next</button>
-          <button onClick={() => table.setPageIndex(pageCount - 1)} disabled={pagination.pageIndex === pageCount - 1}>Last</button>
-        </div>
+      </div>
+      <div style={{ marginTop: 8 }}>
+        <button onClick={() => table.setPageIndex(0)} disabled={pagination.pageIndex === 0}>First</button>
+        <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>Previous</button>
+        <span> Page {pagination.pageIndex + 1} of {pageCount} </span>
+        <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>Next</button>
+        <button onClick={() => table.setPageIndex(pageCount - 1)} disabled={pagination.pageIndex === pageCount - 1}>Last</button>
       </div>
     </div>
   );
