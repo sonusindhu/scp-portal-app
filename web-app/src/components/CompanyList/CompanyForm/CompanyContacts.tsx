@@ -21,7 +21,7 @@ const CompanyContactList = () => {
   const [addDrawer, setAddDrawer] = useState(false);
 
   // const defaultFilters = undefined; 
-  const defaultFilters = [{ field: 'companyId', operator: 'contains', value: id }];
+  const defaultFilters = [{ field: 'companyId', operator: 'eq', value: id }];
 
   const deleteAction = (ids: number[]) => (
     <Fragment>
