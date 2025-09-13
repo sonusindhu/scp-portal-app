@@ -18,6 +18,7 @@ const CompanyList = () => {
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [addDrawer, setAddDrawer] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [globalFilter, setGlobalFilter] = useState("");
 
   const deleteAction = (ids: number[]) => (
     <Fragment>
@@ -89,21 +90,30 @@ const CompanyList = () => {
         menus={mainMenus}
         menuCallback={menuCallbackFun}
       >
-        <Button
-          className="blue-btn m-r-20"
-          type="button"
-          size="large"
-          variant="contained"
-          onClick={onCreate}
-        >
-          Create
-        </Button>
+        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+          <input
+            value={globalFilter}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            placeholder="Search companies..."
+            style={{ padding: "8px", width: "220px" }}
+          />
+          <Button
+            className="blue-btn m-r-20"
+            type="button"
+            size="large"
+            variant="contained"
+            onClick={onCreate}
+          >
+            Create
+          </Button>
+        </div>
       </PageHeading>
 
       <GridListView
         options={CompanyConfig}
         callbackFun={menuCallbackFun}
         refreshKey={refreshKey}
+        globalFilter={globalFilter}
       />
 
       <Drawer

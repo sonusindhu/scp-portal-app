@@ -16,7 +16,6 @@ const GridListView = (props) => {
   const [pageCount, setPageCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [rowSelection, setRowSelection] = useState({});
-  const [globalFilter, setGlobalFilter] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20 });
 
@@ -74,7 +73,7 @@ const GridListView = (props) => {
       filters: props.defaultFilters,
       pageIndex: pagination.pageIndex,
       pageSize: pagination.pageSize,
-      globalFilter,
+      globalFilter: props.globalFilter,
       sorting,
     }).then((result) => {
       console.log('GridListView fetched rows:', result.rows);
@@ -82,7 +81,7 @@ const GridListView = (props) => {
       setPageCount(result.pageCount || 0);
       setLoading(false);
     });
-  }, [pagination, globalFilter, sorting, props.options.listUrl, props.defaultFilters, props.refreshKey]);
+  }, [pagination, props.globalFilter, sorting, props.options.listUrl, props.defaultFilters, props.refreshKey]);
 
   const table = useReactTable({
     data,
@@ -90,7 +89,7 @@ const GridListView = (props) => {
     pageCount,
     state: {
       rowSelection,
-      globalFilter,
+      globalFilter: props.globalFilter,
       sorting,
       pagination,
     },
@@ -102,19 +101,12 @@ const GridListView = (props) => {
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onRowSelectionChange: setRowSelection,
-    onGlobalFilterChange: setGlobalFilter,
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
   });
 
   return (
     <div className="grid-table-container" style={{ height: "79vh", overflow: "auto" }}>
-      <input
-        value={globalFilter}
-        onChange={e => setGlobalFilter(e.target.value)}
-        placeholder="Search..."
-        style={{ marginBottom: 8 }}
-      />
       <div className="grid-table-scroll" style={{ position: "relative" }}>
         {loading && (
           <div className="grid-table-overlay">

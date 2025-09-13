@@ -18,6 +18,7 @@ const QuoteList = () => {
   const [refreshKey, setRefreshKey] = useState(0);
   let navigate = useNavigate();
   const [addDrawer, setAddDrawer] = useState(false);
+  const [globalFilter, setGlobalFilter] = useState("");
 
   const deleteAction = (ids) => (
     <Fragment>
@@ -85,21 +86,30 @@ const QuoteList = () => {
         menus={mainMenus}
         menuCallback={menuCallbackFun}
       >
-        <Button
-          className="blue-btn m-r-20"
-          type="button"
-          size="large"
-          variant="contained"
-          onClick={onCreate}
-        >
-          Create
-        </Button>
+        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+          <input
+            value={globalFilter}
+            onChange={e => setGlobalFilter(e.target.value)}
+            placeholder="Search quotes..."
+            style={{ padding: "8px", width: "220px" }}
+          />
+          <Button
+            className="blue-btn m-r-20"
+            type="button"
+            size="large"
+            variant="contained"
+            onClick={onCreate}
+          >
+            Create
+          </Button>
+        </div>
       </PageHeading>
 
       <GridListView
         options={QuoteConfig}
         callbackFun={menuCallbackFun}
         refreshKey={refreshKey}
+        globalFilter={globalFilter}
       />
 
       <Drawer
@@ -110,6 +120,7 @@ const QuoteList = () => {
       >
         <AddQuote onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
       </Drawer>
+
     </Fragment>
   );
 };
