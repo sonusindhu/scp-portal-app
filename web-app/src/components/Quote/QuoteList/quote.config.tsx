@@ -1,222 +1,145 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import GridHeaderCheckbox from "../../../shared/components/GridList/GridHeaderCheckbox";
 import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 import GridService from "../../../services/grid.service";
 import { MenuItem } from "../../../shared/models/MenuList.model";
 
 const columnDefs = [
   {
-    checkboxSelection: true,
-    headerComponent: GridHeaderCheckbox,
-    pinned: "left",
-    lockPinned: true,
-    suppressMenu: true,
-    width: 40,
-  },
-  {
-    field: "quoteNumber",
-    sortable: true,
-    filter: "agTextColumnFilter",
-    pinned: "left",
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
-    cellRenderer: ({ data }) => (
-      <Link to={`/app/quote/${data?.id}/details`}>{data?.quoteNumber}</Link>
+    accessorKey: "quoteNumber",
+    header: "Quote Number",
+    size: 140,
+    meta: { sticky: "left", stickyClass: "sticky-col-0" },
+    cell: ({ row }) => (
+      <Link to={`/app/quote/${row.original?.id}/details`}>{row.original?.quoteNumber}</Link>
     ),
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "name",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "name",
+    header: "Name",
+    size: 140,
+    meta: { sticky: "left", stickyClass: "sticky-col-1" },
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "service",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "service",
+    header: "Service",
+    size: 120,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "companyName",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "companyName",
+    header: "Company Name",
+    size: 140,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "contactName",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "contactName",
+    header: "Contact Name",
+    size: 140,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "transportMode",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridMultiSelectFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
-    dropdownData: ['LTL', 'FTL', 'Air', 'Ocean']
+    accessorKey: "transportMode",
+    header: "Transport Mode",
+    size: 120,
+    enableSorting: true,
+    enableColumnFilter: true,
+    cell: ({ row }) => row.original?.transportMode || "",
   },
   {
-    field: "status",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "status",
+    header: "Status",
+    size: 100,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "totalCost",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "totalCost",
+    header: "Total Cost",
+    size: 120,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "totalProfit",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "totalProfit",
+    header: "Total Profit",
+    size: 120,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "expiryDate",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    valueFormatter: GridService.dateFormatter,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "expiryDate",
+    header: "Expiry Date",
+    size: 120,
+    cell: ({ row }) => row.original?.expiryDate ? GridService.dateFormatter(row.original.expiryDate) : "",
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "createdByName",
-    headerName: "Created By",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "createdByName",
+    header: "Created By",
+    size: 120,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "createdAt",
-    headerName: "Created Date",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    valueFormatter: GridService.dateFormatter,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "createdAt",
+    header: "Created Date",
+    size: 120,
+    cell: ({ row }) => row.original?.createdAt ? GridService.dateFormatter(row.original.createdAt) : "",
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "updatedByName",
-    headerName: "Updated By",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "updatedByName",
+    header: "Updated By",
+    size: 120,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "updatedAt",
-    headerName: "Updated Date",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    valueFormatter: GridService.dateFormatter,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "updatedAt",
+    header: "Updated Date",
+    size: 120,
+    cell: ({ row }) => row.original?.updatedAt ? GridService.dateFormatter(row.original.updatedAt) : "",
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    headerName: "Action",
-    width: 80,
-    sortable: false,
-    filter: false,
-    pinned: "right",
-    lockPinned: true,
-    cellRenderer: GridActionMenu,
-    cellRendererParams: {
-      menuCallback: (fn) => fn,
-      menus: [
-        {
-          key: "edit",
-          title: "Edit",
-        },
-        {
-          key: "delete",
-          title: "Delete",
-        },
-      ],
-    },
+    id: "action",
+    accessorKey: "action",
+    size: 80,
+    meta: { sticky: "right", stickyClass: "sticky-col-last" },
+    header: "Action",
+    cell: ({ row }) => (
+      <GridActionMenu
+        className="grid-action-menu"
+        menuCallback={(fn) => fn}
+        menus={[
+          { key: "edit", title: "Edit" },
+          { key: "delete", title: "Delete" },
+        ]}
+      />
+    ),
+    enableSorting: false,
+    enableColumnFilter: false,
   },
 ];
 
 const defaultColDef = {
-  minWidth: 40,
-  resizable: true,
-  floatingFilter: true,
+  minSize: 40,
+  enableResizing: true,
 };
 
 const mainMenus: MenuItem[] = [
-  // {
-  //   key: "create",
-  //   title: "Create",
-  //   alwaysEnable: true,
-  // },
   {
     key: "deletes",
     title: "Delete",
