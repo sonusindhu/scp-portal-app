@@ -1,3 +1,38 @@
+/**
+ * Route Configuration for SCP Portal App
+ *
+ * This file defines all application routes using React Router v6 config-based routing.
+ *
+ * - Each route object can have:
+ *   - path: string (URL path)
+ *   - element: ReactNode (component to render)
+ *   - children: nested routes for layouts and sub-pages
+ *   - index: boolean (default child route)
+ *   - errorElement: ReactNode (optional error boundary for the route)
+ *   - loader: function (optional data loader for the route)
+ *
+ * Usage:
+ *   Import `routesConfig` in your App and pass to `useRoutes(routesConfig)`.
+ *
+ * Example:
+ *   import { routesConfig } from "./app-routes";
+ *   const element = useRoutes(routesConfig);
+ *
+ * Structure:
+ *   - Public routes: /, /auth/login
+ *   - Protected routes (require AuthWrapper): /app/profile, /app/inventory, /app/company, /app/contact, /app/quote
+ *   - Nested routes for forms, details, notes, emails, tasks, etc.
+ *   - Catch-all route for 404 page
+ *
+ * To add a new route:
+ *   1. Import your component above
+ *   2. Add a new object to routesConfig with path and element
+ *   3. For nested routes, add children array
+ *
+ * For advanced features (data loaders, error boundaries), see React Router docs:
+ *   https://reactrouter.com/en/main/route/route-object
+ */
+
 import React, { lazy } from "react";
 import { Navigate } from "react-router-dom";
 import Login from "./components/Login/Login";
