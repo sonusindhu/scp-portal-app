@@ -209,12 +209,17 @@ const GridListView = (props: GridListViewProps) => {
               {/* Inline filter row */}
               <tr>
                 {columns.map((col, idx) => {
-                  const isActionCol = col.id === 'select' || col.accessorKey === undefined || col.cell === 'actions' || typeof col.cell === 'function' && col.cell.name?.toLowerCase().includes('action');
+                  const isActionCol = col.id === 'select' || col.header == 'Action' || col.accessorKey === undefined || col.cell === 'actions' || typeof col.cell === 'function' && col.cell.name?.toLowerCase().includes('action');
+                  {isActionCol ? 'yes' : 'no'}
                   return (
-                    <td key={col.id}>
+                    <td
+                      key={col.id}
+                      className={col.meta?.['className'] || ""}
+                      style={col.size ? { width: col.size, minWidth: col.size, maxWidth: col.size } : {}}
+                    >
                       {col.enableFiltering !== false && col.accessorKey && !isActionCol ? (
                         <input
-                          style={{ width: "100%", padding: "4px" }}
+                          style={{ width: "88%", padding: "4px" }}
                           value={columnFilters[col.accessorKey] || ""}
                           onChange={e => setColumnFilters(f => ({ ...f, [col.accessorKey]: e.target.value }))}
                           placeholder={`Filter ${col.header}`}
