@@ -52,6 +52,7 @@ const ServerSideDatasource = (listUrl, defaultFilters = null) => {
           }
         })
         .catch((error) => {
+          debugger
           params.api.showNoRowsOverlay();
           params.successCallback([], 0);
         });
@@ -64,9 +65,85 @@ const dateFormatter = (params) => {
   return format(new Date(params.value), "dd/MM/yyyy");
 };
 
+const fetchRows = async ({ url, filters, pageIndex, pageSize, globalFilter, sorting }) => {
+  // Build sort array for API
+  const sort = (sorting || []).map((item) => `${item.id} ${item.desc ? "desc" : "asc"}`);
+
+  // Build filter array for API
+  let filterArr: any[] = [];
+  if (filters) {
+    filterArr.push({ logic: "and", filters });
+  }
+  if (globalFilter) {
+    filterArr.push({
+      logic: "or",
+      filters: [
+        { field: "global", operator: "contains", value: globalFilter },
+      ],
+    });
+  }
+
+  const payload = {
+    skip: pageIndex * pageSize,
+    take: pageSize,
+    group: [],
+    sort,
+    filter: {
+      logic: "and",
+      filters: filterArr,
+    },
+  };
+
+  const response = await axios.post(url, payload);
+  const { result, total } = response.data;
+  return {
+    rows: result || [],
+    pageCount: Math.ceil((total || 0) / pageSize),
+  };
+};
+
+const fetchRowsV2 = async ({ url, filters, pageIndex, pageSize, globalFilter, sorting }) => {
+  // Build sort array for API
+  const sort = (sorting || []).map((item) => `${item.id} ${item.desc ? "desc" : "asc"}`);
+
+  // Build filter array for API (AG Grid style)
+  let filterArr: any[] = [];
+  if (filters) {
+    filterArr.push({ logic: "and", filters });
+  }
+  if (globalFilter) {
+    filterArr.push({
+      logic: "or",
+      filters: [
+        { field: "global", operator: "contains", value: globalFilter },
+      ],
+    });
+  }
+
+  const payload = {
+    skip: pageIndex * pageSize,
+    take: pageSize,
+    group: [],
+    sort,
+    filter: {
+      logic: "and",
+      filters: filterArr,
+    },
+  };
+
+  const response = await axios.post(url, payload);
+  const { result, total } = response.data;
+  return {
+    rows: result || [],
+    pageCount: Math.ceil((total || 0) / pageSize),
+  };
+};
+
 const GridService = {
   ServerSideDatasource,
   dateFormatter,
+  fetchRows,
+  fetchRowsV2,
 };
 
 export default GridService;

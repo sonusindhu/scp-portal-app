@@ -8,12 +8,12 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Avatar as Avat } from '@mui/material';
-import Avatar from 'react-avatar-edit';
+import Cropper from 'react-easy-crop';
 import UserService from '../../services/user.service';
 
 import toast from "../../utils/toast.util";
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const VALID_SIZE_LIMIT = 5*1024*1024;
 
@@ -76,6 +76,9 @@ const UserProfileImage = (props) => {
     preview: null,
     src: null
   });
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -92,6 +95,10 @@ const UserProfileImage = (props) => {
   const onCrop = (preview: string) => {
     setState({ preview })
   }
+
+  const onCropComplete = (croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  };
 
   const getExtension = (filename: string) => {
     const parts = filename.split('.');
@@ -163,24 +170,46 @@ const UserProfileImage = (props) => {
           onClose={handleClose} disabled={isLoading}>
           Update Profile image
         </BootstrapDialogTitle>
-        <DialogContent dividers className='user-image-dialog'>          
-          
+        <DialogContent dividers className='user-image-dialog'>
           <div className='profile-container'>
-            <Avatar
-              width={400}
-              height={400}
-              onCrop={onCrop}
-              onClose={onClose}
-              onBeforeFileLoad={onBeforeFileLoad}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={e => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                if (file.size > VALID_SIZE_LIMIT) {
+                  toast.error('Your image size exceeded 5mb, please try other images');
+                  return;
+                }
+                if (!isImage(file.name)) {
+                  toast.error('Invalid image, allowed extension: png, jpg, jpeg, gif, bmp');
+                  return;
+                }
+                const reader = new FileReader();
+                reader.onload = () => {
+                  setState(s => ({ ...s, src: reader.result as string }));
+                };
+                reader.readAsDataURL(file);
+              }}
+              disabled={isLoading}
+              style={{ marginBottom: 16 }}
             />
-            
+            {state.src && (
+              <Cropper
+                image={state.src}
+                crop={crop}
+                zoom={zoom}
+                aspect={1}
+                onCropChange={setCrop}
+                onZoomChange={setZoom}
+                onCropComplete={onCropComplete}
+              />
+            )}
             <div>
-              { state.preview ? <img src={state.preview} alt="Preview" /> : <></> }              
+              { state.preview ? <img src={state.preview} alt="Preview" /> : <></> }
             </div>
           </div>
-
-          
-          
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={uploadUserImage} disabled={isLoading || !state.preview}>

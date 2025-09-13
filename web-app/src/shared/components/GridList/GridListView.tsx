@@ -1,83 +1,121 @@
-import React, { useState, useCallback, useEffect } from "react";
-import "ag-grid-enterprise";
-import { AgGridReact } from "@ag-grid-community/react";
-import { ServerSideRowModelModule } from "@ag-grid-enterprise/server-side-row-model";
-import { ModuleRegistry, GetRowIdFunc } from "@ag-grid-community/core";
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-
-import GridTextFilter from "./GridFilters/GridTextFilter";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  useReactTable,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getFilteredRowModel,
+  getSortedRowModel,
+  flexRender,
+  SortingState,
+} from "@tanstack/react-table";
 import GridService from "../../../services/grid.service";
-import GridMultiSelectFilter from "./GridFilters/GridMultiSelectFilter";
-
-ModuleRegistry.registerModules([ServerSideRowModelModule]);
+import "./GridListView.css";
 
 const GridListView = (props) => {
-  const [gridApi, setGridApi] = useState<any>(null);
-  const [, setGridColumnApi] = useState<any>(null);
-  const [columnDefs, setColumnDefs] = useState<any>(props.options.columnDefs);
-  const getRowId: GetRowIdFunc = useCallback(({ data }) => data.id, []);
+  const [data, setData] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [rowSelection, setRowSelection] = useState({});
+  const [globalFilter, setGlobalFilter] = useState("");
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20 });
 
-  const onGridReady = (params) => {
-    setGridApi(params.api);
-    setGridColumnApi(params.columnApi);
-    const defaultFilter = props.defaultFilters;
-    var datasource = GridService.ServerSideDatasource(props.options.listUrl, defaultFilter);
-    params.api.setServerSideDatasource(datasource);
-  };
+  // Convert your columnDefs to TanStack columns
+  const columns = useMemo(() =>
+    props.options.columnDefs.map((col, idx) => ({
+      id: col.field || `col_${idx}`,
+      accessorKey: col.field,
+      header: col.headerName,
+      cell: col.cellRenderer || undefined,
+      enableSorting: col.sortable !== false,
+      enableFiltering: col.filter !== false,
+    })),
+    [props.options.columnDefs]
+  );
 
-  const onSelectionChanged = ($event) => {
-    
-    const selectedRows = gridApi.getSelectedRows().map((item) => item.id);
-    const data = {
-      event: $event,
-      data: selectedRows,
-      menu: { key: "selectRow" },
-    };
-    props.callbackFun && props.callbackFun(data);
-  };
-
-  const overlayLoadingTemplate = `<span className="ag-overlay-loading-center">Please wait while your rows are loading...</span>`;
-  const overlayNoRowsTemplate = `<span className="ag-overlay-loading-center">No data found to display.</span>`;
-
+  // Server-side data fetch (expects GridService.fetchRows to return a Promise)
   useEffect(() => {
-    let columns = columnDefs.map((item) => {
-      if (item.headerName === "Action") {
-        item.cellRendererParams = {
-          ...item.cellRendererParams,
-          menuCallback: props.callbackFun,
-        };
-      }
-      return item;
+    setLoading(true);
+    GridService.fetchRows({
+      url: props.options.listUrl,
+      filters: props.defaultFilters,
+      pageIndex: pagination.pageIndex,
+      pageSize: pagination.pageSize,
+      globalFilter,
+      sorting,
+    }).then((result) => {
+      setData(result.rows || []);
+      setPageCount(result.pageCount || 0);
+      setLoading(false);
     });
-    setColumnDefs(columns);
-  }, [columnDefs, props.callbackFun]);
+  }, [pagination, globalFilter, sorting, props.options.listUrl, props.defaultFilters]);
+
+  const table = useReactTable({
+    data,
+    columns,
+    pageCount,
+    state: {
+      rowSelection,
+      globalFilter,
+      sorting,
+      pagination,
+    },
+    manualPagination: true,
+    manualFiltering: true,
+    manualSorting: true,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onRowSelectionChange: setRowSelection,
+    onGlobalFilterChange: setGlobalFilter,
+    onSortingChange: setSorting,
+    onPaginationChange: setPagination,
+  });
 
   return (
-    <div className="ag-theme-alpine" style={{ height: "79vh" }}>
-      <AgGridReact
-        ref={props.innerRef}
-        rowSelection="multiple"
-        suppressCellFocus={true}
-        suppressRowClickSelection={true}
-        onSelectionChanged={onSelectionChanged}
-        getRowId={getRowId}
-        pagination={true}
-        paginationPageSize={20}
-        defaultColDef={props.options.defaultColDef}
-        components={{
-          GridTextFilter,
-          GridMultiSelectFilter
-        }}
-        rowModelType={"serverSide"}
-        serverSideStoreType={"partial"}
-        animateRows={false}
-        maxBlocksInCache={0}
-        overlayLoadingTemplate={overlayLoadingTemplate}
-        overlayNoRowsTemplate={overlayNoRowsTemplate}
-        onGridReady={onGridReady}
-        columnDefs={props.options.columnDefs}
-      ></AgGridReact>
+    <div style={{ height: "79vh", overflow: "auto" }}>
+      <input
+        value={globalFilter}
+        onChange={e => setGlobalFilter(e.target.value)}
+        placeholder="Search..."
+        style={{ marginBottom: 8 }}
+      />
+      <table className="grid-table">
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <th key={header.id}>
+                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {loading ? (
+            <tr><td colSpan={columns.length}>Loading...</td></tr>
+          ) : data.length === 0 ? (
+            <tr><td colSpan={columns.length}>No data found to display.</td></tr>
+          ) : (
+            table.getRowModel().rows.map(row => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map(cell => (
+                  <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                ))}
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+      <div style={{ marginTop: 8 }}>
+        <button onClick={() => table.setPageIndex(0)} disabled={pagination.pageIndex === 0}>First</button>
+        <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>Previous</button>
+        <span> Page {pagination.pageIndex + 1} of {pageCount} </span>
+        <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>Next</button>
+        <button onClick={() => table.setPageIndex(pageCount - 1)} disabled={pagination.pageIndex === pageCount - 1}>Last</button>
+      </div>
     </div>
   );
 };

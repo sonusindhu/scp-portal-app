@@ -10,14 +10,17 @@
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.14",
     "@mui/x-date-pickers": "^7.6.2",
+    "@tanstack/react-table": "^8.21.3",
     "ag-grid-community": "^31.2.2",
     "ag-grid-enterprise": "^31.2.2",
     "axios": "^1.6.8",
     "date-fns": "^3.6.0",
+    "install": "^0.13.0",
     "notistack": "^3.0.1",
+    "npm": "^11.6.0",
     "react": "^19.0.0",
-    "react-avatar-edit": "^1.2.0",
     "react-dom": "^19.0.0",
+    "react-easy-crop": "^5.5.0",
     "react-hook-form": "^7.51.2",
     "react-hook-form-mui": "^7.0.0",
     "react-router-dom": "^6.22.3",
@@ -25,23 +28,23 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.0.0",
-    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.11.30",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^5.0.2",
     "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.33.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vite": "^7.1.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
-    "test": "react-scripts test --watchAll",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "eslintConfig": {
     "extends": [

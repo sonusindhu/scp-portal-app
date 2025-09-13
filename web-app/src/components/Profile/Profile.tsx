@@ -23,6 +23,7 @@ const QuoteForm = (props) => {
 
   // check if user is authenticated, if not redirect to login page
   useEffect(() => {
+    debugger
     setIsLoading(true);
     AuthService.getUserDetail()
       .then((response) => {
