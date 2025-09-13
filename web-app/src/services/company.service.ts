@@ -12,7 +12,6 @@ const find = (id?) => {
 };
 
 const create = (payload) => {
-  debugger
   return axios
     .post(API_URL + "company/create", payload)
     .then(({ data }) => data);

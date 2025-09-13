@@ -52,7 +52,6 @@ const ServerSideDatasource = (listUrl, defaultFilters = null) => {
           }
         })
         .catch((error) => {
-          debugger
           params.api.showNoRowsOverlay();
           params.successCallback([], 0);
         });

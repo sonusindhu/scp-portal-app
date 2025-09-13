@@ -37,9 +37,23 @@ const AddInventory = (props) => {
     }
   };
 
-  const handleSubmitForm = (e) => {
-    if(!formContext.formState.isValid) return;
-
+  const handleSubmitForm = async (e) => {
+    const valid = await formContext.trigger();
+    const errorFields = Object.keys(formContext.formState.errors);
+    if (!valid) {
+      if (errorFields.length > 0) {
+        const errorMessages = errorFields
+          .map((field) => {
+            const err = formContext.formState.errors[field];
+            return `${field}: ${err?.message || "Invalid value"}`;
+          })
+          .join("\n");
+        toast.error(`Please correct the following fields:\n${errorMessages}`);
+      } else {
+        toast.error("Form is invalid. Please check your input.");
+      }
+      return;
+    }
     const payload = { ...e };
     InventoryService.create(payload)
       .then((response) => handleSuccess(response))
@@ -58,8 +72,9 @@ const AddInventory = (props) => {
       <HeaderWithTitle title="Add Inventory" onCloseDrawer={onCloseDrawer} />
 
       <FormContainer
-        formContext={formContext} 
-        onSuccess={handleSubmitForm}>
+        formContext={formContext}
+        onSuccess={handleSubmitForm}
+      >
         <TextFieldElement
           sx={{ m: 1, width: 410 }}
           required
@@ -74,6 +89,8 @@ const AddInventory = (props) => {
           options={statusList}
           name={"status"}
           label="Status"
+          valueKey="id"
+          labelKey="title"
         ></SelectElement>
         <SelectElement
           sx={{ m: 1, width: 410 }}
@@ -81,6 +98,8 @@ const AddInventory = (props) => {
           options={packages}
           name={"type"}
           label="Type"
+          valueKey="id"
+          labelKey="title"
         ></SelectElement>
 
         <SelectElement
@@ -96,7 +115,7 @@ const AddInventory = (props) => {
           name={"location"}
           label="Location"
           variant="outlined"
-          validation={{ maxLength: 50 }}
+          rules={{ maxLength: 50 }}
           multiline={true}
         />
         <TextFieldElement
@@ -105,7 +124,7 @@ const AddInventory = (props) => {
           name={"length"}
           label="Length"
           variant="outlined"
-          validation={{ maxLength: 7 }}
+          rules={{ maxLength: 7 }}
         />
 
         <TextFieldElement
@@ -114,7 +133,7 @@ const AddInventory = (props) => {
           name={"width"}
           label="Width"
           variant="outlined"
-          validation={{ maxLength: 7 }}
+          rules={{ maxLength: 7 }}
         />
 
         <TextFieldElement
@@ -123,7 +142,7 @@ const AddInventory = (props) => {
           name={"height"}
           label="Height"
           variant="outlined"
-          validation={{ maxLength: 7 }}
+          rules={{ maxLength: 7 }}
         />
 
         <TextFieldElement
@@ -132,7 +151,7 @@ const AddInventory = (props) => {
           name={"weight"}
           label="Weight"
           variant="outlined"
-          validation={{ maxLength: 8 }}
+          rules={{ maxLength: 8 }}
         />
 
         <TextFieldElement
@@ -140,7 +159,7 @@ const AddInventory = (props) => {
           name={"notes"}
           label="Notes"
           variant="outlined"
-          validation={{ maxLength: 254 }}
+          rules={{ maxLength: 254 }}
           multiline={true}
           rows={4}
         />

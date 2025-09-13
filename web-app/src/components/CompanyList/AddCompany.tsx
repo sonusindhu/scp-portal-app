@@ -37,7 +37,6 @@ const AddCompany = (props) => {
 
   const handleSubmitForm = (e) => {
     if (!e.email || !e.name) return;
-    debugger
     const payload = { ...e };
     CompanyService.create(payload)
       .then((response) => handleSuccess(response))
