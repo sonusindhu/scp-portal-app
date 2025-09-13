@@ -301,3 +301,16 @@ button.blue-btn:hover {
   cursor: pointer;
   fill: white;
 }
+
+.theme-dark {
+  background: #181a1b;
+  color: #e0e0e0;
+}
+.theme-light {
+  background: #fff;
+  color: #222;
+}
+.app-root {
+  min-height: 100vh;
+  transition: background 0.2s, color 0.2s;
+}
