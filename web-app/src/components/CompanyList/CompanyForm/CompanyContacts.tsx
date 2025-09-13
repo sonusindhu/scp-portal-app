@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useRef } from "react";
+import React, { useState, useCallback, Fragment } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Drawer } from "@mui/material";
 import GridListView from "../../../shared/components/GridList/GridListView";
@@ -9,27 +9,23 @@ import { MenuItem } from "../../../shared/models/MenuItem";
 import AddContact from "../../Contacts/ContactList/AddContact";
 import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 
-const CompanyContactList = () => {
+interface MenuCallbackArgs {
+  event: React.MouseEvent;
+  data: any;
+  menu: MenuItem;
+}
+
+const CompanyContactList: React.FC = () => {
   const { id } = useParams();
-  let navigate = useNavigate();
-  const [mainMenus, setMainMenus] = useState<MenuItem[]>(
-    ContactConfig.mainMenus
-  );
+  const navigate = useNavigate();
+  const [mainMenus, setMainMenus] = useState<MenuItem[]>(ContactConfig.mainMenus);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [addDrawer, setAddDrawer] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
-  // const defaultFilters = undefined; 
   const defaultFilters = [{ field: 'companyId', operator: 'eq', value: id }];
 
-  const deleteAction = (ids: number[]) => (
-    <Fragment>
-      <Button onClick={() => confirmDelete(ids)}>Confirm</Button>
-      <Button onClick={() => toast.close()}>Close</Button>
-    </Fragment>
-  );
-
-  const confirmDelete = (ids: number[]) => {
+  const confirmDelete = useCallback((ids: number[]) => {
     toast.close();
     ContactService.deleteContacts(ids)
       .then(({ message }) => {
@@ -39,15 +35,22 @@ const CompanyContactList = () => {
       .catch(({ message }) => {
         toast.error(message);
       });
-  };
+  }, []);
 
-  const deleteContact = (ids: number[]) => {
+  const deleteAction = useCallback((ids: number[]) => (
+    <Fragment>
+      <Button onClick={() => confirmDelete(ids)} aria-label="Confirm delete">Confirm</Button>
+      <Button onClick={() => toast.close()} aria-label="Close dialog">Close</Button>
+    </Fragment>
+  ), [confirmDelete]);
+
+  const deleteContact = useCallback((ids: number[]) => {
     toast.warning("Are you sure, you want to delete?", {
       action: () => deleteAction(ids),
     });
-  };
+  }, [deleteAction]);
 
-  const menuCallbackFun = ({ event, data, menu }) => {
+  const menuCallbackFun = useCallback(({ event, data, menu }: MenuCallbackArgs) => {
     switch (menu?.key) {
       case "create":
         navigate(`/app/contact/create`);
@@ -63,27 +66,25 @@ const CompanyContactList = () => {
         break;
       case "selectRow":
         setSelectedIds(data);
-        const menus = mainMenus.map((menu: MenuItem) => {
+        setMainMenus(prevMenus => prevMenus.map((menu: MenuItem) => {
           if (!menu.alwaysEnable) menu.disabled = data.length === 0;
           return menu;
-        });
-        setMainMenus(menus);
+        }));
         break;
     }
-  };
+  }, [navigate, deleteContact, selectedIds]);
 
-  const onCreate = () => {
+  const onCreate = useCallback(() => {
     setAddDrawer(true);
-    // navigate(`/app/contact/create`);
-  };
+  }, []);
 
-  const closeDrawer = () => {
+  const closeDrawer = useCallback(() => {
     setAddDrawer(false);
-  };
+  }, []);
 
-  const onAddSuccess = () => {
+  const onAddSuccess = useCallback(() => {
     setRefreshKey(prev => prev + 1);
-  };
+  }, []);
 
   return (
     <Fragment>
@@ -100,6 +101,7 @@ const CompanyContactList = () => {
           size="large"
           variant="contained"
           onClick={onCreate}
+          aria-label="Create contact"
         >
           Create
         </Button>

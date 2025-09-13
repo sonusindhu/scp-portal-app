@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, useCallback, Fragment } from "react";
 import { Button, Drawer } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -10,23 +10,20 @@ import { MenuItem } from "../../shared/models/MenuItem";
 import AddCompany from "./AddCompany";
 import GridActionMenu from "../../shared/components/GridList/GridActionMenu";
 
-const CompanyList = () => {
-  let navigate = useNavigate();
-  const [mainMenus, setMainMenus] = useState<MenuItem[]>(
-    CompanyConfig.mainMenus
-  );
+interface MenuCallbackArgs {
+  event: React.MouseEvent;
+  data: any;
+  menu: MenuItem;
+}
+
+const CompanyList: React.FC = () => {
+  const navigate = useNavigate();
+  const [mainMenus, setMainMenus] = useState<MenuItem[]>(CompanyConfig.mainMenus);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [addDrawer, setAddDrawer] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
-  const deleteAction = (ids: number[]) => (
-    <Fragment>
-      <Button onClick={() => confirmDelete(ids)}>Confirm</Button>
-      <Button onClick={() => toast.close()}>Close</Button>
-    </Fragment>
-  );
-
-  const confirmDelete = (ids: number[]) => {
+  const confirmDelete = useCallback((ids: number[]) => {
     toast.close();
     CompanyService.deleteCompanies(ids)
       .then(({ message }) => {
@@ -36,28 +33,34 @@ const CompanyList = () => {
       .catch(({ message }) => {
         toast.error(message);
       });
-  };
+  }, []);
 
-  const deleteCompany = (ids: number[]) => {
+  const deleteAction = useCallback((ids: number[]) => (
+    <Fragment>
+      <Button onClick={() => confirmDelete(ids)} aria-label="Confirm delete">Confirm</Button>
+      <Button onClick={() => toast.close()} aria-label="Close dialog">Close</Button>
+    </Fragment>
+  ), [confirmDelete]);
+
+  const deleteCompany = useCallback((ids: number[]) => {
     toast.warning("Are you sure, you want to delete?", {
       action: () => deleteAction(ids),
     });
-  };
+  }, [deleteAction]);
 
-  const onCreate = () => {
+  const onCreate = useCallback(() => {
     setAddDrawer(true);
-    // navigate(`/app/company/create`);
-  };
+  }, []);
 
-  const closeDrawer = () => {
+  const closeDrawer = useCallback(() => {
     setAddDrawer(false);
-  };
+  }, []);
 
-  const onAddSuccess = () => {
+  const onAddSuccess = useCallback(() => {
     setRefreshKey((prev) => prev + 1);
-  };
+  }, []);
 
-  const menuCallbackFun = ({ event, data, menu }) => {
+  const menuCallbackFun = useCallback(({ event, data, menu }: MenuCallbackArgs) => {
     switch (menu?.key) {
       case "create":
         navigate(`/app/company/create`);
@@ -73,14 +76,13 @@ const CompanyList = () => {
         break;
       case "selectRow":
         setSelectedIds(data);
-        const menus = mainMenus.map((menu) => {
+        setMainMenus(prevMenus => prevMenus.map((menu: MenuItem) => {
           if (!menu.alwaysEnable) menu.disabled = data.length === 0;
           return menu;
-        });
-        setMainMenus(menus);
+        }));
         break;
     }
-  };
+  }, [navigate, deleteCompany, selectedIds]);
 
   return (
     <Fragment>
@@ -96,6 +98,7 @@ const CompanyList = () => {
           size="large"
           variant="contained"
           onClick={onCreate}
+          aria-label="Create company"
         >
           Create
         </Button>
@@ -105,7 +108,6 @@ const CompanyList = () => {
           menuCallback={menuCallbackFun}
         />
       </GridListView>
-
       <Drawer
         anchor="right"
         open={addDrawer}
