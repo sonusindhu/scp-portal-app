@@ -6,7 +6,7 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-28a745?style=for-the-badge&logo=github&logoColor=white)
 ![License](https://img.shields.io/badge/license-Free%20to%20Use-ffc107?style=for-the-badge&logo=open-source-initiative&logoColor=white)
 
-*A modern, full-stack portal application built with React and Node.js*
+*A modern, full-stack portal application built with React 19 and Node.js*
 
 </div>
 
@@ -17,7 +17,7 @@
 SCP Portal App is a comprehensive business management platform designed to streamline operations across multiple domains. Built with modern web technologies, it provides an intuitive interface for managing companies, contacts, tasks, emails, quotes, and inventory in one centralized system.
 
 **Tech Stack:**
-- **Frontend**: React 18.3 + TypeScript + Material-UI 5.6
+- **Frontend**: React 19.0.0 + TypeScript 5.4.5 + Material-UI 5.15.14 + Vite
 - **Backend**: Node.js + Sails.js 1.5.2 + MySQL/PostgreSQL
 - **Architecture**: RESTful API with JWT authentication
 
@@ -44,21 +44,21 @@ git clone https://github.com/sonusindhu/scp-portal-app.git
 cd scp-portal-app
 
 # Install and start frontend
-cd web-app && npm install && npm start
+cd web-app && npm install && npm run dev
 
 # Install and start backend (in another terminal)
 cd web-api && npm install && npm start
 ```
 
 **Access the application:**
-- 🌐 **Frontend**: http://localhost:3000
+- 🌐 **Frontend**: http://localhost:5173
 - 🔧 **Backend API**: http://localhost:1337
 - 📚 **API Docs**: http://localhost:1337/docs
 
 ## 🖥️ Server Setup
 
 ### Prerequisites
-- Node.js 16+ and npm
+- Node.js 22+ and npm
 - MySQL or PostgreSQL database
 - Git
 
@@ -100,7 +100,7 @@ cd web-api && npm install && npm start
 ## 💻 Client Setup
 
 ### Prerequisites
-- Node.js 16+ and npm
+- Node.js 22+ and npm
 - Modern web browser
 
 ### Installation Steps
@@ -123,17 +123,26 @@ cd web-api && npm install && npm start
 
 4. **Start the application:**
    ```bash
-   npm start              # Development mode
-   npm run build          # Production build
+   npm run dev              # Development mode
+   npm run build            # Production build
    ```
 
 ### Available Scripts
-- `npm start` - Start development server with hot reload
+- `npm run dev` - Start development server with hot reload (Vite)
 - `npm run build` - Create production build
 - `npm test` - Run test suite
 - `npm run lint` - Code linting and formatting
 
-**Client will be available at:** http://localhost:3000
+**Client will be available at:** http://localhost:5173
+
+## ⚙️ Environment Configuration
+
+Create a `.env` file in the `web-app` root directory:
+
+```bash
+# API Configuration
+VITE_API_ENDPOINT=http://localhost:1337/api/v1/app/
+```
 
 ## 🤝 Contribution
 
@@ -165,6 +174,16 @@ We welcome contributions from the community! Here's how you can help:
 - Use GitHub Issues for bug reports
 - Provide detailed reproduction steps
 - Include system information and screenshots when relevant
+
+## 🧪 Testing
+
+- **Unit Tests** - Component testing with React Testing Library
+- **Integration Tests** - API integration testing
+- **E2E Tests** - End-to-end user flow testing
+
+## 🚀 Deployment
+
+See the [Vite deployment documentation](https://vitejs.dev/guide/static-deploy.html) for more information on deploying this React application.
 
 ## 📄 License
 
