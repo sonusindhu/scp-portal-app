@@ -1,5 +1,5 @@
 import axios from "../utils/config.util";
-const API_URL = process.env.REACT_APP_API_ENDPOINT;
+const API_URL = import.meta.env.VITE_API_ENDPOINT;
 
 const deleteCompanies = (ids: number[]) => {
   return axios
@@ -12,7 +12,6 @@ const find = (id?) => {
 };
 
 const create = (payload) => {
-  debugger
   return axios
     .post(API_URL + "company/create", payload)
     .then(({ data }) => data);

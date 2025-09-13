@@ -1,10 +1,9 @@
 import React, { useState, useEffect, Fragment, useRef } from "react";
 import { Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import { AgGridReact } from "@ag-grid-community/react";
 
 import GridListView from "../../../shared/components/GridList/GridListView";
-import PageHeading from "../../../shared/components/PageHeading/PageHeading";
+import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 import ContactService from "../../../services/contact.service";
 import toast from "../../../utils/toast.util";
 import ContactConfig from "../../Contacts/ContactList/contact.config";
@@ -13,11 +12,11 @@ import { MenuItem } from "../../../shared/models/MenuItem";
 const CompanyContactList = () => {
   const { id } = useParams();
   let navigate = useNavigate();
-  const gridRef = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(
     ContactConfig.mainMenus
   );
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   // const defaultFilters = undefined; 
   const defaultFilters = [{ field: 'companyId', operator: 'contains', value: id }];
@@ -34,7 +33,7 @@ const CompanyContactList = () => {
     ContactService.deleteContacts(ids)
       .then(({ message }) => {
         toast.success(message);
-        gridRef.current?.api?.refreshServerSideStore();
+        setRefreshKey(prev => prev + 1);
       })
       .catch(({ message }) => {
         toast.error(message);
@@ -76,12 +75,18 @@ const CompanyContactList = () => {
     navigate(`/app/contact/create`);
   };
 
+  const onAddSuccess = () => {
+    setRefreshKey(prev => prev + 1);
+  };
+
   return (
     <Fragment>
-      <PageHeading
+      <GridListView
+        options={ContactConfig}
+        defaultFilters={defaultFilters}
+        refreshKey={refreshKey}
+        searchPlaceholder="Search contacts..."
         title="Contact List"
-        menus={mainMenus}
-        menuCallback={menuCallbackFun}
       >
         <Button
           className="blue-btn m-r-20"
@@ -92,14 +97,12 @@ const CompanyContactList = () => {
         >
           Create
         </Button>
-      </PageHeading>
-
-      <GridListView
-        innerRef={gridRef}
-        options={ContactConfig}
-        defaultFilters={defaultFilters}
-        callbackFun={menuCallbackFun}
-      />
+        <GridActionMenu
+          className="heading-menu"
+          menus={mainMenus}
+          menuCallback={menuCallbackFun}
+        />
+      </GridListView>
     </Fragment>
   );
 };

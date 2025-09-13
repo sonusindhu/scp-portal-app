@@ -1,24 +1,23 @@
-import React, { useState, Fragment, useRef } from "react";
+import React, { useState, Fragment } from "react";
 import { Button, Drawer } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { AgGridReact } from "@ag-grid-community/react";
 
 import GridListView from "../../shared/components/GridList/GridListView";
-import PageHeading from "../../shared/components/PageHeading/PageHeading";
 import CompanyService from "../../services/company.service";
 import toast from "../../utils/toast.util";
 import CompanyConfig from "./company.config";
 import { MenuItem } from "../../shared/models/MenuItem";
 import AddCompany from "./AddCompany";
+import GridActionMenu from "../../shared/components/GridList/GridActionMenu";
 
 const CompanyList = () => {
   let navigate = useNavigate();
-  const gridRef = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(
     CompanyConfig.mainMenus
   );
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [addDrawer, setAddDrawer] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const deleteAction = (ids: number[]) => (
     <Fragment>
@@ -30,12 +29,12 @@ const CompanyList = () => {
   const confirmDelete = (ids: number[]) => {
     toast.close();
     CompanyService.deleteCompanies(ids)
-      .then((response) => {
-        toast.success(response.message);
-        gridRef.current?.api?.refreshServerSideStore();
+      .then(({ message }) => {
+        toast.success(message);
+        setRefreshKey((prev) => prev + 1);
       })
-      .catch((error) => {
-        toast.success(error?.message);
+      .catch(({ message }) => {
+        toast.error(message);
       });
   };
 
@@ -55,7 +54,7 @@ const CompanyList = () => {
   };
 
   const onAddSuccess = () => {
-    gridRef.current?.api?.refreshServerSideStore();
+    setRefreshKey((prev) => prev + 1);
   };
 
   const menuCallbackFun = ({ event, data, menu }) => {
@@ -85,13 +84,14 @@ const CompanyList = () => {
 
   return (
     <Fragment>
-      <PageHeading
+      <GridListView
+        options={CompanyConfig}
+        refreshKey={refreshKey}
+        searchPlaceholder="Search companies..."
         title="Company List"
-        menus={mainMenus}
-        menuCallback={menuCallbackFun}
       >
         <Button
-          className="blue-btn m-r-20"
+          className="blue-btn"
           type="button"
           size="large"
           variant="contained"
@@ -99,13 +99,12 @@ const CompanyList = () => {
         >
           Create
         </Button>
-      </PageHeading>
-
-      <GridListView
-        innerRef={gridRef}
-        options={CompanyConfig}
-        callbackFun={menuCallbackFun}
-      />
+        <GridActionMenu
+          className="heading-menu"
+          menus={mainMenus}
+          menuCallback={menuCallbackFun}
+        />
+      </GridListView>
 
       <Drawer
         anchor="right"
@@ -115,7 +114,6 @@ const CompanyList = () => {
       >
         <AddCompany onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
       </Drawer>
-
     </Fragment>
   );
 };

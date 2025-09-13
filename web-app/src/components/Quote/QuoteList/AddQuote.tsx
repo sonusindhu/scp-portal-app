@@ -36,7 +36,6 @@ const AddQuote = (props) => {
   }
 
   const handleSubmitForm = (e) => {
-    debugger
     const payload = { ...e };
     QuoteService.create(payload)
       .then((response) => handleSuccess(response))

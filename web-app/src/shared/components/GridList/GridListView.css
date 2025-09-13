@@ -1,0 +1,191 @@
+/* Basic styles for TanStack React Table */
+.grid-table {
+  width: max-content;
+  min-width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.grid-table th,
+.grid-table td {
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  text-align: left;
+  padding-left: 12px;
+  box-sizing: border-box;
+}
+.grid-table td {
+  background: #fff;
+}
+.grid-table th {
+  background: #f5f5f5;
+  height: 48px;
+  font-size: 16px;
+  vertical-align: middle;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.grid-table th.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #f5f5f5;
+}
+.grid-table td.sticky-filter-row {
+  position: sticky;
+  top: 48px;
+  z-index: 9;
+  background: #fff;
+}
+/* Sticky header columns */
+.grid-table .sticky-col-0,
+.grid-table .sticky-col-1,
+.grid-table .sticky-col-last {
+  position: sticky;
+  z-index: 2;
+  background: #fff;
+  background-clip: padding-box;
+  box-sizing: border-box;
+}
+.grid-table .sticky-col-0 {
+  left: 0;
+  width: 46px;
+  min-width: 46px;
+  max-width: 46px;
+  overflow: hidden;
+}
+.grid-table .sticky-col-1 {
+  left: 46px;
+  width: 180px;
+  min-width: 180px;
+  max-width: 180px;
+}
+.grid-table .sticky-col-last {
+  right: 0;
+  width: 80px;
+  min-width: 80px;
+  max-width: 80px;
+  background: #fff;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.grid-table tbody .sticky-col-0,
+.grid-table tbody .sticky-col-1,
+.grid-table tbody .sticky-col-last {
+  background: #fff;
+}
+.grid-table tbody tr:hover {
+  background: #f0f7ff;
+}
+.grid-table tbody tr {
+  transition: background 0.2s;
+}
+.grid-table input[type="checkbox"] {
+  accent-color: #1976d2;
+}
+/* Pagination buttons */
+div > button {
+  margin-right: 4px;
+  padding: 4px 10px;
+  border: 1px solid #1976d2;
+  background: #fff;
+  color: #1976d2;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+}
+div > button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* Search input */
+input[placeholder="Search..."] {
+  padding: 6px 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  font-size: 15px;
+}
+/* Overlay styles for loading spinner */
+.grid-table-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.grid-table-container {
+  position: relative;
+}
+.grid-table-spinner {
+  border: 4px solid #e0e0e0;
+  border-top: 4px solid #1976d2;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  animation: spin 1s linear infinite;
+  margin-right: 12px;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* Horizontal scroll and sticky columns */
+.grid-table-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+.grid-table th,
+.grid-table td {
+  position: relative;
+}
+.grid-table .sticky-col-0,
+.grid-table .sticky-col-1,
+.grid-table .sticky-col-last {
+  position: sticky;
+  z-index: 2;
+  background: #fff;
+  background-clip: padding-box;
+  box-sizing: border-box;
+}
+.grid-table .sticky-col-0 {
+  left: 0;
+  width: 46px;
+  min-width: 46px;
+  max-width: 46px;
+  overflow: hidden;
+}
+.grid-table .sticky-col-1 {
+  left: 46px;
+  width: 180px;
+  min-width: 180px;
+  max-width: 180px;
+}
+.grid-table .sticky-col-last {
+  right: 0;
+  width: 80px;
+  min-width: 80px;
+  max-width: 80px;
+  background: #fff;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+/* Empty state message */
+.grid-table-empty {
+  text-align: center;
+  padding: 48px 0;
+  font-size: 18px;
+  color: #888;
+  background: #fafbfc;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+}
+
+.right-menu{
+    display: flex;
+    gap: 8px;
+}

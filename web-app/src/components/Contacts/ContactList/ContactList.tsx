@@ -1,24 +1,23 @@
-import React, { useState, useEffect, Fragment, useRef } from "react";
+import React, { useState, Fragment } from "react";
 import { Button, Drawer } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { AgGridReact } from "@ag-grid-community/react";
 
 import GridListView from "../../../shared/components/GridList/GridListView";
-import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 import ContactService from "../../../services/contact.service";
 import toast from "../../../utils/toast.util";
 import ContactConfig from "./contact.config";
 import { MenuItem } from "../../../shared/models/MenuItem";
 import AddContact from "./AddContact";
+import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 
 const ContactList = () => {
   let navigate = useNavigate();
-  const gridRef = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(
     ContactConfig.mainMenus
   );
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [addDrawer, setAddDrawer] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const deleteAction = (ids: number[]) => (
     <Fragment>
@@ -32,7 +31,7 @@ const ContactList = () => {
     ContactService.deleteContacts(ids)
       .then(({ message }) => {
         toast.success(message);
-        gridRef.current?.api?.refreshServerSideStore();
+        setRefreshKey((prev) => prev + 1);
       })
       .catch(({ message }) => {
         toast.error(message);
@@ -80,18 +79,19 @@ const ContactList = () => {
   };
 
   const onAddSuccess = () => {
-    gridRef.current?.api?.refreshServerSideStore();
+    setRefreshKey((prev) => prev + 1);
   };
 
   return (
     <Fragment>
-      <PageHeading
+      <GridListView
+        options={ContactConfig}
+        refreshKey={refreshKey}
+        searchPlaceholder="Search contacts..."
         title="Contact List"
-        menus={mainMenus}
-        menuCallback={menuCallbackFun}
       >
         <Button
-          className="blue-btn m-r-20"
+          className="blue-btn"
           type="button"
           size="large"
           variant="contained"
@@ -99,13 +99,12 @@ const ContactList = () => {
         >
           Create
         </Button>
-      </PageHeading>
-
-      <GridListView
-        innerRef={gridRef}
-        options={ContactConfig}
-        callbackFun={menuCallbackFun}
-      />
+        <GridActionMenu
+          className="heading-menu"
+          menus={mainMenus}
+          menuCallback={menuCallbackFun}
+        />
+      </GridListView>
 
       <Drawer
         anchor="right"

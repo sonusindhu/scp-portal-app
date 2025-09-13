@@ -1,9 +1,7 @@
 import React, { useState, Fragment, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Drawer } from "@mui/material";
-import { AgGridReact } from "@ag-grid-community/react";
 
-import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 import QuoteService from "../../../services/quote.service";
 
 import toast from "../../../utils/toast.util";
@@ -12,11 +10,12 @@ import GridListView from "../../../shared/components/GridList/GridListView";
 import { MenuItem } from "../../../shared/models/MenuList.model";
 
 import AddQuote from "./AddQuote";
+import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 
 const QuoteList = () => {
-  const gridRed = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(QuoteConfig.mainMenus);
   const [selectedIds, setSelectedIds] = useState<any[]>([]);
+  const [refreshKey, setRefreshKey] = useState(0);
   let navigate = useNavigate();
   const [addDrawer, setAddDrawer] = useState(false);
 
@@ -27,14 +26,16 @@ const QuoteList = () => {
     </Fragment>
   );
 
-  const confirmDelete = (ids) => {
+  const confirmDelete = (ids: number[]) => {
     toast.close();
     QuoteService.deleteRange(ids)
-      .then((response) => {
-        toast.success(response.message);
-        gridRed.current?.api?.refreshServerSideStore();
+      .then(({ message }) => {
+        toast.success(message);
+        setRefreshKey((prev) => prev + 1);
       })
-      .catch((error) => toast.success(error?.message));
+      .catch(({ message }) => {
+        toast.error(message);
+      });
   };
 
   const deleteQuote = (ids) => {
@@ -48,7 +49,7 @@ const QuoteList = () => {
   };
 
   const onAddSuccess = () => {
-    gridRed.current?.api?.refreshServerSideStore();
+    setRefreshKey((prev) => prev + 1);
   };
 
   const onCreate = () => {
@@ -79,13 +80,15 @@ const QuoteList = () => {
 
   return (
     <Fragment>
-      <PageHeading
+      <GridListView
         title="Quote List"
-        menus={mainMenus}
-        menuCallback={menuCallbackFun}
+        searchPlaceholder="Search quotes..."
+        options={QuoteConfig}
+        refreshKey={refreshKey}
+        globalFilterFields={QuoteConfig.globalFilterFields}
       >
         <Button
-          className="blue-btn m-r-20"
+          className="blue-btn"
           type="button"
           size="large"
           variant="contained"
@@ -93,14 +96,13 @@ const QuoteList = () => {
         >
           Create
         </Button>
-      </PageHeading>
 
-      <GridListView
-        innerRef={gridRed}
-        options={QuoteConfig}
-        callbackFun={menuCallbackFun}
-      />
-
+        <GridActionMenu
+          className="heading-menu"
+          menus={mainMenus}
+          menuCallback={menuCallbackFun}
+        />
+      </GridListView>
       <Drawer
         anchor="right"
         open={addDrawer}

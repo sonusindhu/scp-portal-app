@@ -1,6 +1,6 @@
 import axios from "axios";
 import AuthService from "../services/auth.service";
-const API_URL = process.env.REACT_APP_API_ENDPOINT;
+const API_URL = import.meta.env.VITE_API_ENDPOINT;
 
 const instance = axios.create({
   baseURL: API_URL,
@@ -10,9 +10,12 @@ instance.interceptors.request.use(
   function (config: any) {
     const user = AuthService.getCurrentUser();
     if (user) {
-      config.headers.common["token"] = user.token;
+      if (!config.headers) config.headers = {};
+      config.headers["token"] = user.token;
     }
-    config.headers.common["allowOrigins"] = "*";
+    // Fix: ensure config.headers exists and use correct CORS header
+    if (!config.headers) config.headers = {};
+    config.headers["Access-Control-Allow-Origin"] = "*";
     return config;
   },
   function (error) {

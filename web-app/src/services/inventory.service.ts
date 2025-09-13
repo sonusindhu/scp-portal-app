@@ -1,10 +1,10 @@
 import axios from "../utils/config.util";
-const API_URL = process.env.REACT_APP_API_ENDPOINT;
+const API_URL = import.meta.env.VITE_API_ENDPOINT;
 interface ListItem{
   id: string, 
   title: string
 }
-const deleteCompanies = (ids: number[]) => {
+const deleteInventories = (ids: number[]) => {
   return axios
     .post(`${API_URL}inventory/deleteRange`, { ids })
     .then(({ data }) => data);
@@ -69,7 +69,7 @@ const InventoryService = {
   create,
   update,
   find,
-  deleteCompanies,
+  deleteInventories,
   getCompanies,
   data: { statusList, packages }
 };

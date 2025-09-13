@@ -1,5 +1,5 @@
 import axios from "../utils/config.util";
-const API_URL = process.env.REACT_APP_API_ENDPOINT;
+const API_URL = import.meta.env.VITE_API_ENDPOINT;
 
 const register = (username: string, email: string, password: string) => {
   return axios.post(API_URL + "auth/signup", {
@@ -27,9 +27,17 @@ const login = (email: string, password: string) => {
 };
 
 const getUserDetail = () => {
+  console.log('GET user detail:', API_URL + "user/detail");
   return axios
     .get(API_URL + "user/detail")
-    .then(({ data }) => data);
+    .then(({ data }) => {
+      console.log('Response:', data);
+      return data;
+    })
+    .catch((error) => {
+      console.error('Axios error:', error);
+      throw error;
+    });
 };
 
 const updateProfile = (payload) => {

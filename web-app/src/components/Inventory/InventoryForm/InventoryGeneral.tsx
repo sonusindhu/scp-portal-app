@@ -83,6 +83,8 @@ const InventoryGeneral = () => {
           options={statusList}
           name={"status"}
           label="Status"
+          valueKey="id"
+          labelKey="title"
         ></SelectElement>
         <SelectElement
           sx={{ m: 1, width: 375 }}
@@ -90,6 +92,8 @@ const InventoryGeneral = () => {
           options={packages}
           name={"type"}
           label="Type"
+          valueKey="id"
+          labelKey="title"
         ></SelectElement>
 
         <SelectElement
