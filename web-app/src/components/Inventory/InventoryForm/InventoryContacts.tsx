@@ -18,6 +18,7 @@ const CompanyContactList = () => {
     ContactConfig.mainMenus
   );
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   // const defaultFilters = undefined; 
   const defaultFilters = [{ field: 'companyId', operator: 'contains', value: id }];
@@ -34,7 +35,7 @@ const CompanyContactList = () => {
     ContactService.deleteContacts(ids)
       .then(({ message }) => {
         toast.success(message);
-        gridRef.current?.api?.refreshServerSideStore();
+        setRefreshKey(prev => prev + 1);
       })
       .catch(({ message }) => {
         toast.error(message);
@@ -76,6 +77,10 @@ const CompanyContactList = () => {
     navigate(`/app/contact/create`);
   };
 
+  const onAddSuccess = () => {
+    setRefreshKey(prev => prev + 1);
+  };
+
   return (
     <Fragment>
       <PageHeading
@@ -99,6 +104,7 @@ const CompanyContactList = () => {
         options={ContactConfig}
         defaultFilters={defaultFilters}
         callbackFun={menuCallbackFun}
+        refreshKey={refreshKey}
       />
     </Fragment>
   );

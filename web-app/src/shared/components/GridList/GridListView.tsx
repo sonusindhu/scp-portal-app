@@ -82,7 +82,7 @@ const GridListView = (props) => {
       setPageCount(result.pageCount || 0);
       setLoading(false);
     });
-  }, [pagination, globalFilter, sorting, props.options.listUrl, props.defaultFilters]);
+  }, [pagination, globalFilter, sorting, props.options.listUrl, props.defaultFilters, props.refreshKey]);
 
   const table = useReactTable({
     data,

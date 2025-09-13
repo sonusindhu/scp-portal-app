@@ -17,6 +17,7 @@ const QuoteList = () => {
   const gridRed = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(QuoteConfig.mainMenus);
   const [selectedIds, setSelectedIds] = useState<any[]>([]);
+  const [refreshKey, setRefreshKey] = useState(0);
   let navigate = useNavigate();
   const [addDrawer, setAddDrawer] = useState(false);
 
@@ -27,14 +28,16 @@ const QuoteList = () => {
     </Fragment>
   );
 
-  const confirmDelete = (ids) => {
+  const confirmDelete = (ids: number[]) => {
     toast.close();
     QuoteService.deleteRange(ids)
-      .then((response) => {
-        toast.success(response.message);
-        gridRed.current?.api?.refreshServerSideStore();
+      .then(({ message }) => {
+        toast.success(message);
+        setRefreshKey((prev) => prev + 1);
       })
-      .catch((error) => toast.success(error?.message));
+      .catch(({ message }) => {
+        toast.error(message);
+      });
   };
 
   const deleteQuote = (ids) => {
@@ -48,7 +51,7 @@ const QuoteList = () => {
   };
 
   const onAddSuccess = () => {
-    gridRed.current?.api?.refreshServerSideStore();
+    setRefreshKey((prev) => prev + 1);
   };
 
   const onCreate = () => {
@@ -99,6 +102,7 @@ const QuoteList = () => {
         innerRef={gridRed}
         options={QuoteConfig}
         callbackFun={menuCallbackFun}
+        refreshKey={refreshKey}
       />
 
       <Drawer

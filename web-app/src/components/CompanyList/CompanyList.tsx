@@ -19,6 +19,7 @@ const CompanyList = () => {
   );
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [addDrawer, setAddDrawer] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const deleteAction = (ids: number[]) => (
     <Fragment>
@@ -30,12 +31,12 @@ const CompanyList = () => {
   const confirmDelete = (ids: number[]) => {
     toast.close();
     CompanyService.deleteCompanies(ids)
-      .then((response) => {
-        toast.success(response.message);
-        gridRef.current?.api?.refreshServerSideStore();
+      .then(({ message }) => {
+        toast.success(message);
+        setRefreshKey((prev) => prev + 1);
       })
-      .catch((error) => {
-        toast.success(error?.message);
+      .catch(({ message }) => {
+        toast.error(message);
       });
   };
 
@@ -55,7 +56,7 @@ const CompanyList = () => {
   };
 
   const onAddSuccess = () => {
-    gridRef.current?.api?.refreshServerSideStore();
+    setRefreshKey((prev) => prev + 1);
   };
 
   const menuCallbackFun = ({ event, data, menu }) => {
@@ -105,6 +106,7 @@ const CompanyList = () => {
         innerRef={gridRef}
         options={CompanyConfig}
         callbackFun={menuCallbackFun}
+        refreshKey={refreshKey}
       />
 
       <Drawer
@@ -115,7 +117,6 @@ const CompanyList = () => {
       >
         <AddCompany onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
       </Drawer>
-
     </Fragment>
   );
 };

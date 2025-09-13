@@ -19,6 +19,7 @@ const CompanyContactList = () => {
   );
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [addDrawer, setAddDrawer] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   // const defaultFilters = undefined; 
   const defaultFilters = [{ field: 'companyId', operator: 'eq', value: id }];
@@ -35,7 +36,7 @@ const CompanyContactList = () => {
     ContactService.deleteContacts(ids)
       .then(({ message }) => {
         toast.success(message);
-        gridRef.current?.api?.refreshServerSideStore();
+        setRefreshKey(prev => prev + 1);
       })
       .catch(({ message }) => {
         toast.error(message);
@@ -83,7 +84,7 @@ const CompanyContactList = () => {
   };
 
   const onAddSuccess = () => {
-    gridRef.current?.api?.refreshServerSideStore();
+    setRefreshKey(prev => prev + 1);
   };
 
   return (
@@ -109,6 +110,7 @@ const CompanyContactList = () => {
         options={ContactConfig}
         defaultFilters={defaultFilters}
         callbackFun={menuCallbackFun}
+        refreshKey={refreshKey}
       />
 
       <Drawer

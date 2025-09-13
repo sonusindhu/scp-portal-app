@@ -20,6 +20,7 @@ const InventoryList = () => {
   );
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [addDrawer, setAddDrawer] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const deleteAction = (ids: number[]) => (
     <Fragment>
@@ -30,12 +31,14 @@ const InventoryList = () => {
 
   const confirmDelete = (ids: number[]) => {
     toast.close();
-    InventoryService.deleteCompanies(ids)
+    InventoryService.deleteInventories(ids)
       .then(({ message }) => {
         toast.success(message);
-        gridRed.current?.api?.refreshServerSideStore();
+        setRefreshKey((prev) => prev + 1);
       })
-      .catch(({ message }) => toast.success(message));
+      .catch(({ message }) => {
+        toast.error(message);
+      });
   };
 
   const deleteInventory = (ids: number[]) => {
@@ -49,7 +52,7 @@ const InventoryList = () => {
   };
 
   const onAddSuccess = () => {
-    gridRed.current?.api?.refreshServerSideStore();
+    setRefreshKey((prev) => prev + 1);
   };
 
   const onCreate = () => {
@@ -87,7 +90,7 @@ const InventoryList = () => {
         title="Inventory List"
         menus={mainMenus}
         menuCallback={menuCallbackFun}
-        >
+      >
         <Button
           className="blue-btn m-r-20"
           type="button"
@@ -103,6 +106,7 @@ const InventoryList = () => {
         innerRef={gridRed}
         options={InventoryConfig}
         callbackFun={menuCallbackFun}
+        refreshKey={refreshKey}
       />
 
       <Drawer

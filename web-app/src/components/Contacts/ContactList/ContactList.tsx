@@ -19,6 +19,7 @@ const ContactList = () => {
   );
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [addDrawer, setAddDrawer] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const deleteAction = (ids: number[]) => (
     <Fragment>
@@ -32,7 +33,7 @@ const ContactList = () => {
     ContactService.deleteContacts(ids)
       .then(({ message }) => {
         toast.success(message);
-        gridRef.current?.api?.refreshServerSideStore();
+        setRefreshKey((prev) => prev + 1);
       })
       .catch(({ message }) => {
         toast.error(message);
@@ -80,7 +81,7 @@ const ContactList = () => {
   };
 
   const onAddSuccess = () => {
-    gridRef.current?.api?.refreshServerSideStore();
+    setRefreshKey((prev) => prev + 1);
   };
 
   return (
@@ -105,6 +106,7 @@ const ContactList = () => {
         innerRef={gridRef}
         options={ContactConfig}
         callbackFun={menuCallbackFun}
+        refreshKey={refreshKey}
       />
 
       <Drawer

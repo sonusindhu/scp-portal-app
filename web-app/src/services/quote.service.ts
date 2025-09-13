@@ -84,6 +84,8 @@ const getEmailById = (id: number, emailId: number) => {
   return axios.get(API_URL + `quote/${id}/getEmailById/${emailId}`).then(({ data }) => data.result);
 };
 
+
+
 const QuoteService = {
   create,
   update,
