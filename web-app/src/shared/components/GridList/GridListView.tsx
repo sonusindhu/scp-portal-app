@@ -169,91 +169,83 @@ const GridListView = (props: GridListViewProps) => {
         </h3>
       </header>
 
-      <div className="grid-table-container" style={{ height: "79vh", overflow: "auto" }}>
-        <div className="grid-table-scroll" style={{ position: "relative" }}>
-          {loading && (
-            <div className="grid-table-overlay">
-              <div className="grid-table-spinner" />
-              <span>Loading...</span>
-            </div>
-          )}
-          <table className="grid-table">
-            <thead>
-              {table.getHeaderGroups().map(headerGroup => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header, colIdx) => {
-                    const width = header.column.columnDef.size;
-                    return (
-                      <th
-                        key={header.id}
-                        className={header.column.columnDef.meta?.['className'] || ""}
-                        style={width ? { width, minWidth: width, maxWidth: width } : {}}
-                      >
-                        {header.isPlaceholder ? null : (
-                          <span
-                            style={{ cursor: header.column.getCanSort() ? "pointer" : "default", userSelect: "none" }}
-                            onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
-                          >
-                            {flexRender(header.column.columnDef.header, header.getContext())}
-                            {header.column.getCanSort() && (
-                              header.column.getIsSorted() === "asc" ? " ▲" :
-                              header.column.getIsSorted() === "desc" ? " ▼" : ""
-                            )}
-                          </span>
-                        )}
-                      </th>
-                    );
-                  })}
-                </tr>
-              ))}
-              {/* Inline filter row */}
-              <tr>
-                {columns.map((col, idx) => {
-                  const isActionCol = col.id === 'select' || col.header == 'Action' || col.accessorKey === undefined || col.cell === 'actions' || typeof col.cell === 'function' && col.cell.name?.toLowerCase().includes('action');
-                  {isActionCol ? 'yes' : 'no'}
+      <div className="grid-table-container" style={{ height: "calc(100vh - 180px)" }}>
+        <table className="grid-table" style={{ display: "block", overflowY: "auto", height: "100%", width: "100%" }}>
+          <thead style={{ display: "table", width: "100%" }}>
+            {table.getHeaderGroups().map(headerGroup => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header, colIdx) => {
+                  const width = header.column.columnDef.size;
                   return (
-                    <td
-                      key={col.id}
-                      className={col.meta?.['className'] || ""}
-                      style={col.size ? { width: col.size, minWidth: col.size, maxWidth: col.size } : {}}
+                    <th
+                      key={header.id}
+                      className={header.column.columnDef.meta?.['className'] || ""}
+                      style={width ? { width, minWidth: width, maxWidth: width } : {}}
                     >
-                      {col.enableFiltering !== false && col.accessorKey && !isActionCol ? (
-                        <input
-                          style={{ width: "88%", padding: "4px" }}
-                          value={columnFilters[col.accessorKey] || ""}
-                          onChange={e => setColumnFilters(f => ({ ...f, [col.accessorKey]: e.target.value }))}
-                          placeholder={`Filter ${col.header}`}
-                        />
-                      ) : null}
-                    </td>
+                      {header.isPlaceholder ? null : (
+                        <span
+                          style={{ cursor: header.column.getCanSort() ? "pointer" : "default", userSelect: "none" }}
+                          onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
+                        >
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                          {header.column.getCanSort() && (
+                            header.column.getIsSorted() === "asc" ? " ▲" :
+                            header.column.getIsSorted() === "desc" ? " ▼" : ""
+                          )}
+                        </span>
+                      )}
+                    </th>
                   );
                 })}
               </tr>
-            </thead>
-            <tbody>
-              {data.length === 0 ? (
-                <tr><td className="grid-table-empty" colSpan={columns.length}>No data found to display.</td></tr>
-              ) : (
-                table.getRowModel().rows.map(row => (
-                  <tr key={row.id}>
-                    {row.getVisibleCells().map((cell, colIdx) => {
-                      const width = cell.column.columnDef.size;
-                      return (
-                        <td
-                          key={cell.id}
-                          className={cell.column.columnDef.meta?.['className'] || ""}
-                          style={width ? { width, minWidth: width, maxWidth: width } : {}}
-                        >
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+            ))}
+            {/* Inline filter row */}
+            <tr>
+              {columns.map((col, idx) => {
+                const isActionCol = col.id === 'select' || col.header == 'Action' || col.accessorKey === undefined || col.cell === 'actions' || typeof col.cell === 'function' && col.cell.name?.toLowerCase().includes('action');
+                {isActionCol ? 'yes' : 'no'}
+                return (
+                  <td
+                    key={col.id}
+                    className={col.meta?.['className'] || ""}
+                    style={col.size ? { width: col.size, minWidth: col.size, maxWidth: col.size } : {}}
+                  >
+                    {col.enableFiltering !== false && col.accessorKey && !isActionCol ? (
+                      <input
+                        style={{ width: "88%", padding: "4px" }}
+                        value={columnFilters[col.accessorKey] || ""}
+                        onChange={e => setColumnFilters(f => ({ ...f, [col.accessorKey]: e.target.value }))}
+                        placeholder={`Filter ${col.header}`}
+                      />
+                    ) : null}
+                  </td>
+                );
+              })}
+            </tr>
+          </thead>
+          <tbody style={{ display: "table", width: "100%" }}>
+            {data.length === 0 ? (
+              <tr><td className="grid-table-empty" colSpan={columns.length}>No data found to display.</td></tr>
+            ) : (
+              table.getRowModel().rows.map(row => (
+                <tr key={row.id}>
+                  {row.getVisibleCells().map((cell, colIdx) => {
+                    const width = cell.column.columnDef.size;
+                    return (
+                      <td
+                        key={cell.id}
+                        className={cell.column.columnDef.meta?.['className'] || ""}
+                        style={width ? { width, minWidth: width, maxWidth: width } : {}}
+                      >
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
         <div style={{ marginTop: 8 }}>
           <button onClick={() => table.setPageIndex(0)} disabled={pagination.pageIndex === 0}>First</button>
           <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>Previous</button>
