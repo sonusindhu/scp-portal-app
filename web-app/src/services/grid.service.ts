@@ -59,9 +59,19 @@ const ServerSideDatasource = (listUrl, defaultFilters = null) => {
   };
 };
 
-const dateFormatter = (params) => {
-  if (!params.value) return "";
-  return format(new Date(params.value), "dd/MM/yyyy");
+const dateFormatter = (date: string | number | Date, dateFormat = "dd/MM/yyyy hh:mm a") => {
+  if (!date) return "";
+  if (typeof date === "number") {
+    date = new Date(date);
+  } else if (typeof date === "string") {
+    // Try to parse as ISO string or timestamp string
+    const num = Number(date);
+    date = isNaN(num) ? new Date(date) : new Date(num);
+  } else {
+    date = new Date(date);
+  }
+  if (isNaN(date.getTime())) return "";
+  return format(date, dateFormat);
 };
 
 const fetchRows = async ({ url, filters, pageIndex, pageSize, globalFilter, sorting }) => {

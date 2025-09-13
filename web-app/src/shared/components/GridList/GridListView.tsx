@@ -77,8 +77,7 @@ const GridListView = (props) => {
       globalFilter,
       sorting,
     }).then((result) => {
-      console.log(result);
-      // Use result.result for rows and result.total for page count
+      console.log('GridListView fetched rows:', result.rows);
       setData(result.rows || []);
       setPageCount(result.pageCount || 0);
       setLoading(false);
