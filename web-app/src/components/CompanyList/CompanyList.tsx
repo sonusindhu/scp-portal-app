@@ -1,7 +1,6 @@
 import React, { useState, Fragment, useRef } from "react";
 import { Button, Drawer } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { AgGridReact } from "@ag-grid-community/react";
 
 import GridListView from "../../shared/components/GridList/GridListView";
 import PageHeading from "../../shared/components/PageHeading/PageHeading";
@@ -13,7 +12,6 @@ import AddCompany from "./AddCompany";
 
 const CompanyList = () => {
   let navigate = useNavigate();
-  const gridRef = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(
     CompanyConfig.mainMenus
   );
@@ -103,7 +101,6 @@ const CompanyList = () => {
       </PageHeading>
 
       <GridListView
-        innerRef={gridRef}
         options={CompanyConfig}
         callbackFun={menuCallbackFun}
         refreshKey={refreshKey}

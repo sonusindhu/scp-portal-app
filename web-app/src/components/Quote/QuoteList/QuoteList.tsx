@@ -1,7 +1,6 @@
 import React, { useState, Fragment, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Drawer } from "@mui/material";
-import { AgGridReact } from "@ag-grid-community/react";
 
 import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 import QuoteService from "../../../services/quote.service";
@@ -14,7 +13,6 @@ import { MenuItem } from "../../../shared/models/MenuList.model";
 import AddQuote from "./AddQuote";
 
 const QuoteList = () => {
-  const gridRed = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(QuoteConfig.mainMenus);
   const [selectedIds, setSelectedIds] = useState<any[]>([]);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -99,7 +97,6 @@ const QuoteList = () => {
       </PageHeading>
 
       <GridListView
-        innerRef={gridRed}
         options={QuoteConfig}
         callbackFun={menuCallbackFun}
         refreshKey={refreshKey}

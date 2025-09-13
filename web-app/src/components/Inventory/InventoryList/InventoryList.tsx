@@ -1,7 +1,6 @@
 import React, { useState, Fragment, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Drawer } from "@mui/material";
-import { AgGridReact } from "@ag-grid-community/react";
 
 import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 import InventoryService from "../../../services/inventory.service";
@@ -14,7 +13,6 @@ import AddInventory from "./AddInventory";
 
 const InventoryList = () => {
   let navigate = useNavigate();
-  const gridRed = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(
     InventoryConfig.mainMenus
   );
@@ -103,7 +101,6 @@ const InventoryList = () => {
       </PageHeading>
 
       <GridListView
-        innerRef={gridRed}
         options={InventoryConfig}
         callbackFun={menuCallbackFun}
         refreshKey={refreshKey}

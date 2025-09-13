@@ -1,6 +1,5 @@
 import React, { useState, Fragment, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AgGridReact } from "@ag-grid-community/react";
 import { Button, Drawer } from "@mui/material";
 import GridListView from "../../../shared/components/GridList/GridListView";
 import PageHeading from "../../../shared/components/PageHeading/PageHeading";
@@ -13,7 +12,6 @@ import AddContact from "../../Contacts/ContactList/AddContact";
 const CompanyContactList = () => {
   const { id } = useParams();
   let navigate = useNavigate();
-  const gridRef = useRef<AgGridReact>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(
     ContactConfig.mainMenus
   );
@@ -106,7 +104,6 @@ const CompanyContactList = () => {
       </PageHeading>
 
       <GridListView
-        innerRef={gridRef}
         options={ContactConfig}
         defaultFilters={defaultFilters}
         callbackFun={menuCallbackFun}
