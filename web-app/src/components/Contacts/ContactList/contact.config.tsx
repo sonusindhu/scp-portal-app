@@ -1,269 +1,170 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import GridHeaderCheckbox from "../../../shared/components/GridList/GridHeaderCheckbox";
 import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 import GridService from "../../../services/grid.service";
 
 const columnDefs = [
   {
-    checkboxSelection: true,
-    headerComponent: GridHeaderCheckbox,
-    headerComponentParams: {
-      selectAll: false,
-      indeterminate: false,
-    },
-    pinned: "left",
-    lockPinned: true,
-    suppressMenu: true,
-    width: 40,
-  },
-  {
-    field: "fullName",
-    sortable: true,
-    filter: "agTextColumnFilter",
-    pinned: "left",
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
-    cellRenderer: ({ data }) => (
-      <Link to={`/app/contact/${data?.id}/general`}>{data?.fullName}</Link>
+    accessorKey: "fullName",
+    header: "Full Name",
+    size: 180,
+    meta: { sticky: "left", stickyClass: "sticky-col-1" },
+    cell: ({ row }) => (
+      <Link to={`/app/contact/${row.original?.id}/general`}>{row.original?.fullName}</Link>
     ),
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "companyName",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "companyName",
+    header: "Company Name",
+    size: 140,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "status",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "status",
+    header: "Status",
+    size: 100,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "email",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "email",
+    header: "Email",
+    size: 180,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "phone",
-    headerName: "Phone Number",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "phone",
+    header: "Phone Number",
+    size: 120,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "extension",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "extension",
+    header: "Extension",
+    size: 80,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "department",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "department",
+    header: "Department",
+    size: 120,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "jobTitle",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "jobTitle",
+    header: "Job Title",
+    size: 120,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "address1",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "address1",
+    header: "Address 1",
+    size: 180,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "address2",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "address2",
+    header: "Address 2",
+    size: 180,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "city",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "city",
+    header: "City",
+    size: 120,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "state",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "state",
+    header: "State",
+    size: 80,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "zipcode",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "zipcode",
+    header: "Zipcode",
+    size: 80,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "birthDate",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    valueFormatter: GridService.dateFormatter,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "birthDate",
+    header: "Birth Date",
+    size: 120,
+    cell: ({ row }) => row.original?.birthDate ? GridService.dateFormatter(row.original.birthDate) : "",
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "createdByName",
-    headerName: "Created By",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "createdByName",
+    header: "Created By",
+    size: 120,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "createdAt",
-    headerName: "Created Date",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    valueFormatter: GridService.dateFormatter,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "createdAt",
+    header: "Created Date",
+    size: 120,
+    cell: ({ row }) => row.original?.createdAt ? GridService.dateFormatter(row.original.createdAt) : "",
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "updatedByName",
-    headerName: "Updated By",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "updatedByName",
+    header: "Updated By",
+    size: 120,
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    field: "updatedAt",
-    headerName: "Updated Date",
-    sortable: true,
-    filter: true,
-    lockPinned: true,
-    suppressMenu: true,
-    valueFormatter: GridService.dateFormatter,
-    floatingFilterComponent: "GridTextFilter",
-    floatingFilterComponentParams: {
-      suppressFilterButton: true,
-    },
+    accessorKey: "updatedAt",
+    header: "Updated Date",
+    size: 120,
+    cell: ({ row }) => row.original?.updatedAt ? GridService.dateFormatter(row.original.updatedAt) : "",
+    enableSorting: true,
+    enableColumnFilter: true,
   },
   {
-    headerName: "Action",
-    width: 80,
-    sortable: false,
-    filter: false,
-    pinned: "right",
-    lockPinned: true,
-    cellRenderer: GridActionMenu,
-    cellRendererParams: {
-      menuCallback: (fn) => fn,
-      menus: [
-        {
-          key: "edit",
-          title: "Edit",
-        },
-        {
-          key: "delete",
-          title: "Delete",
-        },
-      ],
-    },
+    id: "action",
+    accessorKey: "action",
+    size: 80,
+    meta: { sticky: "right", stickyClass: "sticky-col-last" },
+    header: "Action",
+    cell: ({ row }) => (
+      <GridActionMenu
+        className="grid-action-menu"
+        menuCallback={(fn) => fn}
+        menus={[
+          { key: "edit", title: "Edit" },
+          { key: "delete", title: "Delete" },
+        ]}
+      />
+    ),
+    enableSorting: false,
+    enableColumnFilter: false,
   },
 ];
 
 const defaultColDef = {
-  minWidth: 40,
-  resizable: true,
-  floatingFilter: true,
+  minSize: 40,
+  enableResizing: true,
 };
 
 const mainMenus = [
-  // {
-  //   key: "create",
-  //   title: "Create",
-  //   alwaysEnable: true,
-  // },
   {
     key: "deletes",
     title: "Delete",
@@ -273,11 +174,11 @@ const mainMenus = [
 
 const listUrl = "contact/list";
 
-const CompanyConfig = {
+const ContactConfig = {
   columnDefs,
   defaultColDef,
   mainMenus,
   listUrl,
 };
 
-export default CompanyConfig;
+export default ContactConfig;

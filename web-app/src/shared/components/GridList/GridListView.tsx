@@ -50,7 +50,7 @@ const GridListView = (props) => {
       ),
       enableSorting: false,
       enableFiltering: false,
-      size: 40,
+      size: 46,
       meta: { className: "sticky-col-0" },
     },
     {
@@ -155,7 +155,7 @@ const GridListView = (props) => {
           </thead>
           <tbody>
             {data.length === 0 ? (
-              <tr><td colSpan={columns.length}>No data found to display.</td></tr>
+              <tr><td className="grid-table-empty" colSpan={columns.length}>No data found to display.</td></tr>
             ) : (
               table.getRowModel().rows.map(row => (
                 <tr key={row.id}>

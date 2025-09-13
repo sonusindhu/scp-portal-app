@@ -162,3 +162,13 @@ input[placeholder="Search..."] {
   box-sizing: border-box;
   overflow: hidden;
 }
+/* Empty state message */
+.grid-table-empty {
+  text-align: center;
+  padding: 48px 0;
+  font-size: 18px;
+  color: #888;
+  background: #fafbfc;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+}
