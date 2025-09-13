@@ -2,12 +2,12 @@ import React, { useState, Fragment, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Drawer } from "@mui/material";
 import GridListView from "../../../shared/components/GridList/GridListView";
-import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 import ContactService from "../../../services/contact.service";
 import toast from "../../../utils/toast.util";
 import ContactConfig from "../../Contacts/ContactList/contact.config";
 import { MenuItem } from "../../../shared/models/MenuItem";
 import AddContact from "../../Contacts/ContactList/AddContact";
+import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 
 const CompanyContactList = () => {
   const { id } = useParams();
@@ -18,7 +18,6 @@ const CompanyContactList = () => {
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [addDrawer, setAddDrawer] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
-  const [globalFilter, setGlobalFilter] = useState("");
 
   // const defaultFilters = undefined; 
   const defaultFilters = [{ field: 'companyId', operator: 'eq', value: id }];
@@ -88,37 +87,30 @@ const CompanyContactList = () => {
 
   return (
     <Fragment>
-      <PageHeading
-        title="Contact List"
-        menus={mainMenus}
-        menuCallback={menuCallbackFun}
-      >
-        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <input
-            value={globalFilter}
-            onChange={e => setGlobalFilter(e.target.value)}
-            placeholder="Search contacts..."
-            style={{ padding: "8px", width: "220px" }}
-          />
-          <Button
-            className="blue-btn m-r-20"
-            type="button"
-            size="large"
-            variant="contained"
-            onClick={onCreate}
-          >
-            Create
-          </Button>
-        </div>
-      </PageHeading>
-
       <GridListView
         options={ContactConfig}
         defaultFilters={defaultFilters}
-        callbackFun={menuCallbackFun}
         refreshKey={refreshKey}
-        globalFilter={globalFilter}
-      />
+        searchPlaceholder="Search contacts..."
+        title="Contact List"
+      >
+        <Button
+          className="blue-btn"
+          type="button"
+          size="large"
+          variant="contained"
+          onClick={onCreate}
+        >
+          Create
+        </Button>
+
+        <GridActionMenu
+          className="heading-menu"
+          menus={mainMenus}
+          menuCallback={menuCallbackFun}
+        />
+
+      </GridListView>
 
       <Drawer
         anchor="right"

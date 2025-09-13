@@ -1,8 +1,7 @@
-import React, { useState, Fragment, useRef } from "react";
+import React, { useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Drawer } from "@mui/material";
 
-import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 import InventoryService from "../../../services/inventory.service";
 
 import toast from "../../../utils/toast.util";
@@ -10,6 +9,7 @@ import InventoryConfig from "./inventory.config";
 import GridListView from "../../../shared/components/GridList/GridListView";
 import { MenuItem } from "../../../shared/models/MenuList.model";
 import AddInventory from "./AddInventory";
+import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 
 const InventoryList = () => {
   let navigate = useNavigate();
@@ -19,7 +19,6 @@ const InventoryList = () => {
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [addDrawer, setAddDrawer] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
-  const [globalFilter, setGlobalFilter] = useState("");
 
   const deleteAction = (ids: number[]) => (
     <Fragment>
@@ -85,36 +84,27 @@ const InventoryList = () => {
 
   return (
     <Fragment>
-      <PageHeading
-        title="Inventory List"
-        menus={mainMenus}
-        menuCallback={menuCallbackFun}
-      >
-        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <input
-            value={globalFilter}
-            onChange={(e) => setGlobalFilter(e.target.value)}
-            placeholder="Search inventory..."
-            style={{ padding: "8px", width: "220px" }}
-          />
-          <Button
-            className="blue-btn m-r-20"
-            type="button"
-            size="large"
-            variant="contained"
-            onClick={onCreate}
-          >
-            Create
-          </Button>
-        </div>
-      </PageHeading>
-
       <GridListView
         options={InventoryConfig}
-        callbackFun={menuCallbackFun}
         refreshKey={refreshKey}
-        globalFilter={globalFilter}
-      />
+        searchPlaceholder="Search inventory..."
+        title="Inventory List"
+      >
+        <Button
+          className="blue-btn"
+          type="button"
+          size="large"
+          variant="contained"
+          onClick={onCreate}
+        >
+          Create
+        </Button>
+        <GridActionMenu
+          className="heading-menu"
+          menus={mainMenus}
+          menuCallback={menuCallbackFun}
+        />
+      </GridListView>
 
       <Drawer
         anchor="right"

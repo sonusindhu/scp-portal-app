@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 
 import GridListView from "../../../shared/components/GridList/GridListView";
-import PageHeading from "../../../shared/components/PageHeading/PageHeading";
+import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 import ContactService from "../../../services/contact.service";
 import toast from "../../../utils/toast.util";
 import ContactConfig from "../../Contacts/ContactList/contact.config";
@@ -81,10 +81,12 @@ const CompanyContactList = () => {
 
   return (
     <Fragment>
-      <PageHeading
+      <GridListView
+        options={ContactConfig}
+        defaultFilters={defaultFilters}
+        refreshKey={refreshKey}
+        searchPlaceholder="Search contacts..."
         title="Contact List"
-        menus={mainMenus}
-        menuCallback={menuCallbackFun}
       >
         <Button
           className="blue-btn m-r-20"
@@ -95,14 +97,12 @@ const CompanyContactList = () => {
         >
           Create
         </Button>
-      </PageHeading>
-
-      <GridListView
-        options={ContactConfig}
-        defaultFilters={defaultFilters}
-        callbackFun={menuCallbackFun}
-        refreshKey={refreshKey}
-      />
+        <GridActionMenu
+          className="heading-menu"
+          menus={mainMenus}
+          menuCallback={menuCallbackFun}
+        />
+      </GridListView>
     </Fragment>
   );
 };

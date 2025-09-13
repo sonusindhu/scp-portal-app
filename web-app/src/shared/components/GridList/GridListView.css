@@ -172,3 +172,8 @@ input[placeholder="Search..."] {
   border-radius: 6px;
   letter-spacing: 0.5px;
 }
+
+.right-menu{
+    display: flex;
+    gap: 8px;
+}
