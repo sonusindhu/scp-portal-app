@@ -29,24 +29,35 @@ const GridListView = (props: GridListViewProps) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20 });
   const [globalFilter, setGlobalFilter] = useState("");
+  const [columnFilters, setColumnFilters] = useState({});
 
-  // Build combined filters if globalFilterFields and globalFilter are set
+  // Build combined filters for global and column filters
   const combinedFilters = useMemo(() => {
-    if (props.globalFilterFields && globalFilter) {
-      console.log(props.globalFilterFields)
-      const globalFieldFilters = props.globalFilterFields.map(field => ({
-        logic: "or",
-        filters: [{ field, operator: "contains", value: globalFilter }]
-      }))
-
-      return [
-        ...(props.defaultFilters || []),
-        ...(globalFieldFilters || [])
+    let filters = props.defaultFilters ? [...props.defaultFilters] : [];
+    // Global filter fields
+    if (props.globalFilterFields?.length && globalFilter) {
+      filters = [
+        ...filters,
+        {
+          logic: "or",
+          filters: props.globalFilterFields.map(field => ({
+            field, operator: "contains", value: globalFilter
+          }))
+        }
       ];
     }
+    // Column filters
+    Object.entries(columnFilters).forEach(([field, value]) => {
+      if (value) {
+        filters.push({
+          logic: "and",
+          filters: [{ field, operator: "contains", value }]
+        });
+      }
+    });
+    return filters;
 
-    return props.defaultFilters || [];
-  }, [props.defaultFilters, props.globalFilterFields, globalFilter]);
+  }, [props.defaultFilters, props.globalFilterFields, globalFilter, columnFilters]);
 
   // Add selection column at the start
   const columns = useMemo(() => [
@@ -195,6 +206,24 @@ const GridListView = (props: GridListViewProps) => {
                   })}
                 </tr>
               ))}
+              {/* Inline filter row */}
+              <tr>
+                {columns.map((col, idx) => {
+                  const isActionCol = col.id === 'select' || col.accessorKey === undefined || col.cell === 'actions' || typeof col.cell === 'function' && col.cell.name?.toLowerCase().includes('action');
+                  return (
+                    <td key={col.id}>
+                      {col.enableFiltering !== false && col.accessorKey && !isActionCol ? (
+                        <input
+                          style={{ width: "100%", padding: "4px" }}
+                          value={columnFilters[col.accessorKey] || ""}
+                          onChange={e => setColumnFilters(f => ({ ...f, [col.accessorKey]: e.target.value }))}
+                          placeholder={`Filter ${col.header}`}
+                        />
+                      ) : null}
+                    </td>
+                  );
+                })}
+              </tr>
             </thead>
             <tbody>
               {data.length === 0 ? (
