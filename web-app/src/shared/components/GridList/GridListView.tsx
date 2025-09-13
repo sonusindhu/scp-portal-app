@@ -163,7 +163,12 @@ const GridListView = (props: GridListViewProps) => {
           </div>
         </h3>
       </header>
-      <div className="grid-table-container" style={{ maxHeight: "calc(100vh - 180px)", overflow: "auto" }}>
+      <div className="grid-table-container" style={{ maxHeight: "calc(100vh - 180px)", overflow: "auto", position: "relative" }}>
+        {loading && (
+          <div style={{ position: "absolute", left: 0, top: 105, width: "100%", height: "calc(100% - 105px)", background: "rgba(255,255,255,0.5)", zIndex: 20, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div className="grid-spinner" />
+          </div>
+        )}
         <table className="grid-table" style={{ tableLayout: "fixed", width: "100%", maxHeight: "100%"  }}>
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
