@@ -11,16 +11,13 @@
     "@tanstack/react-table": "^8.21.3",
     "axios": "^1.6.8",
     "date-fns": "^3.6.0",
-    "install": "^0.13.0",
     "notistack": "^3.0.1",
-    "npm": "^11.6.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-easy-crop": "^5.5.0",
     "react-hook-form": "^7.51.2",
     "react-hook-form-mui": "^7.0.0",
-    "react-router-dom": "^6.22.3",
-    "web-vitals": "^3.4.0"
+    "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.0.0",
