@@ -170,7 +170,7 @@ const GridListView = (props: GridListViewProps) => {
       </header>
 
       <div className="grid-table-container" style={{ height: "calc(100vh - 180px)" }}>
-        <table className="grid-table" style={{ display: "block", overflowY: "auto", height: "100%", width: "100%" }}>
+        <table className="grid-table" style={{ display: "block", overflowY: "auto", maxHeight: "100%", width: "100%" }}>
           <thead style={{ display: "table", width: "100%" }}>
             {table.getHeaderGroups().map(headerGroup => (
               <tr key={headerGroup.id}>
