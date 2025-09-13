@@ -75,23 +75,10 @@ const dateFormatter = (date: string | number | Date, dateFormat = "dd/MM/yyyy hh
 };
 
 const fetchRows = async ({ url, filters, pageIndex, pageSize, globalFilter, sorting }) => {
+  console.log('fetchRows called with:', filters);
   // Build sort array for API
   const sort = (sorting || []).map((item) => `${item.id} ${item.desc ? "desc" : "asc"}`);
-
-  // Build filter array for API
-  let filterArr: any[] = [];
-  if (filters) {
-    filterArr.push({ logic: "and", filters });
-  }
-  if (globalFilter) {
-    filterArr.push({
-      logic: "or",
-      filters: [
-        { field: "global", operator: "contains", value: globalFilter },
-      ],
-    });
-  }
-
+  
   const payload = {
     skip: pageIndex * pageSize,
     take: pageSize,
@@ -99,7 +86,7 @@ const fetchRows = async ({ url, filters, pageIndex, pageSize, globalFilter, sort
     sort,
     filter: {
       logic: "and",
-      filters: filterArr,
+      filters: filters,
     },
   };
 

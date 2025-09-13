@@ -149,11 +149,14 @@ const mainMenus: MenuItem[] = [
 
 const listUrl = "quote/list";
 
+const globalFilterFields = ['name', 'service', 'contactName'];
+
 const QuoteListConfig = {
   columnDefs,
   defaultColDef,
   mainMenus,
   listUrl,
+  globalFilterFields
 };
 
 export default QuoteListConfig;

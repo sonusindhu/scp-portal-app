@@ -81,10 +81,11 @@ const QuoteList = () => {
   return (
     <Fragment>
       <GridListView
+        title="Quote List"
+        searchPlaceholder="Search quotes..."
         options={QuoteConfig}
         refreshKey={refreshKey}
-        searchPlaceholder="Search quotes..."
-        title="Quote List"
+        globalFilterFields={QuoteConfig.globalFilterFields}
       >
         <Button
           className="blue-btn"

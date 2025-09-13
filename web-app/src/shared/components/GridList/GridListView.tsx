@@ -9,11 +9,7 @@ import {
   SortingState,
 } from "@tanstack/react-table";
 import GridService from "../../../services/grid.service";
-import PageHeading from "../../../shared/components/PageHeading/PageHeading";
-import ListHeaderActions from "../../../shared/components/ListHeaderActions";
 import "./GridListView.css";
-import GridActionMenu from "./GridActionMenu";
-import { Button } from "@mui/material";
 
 interface GridListViewProps {
   options: any;
@@ -22,6 +18,7 @@ interface GridListViewProps {
   searchPlaceholder?: string;
   title: string;
   children?: React.ReactNode | null;
+  globalFilterFields?: string[];
 }
 
 const GridListView = (props: GridListViewProps) => {
@@ -32,6 +29,24 @@ const GridListView = (props: GridListViewProps) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20 });
   const [globalFilter, setGlobalFilter] = useState("");
+
+  // Build combined filters if globalFilterFields and globalFilter are set
+  const combinedFilters = useMemo(() => {
+    if (props.globalFilterFields && globalFilter) {
+      console.log(props.globalFilterFields)
+      const globalFieldFilters = props.globalFilterFields.map(field => ({
+        logic: "or",
+        filters: [{ field, operator: "contains", value: globalFilter }]
+      }))
+
+      return [
+        ...(props.defaultFilters || []),
+        ...(globalFieldFilters || [])
+      ];
+    }
+
+    return props.defaultFilters || [];
+  }, [props.defaultFilters, props.globalFilterFields, globalFilter]);
 
   // Add selection column at the start
   const columns = useMemo(() => [
@@ -82,12 +97,14 @@ const GridListView = (props: GridListViewProps) => {
   // Server-side data fetch (expects GridService.fetchRows to return a Promise)
   useEffect(() => {
     setLoading(true);
+    console.log('Fetching rows with:', combinedFilters);
+
     GridService.fetchRows({
       url: props.options.listUrl,
-      filters: props.defaultFilters,
+      filters: combinedFilters,
       pageIndex: pagination.pageIndex,
       pageSize: pagination.pageSize,
-      globalFilter,
+      globalFilter, // add back for argument shape
       sorting,
     }).then((result) => {
       console.log('GridListView fetched rows:', result.rows);
@@ -95,7 +112,7 @@ const GridListView = (props: GridListViewProps) => {
       setPageCount(result.pageCount || 0);
       setLoading(false);
     });
-  }, [pagination, globalFilter, sorting, props.options.listUrl, props.defaultFilters, props.refreshKey]);
+  }, [pagination, sorting, props.options.listUrl, combinedFilters, props.refreshKey]);
 
   const table = useReactTable({
     data,
