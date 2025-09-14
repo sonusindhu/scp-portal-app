@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useRef } from "react";
+import React, { useState, useCallback, Fragment, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Drawer } from "@mui/material";
 
@@ -12,21 +12,20 @@ import { MenuItem } from "../../../shared/models/MenuList.model";
 import AddQuote from "./AddQuote";
 import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 
-const QuoteList = () => {
+interface MenuCallbackArgs {
+  event: React.MouseEvent;
+  data: any;
+  menu: MenuItem;
+}
+
+const QuoteList: React.FC = () => {
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(QuoteConfig.mainMenus);
-  const [selectedIds, setSelectedIds] = useState<any[]>([]);
+  const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [refreshKey, setRefreshKey] = useState(0);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const [addDrawer, setAddDrawer] = useState(false);
 
-  const deleteAction = (ids) => (
-    <Fragment>
-      <Button onClick={() => confirmDelete(ids)}>Confirm</Button>
-      <Button onClick={() => toast.close()}>Close</Button>
-    </Fragment>
-  );
-
-  const confirmDelete = (ids: number[]) => {
+  const confirmDelete = useCallback((ids: number[]) => {
     toast.close();
     QuoteService.deleteRange(ids)
       .then(({ message }) => {
@@ -36,47 +35,55 @@ const QuoteList = () => {
       .catch(({ message }) => {
         toast.error(message);
       });
-  };
+  }, []);
 
-  const deleteQuote = (ids) => {
+  const deleteAction = useCallback((ids: number[]) => (
+    <Fragment>
+      <Button onClick={() => confirmDelete(ids)} aria-label="Confirm delete">Confirm</Button>
+      <Button onClick={() => toast.close()} aria-label="Close dialog">Close</Button>
+    </Fragment>
+  ), [confirmDelete]);
+
+  const deleteQuote = useCallback((ids: number[]) => {
     toast.warning("Are you sure, you want to delete?", {
       action: () => deleteAction(ids),
     });
-  };
+  }, [deleteAction]);
 
-  const closeDrawer = () => {
+  const closeDrawer = useCallback(() => {
     setAddDrawer(false);
-  };
+  }, []);
 
-  const onAddSuccess = () => {
+  const onAddSuccess = useCallback(() => {
     setRefreshKey((prev) => prev + 1);
-  };
+  }, []);
 
-  const onCreate = () => {
+  const onCreate = useCallback(() => {
     setAddDrawer(true);
-  };
+  }, []);
 
-  const menuCallbackFun = ({ event, data, menu }) => {
+  const menuCallbackFun = useCallback(({ event, data, menu }: MenuCallbackArgs) => {
     switch (menu?.key) {
       case "delete":
         deleteQuote([data.id]);
         break;
       case "deletes":
-        selectedIds.length && deleteQuote(selectedIds);
+        selectedRows.length && deleteQuote(selectedRows.map((row) => row.id));
         break;
       case "edit":
         navigate(`/app/quote/${data.id}/details`);
         break;
-      case "selectRow":
-        setSelectedIds(data);
-        const menus = mainMenus.map((menu) => {
-          if (!menu.alwaysEnable) menu.disabled = data.length === 0;
-          return menu;
-        });
-        setMainMenus(menus);
-        break;
     }
-  };
+  }, [navigate, deleteQuote, selectedRows]);
+
+  useEffect(() => {
+    setMainMenus((prevMenus) =>
+      prevMenus.map((menu) => {
+        if (!menu.alwaysEnable) menu.disabled = selectedRows.length === 0;
+        return menu;
+      })
+    );
+  }, [selectedRows]);
 
   return (
     <Fragment>
@@ -86,6 +93,7 @@ const QuoteList = () => {
         options={QuoteConfig}
         refreshKey={refreshKey}
         globalFilterFields={QuoteConfig.globalFilterFields}
+        onRowSelectionChange={setSelectedRows}
       >
         <Button
           className="blue-btn"
@@ -93,6 +101,7 @@ const QuoteList = () => {
           size="large"
           variant="contained"
           onClick={onCreate}
+          aria-label="Create quote"
         >
           Create
         </Button>

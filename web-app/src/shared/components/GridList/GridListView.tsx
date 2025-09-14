@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, forwardRef, useImperativeHandle } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -19,9 +19,10 @@ interface GridListViewProps {
   title: string;
   children?: React.ReactNode | null;
   globalFilterFields?: string[];
+  onRowSelectionChange?: (selectedIds: any[]) => void;
 }
 
-const GridListView = (props: GridListViewProps) => {
+const GridListView = forwardRef((props: GridListViewProps, ref) => {
   const [data, setData] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -108,7 +109,6 @@ const GridListView = (props: GridListViewProps) => {
   // Server-side data fetch (expects GridService.fetchRows to return a Promise)
   useEffect(() => {
     setLoading(true);
-    console.log('Fetching rows with:', combinedFilters);
 
     GridService.fetchRows({
       url: props.options.listUrl,
@@ -118,7 +118,6 @@ const GridListView = (props: GridListViewProps) => {
       globalFilter, // add back for argument shape
       sorting,
     }).then((result) => {
-      console.log('GridListView fetched rows:', result.rows);
       setData(result.rows || []);
       setPageCount(result.pageCount || 0);
       setLoading(false);
@@ -147,6 +146,21 @@ const GridListView = (props: GridListViewProps) => {
     onPaginationChange: setPagination,
   });
 
+  useEffect(() => {
+    if (props.onRowSelectionChange) {
+      // Get selected row objects
+      const selectedRows = Object.keys(rowSelection)
+        .map(key => table.getRowModel().rows.find(row => row.id === key))
+        .filter(Boolean)
+        .map(row => row && row.original);
+      props.onRowSelectionChange(selectedRows);
+    }
+  }, [rowSelection, props.onRowSelectionChange, table]);
+
+  useImperativeHandle(ref, () => ({
+    table,
+  }), [table]);
+
   return (
     <div>
       <header>
@@ -158,109 +172,112 @@ const GridListView = (props: GridListViewProps) => {
               onChange={e => setGlobalFilter(e.target.value)}
               placeholder={ props.searchPlaceholder }
               style={{ padding: "8px", width: "220px" }}
+              aria-label="Global search"
             />
             { props.children }
           </div>
         </h3>
       </header>
-      <div className="grid-table-container" style={{ maxHeight: "calc(100vh - 180px)", overflow: "auto", position: "relative" }}>
-        {loading && (
-          <div style={{ position: "absolute", left: 0, top: 105, width: "100%", height: "calc(100% - 105px)", background: "rgba(255,255,255,0.5)", zIndex: 20, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <div className="grid-spinner" />
-          </div>
-        )}
-        <table className="grid-table" style={{ tableLayout: "fixed", width: "100%", maxHeight: "100%"  }}>
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header, colIdx) => {
-                  const width = header.column.columnDef.size;
-                  return (
-                    <th
-                      key={header.id}
-                      className={header.column.columnDef.meta?.['className'] + ' sticky-header'}
-                      style={{
-                        ...(width ? { width, minWidth: width, maxWidth: width } : {}),
-                        position: 'sticky',
-                        top: 0,
-                        zIndex:
-                          header.column.columnDef.meta?.['className'] === 'sticky-col-0' ? 12 :
-                          header.column.columnDef.meta?.['className'] === 'sticky-col-1' ? 11 :
-                          10,
-                        background: '#f5f5f5'
-                      }}
-                    >
-                      {header.isPlaceholder ? null : (
-                        <span
-                          style={{ cursor: header.column.getCanSort() ? "pointer" : "default", userSelect: "none" }}
-                          onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
-                        >
-                          {flexRender(header.column.columnDef.header, header.getContext())}
-                          {header.column.getCanSort() && (
-                            header.column.getIsSorted() === "asc" ? " ▲" :
-                            header.column.getIsSorted() === "desc" ? " ▼" : ""
-                          )}
-                        </span>
-                      )}
-                    </th>
-                  );
-                })}
-              </tr>
-            ))}
-            {/* Inline filter row */}
-            <tr>
-              {columns.map((col, idx) => {
-                const isActionCol = col.id === 'select' || col.header == 'Action' || col.accessorKey === undefined || col.cell === 'actions' || typeof col.cell === 'function' && col.cell.name?.toLowerCase().includes('action');
-                let filterZIndex =
-                  col.meta?.['className'] === 'sticky-col-0' ? 12 :
-                  col.meta?.['className'] === 'sticky-col-1' ? 11 :
-                  9;
-                return (
-                  <td
-                    key={col.id}
-                    className={(col.meta?.['className'] || "") + " sticky-filter-row"}
-                    style={{
-                      ...(col.size ? { width: col.size, minWidth: col.size, maxWidth: col.size } : {}),
-                      position: 'sticky', top: 48, zIndex: filterZIndex, background: '#fff'
-                    }}
-                  >
-                    {col.enableFiltering !== false && col.accessorKey && !isActionCol ? (
-                      <input
-                        style={{ width: "88%", padding: "4px" }}
-                        value={columnFilters[col.accessorKey] || ""}
-                        onChange={e => setColumnFilters(f => ({ ...f, [col.accessorKey]: e.target.value }))}
-                        placeholder={`Filter ${col.header}`}
-                      />
-                    ) : null}
-                  </td>
-                );
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {data.length === 0 ? (
-              <tr><td className="grid-table-empty" colSpan={columns.length}>No data found to display.</td></tr>
-            ) : (
-              table.getRowModel().rows.map(row => (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map((cell, colIdx) => {
-                    const width = cell.column.columnDef.size;
+      <main>
+        <div className="grid-table-container" style={{ maxHeight: "calc(100vh - 180px)", overflow: "auto", position: "relative" }}>
+          {loading && (
+            <div style={{ position: "absolute", left: 0, top: 105, width: "100%", height: "calc(100% - 105px)", background: "rgba(255,255,255,0.5)", zIndex: 20, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div className="grid-spinner" />
+            </div>
+          )}
+          <table className="grid-table" style={{ tableLayout: "fixed", width: "100%", maxHeight: "100%"  }}>
+            <thead>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header, colIdx) => {
+                    const width = header.column.columnDef.size;
                     return (
-                      <td
-                        key={cell.id}
-                        className={cell.column.columnDef.meta?.['className'] || ""}
-                        style={width ? { width, minWidth: width, maxWidth: width } : {}}
+                      <th
+                        key={header.id}
+                        className={header.column.columnDef.meta?.['className'] + ' sticky-header'}
+                        style={{
+                          ...(width ? { width, minWidth: width, maxWidth: width } : {}),
+                          position: 'sticky',
+                          top: 0,
+                          zIndex:
+                            header.column.columnDef.meta?.['className'] === 'sticky-col-0' ? 12 :
+                            header.column.columnDef.meta?.['className'] === 'sticky-col-1' ? 11 :
+                            10,
+                          background: '#f5f5f5'
+                        }}
                       >
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </td>
+                        {header.isPlaceholder ? null : (
+                          <span
+                            style={{ cursor: header.column.getCanSort() ? "pointer" : "default", userSelect: "none" }}
+                            onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
+                          >
+                            {flexRender(header.column.columnDef.header, header.getContext())}
+                            {header.column.getCanSort() && (
+                              header.column.getIsSorted() === "asc" ? " ▲" :
+                              header.column.getIsSorted() === "desc" ? " ▼" : ""
+                            )}
+                          </span>
+                        )}
+                      </th>
                     );
                   })}
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+              ))}
+              {/* Inline filter row */}
+              <tr>
+                {columns.map((col, idx) => {
+                  const isActionCol = col.id === 'select' || col.header == 'Action' || col.accessorKey === undefined || col.cell === 'actions' || typeof col.cell === 'function' && col.cell.name?.toLowerCase().includes('action');
+                  let filterZIndex =
+                    col.meta?.['className'] === 'sticky-col-0' ? 12 :
+                    col.meta?.['className'] === 'sticky-col-1' ? 11 :
+                    9;
+                  return (
+                    <td
+                      key={col.id || `filter-${idx}`}
+                      className={(col.meta?.['className'] || "") + " sticky-filter-row"}
+                      style={{
+                        ...(col.size ? { width: col.size, minWidth: col.size, maxWidth: col.size } : {}),
+                        position: 'sticky', top: 48, zIndex: filterZIndex, background: '#fff'
+                      }}
+                    >
+                      {col.enableFiltering !== false && col.accessorKey && !isActionCol ? (
+                        <input
+                          style={{ width: "88%", padding: "4px" }}
+                          value={columnFilters[col.accessorKey] || ""}
+                          onChange={e => setColumnFilters(f => ({ ...f, [col.accessorKey]: e.target.value }))}
+                          placeholder={`Filter ${col.header}`}
+                        />
+                      ) : null}
+                    </td>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody>
+              {data.length === 0 ? (
+                <tr><td className="grid-table-empty" colSpan={columns.length}>No data found to display.</td></tr>
+              ) : (
+                table.getRowModel().rows.map(row => (
+                  <tr key={row.id}>
+                    {row.getVisibleCells().map((cell, colIdx) => {
+                      const width = cell.column.columnDef.size;
+                      return (
+                        <td
+                          key={cell.id || `${row.id}-${colIdx}`}
+                          className={cell.column.columnDef.meta?.['className'] || ""}
+                          style={width ? { width, minWidth: width, maxWidth: width } : {}}
+                        >
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </main>
       <div style={{ marginTop: 8 }}>
         <button onClick={() => table.setPageIndex(0)} disabled={pagination.pageIndex === 0}>First</button>
         <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>Previous</button>
@@ -270,6 +287,6 @@ const GridListView = (props: GridListViewProps) => {
       </div>
     </div>
   );
-};
+});
 
 export default GridListView;

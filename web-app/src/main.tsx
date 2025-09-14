@@ -2,12 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import './index.css';
+import { ErrorBoundary } from "./ErrorBoundary";
+import { SnackbarProvider } from "notistack";
+import { SnackbarUtilConfig } from "./utils/toast.util";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <SnackbarProvider
+          maxSnack={1}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          hideIconVariant={false}
+          autoHideDuration={5000}
+        >
+          <SnackbarUtilConfig />
+          <App />
+        </SnackbarProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   </React.StrictMode>
 );

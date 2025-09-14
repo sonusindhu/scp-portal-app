@@ -27,11 +27,9 @@ const login = (email: string, password: string) => {
 };
 
 const getUserDetail = () => {
-  console.log('GET user detail:', API_URL + "user/detail");
   return axios
     .get(API_URL + "user/detail")
     .then(({ data }) => {
-      console.log('Response:', data);
       return data;
     })
     .catch((error) => {
