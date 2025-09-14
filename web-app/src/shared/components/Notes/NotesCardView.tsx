@@ -42,7 +42,6 @@ const NotesListView = (props: NotesListProps) => {
 
   const onCreate = () => {
     setAddDrawer(true);
-    console.log("create new note");
   };
 
   const onSuccess = (event: Note) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, forwardRef, useImperativeHandle } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -19,9 +19,10 @@ interface GridListViewProps {
   title: string;
   children?: React.ReactNode | null;
   globalFilterFields?: string[];
+  onRowSelectionChange?: (selectedIds: any[]) => void;
 }
 
-const GridListView = (props: GridListViewProps) => {
+const GridListView = forwardRef((props: GridListViewProps, ref) => {
   const [data, setData] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -108,7 +109,6 @@ const GridListView = (props: GridListViewProps) => {
   // Server-side data fetch (expects GridService.fetchRows to return a Promise)
   useEffect(() => {
     setLoading(true);
-    console.log('Fetching rows with:', combinedFilters);
 
     GridService.fetchRows({
       url: props.options.listUrl,
@@ -118,7 +118,6 @@ const GridListView = (props: GridListViewProps) => {
       globalFilter, // add back for argument shape
       sorting,
     }).then((result) => {
-      console.log('GridListView fetched rows:', result.rows);
       setData(result.rows || []);
       setPageCount(result.pageCount || 0);
       setLoading(false);
@@ -146,6 +145,21 @@ const GridListView = (props: GridListViewProps) => {
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
   });
+
+  useEffect(() => {
+    if (props.onRowSelectionChange) {
+      // Get selected row objects
+      const selectedRows = Object.keys(rowSelection)
+        .map(key => table.getRowModel().rows.find(row => row.id === key))
+        .filter(Boolean)
+        .map(row => row && row.original);
+      props.onRowSelectionChange(selectedRows);
+    }
+  }, [rowSelection, props.onRowSelectionChange, table]);
+
+  useImperativeHandle(ref, () => ({
+    table,
+  }), [table]);
 
   return (
     <div>
@@ -219,7 +233,7 @@ const GridListView = (props: GridListViewProps) => {
                     9;
                   return (
                     <td
-                      key={col.id}
+                      key={col.id || `filter-${idx}`}
                       className={(col.meta?.['className'] || "") + " sticky-filter-row"}
                       style={{
                         ...(col.size ? { width: col.size, minWidth: col.size, maxWidth: col.size } : {}),
@@ -249,7 +263,7 @@ const GridListView = (props: GridListViewProps) => {
                       const width = cell.column.columnDef.size;
                       return (
                         <td
-                          key={cell.id}
+                          key={cell.id || `${row.id}-${colIdx}`}
                           className={cell.column.columnDef.meta?.['className'] || ""}
                           style={width ? { width, minWidth: width, maxWidth: width } : {}}
                         >
@@ -273,6 +287,6 @@ const GridListView = (props: GridListViewProps) => {
       </div>
     </div>
   );
-};
+});
 
 export default GridListView;
