@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Fragment } from "react";
+import React, { useState, useCallback, Fragment, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Drawer } from "@mui/material";
 
@@ -20,7 +20,7 @@ interface MenuCallbackArgs {
 
 const QuoteList: React.FC = () => {
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(QuoteConfig.mainMenus);
-  const [selectedIds, setSelectedIds] = useState<any[]>([]);
+  const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [refreshKey, setRefreshKey] = useState(0);
   const navigate = useNavigate();
   const [addDrawer, setAddDrawer] = useState(false);
@@ -68,20 +68,22 @@ const QuoteList: React.FC = () => {
         deleteQuote([data.id]);
         break;
       case "deletes":
-        selectedIds.length && deleteQuote(selectedIds);
+        selectedRows.length && deleteQuote(selectedRows.map((row) => row.id));
         break;
       case "edit":
         navigate(`/app/quote/${data.id}/details`);
         break;
-      case "selectRow":
-        setSelectedIds(data);
-        setMainMenus(prevMenus => prevMenus.map((menu: MenuItem) => {
-          if (!menu.alwaysEnable) menu.disabled = data.length === 0;
-          return menu;
-        }));
-        break;
     }
-  }, [navigate, deleteQuote, selectedIds]);
+  }, [navigate, deleteQuote, selectedRows]);
+
+  useEffect(() => {
+    setMainMenus((prevMenus) =>
+      prevMenus.map((menu) => {
+        if (!menu.alwaysEnable) menu.disabled = selectedRows.length === 0;
+        return menu;
+      })
+    );
+  }, [selectedRows]);
 
   return (
     <Fragment>
@@ -91,6 +93,7 @@ const QuoteList: React.FC = () => {
         options={QuoteConfig}
         refreshKey={refreshKey}
         globalFilterFields={QuoteConfig.globalFilterFields}
+        onRowSelectionChange={setSelectedRows}
       >
         <Button
           className="blue-btn"

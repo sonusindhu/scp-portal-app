@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Fragment } from "react";
+import React, { useState, useCallback, Fragment, useRef, useEffect } from "react";
 import { Button, Drawer } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -18,8 +18,9 @@ interface MenuCallbackArgs {
 
 const ContactList: React.FC = () => {
   const navigate = useNavigate();
+  const gridRef = useRef<any>(null);
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(ContactConfig.mainMenus);
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [addDrawer, setAddDrawer] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -69,28 +70,32 @@ const ContactList: React.FC = () => {
         deleteContact([data.id]);
         break;
       case "deletes":
-        selectedIds.length && deleteContact(selectedIds);
+        selectedRows.length && deleteContact(selectedRows.map((row) => row.id));
         break;
       case "edit":
         navigate(`/app/contact/${data.id}/general`);
         break;
-      case "selectRow":
-        setSelectedIds(data);
-        setMainMenus(prevMenus => prevMenus.map((menu: MenuItem) => {
-          if (!menu.alwaysEnable) menu.disabled = data.length === 0;
-          return menu;
-        }));
-        break;
     }
-  }, [navigate, deleteContact, selectedIds]);
+  }, [navigate, deleteContact, selectedRows]);
+
+  useEffect(() => {
+    setMainMenus((prevMenus) =>
+      prevMenus.map((menu) => {
+        if (!menu.alwaysEnable) menu.disabled = selectedRows.length === 0;
+        return menu;
+      })
+    );
+  }, [selectedRows]);
 
   return (
     <Fragment>
       <GridListView
+        ref={gridRef}
         options={ContactConfig}
         refreshKey={refreshKey}
         searchPlaceholder="Search contacts..."
         title="Contact List"
+        onRowSelectionChange={setSelectedRows}
       >
         <Button
           className="blue-btn"
