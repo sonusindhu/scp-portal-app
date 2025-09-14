@@ -9,7 +9,7 @@ import { SnackbarUtilConfig } from "./utils/toast.util";
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <BrowserRouter>
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <SnackbarProvider
           maxSnack={1}
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
