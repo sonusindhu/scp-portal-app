@@ -1,7 +1,7 @@
 import axios from "../utils/config.util";
 import { AxiosRequestConfig, AxiosError, AxiosResponse } from "axios";
 import toast from "../utils/toast.util";
-import EventBus from "../common/EventBus";
+import EventBus, { AppEvents } from "../common/EventBus";
 
 /**
  * Standard API response structure
@@ -57,7 +57,7 @@ class BaseService {
 
       // Handle unauthorized access
       if (statusCode === 401 || statusCode === 403) {
-        EventBus.dispatch("logout");
+        EventBus.dispatch<void>(AppEvents.LOGOUT);
         errorMessage = "Your session has expired. Please login again.";
       }
     } else if (error.request) {

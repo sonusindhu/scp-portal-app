@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../services/auth.service";
-import EventBus from "../common/EventBus";
+import EventBus, { AppEvents } from "../common/EventBus";
 
 interface AuthContextType {
   currentUser: any;
@@ -37,10 +37,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       navigate("/auth/login");
     };
 
-    EventBus.on("logout", handleLogout);
+    EventBus.on<void>(AppEvents.LOGOUT, handleLogout);
 
     return () => {
-      EventBus.remove("logout", handleLogout);
+      EventBus.remove<void>(AppEvents.LOGOUT, handleLogout);
     };
   }, [navigate]);
 
