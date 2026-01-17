@@ -35,7 +35,7 @@ class InventoryService extends BaseService {
    * @returns Promise with inventory details
    */
   async find(id: number): Promise<ApiResponse<Inventory>> {
-    return this.httpGet<Inventory>(API_ENDPOINTS.INVENTORY.FIND(id));
+    return this.get<Inventory>(API_ENDPOINTS.INVENTORY.FIND(id));
   }
 
   /**
@@ -76,7 +76,7 @@ class InventoryService extends BaseService {
    * @returns Promise with companies list
    */
   async getCompanies(): Promise<ApiResponse<any[]>> {
-    return this.httpGet<any[]>(API_ENDPOINTS.COMPANY.LIST_OF_NAMES);
+    return this.get<any[]>(API_ENDPOINTS.COMPANY.LIST_OF_NAMES);
   }
 }
 

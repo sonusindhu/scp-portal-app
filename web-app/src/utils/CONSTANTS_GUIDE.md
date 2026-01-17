@@ -62,12 +62,12 @@ await this.post(API_ENDPOINTS.COMPANY.CREATE, payload);
 await this.post(API_ENDPOINTS.CONTACT.LIST, filters);
 
 // Endpoints with parameters
-await this.httpGet(API_ENDPOINTS.COMPANY.FIND(companyId));
-await this.httpGet(API_ENDPOINTS.INVENTORY.FIND(inventoryId));
+await this.get(API_ENDPOINTS.COMPANY.FIND(companyId));
+await this.get(API_ENDPOINTS.INVENTORY.FIND(inventoryId));
 
 // In service class
 async find(id: number) {
-  return this.httpGet(API_ENDPOINTS.CONTACT.FIND(id));
+  return this.get(API_ENDPOINTS.CONTACT.FIND(id));
 }
 ```
 
