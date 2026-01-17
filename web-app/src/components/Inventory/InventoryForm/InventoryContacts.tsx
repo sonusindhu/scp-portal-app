@@ -9,6 +9,12 @@ import toast from "../../../utils/toast.util";
 import ContactConfig from "../../Contacts/ContactList/contact.config";
 import { MenuItem } from "../../../shared/models/MenuItem";
 
+interface MenuCallbackArgs {
+  event: React.MouseEvent;
+  data: any;
+  menu: MenuItem;
+}
+
 const CompanyContactList = () => {
   const { id } = useParams();
   let navigate = useNavigate();
@@ -46,7 +52,7 @@ const CompanyContactList = () => {
     });
   };
 
-  const menuCallbackFun = ({ event, data, menu }) => {
+  const menuCallbackFun = ({ event, data, menu }: MenuCallbackArgs) => {
     switch (menu?.key) {
       case "create":
         navigate(`/app/contact/create`);
@@ -79,10 +85,16 @@ const CompanyContactList = () => {
     setRefreshKey(prev => prev + 1);
   };
 
+  // Create config with menuCallback
+  const configWithCallback = {
+    ...ContactConfig,
+    columnDefs: ContactConfig.getColumnDefs(menuCallbackFun),
+  };
+
   return (
     <Fragment>
       <GridListView
-        options={ContactConfig}
+        options={configWithCallback}
         defaultFilters={defaultFilters}
         refreshKey={refreshKey}
         searchPlaceholder="Search contacts..."

@@ -86,10 +86,16 @@ const CompanyContactList: React.FC = () => {
     setRefreshKey(prev => prev + 1);
   }, []);
 
+  // Create config with menuCallback
+  const configWithCallback = {
+    ...ContactConfig,
+    columnDefs: ContactConfig.getColumnDefs(menuCallbackFun),
+  };
+
   return (
     <Fragment>
       <GridListView
-        options={ContactConfig}
+        options={configWithCallback}
         defaultFilters={defaultFilters}
         refreshKey={refreshKey}
         searchPlaceholder="Search contacts..."
