@@ -10,8 +10,7 @@ import { useForm } from "react-hook-form";
 
 import ContactService from "../../../services/contact.service";
 import PageHeading from "../../../shared/components/PageHeading/PageHeading";
-import toast from "../../../utils/toast.util";
-import { ResponseModel } from "../../../models/common.model";
+import { useFormSubmit } from "../../../hooks";
 
 const ContactGeneral = () => {
   let { id } = useParams();
@@ -25,23 +24,15 @@ const ContactGeneral = () => {
   const { reset } = formContext;
   const handleClearForm = () => reset();
 
-  const handleSuccess = (response: ResponseModel) => {
-    if (response.status) {
-      toast.success(response.message);
+  const { handleSubmit } = useFormSubmit({
+    onSuccess: (response) => {
       reset(response.result);
-    } else {
-      toast.error(response.message);
-    }
-  }
+    },
+  });
 
-  const handleSubmitForm = (e) => {
-    if (!e.email || !e.fullName) return;
-    const payload = { ...e };
-    ContactService.update(payload)
-      .then((response) => handleSuccess(response))
-      .catch(({ response }) => {
-        toast.error(response.data);
-      });
+  const handleSubmitForm = async (data) => {
+    if (!data.email || !data.fullName) return;
+    await handleSubmit(() => ContactService.update(data));
   };
 
   const getCompanies = async () => {

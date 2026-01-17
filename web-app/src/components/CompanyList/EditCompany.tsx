@@ -9,9 +9,8 @@ import {
 } from "react-hook-form-mui";
 
 import CompanyService from "../../services/company.service";
-import toast from "../../utils/toast.util";
 import PageHeading from "../../shared/components/PageHeading/PageHeading";
-import { ResponseModel } from "../../models/common.model";
+import { useFormSubmit } from "../../hooks";
 
 const EditCompany = () => {
   let { id } = useParams();
@@ -22,20 +21,15 @@ const EditCompany = () => {
   const { reset } = formContext;
   const handleClearForm = () => reset();
 
-  const handleSubmitForm = async (e) => {
-    if (!e.email || !e.name) return;
-    
-    const payload = { ...e };
-    try {
-      const response = await CompanyService.update(payload);
-      // Success toast shown automatically by BaseService
-      if (response.status) {
-        reset();
-      }
-    } catch (error) {
-      // Error toast already shown by BaseService
-      console.error("Failed to update company:", error);
-    }
+  const { handleSubmit } = useFormSubmit({
+    onSuccess: () => {
+      reset();
+    },
+  });
+
+  const handleSubmitForm = async (data) => {
+    if (!data.email || !data.name) return;
+    await handleSubmit(() => CompanyService.update(data));
   };
 
   useEffect(() => {

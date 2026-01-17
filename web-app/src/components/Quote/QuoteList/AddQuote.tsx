@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import toast from "../../../utils/toast.util";
-
 import {
   FormContainer,
   TextFieldElement,
@@ -11,8 +9,8 @@ import {
 } from "react-hook-form-mui";
 import { Box } from "@mui/material";
 import QuoteService from "../../../services/quote.service";
-import { ResponseModel } from "../../../models/common.model";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
+import { useFormSubmit } from "../../../hooks";
 
 const AddQuote = (props) => {
   const [companies, setCompanies] = useState([]);
@@ -25,21 +23,15 @@ const AddQuote = (props) => {
     props.onCloseDrawer && props.onCloseDrawer();
   };
 
-  const handleSuccess = (response: ResponseModel) => {
-    if (response.status) {
-      toast.success(response.message);
+  const { handleSubmit } = useFormSubmit({
+    onSuccess: () => {
       props.onAddSuccess && props.onAddSuccess();
       onCloseDrawer();
-    } else {
-      toast.error(response.message);
-    }
-  }
+    },
+  });
 
-  const handleSubmitForm = (e) => {
-    const payload = { ...e };
-    QuoteService.create(payload)
-      .then((response) => handleSuccess(response))
-      .catch(({ response }) => toast.error(response.message));
+  const handleSubmitForm = async (data) => {
+    await handleSubmit(() => QuoteService.create(data));
   };
 
   const serviceList = [{ id: "transportation", name: "Transportation" }];

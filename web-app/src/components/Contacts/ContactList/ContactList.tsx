@@ -22,7 +22,7 @@ const ContactList: React.FC = () => {
 
   const { menuCallbackFun, mainMenus, selectedIds } = useGridActions({
     mainMenus: ContactConfig.mainMenus,
-    editRoute: (id) => `/app/contact/${id}/general`,
+    editRoute: (id) => `/app/contact/${id}/details`,
     onDelete: deleteWithConfirmation,
   });
 

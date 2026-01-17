@@ -15,7 +15,7 @@ const getColumnDefs = (menuCallback?: (args: any) => void) => [
     size: 180,
     meta: { sticky: "left", stickyClass: "sticky-col-1" },
     cell: ({ row }) => (
-      <Link to={`/app/contact/${row.original?.id}/general`}>{row.original?.fullName}</Link>
+      <Link to={`/app/contact/${row.original?.id}/details`}>{row.original?.fullName}</Link>
     ),
     enableSorting: true,
     enableColumnFilter: true,

@@ -5,12 +5,11 @@ import { useForm } from "react-hook-form";
 import { FormContainer } from "react-hook-form-mui";
 import QuoteService from "../../../../services/quote.service";
 
-import toast from "../../../../utils/toast.util";
 import QuoteAccessorials from "./QuoteAccessorials";
 import QuoteRoutes from "./QuoteRoutes";
 import QuoteCargoDetail from "./QuoteCargoDetail";
 import { Quote } from "../../../../shared/models/Quote";
-import { ResponseModel } from "../../../../models/common.model";
+import { useFormSubmit } from "../../../../hooks";
 
 interface QuoteEditProps{
   quote: Quote[],
@@ -39,23 +38,15 @@ const QuoteEdit = (props: QuoteEditProps) => {
 
   const handleClearForm = () => reset();
 
-  const handleSave = (response: ResponseModel) => {
-    if (response.status) {
-      toast.success(response.message);
+  const { handleSubmit: submitForm } = useFormSubmit({
+    onSuccess: (response) => {
       reset(response.result);
-    } else {
-      toast.error(response.message);
-    }
-  }
+    },
+  });
 
-  const handleSubmitForm = (e) => {
-    if (!e.email || !e.fullName) return;
-    const payload = { ...e };
-    QuoteService.update(payload)
-      .then((response) => handleSave(response))
-      .catch(({ response }) => {
-        toast.error(response.data);
-      });
+  const handleSubmitForm = async (data) => {
+    if (!data.email || !data.fullName) return;
+    await submitForm(() => QuoteService.update(data));
   };
 
   return (

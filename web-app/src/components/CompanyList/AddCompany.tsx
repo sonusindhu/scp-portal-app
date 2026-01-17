@@ -10,9 +10,8 @@ import {
 } from "react-hook-form-mui";
 
 import CompanyService from "../../services/company.service";
-import toast from "../../utils/toast.util";
-import { ResponseModel } from "../../models/common.model";
 import HeaderWithTitle from "../../shared/components/HeaderWithTitle";
+import { useFormSubmit } from "../../hooks";
 
 const AddCompany = (props) => {
   const formContext = useForm({
@@ -24,22 +23,17 @@ const AddCompany = (props) => {
     props.onCloseDrawer && props.onCloseDrawer();
   };
 
-  const handleSubmitForm = async (e) => {
-    if (!e.email || !e.name) return;
-    
-    const payload = { ...e };
-    try {
-      const response = await CompanyService.create(payload);
-      // Success toast shown automatically by BaseService
-      if (response.status) {
-        props.onAddSuccess && props.onAddSuccess();
-        onCloseDrawer();
-        reset();
-      }
-    } catch (error) {
-      // Error toast already shown by BaseService
-      console.error("Failed to create company:", error);
-    }
+  const { handleSubmit } = useFormSubmit({
+    onSuccess: () => {
+      props.onAddSuccess && props.onAddSuccess();
+      onCloseDrawer();
+      reset();
+    },
+  });
+
+  const handleSubmitForm = async (data) => {
+    if (!data.email || !data.name) return;
+    await handleSubmit(() => CompanyService.create(data));
   };
 
   return (

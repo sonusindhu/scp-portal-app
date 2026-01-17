@@ -9,8 +9,8 @@ import {
 } from "react-hook-form-mui";
 import toast from "../../../utils/toast.util";
 import InventoryService from "../../../services/inventory.service";
-import { ResponseModel } from "../../../models/common.model";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
+import { useFormSubmit } from "../../../hooks";
 
 const AddInventory = (props) => {
   const [companies, setCompanies] = useState([]);
@@ -26,18 +26,15 @@ const AddInventory = (props) => {
     props.onCloseDrawer && props.onCloseDrawer();
   };
 
-  const handleSuccess = (response: ResponseModel) => {
-    if (response.status) {
-      toast.success(response.message);
+  const { handleSubmit } = useFormSubmit({
+    onSuccess: () => {
       props.onAddSuccess && props.onAddSuccess();
       onCloseDrawer();
       reset();
-    } else {
-      toast.error(response.message);
-    }
-  };
+    },
+  });
 
-  const handleSubmitForm = async (e) => {
+  const handleSubmitForm = async (data) => {
     const valid = await formContext.trigger();
     const errorFields = Object.keys(formContext.formState.errors);
     if (!valid) {
@@ -54,10 +51,7 @@ const AddInventory = (props) => {
       }
       return;
     }
-    const payload = { ...e };
-    InventoryService.create(payload)
-      .then((response) => handleSuccess(response))
-      .catch(({ message }) => toast.error(message));
+    await handleSubmit(() => InventoryService.create(data));
   };
 
   // check if user is authenticated, if not redirect to login page

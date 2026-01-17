@@ -8,9 +8,9 @@ import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { Box } from "@mui/material";
 import ContactService from "../../../services/contact.service";
-import toast from "../../../utils/toast.util";
 import { ResponseModel } from "../../../models/common.model";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
+import { useFormSubmit } from "../../../hooks";
 
 const AddContact = (props) => {
   const [companies, setCompanies] = useState([]);
@@ -25,23 +25,17 @@ const AddContact = (props) => {
     props.onCloseDrawer && props.onCloseDrawer();
   };
 
-  const handleSuccess = (response: ResponseModel) => {
-    if (response.status) {
-      toast.success(response.message);
+  const { handleSubmit } = useFormSubmit({
+    onSuccess: () => {
       props.onAddSuccess && props.onAddSuccess();
       onCloseDrawer();
       reset();
-    } else {
-      toast.error(response.message);
-    }
-  };
+    },
+  });
 
-  const handleSubmitForm = (e) => {
-    if (!e.email) return;
-    const payload = { ...e };
-    ContactService.create(payload)
-      .then((response) => handleSuccess(response))
-      .catch(({ response }) => toast.error(response.message));
+  const handleSubmitForm = async (data) => {
+    if (!data.email) return;
+    await handleSubmit(() => ContactService.create(data));
   };
 
   useEffect(() => {
