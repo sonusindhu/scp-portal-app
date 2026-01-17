@@ -14,7 +14,7 @@ import { ValidationRules } from "../../../utils/validation.util";
 const InventoryGeneral = () => {
   let { id } = useParams();
   const navigate = useNavigate();
-  const [companies, setCompanies] = useState([]);
+  const [companies, setCompanies] = useState<any[]>([]);
   const [statusList] = useState(InventoryService.data.statusList);
   const [packages] = useState(InventoryService.data.packages);
 
@@ -40,11 +40,13 @@ const InventoryGeneral = () => {
     if (id) {
       InventoryService.find(+id)
         .then((response) => {
-          const inventory = {
-            ...response.result,
-            companyId: response.result.company
+          if (response.result) {
+            const inventory = {
+              ...response.result,
+              companyId: (response.result as any).company || response.result.companyId
+            }
+            reset(inventory);
           }
-          reset(inventory);
         })
         .catch((error) => {
           navigate("/app/inventory/list");
@@ -52,7 +54,7 @@ const InventoryGeneral = () => {
     }
 
     InventoryService.getCompanies()
-      .then(({ result }) => setCompanies(result))
+      .then(({ result }) => setCompanies(result || []))
       .catch(() => setCompanies([]));
   }, []);
 

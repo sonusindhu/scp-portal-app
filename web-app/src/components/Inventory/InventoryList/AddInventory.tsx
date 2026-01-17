@@ -12,7 +12,7 @@ import { FormTextField, FormSelectField, FieldWidths, FormActions } from "../../
 import { ValidationRules } from "../../../utils/validation.util";
 
 const AddInventory = (props) => {
-  const [companies, setCompanies] = useState([]);
+  const [companies, setCompanies] = useState<any[]>([]);
   const [statusList] = useState(InventoryService.data.statusList);
   const [packages] = useState(InventoryService.data.packages);
 
@@ -41,7 +41,7 @@ const AddInventory = (props) => {
   // check if user is authenticated, if not redirect to login page
   useEffect(() => {
     InventoryService.getCompanies()
-      .then(({ result }) => setCompanies(result))
+      .then(({ result }) => setCompanies(result || []))
       .catch(() => setCompanies([]));
   }, []);
 

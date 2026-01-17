@@ -15,7 +15,7 @@ import { ValidationRules } from "../../../utils/validation.util";
 const ContactGeneral = () => {
   let { id } = useParams();
   const navigate = useNavigate();
-  const [companies, setCompanies] = useState([]);
+  const [companies, setCompanies] = useState<any[]>([]);
   const [statusList] = useState(ContactService.CONST.statusList);
 
   const formContext = useForm({

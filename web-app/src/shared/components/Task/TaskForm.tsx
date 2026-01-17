@@ -4,13 +4,15 @@ import {
   TextFieldElement,
   SelectElement,
 } from "react-hook-form-mui";
-import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { FormActions } from "../FormFields";
 
 import toast from "../../../utils/toast.util";
 import { Task } from "../../models/Task";
 import TaskService from "../../../services/task.service";
 import { TASK_STATUS } from "../../../utils/constants.util";
+import { ValidationRules } from "../../../utils/validation.util";
+import { useFormSubmit } from "../../../hooks";
 
 type TaskProps = { task: Partial<Task>; onSuccess: Function; id?: number };
 const TaskForm = (props: TaskProps) => {
@@ -50,23 +52,20 @@ const TaskForm = (props: TaskProps) => {
 
   const { reset } = formContext;
 
+  const { handleSubmit: handleFormSubmit } = useFormSubmit({
+    onSuccess: (response) => {
+      reset();
+      if (response?.result) {
+        props.onSuccess(response.result);
+      }
+    },
+  });
+
   const handleClearForm = () => reset();
 
-  const handleSubmitForm = (e) => {
-    if (!e.subject || !e.description) return;
-    TaskService.create(e)
-      .then((response) => {
-        if (response.status) {
-          toast.success(response.message);
-          reset();
-          props.onSuccess(response.result);
-        } else {
-          toast.error(response.message);
-        }
-      })
-      .catch(({ response }) => {
-        toast.error(response.message);
-      });
+  const handleSubmitForm = async (data) => {
+    if (!data.subject || !data.description) return;
+    await handleFormSubmit(() => TaskService.create(data));
   };
 
   return (
@@ -78,21 +77,19 @@ const TaskForm = (props: TaskProps) => {
       <div>
         <TextFieldElement
           sx={{ m: 1, minWidth: "96%" }}
-          required={true}
           name={"subject"}
           label="Subject"
           variant="outlined"
-          validation={{ maxLength: 100 }}
+          rules={ValidationRules.text(undefined, 100, true)}
         />
       </div>
       <div>
         <TextFieldElement
           sx={{ m: 1, minWidth: "96%" }}
-          required={true}
           name={"description"}
           label="Description"
           variant="outlined"
-          validation={{ maxLength: 1000 }}
+          rules={ValidationRules.text(undefined, 1000, true)}
           multiline={true}
           rows={4}
         />
@@ -102,19 +99,19 @@ const TaskForm = (props: TaskProps) => {
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "45%" }}
-          required
           options={priorityList}
           name={"priority"}
           label="Priority"
+          rules={ValidationRules.required()}
         ></SelectElement>
         <SelectElement
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "45%" }}
-          required
           options={categoryList}
           name={"category"}
           label="Category"
+          rules={ValidationRules.required()}
         ></SelectElement>
       </div>
       <div>
@@ -122,19 +119,19 @@ const TaskForm = (props: TaskProps) => {
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "45%" }}
-          required
           options={assignedToList}
           name={"assignedTo"}
           label="Assigned To"
+          rules={ValidationRules.required()}
         ></SelectElement>
         <SelectElement
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "45%" }}
-          required
           options={pointOfContactList}
           name={"pointOfContact"}
           label="Point Of Contact"
+          rules={ValidationRules.required()}
         ></SelectElement>
       </div>
 
@@ -165,28 +162,14 @@ const TaskForm = (props: TaskProps) => {
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "46%" }}
-          required
           options={statusList}
           name={"status"}
           label="Status"
+          rules={ValidationRules.required()}
         ></SelectElement>
       </div>
 
-      <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-        <Stack direction="row" spacing={2}>
-          <Button type={"submit"} size="large" variant="contained">
-            Save
-          </Button>
-          <Button
-            size="large"
-            variant="outlined"
-            type="button"
-            onClick={handleClearForm}
-          >
-            Cancel
-          </Button>
-        </Stack>
-      </div>
+      <FormActions onCancel={handleClearForm} />
     </FormContainer>
   );
 };

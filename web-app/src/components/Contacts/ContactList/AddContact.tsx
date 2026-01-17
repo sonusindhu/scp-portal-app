@@ -12,7 +12,7 @@ import { CommonFields, FormSelectField, FieldWidths, FormActions } from "../../.
 import { ValidationRules } from "../../../utils/validation.util";
 
 const AddContact = (props) => {
-  const [companies, setCompanies] = useState([]);
+  const [companies, setCompanies] = useState<any[]>([]);
   const [statusList] = useState(ContactService.CONST.statusList);
 
   const formContext = useForm({

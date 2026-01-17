@@ -22,8 +22,8 @@ interface AddQuoteFormData {
 }
 
 const AddQuote = (props) => {
-  const [companies, setCompanies] = useState([]);
-  const [contacts, setContacts] = useState([]);
+  const [companies, setCompanies] = useState<any[]>([]);
+  const [contacts, setContacts] = useState<any[]>([]);
 
   const formContext = useForm<AddQuoteFormData>({
     defaultValues: {
@@ -62,7 +62,7 @@ const AddQuote = (props) => {
     QuoteService.getCompanies()
       .then((response) => {
         if (response.status) {
-          setCompanies(response.result);
+          setCompanies(response.result || []);
         } else {
           setCompanies([]);
         }
@@ -75,7 +75,7 @@ const AddQuote = (props) => {
       QuoteService.getContactsByCompany(companyId)
         .then((response) => {
           if (response.status) {
-            setContacts(response.result);
+            setContacts(response.result || []);
           } else {
             setContacts([]);
           }
