@@ -1,7 +1,6 @@
 import React from "react";
 import {
   FormContainer,
-  TextFieldElement
 } from "react-hook-form-mui";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
@@ -9,10 +8,15 @@ import { useForm } from "react-hook-form";
 import AuthService from "../../services/auth.service";
 import UserProfileImage from "./UserProfileImage";
 import { useFormSubmit } from "../../hooks";
+import { CommonFields, FormTextField } from "../../shared/components/FormFields";
+import { ValidationRules } from "../../utils/validation.util";
 
 const UserForm = (props) => {
   const user = props.user || {};
-  const formContext = useForm({ defaultValues: user });
+  const formContext = useForm({ 
+    defaultValues: user,
+    mode: "onBlur",
+  });
   const {
     reset
   } = formContext;
@@ -21,12 +25,13 @@ const UserForm = (props) => {
 
   const { handleSubmit } = useFormSubmit({
     onSuccess: (response) => {
-      reset({ ...response.result });
+      if (response) {
+        reset({ ...response.result });
+      }
     },
   });
 
   const handleSubmitForm = async (data) => {
-    if (!data.firstName || !data.lastName || !data.email) return;
     await handleSubmit(() => AuthService.updateProfile(data));
   };
 
@@ -37,83 +42,61 @@ const UserForm = (props) => {
 
       <div className="user-form">  
         <div>
-          <TextFieldElement
-            sx={{ m: 1, minWidth: "90%" }}
-            required={true}
-            name={"firstName"}
+          <CommonFields.FirstName
+            name="firstName"
             label="First Name"
-            variant="outlined"
-            validation={{ maxLength: 100 }}
+            sx={{ m: 1, minWidth: "90%" }}
           />
         </div>
         <div>
-          <TextFieldElement
-            sx={{ m: 1, minWidth: "90%" }}
-            required={true}
-            name={"lastName"}
+          <CommonFields.LastName
+            name="lastName"
             label="Last Name"
-            variant="outlined"
-            validation={{ maxLength: 100 }}
+            sx={{ m: 1, minWidth: "90%" }}
           />
         </div>
         <div>        
-          <TextFieldElement
-            sx={{ m: 1, minWidth: "90%" }}
-            required={true}
-            name={"email"}
+          <CommonFields.Email
+            name="email"
             label="Email"
-            variant="outlined"
-            validation={{ maxLength: 100 }}
+            sx={{ m: 1, minWidth: "90%" }}
           />      
         </div>      
         <div>        
-          <TextFieldElement
-            sx={{ m: 1, minWidth: "90%" }}
-            required={true}
-            name={"jobTitle"}
+          <CommonFields.JobTitle
+            name="jobTitle"
             label="Job Title"
-            variant="outlined"
-            validation={{ maxLength: 100 }}
+            sx={{ m: 1, minWidth: "90%" }}
           />      
         </div>      
         <div>        
-          <TextFieldElement
-            sx={{ m: 1, minWidth: "90%" }}
-            required={true}
-            name={"department"}
+          <CommonFields.Department
+            name="department"
             label="Department"
-            variant="outlined"
-            validation={{ maxLength: 100 }}
+            sx={{ m: 1, minWidth: "90%" }}
           />      
         </div>      
         <div>        
-          <TextFieldElement
-            sx={{ m: 1, minWidth: "90%" }}
-            required={true}
-            name={"location"}
+          <FormTextField
+            name="location"
             label="Location"
-            variant="outlined"
-            validation={{ maxLength: 100 }}
+            rules={ValidationRules.text(undefined, 100, true)}
+            sx={{ m: 1, minWidth: "90%" }}
           />      
         </div>      
         <div>        
-          <TextFieldElement
-            sx={{ m: 1, minWidth: "90%" }}
-            required={true}
-            name={"phoneNumber"}
+          <FormTextField
+            name="phoneNumber"
             label="Phone Number"
-            variant="outlined"
-            validation={{ maxLength: 100 }}
+            rules={ValidationRules.phone(true)}
+            sx={{ m: 1, minWidth: "90%" }}
           />
         </div>
         <div>
-          <TextFieldElement
-            sx={{ m: 1, minWidth: "90%" }}
-            required={true}
-            name={"extension"}
+          <CommonFields.Extension
+            name="extension"
             label="Extension"
-            variant="outlined"
-            validation={{ maxLength: 100 }}
+            sx={{ m: 1, minWidth: "90%" }}
           />      
         </div>      
       </div>

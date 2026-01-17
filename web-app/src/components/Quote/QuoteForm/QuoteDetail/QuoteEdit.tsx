@@ -4,6 +4,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { FormContainer } from "react-hook-form-mui";
 import QuoteService from "../../../../services/quote.service";
+import { ValidationRules } from "../../../../utils/validation.util";
+import { CommonFields, FormTextField } from "../../../../shared/components/FormFields";
 
 import QuoteAccessorials from "./QuoteAccessorials";
 import QuoteRoutes from "./QuoteRoutes";
@@ -23,7 +25,10 @@ const QuoteEdit = (props: QuoteEditProps) => {
   const commodities = props.commodities;
   const equipments = props.equipments;
   const cargos = props.cargos;
-  const formContext = useForm({ defaultValues });
+  const formContext = useForm({ 
+    defaultValues,
+    mode: "onBlur"
+  });
 
   const {
     control,
@@ -45,13 +50,12 @@ const QuoteEdit = (props: QuoteEditProps) => {
   });
 
   const handleSubmitForm = async (data) => {
-    if (!data.email || !data.fullName) return;
     await submitForm(() => QuoteService.update(data));
   };
 
   return (
     <div className="container-fluid">
-      <FormContainer formContext={formContext} defaultValues={defaultValues} onSuccess={() => handleSubmit(handleSubmitForm)}>
+      <FormContainer formContext={formContext} defaultValues={defaultValues} onSuccess={handleSubmitForm}>
         {/* Cargo Details Start */}
         <QuoteCargoDetail 
           {...{

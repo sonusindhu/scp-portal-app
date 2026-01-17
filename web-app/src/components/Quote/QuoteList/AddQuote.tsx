@@ -4,21 +4,41 @@ import { useForm } from "react-hook-form";
 
 import {
   FormContainer,
-  TextFieldElement,
-  SelectElement,
 } from "react-hook-form-mui";
 import { Box } from "@mui/material";
 import QuoteService from "../../../services/quote.service";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
 import { useFormSubmit } from "../../../hooks";
+import { FormTextField, FormSelectField, FieldWidths } from "../../../shared/components/FormFields";
+import { ValidationRules } from "../../../utils/validation.util";
+
+interface AddQuoteFormData {
+  quoteName: string;
+  serviceTypeId: string;
+  transportMode: string;
+  companyId: number;
+  contactId: number | string;
+  quotePickUpDate: string;
+}
 
 const AddQuote = (props) => {
   const [companies, setCompanies] = useState([]);
   const [contacts, setContacts] = useState([]);
 
-  const formContext = useForm({
-    defaultValues: {},
+  const formContext = useForm<AddQuoteFormData>({
+    defaultValues: {
+      quoteName: "",
+      serviceTypeId: "",
+      transportMode: "",
+      companyId: 0,
+      contactId: "",
+      quotePickUpDate: "",
+    },
+    mode: "onBlur",
   });
+  
+  const companyId = formContext.watch("companyId");
+  
   const onCloseDrawer = () => {
     props.onCloseDrawer && props.onCloseDrawer();
   };
@@ -50,16 +70,23 @@ const AddQuote = (props) => {
       .catch(() => setCompanies([]));
   }, []);
 
+  useEffect(() => {
+    if (companyId) {
+      QuoteService.getContactsByCompany(companyId)
+        .then((response) => {
+          if (response.status) {
+            setContacts(response.result);
+          } else {
+            setContacts([]);
+          }
+        })
+        .catch(() => setContacts([]));
+    }
+  }, [companyId]);
+
   const onChangeCompany = (e: number) => {
-    QuoteService.getContactsByCompany(e)
-      .then((response) => {
-        if (response.status) {
-          setContacts(response.result);
-        } else {
-          setContacts([]);
-        }
-      })
-      .catch(() => setContacts([]));
+    formContext.setValue("contactId", "");
+    setContacts([]);
   };
 
   return (
@@ -68,70 +95,65 @@ const AddQuote = (props) => {
       
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <div className="drawer-content">
-          <TextFieldElement
-            sx={{ m: 1, width: 410 }}
-            name={"name"}
+          <FormTextField
+            name="name"
             label="Quote Name"
-            variant="outlined"
-            margin={"dense"}
+            rules={ValidationRules.text(undefined, 200, false)}
+            sx={{ m: 1, width: FieldWidths.DRAWER }}
           />
-          <SelectElement
-            sx={{ m: 1, width: 410 }}
-            required
-            options={serviceList}
-            name={"service"}
-            label="Service"
-            valueKey="id"
-            labelKey="name"
-          ></SelectElement>
           
-          <SelectElement
-            sx={{ m: 1, width: 410 }}
-            required
-            options={transportModes}
-            name={"transportMode"}
+          <FormSelectField
+            name="service"
+            label="Service"
+            options={serviceList}
+            rules={ValidationRules.select(true)}
+            labelKey="name"
+            sx={{ m: 1, width: FieldWidths.DRAWER }}
+          />
+          
+          <FormSelectField
+            name="transportMode"
             label="Transport Mode"
-            valueKey="id"
+            options={transportModes}
+            rules={ValidationRules.select(true)}
             labelKey="name"
-          ></SelectElement>
+            sx={{ m: 1, width: FieldWidths.DRAWER }}
+          />
 
-          <SelectElement
-            sx={{ m: 1, width: 410 }}
-            required
-            options={companies}
-            name={"companyId"}
+          <FormSelectField
+            name="companyId"
             label="Company"
-            valueKey="id"
+            options={companies}
+            rules={ValidationRules.select(true)}
             labelKey="name"
-            onChange={onChangeCompany}
-          ></SelectElement>
+            sx={{ m: 1, width: FieldWidths.DRAWER }}
+          />
 
-          <SelectElement
-            sx={{ m: 1, width: 410 }}
-            required
-            options={contacts}
-            name={"contactId"}
+          <FormSelectField
+            name="contactId"
             label="Contact"
-            valueKey="id"
+            options={contacts}
+            rules={ValidationRules.select(true)}
             labelKey="fullName"
-          ></SelectElement>
+            sx={{ m: 1, width: FieldWidths.DRAWER }}
+          />
 
-          <TextFieldElement
-              sx={{ m: 1, minWidth: 410 }}
-              name={"expiryDate"}
-              variant="outlined"
-              type="date"
-            />
+          <FormTextField
+            name="expiryDate"
+            type="date"
+            label="Expiry Date"
+            sx={{ m: 1, minWidth: FieldWidths.DRAWER }}
+            InputLabelProps={{ shrink: true }}
+          />
         </div>
 
         <div className="drawer-footer">
           <div style={{ marginLeft: "12px", marginTop: "15px" }}>
             <Stack direction="row" spacing={2}>
               <Button
-                type={"submit"}
+                type="submit"
                 size="large"
                 variant="contained"
-                onClick={handleSubmitForm}
               >
                 Save
               </Button>

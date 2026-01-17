@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   FormContainer,
-  TextFieldElement,
-  SelectElement,
 } from "react-hook-form-mui";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
@@ -11,6 +9,8 @@ import { useForm } from "react-hook-form";
 import ContactService from "../../../services/contact.service";
 import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 import { useFormSubmit } from "../../../hooks";
+import { CommonFields, FormSelectField, FieldWidths } from "../../../shared/components/FormFields";
+import { ValidationRules } from "../../../utils/validation.util";
 
 const ContactGeneral = () => {
   let { id } = useParams();
@@ -20,18 +20,20 @@ const ContactGeneral = () => {
 
   const formContext = useForm({
     defaultValues: {},
+    mode: "onBlur",
   });
   const { reset } = formContext;
   const handleClearForm = () => reset();
 
   const { handleSubmit } = useFormSubmit({
     onSuccess: (response) => {
-      reset(response.result);
+      if (response) {
+        reset(response.result);
+      }
     },
   });
 
   const handleSubmitForm = async (data) => {
-    if (!data.email || !data.fullName) return;
     await handleSubmit(() => ContactService.update(data));
   };
 
@@ -56,148 +58,114 @@ const ContactGeneral = () => {
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <div>
-          <TextFieldElement
-            sx={{ m: 1, width: "31%" }}
-            required
-            name={"firstName"}
+          <CommonFields.FirstName
+            name="firstName"
             label="First Name"
-            variant="outlined"
-            margin={"dense"}
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
           />
-          <TextFieldElement
-            sx={{ m: 1, width: "31%" }}
-            required
-            name={"lastName"}
+          
+          <CommonFields.LastName
+            name="lastName"
             label="Last Name"
-            variant="outlined"
-            margin={"dense"}
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
           />
-          <TextFieldElement
-            sx={{ m: 1, width: "31%" }}
-            required
-            type={"email"}
-            name={"email"}
+          
+          <CommonFields.Email
+            name="email"
             label="Email"
-            margin={"dense"}
-            variant="outlined"
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
           />
         </div>
 
         <div>
-          <SelectElement
-            sx={{ m: 1, width: "31%" }}
-            required
-            options={statusList}
-            name={"status"}
+          <FormSelectField
+            name="status"
             label="Status"
-            labelKey="title"
-            valueKey="id"
-          ></SelectElement>
+            options={statusList}
+            rules={ValidationRules.select(true)}
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
+          />
 
-          <SelectElement
-            sx={{ m: 1, width: "31%" }}
-            required
-            options={companies}
-            name={"companyId"}
+          <FormSelectField
+            name="companyId"
             label="Company"
+            options={companies}
+            rules={ValidationRules.select(true)}
             labelKey="name"
-            valueKey="id"
-          ></SelectElement>
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
+          />
 
-          <TextFieldElement
-            sx={{ m: 1, width: "31%" }}
-            required
-            name={"department"}
+          <CommonFields.Department
+            name="department"
             label="Department"
-            variant="outlined"
-            validation={{ maxLength: 20 }}
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
           />
         </div>
         <div>
-          <TextFieldElement
-            sx={{ m: 1, width: "31%" }}
-            required
-            name={"jobTitle"}
+          <CommonFields.JobTitle
+            name="jobTitle"
             label="Job Title"
-            variant="outlined"
-            validation={{ maxLength: 50 }}
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
           />
 
-          <TextFieldElement
-            sx={{ m: 1, width: "31%" }}
-            required
-            name={"address1"}
+          <CommonFields.Address1
+            name="address1"
             label="Address1"
-            variant="outlined"
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
           />
 
-          <TextFieldElement
-            sx={{ m: 1, width: "31%" }}
-            name={"address2"}
+          <CommonFields.Address2
+            name="address2"
             label="Address2"
-            variant="outlined"
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
           />
         </div>
         <div>
-          <TextFieldElement
-            sx={{ m: 1, width: "31%" }}
-            required
-            name={"city"}
+          <CommonFields.City
+            name="city"
             label="City"
-            variant="outlined"
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
           />
-          <TextFieldElement
-            sx={{ m: 1, width: "31%" }}
-            required
-            name={"state"}
+          
+          <CommonFields.State
+            name="state"
             label="State"
-            variant="outlined"
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
           />
 
-          <TextFieldElement
-            sx={{ m: 1, width: "31%" }}
-            required
-            name={"country"}
+          <CommonFields.Country
+            name="country"
             label="Country"
-            variant="outlined"
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
           />
         </div>
 
         <div>
-          <TextFieldElement
-            sx={{ m: 1, width: "31%" }}
-            required
-            name={"zipcode"}
+          <CommonFields.Zipcode
+            name="zipcode"
             label="Zipcode"
-            variant="outlined"
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
           />
 
-          <TextFieldElement
-            sx={{ m: 1, width: "31%" }}
-            required
-            name={"phone"}
+          <CommonFields.Phone
+            name="phone"
             label="Phone"
-            validation={{ maxLength: 15, minLength: 8 }}
-            variant="outlined"
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
           />
 
-          <TextFieldElement
-            sx={{ m: 1, width: "31%" }}
-            name={"extension"}
+          <CommonFields.Extension
+            name="extension"
             label="Extension"
-            validation={{ maxLength: 6 }}
-            type={"number"}
-            variant="outlined"
+            sx={{ m: 1, width: FieldWidths.STANDARD }}
           />
         </div>
 
         <div style={{ marginLeft: "12px", marginTop: "15px" }}>
           <Stack direction="row" spacing={2}>
             <Button
-              type={"submit"}
+              type="submit"
               size="large"
               variant="contained"
-              onClick={handleSubmitForm}
             >
               Save
             </Button>

@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {
   FormContainer,
-  TextFieldElement,
-  SelectElement,
 } from "react-hook-form-mui";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { Box } from "@mui/material";
 import ContactService from "../../../services/contact.service";
-import { ResponseModel } from "../../../models/common.model";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
 import { useFormSubmit } from "../../../hooks";
+import { CommonFields, FormSelectField, FieldWidths } from "../../../shared/components/FormFields";
+import { ValidationRules } from "../../../utils/validation.util";
 
 const AddContact = (props) => {
   const [companies, setCompanies] = useState([]);
@@ -18,6 +17,7 @@ const AddContact = (props) => {
 
   const formContext = useForm({
     defaultValues: {},
+    mode: "onBlur", // Validate on blur for better UX
   });
   const { reset } = formContext;
 
@@ -34,7 +34,6 @@ const AddContact = (props) => {
   });
 
   const handleSubmitForm = async (data) => {
-    if (!data.email) return;
     await handleSubmit(() => ContactService.create(data));
   };
 
@@ -51,142 +50,108 @@ const AddContact = (props) => {
       <HeaderWithTitle title="Add Contact" onCloseDrawer={onCloseDrawer} />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
-        <TextFieldElement
-          sx={{ m: 1, width: 410 }}
-          required
-          name={"firstName"}
+        <CommonFields.FirstName
+          name="firstName"
           label="First Name"
-          variant="outlined"
-          margin={"dense"}
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
         />
-        <TextFieldElement
-          sx={{ m: 1, width: 410 }}
-          required
-          name={"lastName"}
+        
+        <CommonFields.LastName
+          name="lastName"
           label="Last Name"
-          variant="outlined"
-          margin={"dense"}
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
         />
-        <TextFieldElement
-          sx={{ m: 1, width: 410 }}
-          required
-          type={"email"}
-          name={"email"}
+        
+        <CommonFields.Email
+          name="email"
           label="Email"
-          margin={"dense"}
-          variant="outlined"
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
         />
 
-        <SelectElement
-          sx={{ m: 1, width: 410 }}
-          required
-          options={statusList}
-          name={"status"}
+        <FormSelectField
+          name="status"
           label="Status"
-          labelKey="title"
-          valueKey="id"
-        ></SelectElement>
+          options={statusList}
+          rules={ValidationRules.select(true)}
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
+        />
 
-        <SelectElement
-          sx={{ m: 1, width: 410 }}
-          required
-          options={companies}
-          name={"companyId"}
+        <FormSelectField
+          name="companyId"
           label="Company"
+          options={companies}
+          rules={ValidationRules.select(true)}
           labelKey="name"
-          valueKey="id"
-        ></SelectElement>
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
+        />
 
-        <TextFieldElement
-          sx={{ m: 1, width: 410 }}
-          required
-          name={"department"}
+        <CommonFields.Department
+          name="department"
           label="Department"
-          variant="outlined"
-          validation={{ maxLength: 20 }}
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
         />
 
-        <TextFieldElement
-          sx={{ m: 1, width: 410 }}
-          required
-          name={"jobTitle"}
+        <CommonFields.JobTitle
+          name="jobTitle"
           label="Job Title"
-          variant="outlined"
-          validation={{ maxLength: 50 }}
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
         />
 
-        <TextFieldElement
-          sx={{ m: 1, width: 410 }}
-          required
-          name={"address1"}
+        <CommonFields.Address1
+          name="address1"
           label="Address1"
-          variant="outlined"
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
         />
 
-        <TextFieldElement
-          sx={{ m: 1, width: 410 }}
-          name={"address2"}
+        <CommonFields.Address2
+          name="address2"
           label="Address2"
-          variant="outlined"
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
         />
 
-        <TextFieldElement
-          sx={{ m: 1, width: 410 }}
-          required
-          name={"city"}
+        <CommonFields.City
+          name="city"
           label="City"
-          variant="outlined"
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
         />
-        <TextFieldElement
-          sx={{ m: 1, width: 410 }}
-          required
-          name={"state"}
+        
+        <CommonFields.State
+          name="state"
           label="State"
-          variant="outlined"
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
         />
 
-        <TextFieldElement
-          sx={{ m: 1, width: 410 }}
-          required
-          name={"country"}
+        <CommonFields.Country
+          name="country"
           label="Country"
-          variant="outlined"
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
         />
 
-        <TextFieldElement
-          sx={{ m: 1, width: 410 }}
-          required
-          name={"zipcode"}
+        <CommonFields.Zipcode
+          name="zipcode"
           label="Zipcode"
-          variant="outlined"
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
         />
 
-        <TextFieldElement
-          sx={{ m: 1, width: 410 }}
-          required
-          name={"phone"}
+        <CommonFields.Phone
+          name="phone"
           label="Phone"
-          validation={{ maxLength: 15, minLength: 8 }}
-          variant="outlined"
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
         />
 
-        <TextFieldElement
-          sx={{ m: 1, width: 410 }}
-          name={"extension"}
+        <CommonFields.Extension
+          name="extension"
           label="Extension"
-          validation={{ maxLength: 6 }}
-          type={"number"}
-          variant="outlined"
+          sx={{ m: 1, width: FieldWidths.DRAWER }}
         />
 
         <div className="drawer-footer">
           <div style={{ marginLeft: "12px", marginTop: "15px" }}>
             <Stack direction="row" spacing={2}>
               <Button
-                type={"submit"}
+                type="submit"
                 size="large"
                 variant="contained"
-                onClick={handleSubmitForm}
               >
                 Save
               </Button>

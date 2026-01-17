@@ -3,13 +3,13 @@ import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import {
   FormContainer,
-  TextFieldElement,
-  SelectElement,
 } from "react-hook-form-mui";
 import InventoryService from "../../../services/inventory.service";
 import { useNavigate, useParams } from "react-router-dom";
 import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 import { useFormSubmit } from "../../../hooks";
+import { FormTextField, FormSelectField, FieldWidths } from "../../../shared/components/FormFields";
+import { ValidationRules } from "../../../utils/validation.util";
 
 const InventoryGeneral = () => {
   let { id } = useParams();
@@ -20,6 +20,7 @@ const InventoryGeneral = () => {
 
   const formContext = useForm({
     defaultValues: {},
+    mode: "onBlur",
   });
   const { reset } = formContext;
   const handleClearForm = () => reset();
@@ -31,7 +32,6 @@ const InventoryGeneral = () => {
   });
 
   const handleSubmitForm = async (data) => {
-    if (!formContext.formState.isValid) return;
     await handleSubmit(() => InventoryService.update(data));
   };
 
@@ -61,102 +61,93 @@ const InventoryGeneral = () => {
       <PageHeading title="Edit Inventory" />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
-        <TextFieldElement
-          sx={{ m: 1, width: 375 }}
-          required
-          name={"trackingNumber"}
+        <FormTextField
+          name="trackingNumber"
           label="Tracking Number"
-          variant="outlined"
-          margin={"dense"}
-        />
-        <SelectElement
+          rules={ValidationRules.text(undefined, 100, true)}
           sx={{ m: 1, width: 375 }}
-          required
-          options={statusList}
-          name={"status"}
+        />
+        
+        <FormSelectField
+          name="status"
           label="Status"
-          valueKey="id"
-          labelKey="title"
-        ></SelectElement>
-        <SelectElement
+          options={statusList}
+          rules={ValidationRules.select(true)}
           sx={{ m: 1, width: 375 }}
-          required
-          options={packages}
-          name={"type"}
+        />
+        
+        <FormSelectField
+          name="type"
           label="Type"
-          valueKey="id"
-          labelKey="title"
-        ></SelectElement>
-
-        <SelectElement
+          options={packages}
+          rules={ValidationRules.select(true)}
           sx={{ m: 1, width: 375 }}
-          required
-          options={companies}
-          name={"companyId"}
+        />
+
+        <FormSelectField
+          name="companyId"
           label="Company"
+          options={companies}
+          rules={ValidationRules.select(true)}
           labelKey="name"
-        ></SelectElement>
-        <TextFieldElement
           sx={{ m: 1, width: 375 }}
-          name={"location"}
+        />
+        
+        <FormTextField
+          name="location"
           label="Location"
-          variant="outlined"
-          validation={{ maxLength: 50 }}
-          multiline={true}
-        />
-        <TextFieldElement
+          rules={ValidationRules.text(undefined, 50, false)}
+          multiline
           sx={{ m: 1, width: 375 }}
-          required
-          name={"length"}
+        />
+        
+        <FormTextField
+          name="length"
           label="Length"
-          variant="outlined"
-          validation={{ maxLength: 7 }}
+          type="number"
+          rules={ValidationRules.number(0, 9999, true)}
+          sx={{ m: 1, width: 375 }}
         />
 
-        <TextFieldElement
-          sx={{ m: 1, width: 375 }}
-          required
-          name={"width"}
+        <FormTextField
+          name="width"
           label="Width"
-          variant="outlined"
-          validation={{ maxLength: 7 }}
+          type="number"
+          rules={ValidationRules.number(0, 9999, true)}
+          sx={{ m: 1, width: 375 }}
         />
 
-        <TextFieldElement
-          sx={{ m: 1, width: 375 }}
-          required
-          name={"height"}
+        <FormTextField
+          name="height"
           label="Height"
-          variant="outlined"
-          validation={{ maxLength: 7 }}
+          type="number"
+          rules={ValidationRules.number(0, 9999, true)}
+          sx={{ m: 1, width: 375 }}
         />
 
-        <TextFieldElement
-          required
-          sx={{ m: 1, width: 375 }}
-          name={"weight"}
+        <FormTextField
+          name="weight"
           label="Weight"
-          variant="outlined"
-          validation={{ maxLength: 8 }}
+          type="number"
+          rules={ValidationRules.number(0, 99999, true)}
+          sx={{ m: 1, width: 375 }}
         />
 
-        <TextFieldElement
-          sx={{ m: 1, width: 375 }}
-          name={"notes"}
+        <FormTextField
+          name="notes"
           label="Notes"
-          variant="outlined"
-          validation={{ maxLength: 254 }}
-          multiline={true}
+          rules={ValidationRules.text(undefined, 254, false)}
+          multiline
           rows={4}
+          sx={{ m: 1, width: 375 }}
         />
 
         <div style={{ marginLeft: "12px", marginTop: "15px" }}>
           <Stack direction="row" spacing={2}>
             <Button
-              type={"submit"}
+              type="submit"
               size="large"
               variant="contained"
-              onClick={handleSubmitForm}
             >
               Save
             </Button>

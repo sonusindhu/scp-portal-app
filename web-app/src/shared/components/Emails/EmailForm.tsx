@@ -12,10 +12,15 @@ import { Email, EmailFormProps } from "../../models/Email";
 import PageHeading from "../PageHeading/PageHeading";
 import { ResponseModel } from "../../../models/common.model";
 import EmailService from "../../../services/email.service";
+import { ValidationRules } from "../../../utils/validation.util";
+import { FormTextField } from "../FormFields";
 
 const EmailForm = (props: EmailFormProps) => {
   const email: Partial<Email> = props.email || {};
-  const formContext = useForm({ defaultValues: email });
+  const formContext = useForm({ 
+    defaultValues: email,
+    mode: "onBlur"
+  });
 
   const { reset } = formContext;
 
@@ -32,7 +37,6 @@ const EmailForm = (props: EmailFormProps) => {
   };
 
   const handleSubmitForm = (e) => {
-    if (!e.title || !e.message) return;
     const payload = {
       ...e,
       isCritical: e.isCritical || false,
@@ -50,23 +54,19 @@ const EmailForm = (props: EmailFormProps) => {
     >
       <PageHeading title="New Email" />
       <div>
-        <TextFieldElement
+        <FormTextField
           sx={{ m: 1, minWidth: "96%" }}
-          required={true}
-          name={"title"}
+          name="title"
           label="Email Title"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
+          rules={ValidationRules.text(undefined, 100, true)}
         />
       </div>
       <div>
-        <TextFieldElement
+        <FormTextField
           sx={{ m: 1, minWidth: "96%" }}
-          required={true}
-          name={"message"}
+          name="message"
           label="Email Description"
-          variant="outlined"
-          validation={{ maxLength: 1000 }}
+          rules={ValidationRules.text(undefined, 1000, true)}
           multiline={true}
           rows={7}
         />

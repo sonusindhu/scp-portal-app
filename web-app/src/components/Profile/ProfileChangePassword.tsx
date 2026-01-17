@@ -1,14 +1,20 @@
 import React from "react";
-import { FormContainer, TextFieldElement } from "react-hook-form-mui";
+import { FormContainer } from "react-hook-form-mui";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import AuthService from "../../services/auth.service";
 import { useFormSubmit } from "../../hooks";
+import { CommonFields } from "../../shared/components/FormFields";
+import { ValidationRules } from "../../utils/validation.util";
 
 const ProfileChangePassword = () => {
-  const formContext = useForm({ defaultValues: {} });
-  const { reset } = formContext;
+  const formContext = useForm({ 
+    defaultValues: {},
+    mode: "onBlur", // Validate on blur for better UX
+  });
+  const { reset, watch } = formContext;
+  const passwordValue = watch("password");
 
   const { handleSubmit } = useFormSubmit({
     onSuccess: () => {
@@ -23,7 +29,6 @@ const ProfileChangePassword = () => {
   const handleClearForm = () => reset();
 
   const handleSubmitForm = async (data) => {
-    if (!data.currentPassword || !data.password || !data.confirmPassword) return;
     await handleSubmit(() => AuthService.updatePassword(data));
   };
 
@@ -32,36 +37,25 @@ const ProfileChangePassword = () => {
       <h3 style={{ marginLeft: "10px" }}>Change Password</h3>         
 
       <div>
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "46%" }}
-          type='password'
-          required={true}
-          name={"currentPassword"}
+        <CommonFields.Password
+          name="currentPassword"
           label="Current Password"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
+          sx={{ m: 1, minWidth: "46%" }}
         />
       </div>
       <div>
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "46%" }}
-          type='password'
-          required={true}
-          name={"password"}
+        <CommonFields.Password
+          name="password"
           label="New Password"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
+          sx={{ m: 1, minWidth: "46%" }}
         />
       </div>
       <div>
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "46%" }}
-          type='password'
-          required={true}
-          name={"confirmPassword"}
+        <CommonFields.Password
+          name="confirmPassword"
           label="Confirm Password"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
+          sx={{ m: 1, minWidth: "46%" }}
+          rules={ValidationRules.confirmPassword(passwordValue)}
         />
       </div>
            
