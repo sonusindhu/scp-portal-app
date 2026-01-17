@@ -10,6 +10,8 @@ import { useForm } from "react-hook-form";
 import toast from "../../../utils/toast.util";
 import { Task } from "../../models/Task";
 import TaskService from "../../../services/task.service";
+import { TASK_STATUS } from "../../../utils/constants.util";
+
 type TaskProps = { task: Partial<Task>; onSuccess: Function; id?: number };
 const TaskForm = (props: TaskProps) => {
   // let { id } = useParams();
@@ -33,18 +35,18 @@ const TaskForm = (props: TaskProps) => {
     { id: 2, value: "Pulkit Kumawat" },
     { id: 3, value: "Tushar" },
   ];
+  
   const pointOfContactList = [
     { id: 1, value: "Sonu Sindhu" },
     { id: 2, value: "Pulkit Kumawat" },
     { id: 3, value: "Tushar" },
   ];
 
-  const statusList = [
-    { id: 1, value: "New" },
-    { id: 2, value: "In Progress" },
-    { id: 2, value: "Canceled" },
-    { id: 3, value: "Completed" },
-  ];
+  // Convert TASK_STATUS to format expected by SelectElement
+  const statusList = TASK_STATUS.filter(s => s.id !== "").map((status, index) => ({
+    id: index + 1,
+    value: status.title,
+  }));
 
   const { reset } = formContext;
 

@@ -1,12 +1,5 @@
 import BaseService, { ApiResponse } from "./BaseService";
-
-/**
- * List item model for dropdown options
- */
-interface ListItem {
-  id: string;
-  title: string;
-}
+import { COMMON_STATUS, PACKAGE_TYPES, API_ENDPOINTS, ListItem } from "../utils/constants.util";
 
 /**
  * Inventory data model
@@ -27,46 +20,6 @@ export interface Inventory {
 }
 
 /**
- * Status list for inventory
- */
-const statusList: ListItem[] = [
-  {
-    id: "",
-    title: "Select",
-  },
-  {
-    id: "active",
-    title: "Active",
-  },
-  {
-    id: "inactive",
-    title: "Inactive",
-  },
-];
-
-/**
- * Package types list
- */
-const packages: ListItem[] = [
-  {
-    id: "",
-    title: "Select",
-  },
-  {
-    id: "parcel",
-    title: "Parcel",
-  },
-  {
-    id: "pallet",
-    title: "Pallet",
-  },
-  {
-    id: "bale",
-    title: "Bale",
-  },
-];
-
-/**
  * Inventory Service - handles all inventory-related API operations
  * Extends BaseService for common HTTP methods and error handling
  */
@@ -74,7 +27,7 @@ class InventoryService extends BaseService {
   /**
    * Data constants for dropdowns
    */
-  data = { statusList, packages };
+  data = { statusList: COMMON_STATUS, packages: PACKAGE_TYPES };
 
   /**
    * Find an inventory by ID
@@ -82,7 +35,7 @@ class InventoryService extends BaseService {
    * @returns Promise with inventory details
    */
   async find(id: number): Promise<ApiResponse<Inventory>> {
-    return this.get<Inventory>(`inventory/find/${id}`);
+    return this.httpGet<Inventory>(API_ENDPOINTS.INVENTORY.FIND(id));
   }
 
   /**
@@ -91,7 +44,7 @@ class InventoryService extends BaseService {
    * @returns Promise with created inventory
    */
   async create(payload: any): Promise<ApiResponse<Inventory>> {
-    return this.post<Inventory>("inventory/create", payload, {
+    return this.post<Inventory>(API_ENDPOINTS.INVENTORY.CREATE, payload, {
       showSuccessToast: true,
     });
   }
@@ -102,7 +55,7 @@ class InventoryService extends BaseService {
    * @returns Promise with updated inventory
    */
   async update(payload: any): Promise<ApiResponse<Inventory>> {
-    return this.post<Inventory>("inventory/update", payload, {
+    return this.post<Inventory>(API_ENDPOINTS.INVENTORY.UPDATE, payload, {
       showSuccessToast: true,
     });
   }
@@ -113,7 +66,7 @@ class InventoryService extends BaseService {
    * @returns Promise with deletion result
    */
   async deleteInventories(ids: number[]): Promise<ApiResponse<void>> {
-    return this.post<void>("inventory/deleteRange", { ids }, {
+    return this.post<void>(API_ENDPOINTS.INVENTORY.DELETE, { ids }, {
       showSuccessToast: true,
     });
   }
@@ -123,7 +76,7 @@ class InventoryService extends BaseService {
    * @returns Promise with companies list
    */
   async getCompanies(): Promise<ApiResponse<any[]>> {
-    return this.get<any[]>("company/listOfNames");
+    return this.httpGet<any[]>(API_ENDPOINTS.COMPANY.LIST_OF_NAMES);
   }
 }
 

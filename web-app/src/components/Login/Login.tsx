@@ -4,8 +4,9 @@ import "./Login.css";
 import { useAuth } from "../../hooks";
 import { useLoading } from "../../hooks/useLoading";
 import { LoadingButton } from "../../shared/components/Loading";
+import { ROUTES } from "../../utils/constants.util";
 
-const REDIRECT_AFTER_LOGIN = "/app/company/list";
+const REDIRECT_AFTER_LOGIN = ROUTES.COMPANY_LIST;
 
 const Login = () => {
   const navigate = useNavigate();

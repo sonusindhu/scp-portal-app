@@ -1,4 +1,5 @@
 import BaseService, { ApiResponse } from "./BaseService";
+import { COMMON_STATUS, API_ENDPOINTS } from "../utils/constants.util";
 
 /**
  * Status list model
@@ -34,24 +35,6 @@ export interface Contact {
 }
 
 /**
- * Status list for contacts
- */
-const statusList: StatusListModel[] = [
-  {
-    id: "",
-    title: "Select",
-  },
-  {
-    id: "active",
-    title: "Active",
-  },
-  {
-    id: "inactive",
-    title: "Inactive",
-  },
-];
-
-/**
  * Contact Service - handles all contact-related API operations
  * Extends BaseService for common HTTP methods and error handling
  */
@@ -59,15 +42,15 @@ class ContactService extends BaseService {
   /**
    * Status list constant
    */
-  CONST = { statusList };
+  CONST = { statusList: COMMON_STATUS };
 
   /**
    * Get contacts with optional filters
    * @param filters - Optional filter parameters
    * @returns Promise with contacts list
    */
-  async get(filters: any = {}): Promise<ApiResponse<Contact[]>> {
-    return this.post<Contact[]>("contact/get", filters);
+  async getContacts(filters: any = {}): Promise<ApiResponse<Contact[]>> {
+    return this.post<Contact[]>(API_ENDPOINTS.CONTACT.LIST, filters);
   }
 
   /**
@@ -76,7 +59,7 @@ class ContactService extends BaseService {
    * @returns Promise with contact details
    */
   async find(id: number): Promise<ApiResponse<Contact>> {
-    return this.get<Contact>(`contact/find/${id}`);
+    return this.get<Contact>(API_ENDPOINTS.CONTACT.FIND(id));
   }
 
   /**
@@ -85,7 +68,7 @@ class ContactService extends BaseService {
    * @returns Promise with created contact
    */
   async create(payload: any): Promise<ApiResponse<Contact>> {
-    return this.post<Contact>("contact/create", payload, {
+    return this.post<Contact>(API_ENDPOINTS.CONTACT.CREATE, payload, {
       showSuccessToast: true,
     });
   }
@@ -107,7 +90,7 @@ class ContactService extends BaseService {
    * @returns Promise with deletion result
    */
   async deleteContacts(ids: number[]): Promise<ApiResponse<void>> {
-    return this.post<void>("contact/deleteRange", { ids }, {
+    return this.post<void>(API_ENDPOINTS.CONTACT.DELETE, { ids }, {
       showSuccessToast: true,
     });
   }
@@ -117,7 +100,7 @@ class ContactService extends BaseService {
    * @returns Promise with companies list
    */
   async getCompanies(): Promise<any[]> {
-    const response = await this.get<any[]>("company/listOfNames");
+    const response = await this.get<any[]>(API_ENDPOINTS.COMPANY.LIST_OF_NAMES);
     return response.result || [];
   }
 }

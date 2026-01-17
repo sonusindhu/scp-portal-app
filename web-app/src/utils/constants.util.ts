@@ -77,14 +77,73 @@ export const TRANSPORT_MODES: ListItem[] = [
 ];
 
 /**
- * Task types
+ * Entity types (for tasks, notes, emails, etc.)
  */
-export const TASK_TYPES = {
+export const ENTITY_TYPES = {
   COMPANY: "company",
   CONTACT: "contact",
   QUOTE: "quote",
   INVENTORY: "inventory",
+  TASK: "task",
+  EMAIL: "email",
+  NOTE: "note",
 } as const;
+
+/**
+ * Task status list
+ */
+export const TASK_STATUS: ListItem[] = [
+  {
+    id: "",
+    title: "Select",
+  },
+  {
+    id: "new",
+    title: "New",
+  },
+  {
+    id: "in-progress",
+    title: "In Progress",
+  },
+  {
+    id: "completed",
+    title: "Completed",
+  },
+  {
+    id: "canceled",
+    title: "Canceled",
+  },
+];
+
+/**
+ * Quote status list
+ */
+export const QUOTE_STATUS: ListItem[] = [
+  {
+    id: "",
+    title: "Select",
+  },
+  {
+    id: "draft",
+    title: "Draft",
+  },
+  {
+    id: "pending",
+    title: "Pending",
+  },
+  {
+    id: "approved",
+    title: "Approved",
+  },
+  {
+    id: "rejected",
+    title: "Rejected",
+  },
+  {
+    id: "completed",
+    title: "Completed",
+  },
+];
 
 /**
  * Default pagination settings
@@ -146,8 +205,127 @@ export const ROUTES = {
   LOGIN: "/auth/login",
   HOME: "/",
   APP_ROOT: "/app",
+  
+  // Company routes
   COMPANY_LIST: "/app/company/list",
+  COMPANY_CREATE: "/app/company/create",
+  COMPANY_DETAILS: (id: string | number) => `/app/company/${id}/details`,
+  COMPANY_EDIT: (id: string | number) => `/app/company/${id}/edit`,
+  
+  // Contact routes
   CONTACT_LIST: "/app/contact/list",
+  CONTACT_CREATE: "/app/contact/create",
+  CONTACT_DETAILS: (id: string | number) => `/app/contact/${id}/details`,
+  CONTACT_EDIT: (id: string | number) => `/app/contact/${id}/edit`,
+  
+  // Quote routes
   QUOTE_LIST: "/app/quote/list",
+  QUOTE_CREATE: "/app/quote/create",
+  QUOTE_DETAILS: (id: string | number) => `/app/quote/${id}/details`,
+  QUOTE_EDIT: (id: string | number) => `/app/quote/${id}/edit`,
+  
+  // Inventory routes
   INVENTORY_LIST: "/app/inventory/list",
+  INVENTORY_CREATE: "/app/inventory/create",
+  INVENTORY_DETAILS: (id: string | number) => `/app/inventory/${id}/details`,
+  INVENTORY_EDIT: (id: string | number) => `/app/inventory/${id}/edit`,
+  
+  // Profile routes
+  PROFILE: "/app/profile",
+  PROFILE_PASSWORD: "/app/profile/updatepassword",
+  PROFILE_INTEGRATIONS: "/app/profile/integrations",
+  PROFILE_TEMPLATES: "/app/profile/templates",
+} as const;
+
+/**
+ * API endpoints base paths
+ */
+export const API_ENDPOINTS = {
+  AUTH: {
+    LOGIN: "auth/signin",
+    LOGOUT: "auth/signout",
+    SIGNUP: "auth/signup",
+    REFRESH: "auth/refresh",
+    VERIFY: "auth/verify",
+  },
+  COMPANY: {
+    LIST: "company/get",
+    LIST_OF_NAMES: "company/listOfNames",
+    FIND: (id: string | number) => `company/find/${id}`,
+    CREATE: "company/create",
+    UPDATE: "company/update",
+    DELETE: "company/delete",
+  },
+  CONTACT: {
+    LIST: "contact/get",
+    FIND: (id: string | number) => `contact/find/${id}`,
+    CREATE: "contact/create",
+    UPDATE: "contact/update",
+    DELETE: "contact/delete",
+  },
+  QUOTE: {
+    LIST: "quote/get",
+    FIND: (id: string | number) => `quote/find/${id}`,
+    CREATE: "quote/create",
+    UPDATE: "quote/update",
+    DELETE: "quote/delete",
+  },
+  INVENTORY: {
+    LIST: "inventory/get",
+    FIND: (id: string | number) => `inventory/find/${id}`,
+    CREATE: "inventory/create",
+    UPDATE: "inventory/update",
+    DELETE: "inventory/delete",
+  },
+  TASK: {
+    LIST: "task/get",
+    FIND: (id: string | number) => `task/find/${id}`,
+    CREATE: "task/create",
+    UPDATE: "task/update",
+    DELETE: "task/delete",
+  },
+  EMAIL: {
+    LIST: "email/get",
+    FIND: (id: string | number) => `email/find/${id}`,
+    CREATE: "email/create",
+    UPDATE: "email/update",
+    DELETE: "email/delete",
+  },
+  NOTE: {
+    LIST: "note/get",
+    FIND: (id: string | number) => `note/find/${id}`,
+    CREATE: "note/create",
+    UPDATE: "note/update",
+    DELETE: "note/delete",
+  },
+} as const;
+
+/**
+ * Date and time format constants
+ */
+export const DATE_FORMATS = {
+  DISPLAY: "dd/MM/yyyy",
+  DISPLAY_WITH_TIME: "dd/MM/yyyy p",
+  API: "yyyy-MM-dd",
+  API_WITH_TIME: "yyyy-MM-dd HH:mm:ss",
+  TIME_ONLY: "HH:mm",
+} as const;
+
+/**
+ * Toast notification durations (milliseconds)
+ */
+export const TOAST_DURATION = {
+  SHORT: 2000,
+  MEDIUM: 3000,
+  LONG: 5000,
+} as const;
+
+/**
+ * Modal/Dialog sizes
+ */
+export const DIALOG_SIZES = {
+  SMALL: "sm",
+  MEDIUM: "md",
+  LARGE: "lg",
+  EXTRA_LARGE: "xl",
 } as const;
