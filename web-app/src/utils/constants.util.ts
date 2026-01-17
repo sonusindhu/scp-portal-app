@@ -144,6 +144,14 @@ export const TEMP_USER_LIST: ListItem[] = [
 ];
 
 /**
+ * Yes/No options for boolean selections
+ */
+export const YES_NO_OPTIONS: ListItem[] = [
+  { id: "1", value: "Yes" },
+  { id: "2", value: "No" },
+];
+
+/**
  * Quote status list
  */
 export const QUOTE_STATUS: ListItem[] = [

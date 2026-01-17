@@ -11,6 +11,7 @@ import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
 import { useFormSubmit } from "../../../hooks";
 import { FormTextField, FormSelectField, FieldWidths, FormActions } from "../../../shared/components/FormFields";
 import { ValidationRules } from "../../../utils/validation.util";
+import { SERVICE_TYPES, TRANSPORT_MODES } from "../../../utils/constants.util";
 
 interface AddQuoteFormData {
   quoteName: string;
@@ -53,9 +54,6 @@ const AddQuote = (props) => {
   const handleSubmitForm = async (data) => {
     await handleSubmit(() => QuoteService.create(data));
   };
-
-  const serviceList = [{ id: "transportation", name: "Transportation" }];
-  const transportModes = [{ id: "FTL", name: "FTL" }, { id: "LTL", name: "LTL" }];
 
   // check if user is authenticated, if not redirect to login page
   useEffect(() => {
@@ -105,18 +103,18 @@ const AddQuote = (props) => {
           <FormSelectField
             name="service"
             label="Service"
-            options={serviceList}
+            options={SERVICE_TYPES}
             rules={ValidationRules.select(true)}
-            labelKey="name"
+            labelKey="value"
             sx={{ m: 1, width: FieldWidths.DRAWER }}
           />
           
           <FormSelectField
             name="transportMode"
             label="Transport Mode"
-            options={transportModes}
+            options={TRANSPORT_MODES}
             rules={ValidationRules.select(true)}
-            labelKey="name"
+            labelKey="value"
             sx={{ m: 1, width: FieldWidths.DRAWER }}
           />
 
