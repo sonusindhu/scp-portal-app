@@ -5,7 +5,11 @@ import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 import GridService from "../../../services/grid.service";
 import { MenuItem } from "../../../shared/models/MenuList.model";
 
-const columnDefs = [
+/**
+ * Column definitions factory function that accepts menuCallback
+ * @param menuCallback - Function to handle menu actions (edit, delete, etc.)
+ */
+const getColumnDefs = (menuCallback?: (args: any) => void) => [
   {
     accessorKey: "quoteNumber",
     header: "Quote Number",
@@ -122,7 +126,8 @@ const columnDefs = [
     cell: ({ row }) => (
       <GridActionMenu
         className="grid-action-menu"
-        menuCallback={(fn) => fn}
+        data={row.original}
+        menuCallback={menuCallback}
         menus={[
           { key: "edit", title: "Edit" },
           { key: "delete", title: "Delete" },
@@ -152,7 +157,8 @@ const listUrl = "quote/list";
 const globalFilterFields = ['name', 'service', 'contactName'];
 
 const QuoteListConfig = {
-  columnDefs,
+  getColumnDefs, // Export factory function
+  columnDefs: [], // Keep for backward compatibility, will be replaced
   defaultColDef,
   mainMenus,
   listUrl,

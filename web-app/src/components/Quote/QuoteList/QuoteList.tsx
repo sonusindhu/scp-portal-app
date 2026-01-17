@@ -85,12 +85,18 @@ const QuoteList: React.FC = () => {
     );
   }, [selectedRows]);
 
+  // Create config with menuCallback
+  const configWithCallback = {
+    ...QuoteConfig,
+    columnDefs: QuoteConfig.getColumnDefs(menuCallbackFun),
+  };
+
   return (
     <Fragment>
       <GridListView
         title="Quote List"
         searchPlaceholder="Search quotes..."
-        options={QuoteConfig}
+        options={configWithCallback}
         refreshKey={refreshKey}
         globalFilterFields={QuoteConfig.globalFilterFields}
         onRowSelectionChange={setSelectedRows}
