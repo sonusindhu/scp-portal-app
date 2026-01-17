@@ -11,6 +11,12 @@ import { MenuItem } from "../../../shared/models/MenuList.model";
 import AddInventory from "./AddInventory";
 import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 
+interface MenuCallbackArgs {
+  event: React.MouseEvent;
+  data: any;
+  menu: MenuItem;
+}
+
 const InventoryList = () => {
   let navigate = useNavigate();
   const [mainMenus, setMainMenus] = useState<MenuItem[]>(
@@ -58,7 +64,7 @@ const InventoryList = () => {
     // navigate(`/app/inventory/create`);
   };
 
-  const menuCallbackFun = ({ event, data, menu }) => {
+  const menuCallbackFun = ({ event, data, menu }: MenuCallbackArgs) => {
     switch (menu?.key) {
       case "create":
         navigate(`/app/inventory/create`);
@@ -70,6 +76,7 @@ const InventoryList = () => {
         selectedIds.length && deleteInventory(selectedIds);
         break;
       case "edit":
+        navigate(`/app/inventory/${data.id}/details`);
         break;
       case "selectRow":
         setSelectedIds(data);
@@ -82,10 +89,16 @@ const InventoryList = () => {
     }
   };
 
+  // Create config with menuCallback
+  const configWithCallback = {
+    ...InventoryConfig,
+    columnDefs: InventoryConfig.getColumnDefs(menuCallbackFun),
+  };
+
   return (
     <Fragment>
       <GridListView
-        options={InventoryConfig}
+        options={configWithCallback}
         refreshKey={refreshKey}
         searchPlaceholder="Search inventory..."
         title="Inventory List"
