@@ -20,10 +20,10 @@ const InventoryEmails = () => {
 
   useEffect(() => {
     if (id) {
-      EmailService.get({
+      EmailService.list({
         companyId: id,
         // type: "company",
-      }).then((response) => setEmails(response.result));
+      }).then((response) => setEmails(response.result || []));
     }
   }, []);
 

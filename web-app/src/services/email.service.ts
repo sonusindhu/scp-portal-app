@@ -1,34 +1,82 @@
-import axios from "../utils/config.util";
-const API_URL = import.meta.env.VITE_API_ENDPOINT;
+import BaseService, { ApiResponse } from "./BaseService";
+import { Email } from "../shared/models/Email";
 
-const deleteRange = (ids: number[]) => {
-  return axios
-    .post(`${API_URL}email/deleteRange`, { ids })
-    .then(({ data }) => data);
-};
+/**
+ * Email create payload
+ */
+export interface EmailCreatePayload {
+  title: string;
+  message: string;
+  type?: string;
+  companyId?: number;
+  contactId?: number;
+  inventoryId?: number;
+  quoteId?: number;
+  isCritical?: boolean;
+}
 
-const get = (filters: {}) => {
-  return axios.post(`${API_URL}email/list`, filters).then(({ data }) => data);
-};
+/**
+ * Email update payload
+ */
+export interface EmailUpdatePayload extends EmailCreatePayload {
+  id: number;
+}
 
-const find = (id: number) => {
-  return axios.get(`${API_URL}email/find/${id}`).then(({ data }) => data);
-};
+/**
+ * Email Service - handles all email-related API operations
+ * Extends BaseService for common HTTP methods and error handling
+ */
+class EmailService extends BaseService {
+  /**
+   * Get list of emails with optional filters
+   * @param filters - Optional filters for email list
+   * @returns Promise with list of emails
+   */
+  async list(filters = {}): Promise<ApiResponse<Email[]>> {
+    return this.post<Email[]>("email/list", filters);
+  }
 
-const create = (payload) => {
-  return axios.post(API_URL + "email/create", payload).then(({ data }) => data);
-};
+  /**
+   * Find an email by ID
+   * @param id - Email ID
+   * @returns Promise with email details
+   */
+  async find(id: number): Promise<ApiResponse<Email>> {
+    return super.get<Email>(`email/find/${id}`);
+  }
 
-const update = (payload) => {
-  return axios.post(API_URL + "email/update", payload).then(({ data }) => data);
-};
+  /**
+   * Create a new email
+   * @param payload - Email data
+   * @returns Promise with created email
+   */
+  async create(payload: EmailCreatePayload): Promise<ApiResponse<Email>> {
+    return this.post<Email>("email/create", payload, {
+      showSuccessToast: true,
+    });
+  }
 
-const EmailService = {
-  get,
-  create,
-  update,
-  find,
-  deleteRange,
-};
+  /**
+   * Update an existing email
+   * @param payload - Updated email data including ID
+   * @returns Promise with updated email
+   */
+  async update(payload: EmailUpdatePayload): Promise<ApiResponse<Email>> {
+    return this.post<Email>("email/update", payload, {
+      showSuccessToast: true,
+    });
+  }
 
-export default EmailService;
+  /**
+   * Delete multiple emails by IDs
+   * @param ids - Array of email IDs to delete
+   * @returns Promise with deletion result
+   */
+  async deleteRange(ids: number[]): Promise<ApiResponse<void>> {
+    return this.post<void>("email/deleteRange", { ids }, {
+      showSuccessToast: true,
+    });
+  }
+}
+
+export default new EmailService();

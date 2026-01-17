@@ -1,34 +1,83 @@
-import axios from "../utils/config.util";
-const API_URL = import.meta.env.VITE_API_ENDPOINT;
+import BaseService, { ApiResponse } from "./BaseService";
+import { Task } from "../shared/models/Task";
 
-const deleteRange = (ids: number[]) => {
-  return axios
-    .post(`${API_URL}task/deleteRange`, { ids })
-    .then(({ data }) => data);
-};
+/**
+ * Task create payload
+ */
+export interface TaskCreatePayload {
+  subject: string;
+  description: string;
+  priority?: number;
+  category?: number;
+  assignedTo?: number;
+  pointOfContact?: number;
+  dueDateTime?: string;
+  reminderDateTime?: string;
+  status?: number;
+}
 
-const get = (filters: {}) => {
-  return axios.post(`${API_URL}task/list`, filters).then(({ data }) => data);
-};
+/**
+ * Task update payload
+ */
+export interface TaskUpdatePayload extends TaskCreatePayload {
+  id: number;
+}
 
-const find = (id: number) => {
-  return axios.get(`${API_URL}task/find/${id}`).then(({ data }) => data);
-};
+/**
+ * Task Service - handles all task-related API operations
+ * Extends BaseService for common HTTP methods and error handling
+ */
+class TaskService extends BaseService {
+  /**
+   * Get list of tasks with optional filters
+   * @param filters - Optional filters for task list
+   * @returns Promise with list of tasks
+   */
+  async list(filters = {}): Promise<ApiResponse<Task[]>> {
+    return this.post<Task[]>("task/list", filters);
+  }
 
-const create = (payload) => {
-  return axios.post(API_URL + "task/create", payload).then(({ data }) => data);
-};
+  /**
+   * Find a task by ID
+   * @param id - Task ID
+   * @returns Promise with task details
+   */
+  async find(id: number): Promise<ApiResponse<Task>> {
+    return super.get<Task>(`task/find/${id}`);
+  }
 
-const update = (payload) => {
-  return axios.post(API_URL + "task/update", payload).then(({ data }) => data);
-};
+  /**
+   * Create a new task
+   * @param payload - Task data
+   * @returns Promise with created task
+   */
+  async create(payload: TaskCreatePayload): Promise<ApiResponse<Task>> {
+    return this.post<Task>("task/create", payload, {
+      showSuccessToast: true,
+    });
+  }
 
-const TaskService = {
-  get,
-  create,
-  update,
-  find,
-  deleteRange,
-};
+  /**
+   * Update an existing task
+   * @param payload - Updated task data including ID
+   * @returns Promise with updated task
+   */
+  async update(payload: TaskUpdatePayload): Promise<ApiResponse<Task>> {
+    return this.post<Task>("task/update", payload, {
+      showSuccessToast: true,
+    });
+  }
 
-export default TaskService;
+  /**
+   * Delete multiple tasks by IDs
+   * @param ids - Array of task IDs to delete
+   * @returns Promise with deletion result
+   */
+  async deleteRange(ids: number[]): Promise<ApiResponse<void>> {
+    return this.post<void>("task/deleteRange", { ids }, {
+      showSuccessToast: true,
+    });
+  }
+}
+
+export default new TaskService();

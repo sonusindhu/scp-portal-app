@@ -25,7 +25,7 @@ const ContactTasks = () => {
       const payload = {
         pointOfContact: id,
       };
-      TaskService.get(payload).then((response) => setTasks(response.result));
+      TaskService.list(payload).then((response) => setTasks(response.result || []));
     }
   }, []);
 
