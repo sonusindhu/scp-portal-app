@@ -1,90 +1,36 @@
-import React, { useState, useCallback, Fragment } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { Fragment } from "react";
+import { useParams } from "react-router-dom";
 import { Button, Drawer } from "@mui/material";
 import GridListView from "../../../shared/components/GridList/GridListView";
 import ContactService from "../../../services/contact.service";
-import toast from "../../../utils/toast.util";
 import ContactConfig from "../../Contacts/ContactList/contact.config";
-import { MenuItem } from "../../../shared/models/MenuItem";
 import AddContact from "../../Contacts/ContactList/AddContact";
 import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
-
-interface MenuCallbackArgs {
-  event: React.MouseEvent;
-  data: any;
-  menu: MenuItem;
-}
+import { useDeleteConfirmation, useDrawer, useGridActions, useRefresh } from "../../../hooks";
 
 const CompanyContactList: React.FC = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const [mainMenus, setMainMenus] = useState<MenuItem[]>(ContactConfig.mainMenus);
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const [addDrawer, setAddDrawer] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0);
+  const { refreshKey, refresh } = useRefresh();
+  const { isOpen: addDrawer, openDrawer, closeDrawer } = useDrawer();
 
   const defaultFilters = [{ field: 'companyId', operator: 'eq', value: id }];
 
-  const confirmDelete = useCallback((ids: number[]) => {
-    toast.close();
-    ContactService.deleteContacts(ids)
-      .then(({ message }) => {
-        toast.success(message);
-        setRefreshKey(prev => prev + 1);
-      })
-      .catch(({ message }) => {
-        toast.error(message);
-      });
-  }, []);
+  const { deleteWithConfirmation } = useDeleteConfirmation({
+    onDelete: async (ids) => {
+      await ContactService.deleteContacts(ids);
+    },
+    onSuccess: refresh,
+  });
 
-  const deleteAction = useCallback((ids: number[]) => (
-    <Fragment>
-      <Button onClick={() => confirmDelete(ids)} aria-label="Confirm delete">Confirm</Button>
-      <Button onClick={() => toast.close()} aria-label="Close dialog">Close</Button>
-    </Fragment>
-  ), [confirmDelete]);
+  const { menuCallbackFun, mainMenus, selectedIds } = useGridActions({
+    mainMenus: ContactConfig.mainMenus,
+    editRoute: (id) => `/app/contact/${id}/edit`,
+    onDelete: deleteWithConfirmation,
+  });
 
-  const deleteContact = useCallback((ids: number[]) => {
-    toast.warning("Are you sure, you want to delete?", {
-      action: () => deleteAction(ids),
-    });
-  }, [deleteAction]);
-
-  const menuCallbackFun = useCallback(({ event, data, menu }: MenuCallbackArgs) => {
-    switch (menu?.key) {
-      case "create":
-        navigate(`/app/contact/create`);
-        break;
-      case "delete":
-        deleteContact([data.id]);
-        break;
-      case "deletes":
-        selectedIds.length && deleteContact(selectedIds);
-        break;
-      case "edit":
-        navigate(`/app/contact/${data.id}/edit`);
-        break;
-      case "selectRow":
-        setSelectedIds(data);
-        setMainMenus(prevMenus => prevMenus.map((menu: MenuItem) => {
-          if (!menu.alwaysEnable) menu.disabled = data.length === 0;
-          return menu;
-        }));
-        break;
-    }
-  }, [navigate, deleteContact, selectedIds]);
-
-  const onCreate = useCallback(() => {
-    setAddDrawer(true);
-  }, []);
-
-  const closeDrawer = useCallback(() => {
-    setAddDrawer(false);
-  }, []);
-
-  const onAddSuccess = useCallback(() => {
-    setRefreshKey(prev => prev + 1);
-  }, []);
+  const onAddSuccess = () => {
+    refresh();
+  };
 
   // Create config with menuCallback
   const configWithCallback = {
@@ -106,7 +52,7 @@ const CompanyContactList: React.FC = () => {
           type="button"
           size="large"
           variant="contained"
-          onClick={onCreate}
+          onClick={openDrawer}
           aria-label="Create contact"
         >
           Create
