@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 import GridService from "../../../services/grid.service";
 
-const columnDefs = [
+/**
+ * Column definitions factory function that accepts menuCallback
+ * @param menuCallback - Function to handle menu actions (edit, delete, etc.)
+ */
+const getColumnDefs = (menuCallback?: (args: any) => void) => [
   {
     accessorKey: "fullName",
     header: "Full Name",
@@ -147,7 +151,8 @@ const columnDefs = [
     cell: ({ row }) => (
       <GridActionMenu
         className="grid-action-menu"
-        menuCallback={(fn) => fn}
+        data={row.original}
+        menuCallback={menuCallback}
         menus={[
           { key: "edit", title: "Edit" },
           { key: "delete", title: "Delete" },
@@ -175,7 +180,8 @@ const mainMenus = [
 const listUrl = "contact/list";
 
 const ContactConfig = {
-  columnDefs,
+  getColumnDefs,
+  columnDefs: [],
   defaultColDef,
   mainMenus,
   listUrl,

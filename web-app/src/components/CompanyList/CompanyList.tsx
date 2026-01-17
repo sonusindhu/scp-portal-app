@@ -86,10 +86,16 @@ const CompanyList: React.FC = () => {
     }
   }, [navigate, deleteCompany, selectedIds]);
 
+  // Create config with menuCallback
+  const configWithCallback = {
+    ...CompanyConfig,
+    columnDefs: CompanyConfig.getColumnDefs(menuCallbackFun),
+  };
+
   return (
     <Fragment>
       <GridListView
-        options={CompanyConfig}
+        options={configWithCallback}
         refreshKey={refreshKey}
         searchPlaceholder="Search companies..."
         title="Company List"

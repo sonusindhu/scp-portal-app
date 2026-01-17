@@ -5,7 +5,11 @@ import GridActionMenu from "../../shared/components/GridList/GridActionMenu";
 import GridService from "../../services/grid.service";
 import { MenuItem } from "../../shared/models/MenuItem";
 
-const columnDefs = [
+/**
+ * Column definitions factory function that accepts menuCallback
+ * @param menuCallback - Function to handle menu actions (edit, delete, etc.)
+ */
+const getColumnDefs = (menuCallback?: (args: any) => void) => [
   {
     accessorKey: "name",
     header: "Name",
@@ -32,10 +36,23 @@ const columnDefs = [
   { accessorKey: "updatedAt", header: "Updated Date", cell: ({ row }) => GridService.dateFormatter(row.original.updatedAt), enableSorting: true },
   {
     id: "action",
+    accessorKey: "action",
+    size: 80,
+    meta: { sticky: "right", stickyClass: "sticky-col-last" },
     header: "Action",
-    cell: GridActionMenu,
-    width: 80,
+    cell: ({ row }) => (
+      <GridActionMenu
+        className="grid-action-menu"
+        data={row.original}
+        menuCallback={menuCallback}
+        menus={[
+          { key: "edit", title: "Edit" },
+          { key: "delete", title: "Delete" },
+        ]}
+      />
+    ),
     enableSorting: false,
+    enableColumnFilter: false,
   },
 ];
 
@@ -61,7 +78,8 @@ const mainMenus: MenuItem[] = [
 const listUrl = "company/list";
 
 const CompanyConfig = {
-  columnDefs,
+  getColumnDefs, // Export factory function
+  columnDefs: [], // Keep for backward compatibility, will be replaced
   defaultColDef,
   mainMenus,
   listUrl,

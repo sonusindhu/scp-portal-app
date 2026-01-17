@@ -87,11 +87,17 @@ const ContactList: React.FC = () => {
     );
   }, [selectedRows]);
 
+  // Create config with menuCallback
+  const configWithCallback = {
+    ...ContactConfig,
+    columnDefs: ContactConfig.getColumnDefs(menuCallbackFun),
+  };
+
   return (
     <Fragment>
       <GridListView
         ref={gridRef}
-        options={ContactConfig}
+        options={configWithCallback}
         refreshKey={refreshKey}
         searchPlaceholder="Search contacts..."
         title="Contact List"
