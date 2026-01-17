@@ -1,9 +1,11 @@
+/**
+ * @deprecated Use LoadingSpinner or PageLoader from 'shared/components/Loading' instead
+ * This component is kept for backward compatibility
+ */
+import { LoadingSpinner } from "./Loading";
+
 const Loader = () => {
-  return (
-    <div className="loading-spinner">
-        <div className="spinner"></div>
-    </div>
-  );
+  return <LoadingSpinner />;
 };
 
 export default Loader;

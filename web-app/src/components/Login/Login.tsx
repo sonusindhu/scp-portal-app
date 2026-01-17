@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { useAuth } from "../../hooks";
+import { useLoading } from "../../hooks/useLoading";
+import { LoadingButton } from "../../shared/components/Loading";
+
 const REDIRECT_AFTER_LOGIN = "/app/company/list";
 
 const Login = () => {
   const navigate = useNavigate();
   const { login: loginUser } = useAuth();
+  const { isLoading, withLoading } = useLoading();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   const onChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,14 +40,12 @@ const Login = () => {
     }
 
     setMessage("");
-    setLoading(true);
 
-    const result = await loginUser(username.trim(), password);
+    const result = await withLoading(loginUser(username.trim(), password));
     
     if (result.success) {
       navigate(REDIRECT_AFTER_LOGIN, { replace: true });
     } else {
-      setLoading(false);
       setMessage(result.error || "Login failed");
     }
   };
@@ -69,7 +70,7 @@ const Login = () => {
                 required
                 autoFocus
                 className="form-input"
-                disabled={loading}
+                disabled={isLoading}
               />
             </div>
             
@@ -82,19 +83,21 @@ const Login = () => {
                 onChange={onChangePassword}
                 required
                 className="form-input"
-                disabled={loading}
+                disabled={isLoading}
               />
             </div>
             
             <div className="form-group">
-              <button
+              <LoadingButton
                 type="submit"
-                className={`login-button ${loading ? 'loading' : ''}`}
-                disabled={loading}
+                loading={isLoading}
+                loadingText="Signing in..."
+                className="login-button"
+                fullWidth
+                variant="contained"
               >
-                {loading && <span className="spinner"></span>}
-                {loading ? 'Signing in...' : 'Submit'}
-              </button>
+                Submit
+              </LoadingButton>
             </div>
           </form>
           
