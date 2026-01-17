@@ -1,5 +1,5 @@
 import React, { useState, Suspense } from "react";
-import { useRoutes } from "react-router-dom";
+import { useRoutes, useLocation } from "react-router-dom";
 
 import "./App.css";
 
@@ -10,12 +10,17 @@ import { routesConfig } from "./app-routes";
 import { useAuth } from "./hooks";
 
 const App = () => {
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, isAuthenticated } = useAuth();
+  const location = useLocation();
   const [theme, setTheme] = useState<string>("light");
+
+  // Don't show header on public routes (auth pages, home page)
+  const isPublicRoute = location.pathname === "/" || location.pathname.startsWith("/auth");
+  const shouldShowHeader = isAuthenticated && !isPublicRoute;
 
   return (
     <div className={`app-root theme-${theme}`}>
-      { currentUser ? <AppHeader onLogout={logout} /> : null }
+      { shouldShowHeader ? <AppHeader onLogout={logout} /> : null }
       <div className="app-container">
         <Suspense fallback={<Loader />}>
           <ErrorBoundary>

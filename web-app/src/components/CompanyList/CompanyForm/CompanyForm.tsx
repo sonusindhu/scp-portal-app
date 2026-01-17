@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 
-import AuthService from "../../../services/auth.service";
 import { Tab, Tabs } from "@mui/material";
+import { useAuth } from "../../../hooks";
 
 const CompanyForm = (props) => {
   const location = useLocation();
@@ -17,14 +17,14 @@ const CompanyForm = (props) => {
   };
 
   // check if user is authenticated, if not redirect to login page
-  const user = AuthService.getCurrentUser();
+  const { isAuthenticated } = useAuth();
   useEffect(() => {
-    if (user && id) {
-    } else {
+    if (!isAuthenticated || !id) {
       navigate("/auth/login");
     }
-  }, []);
-  if (!user) return <></>;
+  }, [isAuthenticated, id, navigate]);
+  
+  if (!isAuthenticated) return <></>;
 
   return (
     <div className="container-fluid">

@@ -1,10 +1,11 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import AuthService from "../services/auth.service";
-const Home = () => {
-  const user = AuthService.getCurrentUser();
+import { useAuth } from "../hooks";
 
-  if (user) {
+const Home = () => {
+  const { isAuthenticated } = useAuth();
+
+  if (isAuthenticated) {
     return <Navigate to="/app/company/list" />;
   } else {
     return <Navigate to="/auth/login" />;

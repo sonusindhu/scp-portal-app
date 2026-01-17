@@ -4,7 +4,7 @@
  * Reusable hooks for common patterns across the application
  */
 
-export { useAuth } from "./useAuth";
+export { useAuth, AuthProvider } from "./useAuth";
 export { useDeleteConfirmation } from "./useDeleteConfirmation";
 export { useDrawer } from "./useDrawer";
 export { useGridActions } from "./useGridActions";
