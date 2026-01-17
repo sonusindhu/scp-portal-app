@@ -115,7 +115,7 @@ export const FormSelectField: React.FC<FormSelectFieldProps> = ({
   rules,
   sx = { m: 1, width: FieldWidths.FULL },
   disabled = false,
-  labelKey = "title",
+  labelKey = "value",
   valueKey = "id",
 }) => {
   return (

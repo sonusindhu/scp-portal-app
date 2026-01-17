@@ -10,7 +10,7 @@ import { FormActions } from "../FormFields";
 import toast from "../../../utils/toast.util";
 import { Task } from "../../models/Task";
 import TaskService from "../../../services/task.service";
-import { TASK_STATUS } from "../../../utils/constants.util";
+import { TASK_STATUS, TASK_PRIORITY, TASK_CATEGORY, TEMP_USER_LIST } from "../../../utils/constants.util";
 import { ValidationRules } from "../../../utils/validation.util";
 import { useFormSubmit } from "../../../hooks";
 
@@ -19,36 +19,6 @@ const TaskForm = (props: TaskProps) => {
   // let { id } = useParams();
   const task: Partial<Task> = props.task;
   const formContext = useForm({ defaultValues: task });
-
-  const priorityList = [
-    { id: 1, value: "High" },
-    { id: 2, value: "Medium" },
-    { id: 3, value: "Low" },
-  ];
-
-  const categoryList = [
-    { id: 1, value: "Call" },
-    { id: 2, value: "Email" },
-    { id: 3, value: "Reminder" },
-  ];
-
-  const assignedToList = [
-    { id: 1, value: "Sonu Sindhu" },
-    { id: 2, value: "Pulkit Kumawat" },
-    { id: 3, value: "Tushar" },
-  ];
-  
-  const pointOfContactList = [
-    { id: 1, value: "Sonu Sindhu" },
-    { id: 2, value: "Pulkit Kumawat" },
-    { id: 3, value: "Tushar" },
-  ];
-
-  // Convert TASK_STATUS to format expected by SelectElement
-  const statusList = TASK_STATUS.filter(s => s.id !== "").map((status, index) => ({
-    id: index + 1,
-    value: status.title,
-  }));
 
   const { reset } = formContext;
 
@@ -99,7 +69,7 @@ const TaskForm = (props: TaskProps) => {
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "45%" }}
-          options={priorityList}
+          options={TASK_PRIORITY}
           name={"priority"}
           label="Priority"
           rules={ValidationRules.required()}
@@ -108,7 +78,7 @@ const TaskForm = (props: TaskProps) => {
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "45%" }}
-          options={categoryList}
+          options={TASK_CATEGORY}
           name={"category"}
           label="Category"
           rules={ValidationRules.required()}
@@ -119,7 +89,7 @@ const TaskForm = (props: TaskProps) => {
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "45%" }}
-          options={assignedToList}
+          options={TEMP_USER_LIST}
           name={"assignedTo"}
           label="Assigned To"
           rules={ValidationRules.required()}
@@ -128,7 +98,7 @@ const TaskForm = (props: TaskProps) => {
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "45%" }}
-          options={pointOfContactList}
+          options={TEMP_USER_LIST}
           name={"pointOfContact"}
           label="Point Of Contact"
           rules={ValidationRules.required()}
@@ -162,7 +132,7 @@ const TaskForm = (props: TaskProps) => {
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "46%" }}
-          options={statusList}
+          options={TASK_STATUS.filter(s => s.id !== "")}
           name={"status"}
           label="Status"
           rules={ValidationRules.required()}

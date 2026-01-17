@@ -8,7 +8,7 @@
  */
 export interface ListItem {
   id: string;
-  title: string;
+  value: string;
 }
 
 /**
@@ -18,15 +18,15 @@ export interface ListItem {
 export const COMMON_STATUS: ListItem[] = [
   {
     id: "",
-    title: "Select",
+    value: "Select",
   },
   {
     id: "active",
-    title: "Active",
+    value: "Active",
   },
   {
     id: "inactive",
-    title: "Inactive",
+    value: "Inactive",
   },
 ];
 
@@ -36,19 +36,19 @@ export const COMMON_STATUS: ListItem[] = [
 export const PACKAGE_TYPES: ListItem[] = [
   {
     id: "",
-    title: "Select",
+    value: "Select",
   },
   {
     id: "parcel",
-    title: "Parcel",
+    value: "Parcel",
   },
   {
     id: "pallet",
-    title: "Pallet",
+    value: "Pallet",
   },
   {
     id: "bale",
-    title: "Bale",
+    value: "Bale",
   },
 ];
 
@@ -58,7 +58,7 @@ export const PACKAGE_TYPES: ListItem[] = [
 export const SERVICE_TYPES: ListItem[] = [
   {
     id: "transportation",
-    title: "Transportation",
+    value: "Transportation",
   },
 ];
 
@@ -68,11 +68,11 @@ export const SERVICE_TYPES: ListItem[] = [
 export const TRANSPORT_MODES: ListItem[] = [
   {
     id: "FTL",
-    title: "FTL (Full Truckload)",
+    value: "FTL (Full Truckload)",
   },
   {
     id: "LTL",
-    title: "LTL (Less Than Truckload)",
+    value: "LTL (Less Than Truckload)",
   },
 ];
 
@@ -95,24 +95,52 @@ export const ENTITY_TYPES = {
 export const TASK_STATUS: ListItem[] = [
   {
     id: "",
-    title: "Select",
+    value: "Select",
   },
   {
     id: "new",
-    title: "New",
+    value: "New",
   },
   {
     id: "in-progress",
-    title: "In Progress",
+    value: "In Progress",
   },
   {
     id: "completed",
-    title: "Completed",
+    value: "Completed",
   },
   {
     id: "canceled",
-    title: "Canceled",
+    value: "Canceled",
   },
+];
+
+/**
+ * Task priority list
+ */
+export const TASK_PRIORITY: ListItem[] = [
+  { id: "1", value: "High" },
+  { id: "2", value: "Medium" },
+  { id: "3", value: "Low" },
+];
+
+/**
+ * Task category list
+ */
+export const TASK_CATEGORY: ListItem[] = [
+  { id: "1", value: "Call" },
+  { id: "2", value: "Email" },
+  { id: "3", value: "Reminder" },
+];
+
+/**
+ * Temporary user list
+ * TODO: Replace with dynamic API call to fetch actual users
+ */
+export const TEMP_USER_LIST: ListItem[] = [
+  { id: "1", value: "Sonu Sindhu" },
+  { id: "2", value: "Pulkit Kumawat" },
+  { id: "3", value: "Tushar" },
 ];
 
 /**
@@ -121,27 +149,27 @@ export const TASK_STATUS: ListItem[] = [
 export const QUOTE_STATUS: ListItem[] = [
   {
     id: "",
-    title: "Select",
+    value: "Select",
   },
   {
     id: "draft",
-    title: "Draft",
+    value: "Draft",
   },
   {
     id: "pending",
-    title: "Pending",
+    value: "Pending",
   },
   {
     id: "approved",
-    title: "Approved",
+    value: "Approved",
   },
   {
     id: "rejected",
-    title: "Rejected",
+    value: "Rejected",
   },
   {
     id: "completed",
-    title: "Completed",
+    value: "Completed",
   },
 ];
 
