@@ -23,16 +23,18 @@ const CompanyList: React.FC = () => {
   const [addDrawer, setAddDrawer] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
-  const confirmDelete = useCallback((ids: number[]) => {
+  const confirmDelete = useCallback(async (ids: number[]) => {
     toast.close();
-    CompanyService.deleteCompanies(ids)
-      .then(({ message }) => {
-        toast.success(message);
+    try {
+      const response = await CompanyService.deleteCompanies(ids);
+      // Success toast shown automatically by BaseService
+      if (response.status) {
         setRefreshKey((prev) => prev + 1);
-      })
-      .catch(({ message }) => {
-        toast.error(message);
-      });
+      }
+    } catch (error) {
+      // Error toast already shown by BaseService
+      console.error("Failed to delete companies:", error);
+    }
   }, []);
 
   const deleteAction = useCallback((ids: number[]) => (

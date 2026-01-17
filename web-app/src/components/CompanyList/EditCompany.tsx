@@ -22,32 +22,38 @@ const EditCompany = () => {
   const { reset } = formContext;
   const handleClearForm = () => reset();
 
-  const handleSuccess = (response: ResponseModel) => {
-    if (response.status) {
-      toast.success(response.message);
-      reset();
-    } else {
-      toast.error(response.message);
-    }
-  }
-
-  const handleSubmitForm = (e) => {
+  const handleSubmitForm = async (e) => {
     if (!e.email || !e.name) return;
+    
     const payload = { ...e };
-    CompanyService.update(payload)
-      .then((response) => handleSuccess(response))
-      .catch(({ response }) => toast.error(response.data));
+    try {
+      const response = await CompanyService.update(payload);
+      // Success toast shown automatically by BaseService
+      if (response.status) {
+        reset();
+      }
+    } catch (error) {
+      // Error toast already shown by BaseService
+      console.error("Failed to update company:", error);
+    }
   };
 
   useEffect(() => {
-    CompanyService.find(id)
-      .then((response) => {
-        reset(response.result);
-      })
-      .catch((error) => {
+    const loadCompany = async () => {
+      try {
+        const response = await CompanyService.find(id);
+        if (response.status && response.result) {
+          reset(response.result);
+        }
+      } catch (error) {
+        // Error toast already shown by BaseService
+        console.error("Failed to load company:", error);
         navigate("/app/company/list");
-      });
-  }, []);
+      }
+    };
+    
+    loadCompany();
+  }, [id, navigate, reset]);
 
   return (
     <div className="container-fluid">

@@ -24,23 +24,22 @@ const AddCompany = (props) => {
     props.onCloseDrawer && props.onCloseDrawer();
   };
 
-  const handleSuccess = (response: ResponseModel) => {
-    if (response.status) {
-      toast.success(response.message);
-      props.onAddSuccess && props.onAddSuccess();
-      onCloseDrawer();
-      reset();
-    } else {
-      toast.error(response.message);
-    }
-  };
-
-  const handleSubmitForm = (e) => {
+  const handleSubmitForm = async (e) => {
     if (!e.email || !e.name) return;
+    
     const payload = { ...e };
-    CompanyService.create(payload)
-      .then((response) => handleSuccess(response))
-      .catch(({ response, error }) => toast.error(response?.message ?? error?.message ?? "An error occurred while creating the company"));
+    try {
+      const response = await CompanyService.create(payload);
+      // Success toast shown automatically by BaseService
+      if (response.status) {
+        props.onAddSuccess && props.onAddSuccess();
+        onCloseDrawer();
+        reset();
+      }
+    } catch (error) {
+      // Error toast already shown by BaseService
+      console.error("Failed to create company:", error);
+    }
   };
 
   return (
