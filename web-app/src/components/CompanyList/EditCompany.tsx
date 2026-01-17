@@ -9,8 +9,8 @@ import {
 import CompanyService from "../../services/company.service";
 import PageHeading from "../../shared/components/PageHeading/PageHeading";
 import { useFormSubmit } from "../../hooks";
-import { CommonFields, FormTextField, FormSelectField, FieldWidths } from "../../shared/components/FormFields";
 import { ValidationRules } from "../../utils/validation.util";
+import { CommonFields, FormTextField, FormSelectField, FieldWidths, FormActions } from "../../shared/components/FormFields";
 
 const EditCompany = () => {
   let { id } = useParams();
@@ -163,25 +163,7 @@ const EditCompany = () => {
           />
         </div>
 
-        <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-          <Stack direction="row" spacing={2}>
-            <Button
-              type="submit"
-              size="large"
-              variant="contained"
-            >
-              Save
-            </Button>
-            <Button
-              size="large"
-              variant="outlined"
-              type="button"
-              onClick={handleClearForm}
-            >
-              Cancel
-            </Button>
-          </Stack>
-        </div>
+        <FormActions onCancel={handleClearForm} />
       </FormContainer>
     </div>
   );

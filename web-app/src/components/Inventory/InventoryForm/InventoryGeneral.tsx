@@ -8,7 +8,7 @@ import InventoryService from "../../../services/inventory.service";
 import { useNavigate, useParams } from "react-router-dom";
 import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 import { useFormSubmit } from "../../../hooks";
-import { FormTextField, FormSelectField, FieldWidths } from "../../../shared/components/FormFields";
+import { FormTextField, FormSelectField, FieldWidths, FormActions } from "../../../shared/components/FormFields";
 import { ValidationRules } from "../../../utils/validation.util";
 
 const InventoryGeneral = () => {
@@ -142,25 +142,7 @@ const InventoryGeneral = () => {
           sx={{ m: 1, width: 375 }}
         />
 
-        <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-          <Stack direction="row" spacing={2}>
-            <Button
-              type="submit"
-              size="large"
-              variant="contained"
-            >
-              Save
-            </Button>
-            <Button
-              size="large"
-              variant="outlined"
-              type="button"
-              onClick={handleClearForm}
-            >
-              Cancel
-            </Button>
-          </Stack>
-        </div>
+        <FormActions onCancel={handleClearForm} />
       </FormContainer>
     </div>
   );

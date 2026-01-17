@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { FormContainer } from "react-hook-form-mui";
 import QuoteService from "../../../../services/quote.service";
 import { ValidationRules } from "../../../../utils/validation.util";
-import { CommonFields, FormTextField } from "../../../../shared/components/FormFields";
+import { CommonFields, FormTextField, FormActions } from "../../../../shared/components/FormFields";
 
 import QuoteAccessorials from "./QuoteAccessorials";
 import QuoteRoutes from "./QuoteRoutes";
@@ -45,7 +45,9 @@ const QuoteEdit = (props: QuoteEditProps) => {
 
   const { handleSubmit: submitForm } = useFormSubmit({
     onSuccess: (response) => {
-      reset(response.result);
+      if (response) {
+        reset(response.result);
+      }
     },
   });
 
@@ -106,25 +108,7 @@ const QuoteEdit = (props: QuoteEditProps) => {
         
         {/* Accessorials Details End */}
 
-        <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-          <Stack direction="row" spacing={2}>
-            <Button
-              type={"submit"}
-              size="large"
-              variant="contained"
-            >
-              Save
-            </Button>
-            <Button
-              size="large"
-              variant="outlined"
-              type="button"
-              onClick={handleClearForm}
-            >
-              Cancel
-            </Button>
-          </Stack>
-        </div>
+        <FormActions onCancel={handleClearForm} />
       </FormContainer>
     </div>
   );

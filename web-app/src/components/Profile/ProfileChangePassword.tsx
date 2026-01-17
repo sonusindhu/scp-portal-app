@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 import AuthService from "../../services/auth.service";
 import { useFormSubmit } from "../../hooks";
-import { CommonFields } from "../../shared/components/FormFields";
+import { CommonFields, FormActions } from "../../shared/components/FormFields";
 import { ValidationRules } from "../../utils/validation.util";
 
 const ProfileChangePassword = () => {
@@ -59,25 +59,7 @@ const ProfileChangePassword = () => {
         />
       </div>
            
-      <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-        <Stack direction="row" spacing={2}>
-          <Button
-            type={"submit"}
-            size="large"
-            variant="contained"
-          >
-            Update Password
-          </Button>
-          <Button
-            size="large"
-            variant="outlined"
-            type="button"
-            onClick={handleClearForm}
-          >
-            Cancel
-          </Button>
-        </Stack>
-      </div>
+      <FormActions onCancel={handleClearForm} submitLabel="Update Password" />
     </FormContainer>        
   );
 };

@@ -8,7 +8,7 @@ import {
 import InventoryService from "../../../services/inventory.service";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
 import { useFormSubmit } from "../../../hooks";
-import { FormTextField, FormSelectField, FieldWidths } from "../../../shared/components/FormFields";
+import { FormTextField, FormSelectField, FieldWidths, FormActions } from "../../../shared/components/FormFields";
 import { ValidationRules } from "../../../utils/validation.util";
 
 const AddInventory = (props) => {

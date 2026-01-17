@@ -13,7 +13,7 @@ import PageHeading from "../PageHeading/PageHeading";
 import { ResponseModel } from "../../../models/common.model";
 import EmailService from "../../../services/email.service";
 import { ValidationRules } from "../../../utils/validation.util";
-import { FormTextField } from "../FormFields";
+import { FormTextField, FormActions } from "../FormFields";
 
 const EmailForm = (props: EmailFormProps) => {
   const email: Partial<Email> = props.email || {};
@@ -79,21 +79,7 @@ const EmailForm = (props: EmailFormProps) => {
         />
       </div>
 
-      <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-        <Stack direction="row" spacing={2}>
-          <Button type={"submit"} size="large" variant="contained">
-            Save
-          </Button>
-          <Button
-            size="large"
-            variant="outlined"
-            type="button"
-            onClick={handleClearForm}
-          >
-            Cancel
-          </Button>
-        </Stack>
-      </div>
+      <FormActions onCancel={handleClearForm} />
     </FormContainer>
   );
 };

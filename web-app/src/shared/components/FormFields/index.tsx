@@ -5,7 +5,7 @@
 
 import React from "react";
 import { TextFieldElement, SelectElement, CheckboxElement } from "react-hook-form-mui";
-import { SxProps, Theme } from "@mui/material";
+import { SxProps, Theme, Button, Stack } from "@mui/material";
 import { RegisterOptions } from "react-hook-form";
 import { ValidationRules } from "../../../utils/validation.util";
 
@@ -309,3 +309,53 @@ export const CommonFields = {
     />
   ),
 } as const;
+
+/**
+ * Form action buttons props
+ */
+interface FormActionsProps {
+  onCancel?: () => void;
+  submitLabel?: string;
+  cancelLabel?: string;
+  isSubmitting?: boolean;
+  showCancel?: boolean;
+  sx?: SxProps<Theme>;
+}
+
+/**
+ * Reusable form action buttons (Submit/Cancel)
+ */
+export const FormActions: React.FC<FormActionsProps> = ({
+  onCancel,
+  submitLabel = "Save",
+  cancelLabel = "Cancel",
+  isSubmitting = false,
+  showCancel = true,
+  sx = { marginLeft: "12px", marginTop: "15px" },
+}) => {
+  return (
+    <div style={sx as any}>
+      <Stack direction="row" spacing={2}>
+        <Button 
+          type="submit" 
+          size="large" 
+          variant="contained"
+          disabled={isSubmitting}
+        >
+          {submitLabel}
+        </Button>
+        {showCancel && (
+          <Button
+            size="large"
+            variant="outlined"
+            type="button"
+            onClick={onCancel}
+            disabled={isSubmitting}
+          >
+            {cancelLabel}
+          </Button>
+        )}
+      </Stack>
+    </div>
+  );
+};

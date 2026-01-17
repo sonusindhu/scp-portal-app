@@ -8,7 +8,7 @@ import { Box } from "@mui/material";
 import ContactService from "../../../services/contact.service";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
 import { useFormSubmit } from "../../../hooks";
-import { CommonFields, FormSelectField, FieldWidths } from "../../../shared/components/FormFields";
+import { CommonFields, FormSelectField, FieldWidths, FormActions } from "../../../shared/components/FormFields";
 import { ValidationRules } from "../../../utils/validation.util";
 
 const AddContact = (props) => {
@@ -146,25 +146,7 @@ const AddContact = (props) => {
         />
 
         <div className="drawer-footer">
-          <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-            <Stack direction="row" spacing={2}>
-              <Button
-                type="submit"
-                size="large"
-                variant="contained"
-              >
-                Save
-              </Button>
-              <Button
-                size="large"
-                variant="outlined"
-                type="button"
-                onClick={onCloseDrawer}
-              >
-                Close
-              </Button>
-            </Stack>
-          </div>
+          <FormActions onCancel={onCloseDrawer} cancelLabel="Close" />
         </div>
       </FormContainer>
     </Box>
