@@ -2,7 +2,7 @@ import React from "react";
 import {
   FormContainer,
 } from "react-hook-form-mui";
-import { Button } from "@mui/material";
+
 import { useForm } from "react-hook-form";
 
 import AuthService from "../../services/auth.service";

@@ -4,7 +4,7 @@ import {
   TextFieldElement,
   CheckboxElement,
 } from "react-hook-form-mui";
-import { Button } from "@mui/material";
+
 import { useForm } from "react-hook-form";
 
 import toast from "../../../utils/toast.util";
