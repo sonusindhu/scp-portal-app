@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Avatar from "@mui/material/Avatar";
+import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import WarningOutlinedIcon from "@mui/icons-material/WarningOutlined";
 
@@ -24,6 +17,7 @@ import { useParams } from "react-router-dom";
 import NoteService from "../../../services/note.service";
 import NoteForm from "./NoteForm";
 import { NotesMainMenu } from "../../const/notes.conts";
+import { AvatarFallback } from "@radix-ui/react-avatar";
 
 interface NotesListProps {
   options: any;

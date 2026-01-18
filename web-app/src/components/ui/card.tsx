@@ -17,16 +17,46 @@ const Card = React.forwardRef<
 ))
 Card.displayName = "Card"
 
+interface MuiCardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  avatar?: React.ReactNode;
+  action?: React.ReactNode;
+  title?: React.ReactNode;
+  subheader?: React.ReactNode;
+}
+
 const CardHeader = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
-    {...props}
-  />
-))
+  MuiCardHeaderProps
+>(({ className, avatar, action, title, subheader, children, ...props }, ref) => {
+  // If MUI-style props are provided, use custom layout
+  if (avatar || action || title || subheader) {
+    return (
+      <div
+        ref={ref}
+        className={cn("flex items-start gap-4 p-6", className)}
+        {...props}
+      >
+        {avatar && <div className="flex-shrink-0">{avatar}</div>}
+        <div className="flex-1 min-w-0">
+          {title && <h3 className="text-base font-medium">{title}</h3>}
+          {subheader && <div className="text-sm text-gray-500 mt-1">{subheader}</div>}
+        </div>
+        {action && <div className="flex-shrink-0">{action}</div>}
+      </div>
+    );
+  }
+  
+  // Otherwise use standard layout
+  return (
+    <div
+      ref={ref}
+      className={cn("flex flex-col space-y-1.5 p-6", className)}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+})
 CardHeader.displayName = "CardHeader"
 
 const CardTitle = React.forwardRef<

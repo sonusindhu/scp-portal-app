@@ -1,9 +1,7 @@
 import React from "react";
 import { format } from "date-fns";
 
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';

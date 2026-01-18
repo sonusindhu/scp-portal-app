@@ -5,7 +5,6 @@
 
 import React from "react";
 import { TextFieldElement, SelectElement, CheckboxElement } from "react-hook-form-mui";
-import { SxProps, Theme } from "@mui/material";
 import { RegisterOptions } from "react-hook-form";
 import { ValidationRules } from "../../../utils/validation.util";
 import { Button } from "@/components/ui/button";
@@ -16,7 +15,7 @@ import { Button } from "@/components/ui/button";
 interface BaseFieldProps {
   name: string;
   label: string;
-  sx?: SxProps<Theme>;
+  className?: string;
   disabled?: boolean;
   helperText?: string;
 }
@@ -50,7 +49,7 @@ interface FormSelectFieldProps extends BaseFieldProps {
 interface FormCheckboxFieldProps {
   name: string;
   label: string;
-  sx?: SxProps<Theme>;
+  className?: string;
   disabled?: boolean;
 }
 
@@ -320,7 +319,7 @@ interface FormActionsProps {
   cancelLabel?: string;
   isSubmitting?: boolean;
   showCancel?: boolean;
-  sx?: SxProps<Theme>;
+  className?: string;
 }
 
 /**
