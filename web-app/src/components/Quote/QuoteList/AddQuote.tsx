@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import {
@@ -8,6 +7,7 @@ import {
 import { Box } from "@mui/material";
 import QuoteService from "../../../services/quote.service";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
+import { Button } from "@/components/ui/button";
 import { useFormSubmit } from "../../../hooks";
 import { FormTextField, FormSelectField, FieldWidths, FormActions } from "../../../shared/components/FormFields";
 import { ValidationRules } from "../../../utils/validation.util";
@@ -147,23 +147,23 @@ const AddQuote = (props) => {
 
         <div className="drawer-footer">
           <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-            <Stack direction="row" spacing={2}>
+            <div className="flex flex-row gap-4">
               <Button
                 type="submit"
-                size="large"
-                variant="contained"
+                size="lg"
+                variant="default"
               >
                 Save
               </Button>
               <Button
-                size="large"
-                variant="outlined"
+                size="lg"
+                variant="outline"
                 type="button"
                 onClick={onCloseDrawer}
               >
                 Close
               </Button>
-            </Stack>
+            </div>
           </div>
         </div>
       </FormContainer>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   FormContainer,
 } from "react-hook-form-mui";
-import { Button, Stack } from "@mui/material";
+import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { Box } from "@mui/material";
 import ContactService from "../../../services/contact.service";
