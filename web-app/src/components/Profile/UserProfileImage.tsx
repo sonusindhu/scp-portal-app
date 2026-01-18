@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Avatar as Avat } from '@mui/material';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import Cropper from 'react-easy-crop';
 import UserService from '../../services/user.service';
 import toast from "../../utils/toast.util";
@@ -18,47 +18,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 const VALID_SIZE_LIMIT = 5*1024*1024;
 
 const VALID_IMG_EXT = ['jpg', 'jpeg', 'gif', 'bmp', 'png'];
-
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: theme.spacing(2),
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
-  },
-}));
-
-export interface DialogTitleProps {
-  id: string;
-  children?: React.ReactNode;
-  onClose: () => void;
-  disabled?: boolean
-}
-
-const BootstrapDialogTitle = (props: DialogTitleProps) => {
-  const { children, onClose, ...other } = props;
-
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          disabled={props.disabled}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
-};
 
 interface ImageState{
   preview: string | null,
@@ -123,7 +82,7 @@ const UserProfileImage = (props) => {
 
   const { handleSubmit } = useFormSubmit({
     onSuccess: (response) => {
-      const img = `${API_URL}user-images/${response.result.userImage}`;
+      const img = `${API_URL}user-images/${response?.result?.userImage}`;
       setUserImage(img);
       setIsLoading(false);
       handleClose();
@@ -142,13 +101,13 @@ const UserProfileImage = (props) => {
     <div>
 
       <div className='user-header'>
-        <Avat
-          alt={props.user.fullName}
-          src={userImage}
-          variant="circular"
+        <Avatar
           onClick={handleClickOpen}
-          className="avatar-profile"
-        />
+          className="avatar-profile cursor-pointer"
+        >
+          <AvatarImage src={userImage} alt={props.user.fullName} />
+          <AvatarFallback>{props.user.fullName?.charAt(0)}</AvatarFallback>
+        </Avatar>
 
         <div className='user-details'>
           <p className='full-name'> <strong>{ props.user.fullName }</strong></p>
@@ -158,16 +117,11 @@ const UserProfileImage = (props) => {
 
       </div>
       
-      <BootstrapDialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
-        <BootstrapDialogTitle id="customized-dialog-title" 
-          onClose={handleClose} disabled={isLoading}>
-          Update Profile image
-        </BootstrapDialogTitle>
-        <DialogContent dividers className='user-image-dialog'>
+      <Dialog open={open} onOpenChange={(isOpen) => !isOpen && handleClose()}>
+        <DialogContent className="user-image-dialog max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Update Profile image</DialogTitle>
+          </DialogHeader>
           <div className='profile-container'>
             <input
               type="file"
@@ -190,7 +144,7 @@ const UserProfileImage = (props) => {
                 reader.readAsDataURL(file);
               }}
               disabled={isLoading}
-              style={{ marginBottom: 16 }}
+              className="mb-4"
             />
             {state.src && (
               <Cropper
@@ -207,13 +161,13 @@ const UserProfileImage = (props) => {
               { state.preview ? <img src={state.preview} alt="Preview" /> : <></> }
             </div>
           </div>
+          <DialogFooter>
+            <Button onClick={uploadUserImage} disabled={isLoading || !state.preview}>
+              Save Image
+            </Button>
+          </DialogFooter>
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={uploadUserImage} disabled={isLoading || !state.preview}>
-            Save Image
-          </Button>
-        </DialogActions>
-      </BootstrapDialog>
+      </Dialog>
     </div>
   );
 }
