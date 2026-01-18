@@ -78,6 +78,8 @@ const EditCompany = () => {
             ]}
             rules={ValidationRules.select(true)}
             sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            valueKey="id"
+            labelKey="title"
           />
         </div>
 
@@ -92,6 +94,8 @@ const EditCompany = () => {
             ]}
             rules={ValidationRules.select(true)}
             sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            valueKey="id"
+            labelKey="title"
           />
 
           <FormTextField

@@ -5,9 +5,10 @@
 
 import React from "react";
 import { TextFieldElement, SelectElement, CheckboxElement } from "react-hook-form-mui";
-import { SxProps, Theme, Button, Stack } from "@mui/material";
+import { SxProps, Theme } from "@mui/material";
 import { RegisterOptions } from "react-hook-form";
 import { ValidationRules } from "../../../utils/validation.util";
+import { Button } from "@/components/ui/button";
 
 /**
  * Common form field props
@@ -335,19 +336,19 @@ export const FormActions: React.FC<FormActionsProps> = ({
 }) => {
   return (
     <div style={sx as any}>
-      <Stack direction="row" spacing={2}>
+      <div className="flex flex-row gap-4">
         <Button 
           type="submit" 
-          size="large" 
-          variant="contained"
+          size="lg" 
+          variant="default"
           disabled={isSubmitting}
         >
           {submitLabel}
         </Button>
         {showCancel && (
           <Button
-            size="large"
-            variant="outlined"
+            size="lg"
+            variant="outline"
             type="button"
             onClick={onCancel}
             disabled={isSubmitting}
@@ -355,7 +356,7 @@ export const FormActions: React.FC<FormActionsProps> = ({
             {cancelLabel}
           </Button>
         )}
-      </Stack>
+      </div>
     </div>
   );
 };

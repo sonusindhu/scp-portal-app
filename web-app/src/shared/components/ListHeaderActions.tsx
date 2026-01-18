@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button } from "@/components/ui/button";
 
 const ListHeaderActions = ({
   searchValue,
@@ -19,8 +19,8 @@ const ListHeaderActions = ({
     <Button
       className="blue-btn m-r-20"
       type="button"
-      size="large"
-      variant="contained"
+      size="lg"
+      variant="default"
       onClick={onCreate}
     >
       {createLabel}
