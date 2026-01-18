@@ -118,9 +118,9 @@ const NotesCardView = (props: NotesListProps) => {
           />
 
           <CardContent className="note-card-content">
-            <Typography variant="body2" color="text.secondary">
+            <p className="text-sm text-gray-600">
               {note.message}
-            </Typography>
+            </p>
           </CardContent>
           {/* <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">

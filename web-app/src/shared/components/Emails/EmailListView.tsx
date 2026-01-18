@@ -5,7 +5,6 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -58,9 +57,9 @@ const EmailListView = (props: EmailListProps) => {
             />
           
           <CardContent className="note-card-content">
-            <Typography variant="body2" color="text.secondary">
+            <p className="text-sm text-gray-600">
               {email.message}
-            </Typography>
+            </p>
           </CardContent>
           </Card>
       )) }

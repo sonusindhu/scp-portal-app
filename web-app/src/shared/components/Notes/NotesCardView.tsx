@@ -5,7 +5,6 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import WarningOutlinedIcon from "@mui/icons-material/WarningOutlined";
@@ -115,9 +114,9 @@ const NotesListView = (props: NotesListProps) => {
           />
 
           <CardContent className="note-card-content">
-            <Typography variant="body2" color="text.secondary">
+            <p className="text-sm text-gray-600">
               {note.message}
-            </Typography>
+            </p>
           </CardContent>
           {/* <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
