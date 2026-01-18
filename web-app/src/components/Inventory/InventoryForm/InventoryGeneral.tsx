@@ -59,86 +59,88 @@ const InventoryGeneral = () => {
       <PageHeading title="Edit Inventory" />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
-        <FormTextField
-          name="trackingNumber"
-          label="Tracking Number"
-          rules={ValidationRules.text(undefined, 100, true)}
-          className="m-2 w-full"
-        />
-        
-        <FormSelectField
-          name="status"
-          label="Status"
-          options={statusList}
-          rules={ValidationRules.select(true)}
-          className="m-2 w-full"
-        />
-        
-        <FormSelectField
-          name="type"
-          label="Type"
-          options={packages}
-          rules={ValidationRules.select(true)}
-          className="m-2 w-full"
-        />
+        <div className="grid grid-cols-4 gap-4">
+          <FormTextField
+            name="trackingNumber"
+            label="Tracking Number"
+            rules={ValidationRules.text(undefined, 100, true)}
+            className="m-2 w-full"
+          />
+          
+          <FormSelectField
+            name="status"
+            label="Status"
+            options={statusList}
+            rules={ValidationRules.select(true)}
+            className="m-2 w-full"
+          />
+          
+          <FormSelectField
+            name="type"
+            label="Type"
+            options={packages}
+            rules={ValidationRules.select(true)}
+            className="m-2 w-full"
+          />
 
-        <FormSelectField
-          name="companyId"
-          label="Company"
-          options={companies}
-          rules={ValidationRules.select(true)}
-          labelKey="name"
-          className="m-2 w-full"
-        />
-        
-        <FormTextField
-          name="location"
-          label="Location"
-          rules={ValidationRules.text(undefined, 50, false)}
-          multiline
-          className="m-2 w-full"
-        />
-        
-        <FormTextField
-          name="length"
-          label="Length"
-          type="number"
-          rules={ValidationRules.number(0, 9999, true)}
-          className="m-2 w-full"
-        />
+          <FormSelectField
+            name="companyId"
+            label="Company"
+            options={companies}
+            rules={ValidationRules.select(true)}
+            labelKey="name"
+            className="m-2 w-full"
+          />
+          
+          <FormTextField
+            name="location"
+            label="Location"
+            rules={ValidationRules.text(undefined, 50, false)}
+            multiline
+            className="m-2 w-full"
+          />
+          
+          <FormTextField
+            name="length"
+            label="Length"
+            type="number"
+            rules={ValidationRules.number(0, 9999, true)}
+            className="m-2 w-full"
+          />
 
-        <FormTextField
-          name="width"
-          label="Width"
-          type="number"
-          rules={ValidationRules.number(0, 9999, true)}
-          className="m-2 w-full"
-        />
+          <FormTextField
+            name="width"
+            label="Width"
+            type="number"
+            rules={ValidationRules.number(0, 9999, true)}
+            className="m-2 w-full"
+          />
 
-        <FormTextField
-          name="height"
-          label="Height"
-          type="number"
-          rules={ValidationRules.number(0, 9999, true)}
-          className="m-2 w-full"
-        />
+          <FormTextField
+            name="height"
+            label="Height"
+            type="number"
+            rules={ValidationRules.number(0, 9999, true)}
+            className="m-2 w-full"
+          />
 
-        <FormTextField
-          name="weight"
-          label="Weight"
-          type="number"
-          rules={ValidationRules.number(0, 99999, true)}
-          className="m-2 w-full"
-        />
+          <FormTextField
+            name="weight"
+            label="Weight"
+            type="number"
+            rules={ValidationRules.number(0, 99999, true)}
+            className="m-2 w-full"
+          />
 
-        <FormTextField
-          name="notes"
-          label="Notes"
-          rules={ValidationRules.text(undefined, 254, false)}
-          multiline
-          rows={4}
-          className="m-2 w-full"
-        />
+          <FormTextField
+            name="notes"
+            label="Notes"
+            rules={ValidationRules.text(undefined, 254, false)}
+            multiline
+            rows={4}
+            className="m-2 w-full col-span-4"
+          />
+        </div>
 
         <FormActions onCancel={handleClearForm} />
       </FormContainer>

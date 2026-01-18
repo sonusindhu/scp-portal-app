@@ -127,8 +127,10 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
               className={error ? "border-red-500" : ""}
             />
           )}
-          {error && <p className="text-sm text-red-500">{error.message}</p>}
-          {helperText && !error && <p className="text-sm text-gray-500">{helperText}</p>}
+          <div className="min-h-[20px]">
+            {error && <p className="text-sm text-red-500">{error.message}</p>}
+            {helperText && !error && <p className="text-sm text-gray-500">{helperText}</p>}
+          </div>
         </div>
       )}
     />
@@ -183,7 +185,9 @@ export const FormSelectField: React.FC<FormSelectFieldProps> = ({
                 ))}
             </SelectContent>
           </Select>
-          {error && <p className="text-sm text-red-500">{error.message}</p>}
+          <div className="min-h-[20px]">
+            {error && <p className="text-sm text-red-500">{error.message}</p>}
+          </div>
         </div>
       )}
     />

@@ -87,7 +87,7 @@ const ContactGeneral = () => {
       <PageHeading title="Edit Contact" />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
-        <div>
+        <div className="grid grid-cols-4 gap-4">
           <CommonFields.FirstName
             name="firstName"
             label="First Name"
@@ -105,9 +105,7 @@ const ContactGeneral = () => {
             label="Email"
             className="m-2 w-full"
           />
-        </div>
 
-        <div>
           <FormSelectField
             name="status"
             label="Status"
@@ -130,8 +128,7 @@ const ContactGeneral = () => {
             label="Department"
             className="m-2 w-full"
           />
-        </div>
-        <div>
+
           <CommonFields.JobTitle
             name="jobTitle"
             label="Job Title"
@@ -149,8 +146,7 @@ const ContactGeneral = () => {
             label="Address2"
             className="m-2 w-full"
           />
-        </div>
-        <div>
+
           <CommonFields.City
             name="city"
             label="City"
@@ -168,9 +164,7 @@ const ContactGeneral = () => {
             label="Country"
             className="m-2 w-full"
           />
-        </div>
 
-        <div>
           <CommonFields.Zipcode
             name="zipcode"
             label="Zipcode"

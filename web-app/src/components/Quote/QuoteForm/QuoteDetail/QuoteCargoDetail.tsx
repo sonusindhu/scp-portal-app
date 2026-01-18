@@ -19,9 +19,9 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
   return (
     <div className="container-fluid">
       <PageHeading title="Cargo Details" />
-      <div>
+      <div className="grid grid-cols-4 gap-4">
         <SelectElement
-          className="m-2 w-[15%]"
+          className="m-2 w-full"
           options={equipments}
           name={"cargoDetail.equipmentId"}
           label="Equipment"
@@ -30,7 +30,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
           rules={{ required: "Equipment is required" }}
         ></SelectElement>
         <SelectElement
-          className="m-2 w-[15%]"
+          className="m-2 w-full"
           options={commodities}
           name={"cargoDetail.commodityId"}
           label="Commodity"
@@ -40,30 +40,30 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
         ></SelectElement>
 
         <TextFieldElement
-          className="m-2 w-[15%]"
+          className="m-2 w-full"
           name={"cargoDetail.weight"}
           label="Weight"
           rules={{ required: "Weight is required" }}
         />
         <TextFieldElement
-          className="m-2 w-[15%]"
+          className="m-2 w-full"
           name={"cargoDetail.cargoValue"}
           label="Cargo Value"
           rules={{ required: "Cargo Value is required" }}
         />
         <TextFieldElement
-          className="m-2 w-[15%]"
+          className="m-2 w-full"
           name={"cargoDetail.temperature"}
           label="Temperature"
         />
         <TextFieldElement
-          className="m-2 w-[15%]"
+          className="m-2 w-full"
           name={"cargoDetail.pieces"}
           label="Pieces"
         />
 
         <SelectElement
-          className="m-2 w-[15%]"
+          className="m-2 w-full"
           options={cargos}
           name={"cargoDetail.cargoTypeId"}
           label="Cargo Type"
@@ -73,7 +73,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
         ></SelectElement>
 
         <SelectElement
-          className="m-2 w-[15%]"
+          className="m-2 w-full"
           options={YES_NO_OPTIONS}
           name={"cargoDetail.isHazmat"}
           label="Hazmat"
@@ -83,7 +83,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
 
 
         <TextFieldElement
-          className="m-2 w-[15%]"
+          className="m-2 w-full"
           name={"cargoDetail.hazmatName"}
           label="Hazmat Name"
           rules={{ 
@@ -92,7 +92,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
           }}
         />
         <TextFieldElement
-          className="m-2 w-[15%]"
+          className="m-2 w-full"
           name={"cargoDetail.hazmatClass"}
           label="Hazmat Class"
           rules={{ 
@@ -101,7 +101,7 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
           }}
         />
         <TextFieldElement
-          className="m-2 w-[15%]"
+          className="m-2 w-full"
           name={"cargoDetail.hazmatUN"}
           label="Hazmat UN"
           rules={{ 

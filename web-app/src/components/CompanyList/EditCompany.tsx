@@ -50,7 +50,7 @@ const EditCompany = () => {
       <PageHeading title="Edit Company" />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
-        <div>
+        <div className="grid grid-cols-4 gap-4">
           <FormTextField
             name="name"
             label="Name"
@@ -77,9 +77,7 @@ const EditCompany = () => {
             valueKey="id"
             labelKey="title"
           />
-        </div>
 
-        <div>
           <FormSelectField
             name="type"
             label="Type"
@@ -109,8 +107,7 @@ const EditCompany = () => {
             rules={ValidationRules.number(1, 99999, true)}
             className="m-2 w-full"
           />
-        </div>
-        <div>
+
           <CommonFields.Address1
             name="address1"
             label="Address1"
@@ -128,8 +125,7 @@ const EditCompany = () => {
             label="City"
             className="m-2 w-full"
           />
-        </div>
-        <div>
+
           <CommonFields.State
             name="state"
             label="State"
@@ -147,9 +143,7 @@ const EditCompany = () => {
             label="Zipcode"
             className="m-2 w-full"
           />
-        </div>
 
-        <div>
           <CommonFields.Phone
             name="phone"
             label="Phone"

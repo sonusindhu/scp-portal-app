@@ -30,39 +30,39 @@ const QuoteAccessorials = ({ control }) => {
       <div>
         {fields.map((item: any, index) => {
           return (
-            <div key={item.key}>
+            <div key={item.key} className="flex items-end gap-2 mb-4">
               <TextFieldElement
-                className="m-2"
+                className="m-2 flex-1"
                 name={`accessorials.${index}.name`}
                 label="Name"
                 rules={{ required: "Name is required" }}
               />
               <TextFieldElement
-                className="m-2"
+                className="m-2 flex-1"
                 name={`accessorials.${index}.quantity`}
                 label="Quantity"
                 rules={{ required: "Quantity is required" }}
               />
               <TextFieldElement
-                className="m-2"
+                className="m-2 flex-1"
                 name={`accessorials.${index}.rate`}
                 label="Rate"
                 rules={{ required: "Rate is required" }}
               />
               <TextFieldElement
-                className="m-2"
+                className="m-2 flex-1"
                 name={`accessorials.${index}.totalRate`}
                 label="Total Rate"
                 disabled={true}
               />
               <TextFieldElement
-                className="m-2"
+                className="m-2 flex-1"
                 name={`accessorials.${index}.description`}
                 label="Description"
                 disabled={true}
               />
 
-              <div className="add-remove-btn">
+              <div className="add-remove-btn flex gap-1">
                 <button
                   className="inline-flex items-center justify-center p-2 rounded-full hover:bg-gray-100 text-[#1976d2] disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label="Add Accessorial"
