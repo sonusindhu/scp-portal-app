@@ -1,40 +1,42 @@
-import { MenuItem, Select } from "@mui/material";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import React, {
   forwardRef,
   Fragment,
   useImperativeHandle,
-  useRef,
   useState,
 } from "react";
 
 export default forwardRef((props: any, ref) => {
   const [currentValue, setCurrentValue] = useState<string>("");
-  const selectRef = useRef<HTMLSelectElement>(null);
 
   // expose AG Grid Filter Lifecycle callbacks
   useImperativeHandle(ref, () => {
     return {
       onParentModelChanged(parentModel) {
         // When the filter is empty we will receive a null value here
-        if (!parentModel && selectRef && selectRef.current) {
-          selectRef.current.value = "";
+        if (!parentModel) {
           setCurrentValue("");
-        } else if (selectRef && selectRef.current) {
-          selectRef.current.value = parentModel.filter + "";
-          setCurrentValue(parentModel.filter);
+        } else {
+          setCurrentValue(parentModel.filter + "");
         }
       },
     };
   });
 
-  const onChanged = (input: any) => {
+  const onChanged = (value: string) => {
     let operator: string | null = null;
     let keyword = null;
-    if (input.target.value !== "") {
+    if (value !== "") {
       operator = "contains";
-      keyword = input.target.value;
+      keyword = value;
     }
-    setCurrentValue(input.target.value);
+    setCurrentValue(value);
     props.parentFilterInstance((instance) => {
       instance.onFloatingFilterChanged(operator, keyword);
     });
@@ -42,19 +44,18 @@ export default forwardRef((props: any, ref) => {
 
   return (
     <Fragment>
-      <Select
-        ref={selectRef}
-        value={currentValue}
-        onChange={onChanged}
-        displayEmpty
-        className="multi-select-filter"
-      >
-        <MenuItem value="">Select</MenuItem>
-        {props.column?.colDef?.dropdownData?.map((item) => (
-          <MenuItem key={item} value={item}>
-            {item}
-          </MenuItem>
-        ))}
+      <Select value={currentValue} onValueChange={onChanged}>
+        <SelectTrigger className="multi-select-filter">
+          <SelectValue placeholder="Select" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="">Select</SelectItem>
+          {props.column?.colDef?.dropdownData?.map((item) => (
+            <SelectItem key={item} value={item}>
+              {item}
+            </SelectItem>
+          ))}
+        </SelectContent>
       </Select>
     </Fragment>
   );
