@@ -31,7 +31,7 @@ export default forwardRef((props: any, ref) => {
 
   const onChanged = (value: string) => {
     let operator: string | null = null;
-    let keyword = null;
+    let keyword: string | null = null;
     if (value !== "") {
       operator = "contains";
       keyword = value;
@@ -49,7 +49,6 @@ export default forwardRef((props: any, ref) => {
           <SelectValue placeholder="Select" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="">Select</SelectItem>
           {props.column?.colDef?.dropdownData?.map((item) => (
             <SelectItem key={item} value={item}>
               {item}

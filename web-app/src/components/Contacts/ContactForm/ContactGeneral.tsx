@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  FormContainer,
-} from "react-hook-form-mui";
 import { useNavigate, useParams } from "react-router-dom";
-
 import { useForm } from "react-hook-form";
 
 import ContactService from "../../../services/contact.service";
 import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 import { useFormSubmit } from "../../../hooks";
-import { CommonFields, FormSelectField, FieldWidths, FormActions } from "../../../shared/components/FormFields";
+import { CommonFields, FormSelectField, FieldWidths, FormActions, FormContainer } from "../../../shared/components/FormFields";
 import { ValidationRules } from "../../../utils/validation.util";
 
 const ContactGeneral = () => {

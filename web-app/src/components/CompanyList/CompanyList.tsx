@@ -7,7 +7,7 @@ import AddCompany from "./AddCompany";
 import GridActionMenu from "../../shared/components/GridList/GridActionMenu";
 import { useDeleteConfirmation, useDrawer, useGridActions, useRefresh } from "../../hooks";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 
 const CompanyList: React.FC = () => {
   // Use custom hooks for common patterns

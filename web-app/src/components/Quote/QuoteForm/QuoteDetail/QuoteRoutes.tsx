@@ -1,5 +1,5 @@
 import React from "react";
-import { TextFieldElement } from "react-hook-form-mui";
+import { TextFieldElement } from "@/shared/components/FormFields";
 import { useFieldArray } from "react-hook-form";
 import PageHeading from "../../../../shared/components/PageHeading/PageHeading";
 
@@ -23,40 +23,30 @@ const QuoteRoutes = ({ control }) => {
                 name={`stops.${index}.origin`}
                 label="Origin"
                 disabled={true}
-                variant="outlined"
-                margin={"dense"}
               />
               <TextFieldElement
                 className="m-2"
-                required
                 name={`stops.${index}.city`}
                 label="City"
-                variant="outlined"
-                margin={"dense"}
+                rules={{ required: "City is required" }}
               />
               <TextFieldElement
                 className="m-2"
-                required
                 name={`stops.${index}.zipcode`}
                 label="Zipcode"
-                margin={"dense"}
-                variant="outlined"
+                rules={{ required: "Zipcode is required" }}
               />
               <TextFieldElement
                 className="m-2"
-                required
                 name={`stops.${index}.state`}
                 label="State"
-                margin={"dense"}
-                variant="outlined"
+                rules={{ required: "State is required" }}
               />
               <TextFieldElement
                 className="m-2"
-                required
                 name={`stops.${index}.country`}
                 label="Country"
-                margin={"dense"}
-                variant="outlined"
+                rules={{ required: "Country is required" }}
               />
             </div> 
           );  

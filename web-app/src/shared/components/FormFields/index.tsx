@@ -1,13 +1,23 @@
 /**
  * Reusable form field components with built-in validation
- * Wraps react-hook-form-mui components with standardized styling and validation
+ * Wraps shadcn-ui components with react-hook-form integration
  */
 
 import React from "react";
-import { TextFieldElement, SelectElement, CheckboxElement } from "react-hook-form-mui";
-import { RegisterOptions } from "react-hook-form";
+import { useFormContext, Controller, RegisterOptions, FormProvider } from "react-hook-form";
 import { ValidationRules } from "../../../utils/validation.util";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 /**
  * Common form field props
@@ -30,7 +40,6 @@ interface FormTextFieldProps extends BaseFieldProps {
   multiline?: boolean;
   rows?: number;
   autoFocus?: boolean;
-  InputLabelProps?: any;
 }
 
 /**
@@ -83,24 +92,45 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
   multiline = false,
   rows,
   autoFocus = false,
-  InputLabelProps,
 }) => {
+  const { control } = useFormContext();
+
   return (
-    <TextFieldElement
+    <Controller
       name={name}
-      label={label}
-      type={type}
+      control={control}
       rules={rules}
-      className={className}
-      disabled={disabled}
-      helperText={helperText}
-      placeholder={placeholder}
-      multiline={multiline}
-      rows={rows}
-      autoFocus={autoFocus}
-      InputLabelProps={InputLabelProps}
-      variant="outlined"
-      margin="dense"
+      render={({ field, fieldState: { error } }) => (
+        <div className={cn("space-y-2", className)}>
+          <Label htmlFor={name}>{label}</Label>
+          {multiline ? (
+            <textarea
+              {...field}
+              id={name}
+              placeholder={placeholder}
+              disabled={disabled}
+              autoFocus={autoFocus}
+              rows={rows}
+              className={cn(
+                "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+                error && "border-red-500"
+              )}
+            />
+          ) : (
+            <Input
+              {...field}
+              id={name}
+              type={type}
+              placeholder={placeholder}
+              disabled={disabled}
+              autoFocus={autoFocus}
+              className={error ? "border-red-500" : ""}
+            />
+          )}
+          {error && <p className="text-sm text-red-500">{error.message}</p>}
+          {helperText && !error && <p className="text-sm text-gray-500">{helperText}</p>}
+        </div>
+      )}
     />
   );
 };
@@ -118,16 +148,44 @@ export const FormSelectField: React.FC<FormSelectFieldProps> = ({
   labelKey = "value",
   valueKey = "id",
 }) => {
+  const { control } = useFormContext();
+
   return (
-    <SelectElement
+    <Controller
       name={name}
-      label={label}
-      options={options}
+      control={control}
       rules={rules}
-      className={className}
-      disabled={disabled}
-      labelKey={labelKey}
-      valueKey={valueKey}
+      render={({ field, fieldState: { error } }) => (
+        <div className={cn("space-y-2", className)}>
+          <Label htmlFor={name}>{label}</Label>
+          <Select
+            value={field.value?.toString()}
+            onValueChange={(value) => {
+              // Convert back to number if the original value was a number
+              const option = options.find(opt => opt[valueKey]?.toString() === value);
+              field.onChange(option ? option[valueKey] : value);
+            }}
+            disabled={disabled}
+          >
+            <SelectTrigger className={error ? "border-red-500" : ""}>
+              <SelectValue placeholder={`Select ${label}`} />
+            </SelectTrigger>
+            <SelectContent>
+              {options
+                .filter(option => option[valueKey] !== "" && option[valueKey] != null)
+                .map((option) => (
+                  <SelectItem
+                    key={option[valueKey]}
+                    value={option[valueKey]?.toString()}
+                  >
+                    {option[labelKey]}
+                  </SelectItem>
+                ))}
+            </SelectContent>
+          </Select>
+          {error && <p className="text-sm text-red-500">{error.message}</p>}
+        </div>
+      )}
     />
   );
 };
@@ -141,12 +199,29 @@ export const FormCheckboxField: React.FC<FormCheckboxFieldProps> = ({
   className = "m-2",
   disabled = false,
 }) => {
+  const { control } = useFormContext();
+
   return (
-    <CheckboxElement
+    <Controller
       name={name}
-      label={label}
-      className={className}
-      disabled={disabled}
+      control={control}
+      render={({ field, fieldState: { error } }) => (
+        <div className={cn("flex items-center space-x-2", className)}>
+          <Checkbox
+            id={name}
+            checked={field.value}
+            onCheckedChange={field.onChange}
+            disabled={disabled}
+          />
+          <Label
+            htmlFor={name}
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            {label}
+          </Label>
+          {error && <p className="text-sm text-red-500">{error.message}</p>}
+        </div>
+      )}
     />
   );
 };
@@ -359,3 +434,37 @@ export const FormActions: React.FC<FormActionsProps> = ({
     </div>
   );
 };
+
+/**
+ * Form container component - wraps form with FormProvider
+ * Provides compatibility with react-hook-form-mui FormContainer
+ */
+interface FormContainerProps {
+  formContext: any;
+  onSuccess: (data: any) => void;
+  children: React.ReactNode;
+}
+
+export const FormContainer: React.FC<FormContainerProps> = ({
+  formContext,
+  onSuccess,
+  children,
+}) => {
+  const { handleSubmit, ...methods } = formContext;
+
+  return (
+    <FormProvider {...formContext}>
+      <form onSubmit={handleSubmit(onSuccess)}>
+        {children}
+      </form>
+    </FormProvider>
+  );
+};
+
+/**
+ * Compatibility exports - allows direct usage like react-hook-form-mui
+ * These wrap our form components for drop-in replacement
+ */
+export const TextFieldElement = FormTextField;
+export const SelectElement = FormSelectField;
+export const CheckboxElement = FormCheckboxField;

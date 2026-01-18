@@ -1,14 +1,10 @@
 import React from "react";
-import {
-  FormContainer,
-} from "react-hook-form-mui";
-
 import { useForm } from "react-hook-form";
 
 import AuthService from "../../services/auth.service";
 import UserProfileImage from "./UserProfileImage";
 import { useFormSubmit } from "../../hooks";
-import { CommonFields, FormTextField, FormActions } from "../../shared/components/FormFields";
+import { CommonFields, FormTextField, FormActions, FormContainer } from "../../shared/components/FormFields";
 import { ValidationRules } from "../../utils/validation.util";
 
 const UserForm = (props) => {

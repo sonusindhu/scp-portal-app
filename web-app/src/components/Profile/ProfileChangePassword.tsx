@@ -1,11 +1,9 @@
 import React from "react";
-import { FormContainer } from "react-hook-form-mui";
-
 import { useForm } from "react-hook-form";
 
 import AuthService from "../../services/auth.service";
 import { useFormSubmit } from "../../hooks";
-import { CommonFields, FormActions } from "../../shared/components/FormFields";
+import { CommonFields, FormActions, FormContainer } from "../../shared/components/FormFields";
 import { ValidationRules } from "../../utils/validation.util";
 
 const ProfileChangePassword = () => {

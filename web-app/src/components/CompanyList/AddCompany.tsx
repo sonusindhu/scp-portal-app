@@ -1,16 +1,10 @@
 import React from "react";
-
 import { useForm } from "react-hook-form";
-
-
-import {
-  FormContainer,
-} from "react-hook-form-mui";
 
 import CompanyService from "../../services/company.service";
 import HeaderWithTitle from "../../shared/components/HeaderWithTitle";
 import { useFormSubmit } from "../../hooks";
-import { CommonFields, FormTextField, FormSelectField, FieldWidths, FormActions } from "../../shared/components/FormFields";
+import { CommonFields, FormTextField, FormSelectField, FieldWidths, FormActions, FormContainer } from "../../shared/components/FormFields";
 import { ValidationRules } from "../../utils/validation.util";
 
 const AddCompany = (props) => {
@@ -58,9 +52,8 @@ const AddCompany = (props) => {
           name="status"
           label="Status"
           options={[
-            { id: "", title: "Select" },
-            { id: "active", title: "Active" },
-            { id: "inactive", title: "Inactive" },
+            { id: "active", value: "Active" },
+            { id: "inactive", value: "Inactive" },
           ]}
           rules={ValidationRules.select(true)}
           className="m-2 w-full"
@@ -70,9 +63,8 @@ const AddCompany = (props) => {
           name="type"
           label="Type"
           options={[
-            { id: "", title: "Select" },
-            { id: "customer", title: "Customer" },
-            { id: "carrier", title: "Carrier" },
+            { id: "customer", value: "Customer" },
+            { id: "carrier", value: "Carrier" },
           ]}
           rules={ValidationRules.select(true)}
           className="m-2 w-full"

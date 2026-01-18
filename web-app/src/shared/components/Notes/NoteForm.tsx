@@ -3,7 +3,7 @@ import {
   FormContainer,
   TextFieldElement,
   CheckboxElement,
-} from "react-hook-form-mui";
+} from "../FormFields";
 import { useForm } from "react-hook-form";
 import { FormActions } from "../FormFields";
 import toast from "../../../utils/toast.util";
@@ -75,7 +75,6 @@ const NoteForm = (props: NoteProps) => {
             className="m-2 w-[96%]"
             name={"title"}
             label="Note Title"
-            variant="outlined"
             rules={ValidationRules.text(undefined, 100, true)}
           />
         </div>
@@ -84,7 +83,6 @@ const NoteForm = (props: NoteProps) => {
             className="m-2 w-[96%]"
             name={"message"}
             label="Note Description"
-            variant="outlined"
             rules={ValidationRules.text(undefined, 1000, true)}
             multiline={true}
             rows={7}

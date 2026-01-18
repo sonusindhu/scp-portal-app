@@ -3,7 +3,7 @@ import {
   FormContainer,
   TextFieldElement,
   CheckboxElement,
-} from "react-hook-form-mui";
+} from "../FormFields";
 
 import { useForm } from "react-hook-form";
 
@@ -14,6 +14,7 @@ import { ResponseModel } from "../../../models/common.model";
 import EmailService from "../../../services/email.service";
 import { ValidationRules } from "../../../utils/validation.util";
 import { FormTextField, FormActions } from "../FormFields";
+import { ApiResponse } from "@/services/BaseService";
 
 const EmailForm = (props: EmailFormProps) => {
   const email: Partial<Email> = props.email || {};
@@ -26,7 +27,7 @@ const EmailForm = (props: EmailFormProps) => {
 
   const handleClearForm = () => reset();
 
-  const handleSuccess = (response: ResponseModel) => {
+  const handleSuccess = (response: ApiResponse<Email>) => {
     if (response.status) {
       toast.success(response.message);
       reset({ ...email, isCritical: false, title: "", message: "" });

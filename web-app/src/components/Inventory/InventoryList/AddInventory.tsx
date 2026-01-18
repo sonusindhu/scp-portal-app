@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  FormContainer,
-} from "react-hook-form-mui";
 import InventoryService from "../../../services/inventory.service";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
 import { useFormSubmit } from "../../../hooks";
 import { Button } from "@/components/ui/button";
-import { FormTextField, FormSelectField, FieldWidths, FormActions } from "../../../shared/components/FormFields";
+import { FormTextField, FormSelectField, FieldWidths, FormActions, FormContainer } from "../../../shared/components/FormFields";
 import { ValidationRules } from "../../../utils/validation.util";
 
 const AddInventory = (props) => {

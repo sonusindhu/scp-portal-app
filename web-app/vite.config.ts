@@ -26,12 +26,20 @@ export default defineConfig({
         manualChunks: {
           // Vendor chunks for better caching
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          // Split MUI into separate chunks for better caching
-          'mui-core': ['@mui/material', '@emotion/react', '@emotion/styled'],
-          'mui-pickers': ['@mui/x-date-pickers'], // Lazy loaded, separate cache
-          'form-vendor': ['react-hook-form', 'react-hook-form-mui'],
+          // Radix UI and form libraries
+          'radix-vendor': [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-select',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-checkbox',
+            '@radix-ui/react-avatar',
+            '@radix-ui/react-slot',
+            '@radix-ui/react-label',
+          ],
+          'form-vendor': ['react-hook-form'],
           'table-vendor': ['@tanstack/react-table'],
-          'utils-vendor': ['axios', 'date-fns', 'notistack'],
+          'utils-vendor': ['axios', 'date-fns', 'notistack', 'lucide-react'],
         },
       },
     },
@@ -46,7 +54,7 @@ export default defineConfig({
       'react',
       'react-dom',
       'react-router-dom',
-      '@mui/material',
+      'react-hook-form',
       'axios',
       'date-fns',
     ],

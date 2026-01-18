@@ -1,15 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import {
-  FormContainer,
-} from "react-hook-form-mui";
 
 import CompanyService from "../../services/company.service";
 import PageHeading from "../../shared/components/PageHeading/PageHeading";
 import { useFormSubmit } from "../../hooks";
 import { ValidationRules } from "../../utils/validation.util";
-import { CommonFields, FormTextField, FormSelectField, FieldWidths, FormActions } from "../../shared/components/FormFields";
+import { CommonFields, FormTextField, FormSelectField, FieldWidths, FormActions, FormContainer } from "../../shared/components/FormFields";
 
 const EditCompany = () => {
   let { id } = useParams();

@@ -1,11 +1,11 @@
 import React from "react";
+import { useForm, FormProvider } from "react-hook-form";
 import {
   FormContainer,
   TextFieldElement,
   SelectElement,
-} from "react-hook-form-mui";
-import { useForm } from "react-hook-form";
-import { FormActions } from "../FormFields";
+  FormActions,
+} from "../FormFields";
 
 import toast from "../../../utils/toast.util";
 import { Task } from "../../models/Task";
@@ -49,7 +49,6 @@ const TaskForm = (props: TaskProps) => {
           className="m-2 w-[96%]"
           name={"subject"}
           label="Subject"
-          variant="outlined"
           rules={ValidationRules.text(undefined, 100, true)}
         />
       </div>
@@ -58,7 +57,6 @@ const TaskForm = (props: TaskProps) => {
           className="m-2 w-[96%]"
           name={"description"}
           label="Description"
-          variant="outlined"
           rules={ValidationRules.text(undefined, 1000, true)}
           multiline={true}
           rows={4}
@@ -111,7 +109,6 @@ const TaskForm = (props: TaskProps) => {
             className="m-2 w-[96%]"
             name={"dueDateTime"}
             label="Due Date"
-            variant="outlined"
             type="date"
           />
         </div>
@@ -120,7 +117,6 @@ const TaskForm = (props: TaskProps) => {
             className="m-2 w-[96%]"
             name={"reminderDateTime"}
             label="Reminder Date"
-            variant="outlined"
             type="date"
           />
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { TextFieldElement } from "react-hook-form-mui";
+import { TextFieldElement } from "@/shared/components/FormFields";
 import { useFieldArray } from "react-hook-form";
 import { PlusCircle, MinusCircle } from "lucide-react";
 import PageHeading from "../../../../shared/components/PageHeading/PageHeading";
@@ -33,43 +33,33 @@ const QuoteAccessorials = ({ control }) => {
             <div key={item.key}>
               <TextFieldElement
                 className="m-2"
-                required
                 name={`accessorials.${index}.name`}
                 label="Name"
-                variant="outlined"
-                margin={"dense"}
+                rules={{ required: "Name is required" }}
               />
               <TextFieldElement
                 className="m-2"
-                required
                 name={`accessorials.${index}.quantity`}
                 label="Quantity"
-                margin={"dense"}
-                variant="outlined"
+                rules={{ required: "Quantity is required" }}
               />
               <TextFieldElement
                 className="m-2"
-                required
                 name={`accessorials.${index}.rate`}
                 label="Rate"
-                margin={"dense"}
-                variant="outlined"
+                rules={{ required: "Rate is required" }}
               />
               <TextFieldElement
                 className="m-2"
                 name={`accessorials.${index}.totalRate`}
                 label="Total Rate"
-                margin={"dense"}
                 disabled={true}
-                variant="outlined"
               />
               <TextFieldElement
                 className="m-2"
                 name={`accessorials.${index}.description`}
                 label="Description"
                 disabled={true}
-                variant="outlined"
-                margin={"dense"}
               />
 
               <div className="add-remove-btn">

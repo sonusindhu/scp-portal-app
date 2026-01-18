@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  FormContainer,
-} from "react-hook-form-mui";
 import InventoryService from "../../../services/inventory.service";
 import { useNavigate, useParams } from "react-router-dom";
 import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 import { useFormSubmit } from "../../../hooks";
-import { FormTextField, FormSelectField, FieldWidths, FormActions } from "../../../shared/components/FormFields";
+import { FormTextField, FormSelectField, FieldWidths, FormActions, FormContainer } from "../../../shared/components/FormFields";
 import { ValidationRules } from "../../../utils/validation.util";
 
 const InventoryGeneral = () => {

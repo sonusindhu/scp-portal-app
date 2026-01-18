@@ -215,7 +215,6 @@ const CompanyForm = () => {
       <LoadingButton 
         loading={loading.delete}
         loadingText="Deleting..."
-        variant="outlined"
         color="error"
         onClick={handleDelete}
       >

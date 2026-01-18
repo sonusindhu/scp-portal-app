@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import {
-  FormContainer,
-} from "react-hook-form-mui";
-
 import QuoteService from "../../../services/quote.service";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
 import { Button } from "@/components/ui/button";
 import { useFormSubmit } from "../../../hooks";
-import { FormTextField, FormSelectField, FieldWidths, FormActions } from "../../../shared/components/FormFields";
+import { FormTextField, FormSelectField, FieldWidths, FormActions, FormContainer } from "../../../shared/components/FormFields";
 import { ValidationRules } from "../../../utils/validation.util";
 import { SERVICE_TYPES, TRANSPORT_MODES } from "../../../utils/constants.util";
 
@@ -140,7 +136,6 @@ const AddQuote = (props) => {
             name="expiryDate"
             type="date"
             label="Expiry Date"
-            InputLabelProps={{ shrink: true }}
           />
         </div>
 
