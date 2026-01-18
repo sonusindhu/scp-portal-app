@@ -1,8 +1,13 @@
-import { IconButton, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import { MenuItem as MenuItemModel } from "../../models/MenuItem";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface GridActionMenuProps{
   className: string,
@@ -12,18 +17,8 @@ interface GridActionMenuProps{
   data?: any,
 }
 
-const ITEM_HEIGHT = 48;
 const GridActionMenu = (props: GridActionMenuProps) => {
-  const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-    setOpen(false);
-  };
 
   const actionEvent = (event, menu: MenuItemModel) => {
     const data = props.data;
@@ -38,48 +33,34 @@ const GridActionMenu = (props: GridActionMenuProps) => {
 
   return (
     <span className={props.className}>
-      <IconButton
-        aria-label="more"
-        id="long-button"
-        aria-controls={open ? "long-menu" : undefined}
-        aria-expanded={open ? "true" : undefined}
-        aria-haspopup="true"
-        className="action-icon"
-        onClick={handleClick}
-        disabled={!props.menus || props.menus.length === 0 || props.disabled}
-      >
-        <MoreVertIcon />
-      </IconButton>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
+        <DropdownMenuTrigger asChild>
+          <button
+            aria-label="more"
+            className="action-icon inline-flex items-center justify-center p-2 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={!props.menus || props.menus.length === 0 || props.disabled}
+          >
+            <MoreVertIcon />
+          </button>
+        </DropdownMenuTrigger>
 
-      {props.menus && props.menus.length > 0 ? (
-        <Menu
-          id="long-menu"
-          MenuListProps={{
-            "aria-labelledby": "long-button",
-          }}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          PaperProps={{
-            style: {
-              maxHeight: ITEM_HEIGHT * 4.5,
-              width: "20ch",
-            },
-          }}
-        >
-          {props.menus.map((menu: MenuItemModel) => (
-            <MenuItem
-              disabled={menu.disabled}
-              key={menu.key}
-              onClick={($event) => actionEvent($event, menu)}
-            >
-              {menu.title}
-            </MenuItem>
-          ))}
-        </Menu>
-      ) : (
-        ""
-      )}
+        {props.menus && props.menus.length > 0 && (
+          <DropdownMenuContent 
+            align="end"
+            className="w-[20ch] max-h-[216px] overflow-auto"
+          >
+            {props.menus.map((menu: MenuItemModel) => (
+              <DropdownMenuItem
+                key={menu.key}
+                disabled={menu.disabled}
+                onClick={($event) => actionEvent($event, menu)}
+              >
+                {menu.title}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        )}
+      </DropdownMenu>
     </span>
   );
 };
