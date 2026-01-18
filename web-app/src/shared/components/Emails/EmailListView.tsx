@@ -20,7 +20,7 @@ const EmailListView = (props: EmailListProps) => {
       <h3>Emails({ props.emails.length })</h3>
       { props.emails.map( (email: Email) => (
 
-        <Card className="note-card">
+        <Card key={email.id} className="note-card">
             <CardHeader
               className="note-card-header"
               avatar={

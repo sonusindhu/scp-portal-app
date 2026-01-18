@@ -58,14 +58,13 @@ header a:hover {
   color: white;
 }
 
-header.MuiAppBar-root a:hover,
-header.MuiAppBar-root a.active {
+header a.active {
   color: white;
   font-weight: 600;
   border-bottom: 2px solid;
 }
 
-header.MuiAppBar-root a {
+header a {
   font-weight: 600;
 }
 
@@ -77,37 +76,34 @@ a.fl-right {
   justify-content: center;
 }
 
-.custom-header-checkbox .MuiCheckbox-root {
+.custom-header-checkbox input[type="checkbox"] {
   padding-left: 0;
   width: 20px;
   height: 20px;
 }
-.custom-header-checkbox .MuiCheckbox-root .MuiSvgIcon-root {
-  width: 20px;
-  height: 20px;
-}
-header.MuiPaper-root .MuiBox-root .MuiButton-root.MuiButton-text {
+
+header .heading button {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-header .heading .MuiButtonBase-root.action-icon {
+
+header .heading button.action-icon {
   border: 1px solid #c2c2c2;
   width: 40px;
   height: 40px;
 }
-header .heading .MuiButtonBase-root.action-icon:hover {
+
+header .heading button.action-icon:hover {
   border: 1px solid;
   background-color: rgba(0, 0, 0, 0.04);
 }
+
 header .heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 10px;
   margin-bottom: 10px;
-}
-header .MuiContainer-root {
-  max-width: 100%;
 }
 
 .ag-full-width-container .ag-theme-alpine .ag-loading {
@@ -159,57 +155,47 @@ header .MuiContainer-root {
   z-index: 1;
 }
 
-ul.MuiList-root.MuiList-padding.MuiMenu-list {
-  max-height: 200px;
-}
-
-.quote-datepicker .MuiFormControl-root {
+.quote-datepicker .form-control {
   width: 300px;
   margin-left: 8px;
   margin-top: 8px;
 }
 
-.container-fluid div.MuiCard-root.note-card {
+.container-fluid div.note-card {
   margin-top: 20px;
   background-color: #f7f1f1;
 }
 
-.sub-header .MuiChip-root {
+.sub-header .badge {
   margin-left: 20px;
 }
-/* 
-div.container-fluid.note-list {
-  overflow-y: scroll;
-  height: calc(100vh - 120px);
-} */
 
 .note-list .note-card div.note-card-header {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
 .note-list .note-card div.note-card-content {
   padding-top: 0;
 }
 
-div.MuiAvatar-root.avatar-profile {
+div.avatar-profile {
   width: 100px;
   height: 100px;
   cursor: pointer;
 }
 
-.MuiDialog-container.MuiDialog-scrollPaper .MuiPaper-root {
-  max-width: 950px;
-}
-
-.MuiDialogContent-root.MuiDialogContent-dividers.user-image-dialog {
+.user-image-dialog {
   width: 900px;
+  max-width: 950px;
 }
 
 .profile-container {
   display: flex;
   justify-content: space-around;
 }
-.profile-containe > div {
+
+.profile-container > div {
   display: inline-block;
   width: 400px;
   height: 400px;
@@ -235,10 +221,10 @@ div.MuiAvatar-root.avatar-profile {
 }
 
 .user-header .user-details p.job-title {
-  font-size: 18;
+  font-size: 18px;
 }
 
-.MuiGrid-root.MuiGrid-item.left-user-form {
+.left-user-form {
   border-right: 2px solid #c2c2c2;
   margin-top: 9px;
 }
@@ -251,62 +237,56 @@ div.user-form {
 .quote-task-datepicker {
   display: flex;
 }
+
 .reminder-date {
   width: 47%;
   margin: 8px;
 }
+
 .due-date {
   width: 46%;
   margin: 8px;
 }
+
 .add-remove-btn {
   width: 110px;
   display: inline-flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
   flex-direction: row;
   position: relative;
 }
-.add-remove-btn .MuiIconButton-colorPrimary {
+
+.add-remove-btn button {
   width: 35px;
 }
+
 button.m-r-20 {
   margin-right: 20px;
 }
+
 button.blue-btn {
   background-color: #1976d2;
   color: #fff;
 }
+
 button.blue-btn:hover {
   background-color: #154e87;
   color: #fff;
 }
-.MuiAppBar-colorPrimary {
-  background-color: #1976d2;
-}
-.ag-header-row .ag-header-cell{
+
+.ag-header-row .ag-header-cell {
   padding: 7px;
 }
-.ag-header-row .ag-header-cell .text-filter{
+
+.ag-header-row .ag-header-cell .text-filter {
   height: 24px;
   padding-left: 10px;
 }
-.multi-select-filter.MuiInput-underline:hover:not(.Mui-disabled):before{
-  border-bottom: 1px solid rgb(118, 118, 118);
-}
-.multi-select-filter{
-  width: 93px;
-  border: 1px solid rgb(118, 118, 118);
-}
-.multi-select-filter .MuiSelect-select{
-  padding-left: 10px;
-}
-/* .form-container form{
-  padding-top: 75px;
-  padding-bottom: 80px;
-} */
 
-.close-icon{
+.multi-select-filter {
+  width: 93px;
+}
+
+.close-icon {
   width: 24px;
   height: 24px;
   cursor: pointer;
@@ -317,10 +297,12 @@ button.blue-btn:hover {
   background: #181a1b;
   color: #e0e0e0;
 }
+
 .theme-light {
   background: #fff;
   color: #222;
 }
+
 .app-root {
   min-height: 100vh;
   transition: background 0.2s, color 0.2s;
