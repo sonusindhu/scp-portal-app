@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 
-import { Grid, Tab, Tabs } from "@mui/material";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "../../../hooks";
 
 const InventoryForm = (props) => {
@@ -11,9 +11,9 @@ const InventoryForm = (props) => {
   let [selectedTab, setSelectedTab] = useState<string>(pathname ?? 'details');
   const navigate = useNavigate();
 
-  const handleChangeTab = (event, tab: string) => {
-    setSelectedTab(tab);
-    navigate(tab);
+  const handleChangeTab = (value: string) => {
+    setSelectedTab(value);
+    navigate(value);
   };
 
   // check if user is authenticated, if not redirect to login page
@@ -28,21 +28,22 @@ const InventoryForm = (props) => {
 
   return (
     <div className="container-fluid">
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
+      <div className="grid grid-cols-12 gap-4">
+        <div className="col-span-12">
           <Tabs
             value={selectedTab}
-            onChange={handleChangeTab}
-            aria-label="Vertical tabs example"
+            onValueChange={handleChangeTab}
           >
-            <Tab value="details" label="General" />
-            <Tab value="notes" label="Notes" />
-            <Tab value="emails" label="Emails" />
-            <Tab value="tasks" label="Tasks" />
+            <TabsList>
+              <TabsTrigger value="details">General</TabsTrigger>
+              <TabsTrigger value="notes">Notes</TabsTrigger>
+              <TabsTrigger value="emails">Emails</TabsTrigger>
+              <TabsTrigger value="tasks">Tasks</TabsTrigger>
+            </TabsList>
           </Tabs>
           <Outlet />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </div>
   );
 };
