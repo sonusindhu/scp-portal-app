@@ -4,7 +4,8 @@
  */
 
 import React from "react";
-import { Button, ButtonProps, CircularProgress, Skeleton } from "@mui/material";
+import { CircularProgress, Skeleton } from "@mui/material";
+import { Button, type ButtonProps } from "@/components/ui/button";
 import "./Loading.css";
 
 /**
@@ -87,7 +88,6 @@ export const LoadingButton: React.FC<LoadingButtonProps> = ({
   loading = false,
   loadingText,
   children,
-  startIcon,
   disabled,
   ...buttonProps
 }) => {
@@ -95,8 +95,9 @@ export const LoadingButton: React.FC<LoadingButtonProps> = ({
     <Button
       {...buttonProps}
       disabled={loading || disabled}
-      startIcon={loading ? <CircularProgress size={20} /> : startIcon}
+      className={`flex items-center gap-2 ${buttonProps.className || ''}`}
     >
+      {loading && <CircularProgress size={20} />}
       {loading && loadingText ? loadingText : children}
     </Button>
   );

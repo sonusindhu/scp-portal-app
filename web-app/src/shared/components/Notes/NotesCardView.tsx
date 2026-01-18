@@ -12,7 +12,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import WarningOutlinedIcon from "@mui/icons-material/WarningOutlined";
 
 import { Note } from "../../models/Note";
-import { Chip } from "@mui/material";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import PageHeading from "../PageHeading/PageHeading";
@@ -75,8 +75,8 @@ const NotesListView = (props: NotesListProps) => {
         <Button
           className="blue-btn m-r-20"
           type="button"
-          size="large"
-          variant="contained"
+          size="lg"
+          variant="default"
           onClick={onCreate}
         >
           Create
@@ -103,10 +103,10 @@ const NotesListView = (props: NotesListProps) => {
                 <span>{noteSubHeader(note)}</span>
 
                 {note.isCritical && (
-                  <Chip
-                    icon={<WarningOutlinedIcon color="error" />}
-                    label="Critical"
-                  />
+                  <Badge variant="destructive" className="flex items-center gap-1">
+                    <WarningOutlinedIcon fontSize="small" />
+                    Critical
+                  </Badge>
                 )}
               </div>
             }
@@ -135,8 +135,8 @@ const NotesListView = (props: NotesListProps) => {
             onSuccess={onSuccess}
             onCloseDrawer={closeDrawer}
         />
-        `
-      </Drawer>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };

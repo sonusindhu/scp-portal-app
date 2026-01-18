@@ -51,8 +51,8 @@ const CompanyContactList: React.FC = () => {
         <Button
           className="blue-btn"
           type="button"
-          size="large"
-          variant="contained"
+          size="lg"
+          variant="default"
           onClick={openDrawer}
           aria-label="Create contact"
         >

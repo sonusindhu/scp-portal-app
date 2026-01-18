@@ -11,7 +11,7 @@ import { red } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
 
-import { Chip } from "@mui/material";
+import { Badge } from "@/components/ui/badge";
 import { Task } from "../../models/Task";
 
 interface TaskListProps {
@@ -47,7 +47,12 @@ const TasksListView = (props: TaskListProps) => {
               subheader={
                 <div className="sub-header">
                   <span>{ taskSubHeader(task) }</span>
-                  { task.isCritical && <Chip icon={<WarningOutlinedIcon color="error"  />} label="Critical" /> }                  
+                  { task.isCritical && (
+                    <Badge variant="destructive" className="flex items-center gap-1">
+                      <WarningOutlinedIcon fontSize="small" />
+                      Critical
+                    </Badge>
+                  ) }                  
                   
                 </div>
               }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import EmailListView from "../../../shared/components/Emails/EmailListView";
-import { Grid } from "@mui/material";
 import EmailForm from "../../../shared/components/Emails/EmailForm";
 import { Email } from "../../../shared/models/Email";
 import EmailService from "../../../services/email.service";
@@ -30,7 +29,7 @@ const QuoteEmails = () => {
   return (
     <div className="grid grid-cols-12 gap-4">
       <div className="col-span-4">
-        <EmailForm options={options} onSuccess={onSuccess} />
+        <EmailForm email={email} onSuccess={onSuccess} />
       </div>
 
       <div className="col-span-8">

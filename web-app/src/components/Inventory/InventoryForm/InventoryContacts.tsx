@@ -55,7 +55,7 @@ const CompanyContactList = () => {
           className="blue-btn m-r-20"
           type="button"
           size="large"
-          variant="contained"
+          variant="default"
           onClick={onCreate}
         >
           Create

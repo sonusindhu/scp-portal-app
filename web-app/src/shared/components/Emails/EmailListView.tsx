@@ -12,7 +12,7 @@ import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { Email, EmailListProps } from "../../models/Email";
-import { Chip } from "@mui/material";
+import { Badge } from "@/components/ui/badge";
 
 const EmailListView = (props: EmailListProps) => {
   
@@ -44,7 +44,12 @@ const EmailListView = (props: EmailListProps) => {
                 <div className="sub-header">
                   <span>{ emailSubHeader(email) }</span>
 
-                  { email.isCritical && <Chip icon={<WarningOutlinedIcon color="error"  />} label="Critical" /> }
+                  { email.isCritical && (
+                    <Badge variant="destructive" className="flex items-center gap-1">
+                      <WarningOutlinedIcon fontSize="small" />
+                      Critical
+                    </Badge>
+                  ) }
                                     
                 </div>
               }
