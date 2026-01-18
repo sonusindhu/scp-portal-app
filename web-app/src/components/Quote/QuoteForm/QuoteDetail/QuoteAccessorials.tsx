@@ -1,7 +1,6 @@
 import React from "react";
 import { TextFieldElement } from "react-hook-form-mui";
 import { useFieldArray } from "react-hook-form";
-import { IconButton } from "@mui/material";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import RemoveCircleOutlinedIcon from "@mui/icons-material/RemoveCircleOutlined";
 import PageHeading from "../../../../shared/components/PageHeading/PageHeading";
@@ -75,22 +74,24 @@ const QuoteAccessorials = ({ control }) => {
               />
 
               <div className="add-remove-btn">
-                <IconButton
-                  color="primary"
+                <button
+                  className="inline-flex items-center justify-center p-2 rounded-full hover:bg-gray-100 text-[#1976d2] disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label="Add Accessorial"
                   onClick={() => onAddAcc(index)}
+                  type="button"
                 >
                   <AddCircleOutlinedIcon fontSize="large" />
-                </IconButton>
+                </button>
 
-                <IconButton
-                  color="primary"
+                <button
+                  className="inline-flex items-center justify-center p-2 rounded-full hover:bg-gray-100 text-[#1976d2] disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label="Remove Accessorial"
                   disabled={fields.length === 1}
                   onClick={() => onRemoveAcc(index)}
+                  type="button"
                 >
                   <RemoveCircleOutlinedIcon fontSize="large" />
-                </IconButton>
+                </button>
               </div>
             </div>
           );
