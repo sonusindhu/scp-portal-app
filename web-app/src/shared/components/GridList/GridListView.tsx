@@ -242,7 +242,7 @@ const GridListView = forwardRef((props: GridListViewProps, ref) => {
                           style={{ width: "88%", padding: "4px" }}
                           value={columnFilters[col.accessorKey] || ""}
                           onChange={e => setColumnFilters(f => ({ ...f, [col.accessorKey]: e.target.value }))}
-                          placeholder={`Filter ${col.header}`}
+                          placeholder={`Search...`}
                         />
                       ) : null}
                     </td>
