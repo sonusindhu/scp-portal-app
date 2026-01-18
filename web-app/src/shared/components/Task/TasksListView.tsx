@@ -4,8 +4,7 @@ import { format } from "date-fns";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
-import { red } from '@mui/material/colors';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
 
@@ -32,8 +31,8 @@ const TasksListView = (props: TaskListProps) => {
             <CardHeader
               className="note-card-header"
               avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="User Name">
-                  R
+                <Avatar className="bg-red-500">
+                  <AvatarFallback className="bg-red-500 text-white">R</AvatarFallback>
                 </Avatar>
               }
               action={

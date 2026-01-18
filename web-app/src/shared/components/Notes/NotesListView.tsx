@@ -90,8 +90,8 @@ const NotesCardView = (props: NotesListProps) => {
           <CardHeader
             className="note-card-header"
             avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="User Name">
-                R
+              <Avatar className="bg-red-500">
+                <AvatarFallback className="bg-red-500 text-white">R</AvatarFallback>
               </Avatar>
             }
             action={
