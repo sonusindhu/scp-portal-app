@@ -28,15 +28,15 @@ const QuoteEmails = () => {
   }, []);
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={4}>
-        <EmailForm email={email} onSuccess={onSuccess} />`
-      </Grid>
+    <div className="grid grid-cols-12 gap-4">
+      <div className="col-span-4">
+        <EmailForm options={options} onSuccess={onSuccess} />
+      </div>
 
-      <Grid item xs={8}>
+      <div className="col-span-8">
         <EmailListView emails={emails} />
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 };
 
