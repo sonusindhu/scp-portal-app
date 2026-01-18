@@ -114,7 +114,7 @@ header .MuiContainer-root {
   display: none;
 }
 
-header.MuiPaper-root.drawer-header {
+.drawer-header {
   position: sticky;
   width: 100%;
   right: 0;
@@ -122,10 +122,17 @@ header.MuiPaper-root.drawer-header {
   top: 0;
   z-index: 10;
   margin: 0;
+  height: 64px;
+  background-color: #1976d2;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-header.MuiPaper-root.drawer-header .close-icon {
+.drawer-header .close-icon {
   cursor: pointer;
+  fill: white;
+  width: 24px;
+  height: 24px;
 }
 
 .form-container {
@@ -298,15 +305,6 @@ button.blue-btn:hover {
   padding-top: 75px;
   padding-bottom: 80px;
 } */
-
-.MuiDrawer-modal .MuiPaper-root{
-  width: 450px;
-}
-
-.MuiDrawer-modal .drawer-header .MuiToolbar-root{
-  display: flex;
-  justify-content: space-between;
-}
 
 .close-icon{
   width: 24px;
