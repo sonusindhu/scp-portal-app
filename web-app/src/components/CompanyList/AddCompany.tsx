@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { Box } from "@mui/material";
+
 
 import {
   FormContainer,
@@ -37,7 +37,7 @@ const AddCompany = (props) => {
   };
 
   return (
-    <Box sx={{ width: 450 }} className="form-container">
+    <div style={{ width: 450 }} className="form-container">
       <HeaderWithTitle title="Add Company" onCloseDrawer={onCloseDrawer} />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
@@ -145,7 +145,7 @@ const AddCompany = (props) => {
           <FormActions onCancel={onCloseDrawer} cancelLabel="Close" />
         </div>
       </FormContainer>
-    </Box>
+    </div>
   );
 };
 

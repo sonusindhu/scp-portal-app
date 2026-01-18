@@ -9,7 +9,7 @@ import { FormActions } from "../FormFields";
 import toast from "../../../utils/toast.util";
 import { Note } from "../../models/Note";
 import NoteService from "../../../services/note.service";
-import { Box } from "@mui/material";
+
 import HeaderWithTitle from "../HeaderWithTitle";
 import { ValidationRules } from "../../../utils/validation.util";
 import { useFormSubmit } from "../../../hooks";
@@ -62,7 +62,7 @@ const NoteForm = (props: NoteProps) => {
   };
 
   return (
-    <Box sx={{ width: 400 }}>
+    <div style={{ width: 400 }}>
       <HeaderWithTitle title="Add Note" onCloseDrawer={onCloseDrawer} />
 
       <FormContainer
@@ -100,7 +100,7 @@ const NoteForm = (props: NoteProps) => {
 
         <FormActions onCancel={handleClearForm} />
       </FormContainer>
-    </Box>
+    </div>
   );
 };
 

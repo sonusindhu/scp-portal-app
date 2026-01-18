@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Box } from "@mui/material";
 import {
   FormContainer,
 } from "react-hook-form-mui";
@@ -46,7 +45,7 @@ const AddInventory = (props) => {
   }, []);
 
   return (
-    <Box sx={{ width: 450 }} className="form-container">
+    <div style={{ width: 450 }} className="form-container">
       <HeaderWithTitle title="Add Inventory" onCloseDrawer={onCloseDrawer} />
 
       <FormContainer
@@ -156,7 +155,7 @@ const AddInventory = (props) => {
           </div>
         </div>
       </FormContainer>
-    </Box>
+    </div>
   );
 };
 

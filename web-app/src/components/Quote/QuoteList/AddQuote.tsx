@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import {
   FormContainer,
 } from "react-hook-form-mui";
-import { Box } from "@mui/material";
+
 import QuoteService from "../../../services/quote.service";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
 import { Button } from "@/components/ui/button";
@@ -88,7 +88,7 @@ const AddQuote = (props) => {
   };
 
   return (
-    <Box className="quote-form" sx={{ width: 450 }}>
+    <div className="quote-form" style={{ width: 450 }}>
       <HeaderWithTitle title="Add Quote" onCloseDrawer={onCloseDrawer} />
       
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
@@ -167,7 +167,7 @@ const AddQuote = (props) => {
           </div>
         </div>
       </FormContainer>
-    </Box>
+    </div>
   );
 };
 

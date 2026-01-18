@@ -4,7 +4,7 @@ import {
 } from "react-hook-form-mui";
 import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { Box } from "@mui/material";
+
 import ContactService from "../../../services/contact.service";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
 import { useFormSubmit } from "../../../hooks";
@@ -46,7 +46,7 @@ const AddContact = (props) => {
   }, []);
 
   return (
-    <Box sx={{ width: 450 }} className="form-container">
+    <div style={{ width: 450 }} className="form-container">
       <HeaderWithTitle title="Add Contact" onCloseDrawer={onCloseDrawer} />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
@@ -149,7 +149,7 @@ const AddContact = (props) => {
           <FormActions onCancel={onCloseDrawer} cancelLabel="Close" />
         </div>
       </FormContainer>
-    </Box>
+    </div>
   );
 };
 
