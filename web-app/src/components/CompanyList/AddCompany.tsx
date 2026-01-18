@@ -37,7 +37,7 @@ const AddCompany = (props) => {
   };
 
   return (
-    <div style={{ width: 450 }} className="form-container">
+    <div className="form-container">
       <HeaderWithTitle title="Add Company" onCloseDrawer={onCloseDrawer} />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>

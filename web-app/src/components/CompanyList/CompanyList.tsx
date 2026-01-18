@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import { Button, Drawer } from "@mui/material";
 
 import GridListView from "../../shared/components/GridList/GridListView";
 import CompanyService from "../../services/company.service";
@@ -7,6 +6,8 @@ import CompanyConfig from "./company.config";
 import AddCompany from "./AddCompany";
 import GridActionMenu from "../../shared/components/GridList/GridActionMenu";
 import { useDeleteConfirmation, useDrawer, useGridActions, useRefresh } from "../../hooks";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 
 const CompanyList: React.FC = () => {
   // Use custom hooks for common patterns
@@ -51,8 +52,8 @@ const CompanyList: React.FC = () => {
         <Button
           className="blue-btn"
           type="button"
-          size="large"
-          variant="contained"
+          size="lg"
+          variant="default"
           onClick={onCreate}
           aria-label="Create company"
         >
@@ -64,14 +65,11 @@ const CompanyList: React.FC = () => {
           menuCallback={menuCallbackFun}
         />
       </GridListView>
-      <Drawer
-        anchor="right"
-        open={addDrawer}
-        onClose={closeDrawer}
-        ModalProps={{ disableEnforceFocus: true }}
-      >
-        <AddCompany onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
-      </Drawer>
+      <Sheet open={addDrawer} onOpenChange={(open) => !open && closeDrawer()}>
+        <SheetContent side="right">
+          <AddCompany onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
+        </SheetContent>
+      </Sheet>
     </Fragment>
   );
 };

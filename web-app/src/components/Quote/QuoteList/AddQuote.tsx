@@ -88,7 +88,7 @@ const AddQuote = (props) => {
   };
 
   return (
-    <div className="quote-form" style={{ width: 450 }}>
+    <div className="quote-form">
       <HeaderWithTitle title="Add Quote" onCloseDrawer={onCloseDrawer} />
       
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>

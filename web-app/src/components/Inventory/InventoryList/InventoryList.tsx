@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
-import { Drawer, Button } from "@mui/material";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 
 import InventoryService from "../../../services/inventory.service";
 import InventoryConfig from "./inventory.config";
@@ -46,8 +47,8 @@ const InventoryList = () => {
         <Button
           className="blue-btn"
           type="button"
-          size="large"
-          variant="contained"
+          size="lg"
+          variant="default"
           onClick={openDrawer}
         >
           Create
@@ -59,14 +60,11 @@ const InventoryList = () => {
         />
       </GridListView>
 
-      <Drawer
-        anchor="right"
-        open={addDrawer}
-        onClose={closeDrawer}
-        ModalProps={{ disableEnforceFocus: true }}
-      >
-        <AddInventory onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
-      </Drawer>
+      <Sheet open={addDrawer} onOpenChange={(open) => !open && closeDrawer()}>
+        <SheetContent side="right">
+          <AddInventory onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
+        </SheetContent>
+      </Sheet>
     </Fragment>
   );
 };

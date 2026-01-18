@@ -12,7 +12,9 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import WarningOutlinedIcon from "@mui/icons-material/WarningOutlined";
 
 import { Note } from "../../models/Note";
-import { Button, Chip, Drawer } from "@mui/material";
+import { Chip } from "@mui/material";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import PageHeading from "../PageHeading/PageHeading";
 import { MenuItem } from "../../models/MenuItem";
 import { useParams } from "react-router-dom";
@@ -126,16 +128,12 @@ const NotesListView = (props: NotesListProps) => {
         </Card>
       ))}
 
-      <Drawer
-        anchor="right"
-        open={addDrawer}
-        onClose={closeDrawer}
-        ModalProps={{ disableEnforceFocus: true }}
-      >
-        <NoteForm
-          note={note}
-          onSuccess={onSuccess}
-          onCloseDrawer={closeDrawer}
+      <Sheet open={addDrawer} onOpenChange={(open) => !open && closeDrawer()}>
+        <SheetContent side="right">
+          <NoteForm
+            note={note}
+            onSuccess={onSuccess}
+            onCloseDrawer={closeDrawer}
         />
         `
       </Drawer>

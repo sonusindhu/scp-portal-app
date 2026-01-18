@@ -115,13 +115,24 @@ header .MuiContainer-root {
 }
 
 header.MuiPaper-root.drawer-header {
+  position: sticky;
   width: 100%;
-  right: inherit;
+  right: 0;
+  left: 0;
   top: 0;
+  z-index: 10;
+  margin: 0;
 }
 
 header.MuiPaper-root.drawer-header .close-icon {
   cursor: pointer;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .drawer-content {
@@ -130,8 +141,10 @@ header.MuiPaper-root.drawer-header .close-icon {
 }
 
 .drawer-footer {
-  position: fixed;
-  bottom: 0px;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding-bottom: 10px;
   width: 100%;
   background: #f7f5f5;
@@ -281,10 +294,10 @@ button.blue-btn:hover {
 .multi-select-filter .MuiSelect-select{
   padding-left: 10px;
 }
-.form-container form{
+/* .form-container form{
   padding-top: 75px;
   padding-bottom: 80px;
-}
+} */
 
 .MuiDrawer-modal .MuiPaper-root{
   width: 450px;

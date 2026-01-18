@@ -45,7 +45,7 @@ const AddInventory = (props) => {
   }, []);
 
   return (
-    <div style={{ width: 450 }} className="form-container">
+    <div className="form-container">
       <HeaderWithTitle title="Add Inventory" onCloseDrawer={onCloseDrawer} />
 
       <FormContainer
