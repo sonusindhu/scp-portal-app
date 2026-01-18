@@ -5,7 +5,6 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
@@ -35,9 +34,12 @@ const EmailListView = (props: EmailListProps) => {
                 </Avatar>
               }
               action={
-                <IconButton aria-label="settings">
+                <button
+                  aria-label="settings"
+                  className="inline-flex items-center justify-center rounded-full p-2 hover:bg-gray-100 transition-colors"
+                >
                   <MoreVertIcon />
-                </IconButton>
+                </button>
               }
               title={email.title}
               subheader={
