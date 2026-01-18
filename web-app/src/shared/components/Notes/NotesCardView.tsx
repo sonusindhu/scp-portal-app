@@ -3,8 +3,7 @@ import { format } from "date-fns";
 
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import WarningOutlinedIcon from "@mui/icons-material/WarningOutlined";
+import { MoreVertical, AlertTriangle } from "lucide-react";
 
 import { Note } from "../../models/Note";
 import { Badge } from "@/components/ui/badge";
@@ -92,7 +91,7 @@ const NotesListView = (props: NotesListProps) => {
                 aria-label="settings"
                 className="inline-flex items-center justify-center rounded-full p-2 hover:bg-gray-100 transition-colors"
               >
-                <MoreVertIcon />
+                <MoreVertical className="w-5 h-5" />
               </button>
             }
             title={note.title}
@@ -102,7 +101,7 @@ const NotesListView = (props: NotesListProps) => {
 
                 {note.isCritical && (
                   <Badge variant="destructive" className="flex items-center gap-1">
-                    <WarningOutlinedIcon fontSize="small" />
+                    <AlertTriangle className="w-3 h-3" />
                     Critical
                   </Badge>
                 )}

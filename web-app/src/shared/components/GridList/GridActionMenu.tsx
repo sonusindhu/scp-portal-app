@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { MoreVertical } from "lucide-react";
 
 import { MenuItem as MenuItemModel } from "../../models/MenuItem";
 import {
@@ -40,7 +40,7 @@ const GridActionMenu = (props: GridActionMenuProps) => {
             className="action-icon inline-flex items-center justify-center p-2 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={!props.menus || props.menus.length === 0 || props.disabled}
           >
-            <MoreVertIcon />
+            <MoreVertical className="w-5 h-5" />
           </button>
         </DropdownMenuTrigger>
 

@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { CircularProgress, Skeleton } from "@mui/material";
+import { Loader2 } from "lucide-react";
 import { Button, type ButtonProps } from "@/components/ui/button";
 import "./Loading.css";
 
@@ -24,14 +24,20 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   color = "primary"
 }) => {
   const sizeMap = {
-    small: 24,
-    medium: 40,
-    large: 60,
+    small: "w-6 h-6",
+    medium: "w-10 h-10",
+    large: "w-15 h-15",
+  };
+  
+  const colorMap = {
+    primary: "text-[#1976d2]",
+    secondary: "text-gray-500",
+    inherit: "",
   };
 
   return (
     <div className={`loading-spinner ${className}`}>
-      <CircularProgress size={sizeMap[size]} color={color} />
+      <Loader2 className={`animate-spin ${sizeMap[size]} ${colorMap[color]}`} />
     </div>
   );
 };
@@ -66,7 +72,7 @@ export const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
       {children}
       <div className={overlayClass}>
         <div className="loading-overlay-content">
-          <CircularProgress size={50} />
+          <Loader2 className="animate-spin w-12 h-12 text-[#1976d2]" />
           {message && <p className="loading-message">{message}</p>}
         </div>
       </div>
@@ -97,7 +103,7 @@ export const LoadingButton: React.FC<LoadingButtonProps> = ({
       disabled={loading || disabled}
       className={`flex items-center gap-2 ${buttonProps.className || ''}`}
     >
-      {loading && <CircularProgress size={20} />}
+      {loading && <Loader2 className="animate-spin w-5 h-5" />}
       {loading && loadingText ? loadingText : children}
     </Button>
   );
@@ -168,21 +174,29 @@ interface LoadingSkeletonProps {
 export const LoadingSkeleton: React.FC<LoadingSkeletonProps> = ({
   type = "text",
   count = 1,
-  height,
+  height = 20,
   width = "100%",
   variant,
 }) => {
   const skeletonVariant = variant || type;
   
+  const variantClass = {
+    text: "rounded",
+    rectangular: "rounded-none",
+    circular: "rounded-full",
+    rounded: "rounded-md",
+  }[skeletonVariant];
+  
   return (
     <div className="loading-skeleton">
       {Array.from({ length: count }).map((_, index) => (
-        <Skeleton
+        <div
           key={index}
-          variant={skeletonVariant}
-          height={height}
-          width={width}
-          sx={{ marginBottom: 1 }}
+          className={`animate-pulse bg-gray-200 mb-2 ${variantClass}`}
+          style={{ 
+            height: typeof height === 'number' ? `${height}px` : height,
+            width: typeof width === 'number' ? `${width}px` : width
+          }}
         />
       ))}
     </div>
@@ -207,11 +221,10 @@ export const TableLoadingSkeleton: React.FC<TableLoadingSkeletonProps> = ({
       {Array.from({ length: rows }).map((_, rowIndex) => (
         <div key={rowIndex} className="skeleton-row">
           {Array.from({ length: columns }).map((_, colIndex) => (
-            <Skeleton
+            <div
               key={colIndex}
-              variant="text"
-              height={40}
-              sx={{ marginBottom: 0.5, marginRight: 1 }}
+              className="animate-pulse bg-gray-200 rounded mb-1 mr-2"
+              style={{ height: '40px' }}
             />
           ))}
         </div>
@@ -235,7 +248,7 @@ export const InlineLoadingSpinner: React.FC<InlineLoadingSpinnerProps> = ({
 }) => {
   return (
     <span className="inline-loading-spinner">
-      <CircularProgress size={size} />
+      <Loader2 className="animate-spin" style={{ width: size, height: size }} />
       {text && <span className="inline-loading-text">{text}</span>}
     </span>
   );
@@ -253,7 +266,7 @@ export const PageLoader: React.FC<PageLoaderProps> = ({ message }) => {
   return (
     <div className="page-loader">
       <div className="page-loader-content">
-        <CircularProgress size={60} />
+        <Loader2 className="animate-spin w-15 h-15 text-[#1976d2]" />
         {message && <p className="page-loader-message">{message}</p>}
       </div>
     </div>

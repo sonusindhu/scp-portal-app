@@ -1,8 +1,7 @@
 import React from "react";
 import { TextFieldElement } from "react-hook-form-mui";
 import { useFieldArray } from "react-hook-form";
-import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
-import RemoveCircleOutlinedIcon from "@mui/icons-material/RemoveCircleOutlined";
+import { PlusCircle, MinusCircle } from "lucide-react";
 import PageHeading from "../../../../shared/components/PageHeading/PageHeading";
 
 const QuoteAccessorials = ({ control }) => {
@@ -80,7 +79,7 @@ const QuoteAccessorials = ({ control }) => {
                   onClick={() => onAddAcc(index)}
                   type="button"
                 >
-                  <AddCircleOutlinedIcon fontSize="large" />
+                  <PlusCircle className="w-8 h-8" />
                 </button>
 
                 <button
@@ -90,7 +89,7 @@ const QuoteAccessorials = ({ control }) => {
                   onClick={() => onRemoveAcc(index)}
                   type="button"
                 >
-                  <RemoveCircleOutlinedIcon fontSize="large" />
+                  <MinusCircle className="w-8 h-8" />
                 </button>
               </div>
             </div>

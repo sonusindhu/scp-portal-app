@@ -3,8 +3,7 @@ import { format } from "date-fns";
 
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { MoreVertical, AlertTriangle } from 'lucide-react';
 
 import { Email, EmailListProps } from "../../models/Email";
 import { Badge } from "@/components/ui/badge";
@@ -34,7 +33,7 @@ const EmailListView = (props: EmailListProps) => {
                   aria-label="settings"
                   className="inline-flex items-center justify-center rounded-full p-2 hover:bg-gray-100 transition-colors"
                 >
-                  <MoreVertIcon />
+                  <MoreVertical className="w-5 h-5" />
                 </button>
               }
               title={email.title}
@@ -44,7 +43,7 @@ const EmailListView = (props: EmailListProps) => {
 
                   { email.isCritical && (
                     <Badge variant="destructive" className="flex items-center gap-1">
-                      <WarningOutlinedIcon fontSize="small" />
+                      <AlertTriangle className="w-3 h-3" />
                       Critical
                     </Badge>
                   ) }
