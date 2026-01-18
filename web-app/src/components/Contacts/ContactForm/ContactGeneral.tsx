@@ -15,7 +15,23 @@ const ContactGeneral = () => {
   const [statusList] = useState(ContactService.CONST.statusList);
 
   const formContext = useForm({
-    defaultValues: {},
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      status: "",
+      companyId: "",
+      department: "",
+      jobTitle: "",
+      address1: "",
+      address2: "",
+      city: "",
+      state: "",
+      country: "",
+      zipcode: "",
+      phone: "",
+      extension: "",
+    },
     mode: "onBlur",
   });
   const { reset } = formContext;
@@ -43,10 +59,28 @@ const ContactGeneral = () => {
     getCompanies();
     if (id) {
       ContactService.find(+id)
-        .then(({ result }) =>  reset(result))
+        .then(({ result }) =>  {
+          reset({
+            firstName: result?.firstName || "",
+            lastName: result?.lastName || "",
+            email: result?.email || "",
+            status: result?.status || "",
+            companyId: result?.companyId?.toString() || "",
+            department: result?.department || "",
+            jobTitle: result?.jobTitle || "",
+            address1: result?.address1 || "",
+            address2: result?.address2 || "",
+            city: result?.city || "",
+            state: result?.state || "",
+            country: result?.country || "",
+            zipcode: result?.zipcode || "",
+            phone: result?.phone || "",
+            extension: result?.extension || "",
+          });
+        })
         .catch(() => navigate("/app/contact/list"));
     }
-  }, []);
+  }, [id, navigate, reset]);
 
   return (
     <div className="container-fluid">
