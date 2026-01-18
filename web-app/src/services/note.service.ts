@@ -1,34 +1,79 @@
-import axios from "../utils/config.util";
-const API_URL = import.meta.env.VITE_API_ENDPOINT;
+import BaseService, { ApiResponse } from "./BaseService";
+import { Note } from "../shared/models/Note";
 
-const deleteRange = (ids: number[]) => {
-  return axios
-    .post(`${API_URL}note/deleteRange`, { ids })
-    .then(({ data }) => data);
-};
+/**
+ * Payload for creating a new note
+ */
+export interface NoteCreatePayload {
+  title: string;
+  message: string;
+  isCritical?: boolean;
+  type?: string;
+  companyId?: number;
+}
 
-const get = (filters = {}) => {
-  return axios.post(`${API_URL}note/list`, filters).then(({ data }) => data);
-};
+/**
+ * Payload for updating an existing note
+ */
+export interface NoteUpdatePayload extends NoteCreatePayload {
+  id: number;
+}
 
-const find = (id: number) => {
-  return axios.get(`${API_URL}note/find/${id}`).then(({ data }) => data);
-};
+/**
+ * Note Service - handles all note-related API operations
+ * Extends BaseService for common HTTP methods and error handling
+ */
+class NoteService extends BaseService {
+  /**
+   * Get list of notes with optional filters
+   * @param filters - Optional filters for note list
+   * @returns Promise with list of notes
+   */
+  async list(filters = {}): Promise<ApiResponse<Note[]>> {
+    return this.post<Note[]>("note/list", filters);
+  }
 
-const create = (payload) => {
-  return axios.post(API_URL + "note/create", payload).then(({ data }) => data);
-};
+  /**
+   * Find a note by ID
+   * @param id - Note ID
+   * @returns Promise with note details
+   */
+  async find(id: number): Promise<ApiResponse<Note>> {
+    return super.get<Note>(`note/find/${id}`);
+  }
 
-const update = (payload) => {
-  return axios.post(API_URL + "note/update", payload).then(({ data }) => data);
-};
+  /**
+   * Create a new note
+   * @param payload - Note data
+   * @returns Promise with created note
+   */
+  async create(payload: NoteCreatePayload): Promise<ApiResponse<Note>> {
+    return this.post<Note>("note/create", payload, {
+      showSuccessToast: true,
+    });
+  }
 
-const NoteService = {
-  get,
-  create,
-  update,
-  find,
-  deleteRange,
-};
+  /**
+   * Update an existing note
+   * @param payload - Updated note data including ID
+   * @returns Promise with updated note
+   */
+  async update(payload: NoteUpdatePayload): Promise<ApiResponse<Note>> {
+    return this.post<Note>("note/update", payload, {
+      showSuccessToast: true,
+    });
+  }
 
-export default NoteService;
+  /**
+   * Delete multiple notes by IDs
+   * @param ids - Array of note IDs to delete
+   * @returns Promise with deletion result
+   */
+  async deleteRange(ids: number[]): Promise<ApiResponse<void>> {
+    return this.post<void>("note/deleteRange", { ids }, {
+      showSuccessToast: true,
+    });
+  }
+}
+
+export default new NoteService();

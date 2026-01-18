@@ -9,6 +9,7 @@ import {
   SortingState,
 } from "@tanstack/react-table";
 import GridService from "../../../services/grid.service";
+import { LoadingOverlay } from "../Loading";
 import "./GridListView.css";
 
 interface GridListViewProps {
@@ -179,13 +180,9 @@ const GridListView = forwardRef((props: GridListViewProps, ref) => {
         </h3>
       </header>
       <main>
-        <div className="grid-table-container" style={{ maxHeight: "calc(100vh - 180px)", overflow: "auto", position: "relative" }}>
-          {loading && (
-            <div style={{ position: "absolute", left: 0, top: 105, width: "100%", height: "calc(100% - 105px)", background: "rgba(255,255,255,0.5)", zIndex: 20, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <div className="grid-spinner" />
-            </div>
-          )}
-          <table className="grid-table" style={{ tableLayout: "fixed", width: "100%", maxHeight: "100%"  }}>
+        <LoadingOverlay visible={loading} transparent>
+          <div className="grid-table-container" style={{ maxHeight: "calc(100vh - 180px)", overflow: "auto", position: "relative" }}>
+            <table className="grid-table" style={{ tableLayout: "fixed", width: "100%", maxHeight: "100%"  }}>
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
@@ -276,7 +273,8 @@ const GridListView = forwardRef((props: GridListViewProps, ref) => {
               )}
             </tbody>
           </table>
-        </div>
+          </div>
+        </LoadingOverlay>
       </main>
       <div style={{ marginTop: 8 }}>
         <button onClick={() => table.setPageIndex(0)} disabled={pagination.pageIndex === 0}>First</button>

@@ -4,50 +4,50 @@ import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import {
   FormContainer,
-  TextFieldElement,
-  SelectElement,
 } from "react-hook-form-mui";
 
 import CompanyService from "../../services/company.service";
-import toast from "../../utils/toast.util";
 import PageHeading from "../../shared/components/PageHeading/PageHeading";
-import { ResponseModel } from "../../models/common.model";
+import { useFormSubmit } from "../../hooks";
+import { ValidationRules } from "../../utils/validation.util";
+import { CommonFields, FormTextField, FormSelectField, FieldWidths, FormActions } from "../../shared/components/FormFields";
 
 const EditCompany = () => {
   let { id } = useParams();
   const navigate = useNavigate();
   const formContext = useForm({
     defaultValues: {},
+    mode: "onBlur",
   });
   const { reset } = formContext;
   const handleClearForm = () => reset();
 
-  const handleSuccess = (response: ResponseModel) => {
-    if (response.status) {
-      toast.success(response.message);
+  const { handleSubmit } = useFormSubmit({
+    onSuccess: () => {
       reset();
-    } else {
-      toast.error(response.message);
-    }
-  }
+    },
+  });
 
-  const handleSubmitForm = (e) => {
-    if (!e.email || !e.name) return;
-    const payload = { ...e };
-    CompanyService.update(payload)
-      .then((response) => handleSuccess(response))
-      .catch(({ response }) => toast.error(response.data));
+  const handleSubmitForm = async (data) => {
+    await handleSubmit(() => CompanyService.update(data));
   };
 
   useEffect(() => {
-    CompanyService.find(id)
-      .then((response) => {
-        reset(response.result);
-      })
-      .catch((error) => {
+    const loadCompany = async () => {
+      try {
+        const response = await CompanyService.find(Number(id));
+        if (response.status && response.result) {
+          reset(response.result);
+        }
+      } catch (error) {
+        // Error toast already shown by BaseService
+        console.error("Failed to load company:", error);
         navigate("/app/company/list");
-      });
-  }, []);
+      }
+    };
+    
+    loadCompany();
+  }, [id, navigate, reset]);
 
   return (
     <div className="container-fluid">
@@ -55,182 +55,115 @@ const EditCompany = () => {
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
         <div>
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"name"}
+          <FormTextField
+            name="name"
             label="Name"
-            variant="outlined"
-            margin={"dense"}
+            rules={ValidationRules.companyName(true)}
+            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
           />
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            type={"email"}
-            name={"email"}
+          
+          <CommonFields.Email
+            name="email"
             label="Email"
-            margin={"dense"}
-            variant="outlined"
+            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
           />
 
-          <SelectElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            options={[
-              {
-                id: "",
-                title: "Select",
-              },
-              {
-                id: "active",
-                title: "active",
-              },
-              {
-                id: "active",
-                title: "Inactive",
-              },
-            ]}
-            name={"status"}
+          <FormSelectField
+            name="status"
             label="Status"
-            labelKey="title"
-            valueKey="id"
-          ></SelectElement>
-        </div>
-
-        <div>
-          <SelectElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
             options={[
-              {
-                id: "",
-                title: "Select",
-              },
-              {
-                id: "customer",
-                title: "Customer",
-              },
-              {
-                id: "carrier",
-                title: "Carrier",
-              },
+              { id: "", title: "Select" },
+              { id: "active", title: "Active" },
+              { id: "inactive", title: "Inactive" },
             ]}
-            name={"type"}
+            rules={ValidationRules.select(true)}
+            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+          />
+        </div>
+
+        <div>
+          <FormSelectField
+            name="type"
             label="Type"
-            labelKey="title"
-            valueKey="id"
-          ></SelectElement>
+            options={[
+              { id: "", title: "Select" },
+              { id: "customer", title: "Customer" },
+              { id: "carrier", title: "Carrier" },
+            ]}
+            rules={ValidationRules.select(true)}
+            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+          />
 
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"revenue"}
+          <FormTextField
+            name="revenue"
             label="Revenue"
-            variant="outlined"
-            validation={{ maxLength: 10 }}
-            type={"number"}
+            type="number"
+            rules={ValidationRules.number(0, 9999999999, true)}
+            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
           />
 
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"employeesCount"}
+          <FormTextField
+            name="employeesCount"
             label="Employees Count"
-            variant="outlined"
-            validation={{ maxLength: 5 }}
-            type={"number"}
+            type="number"
+            rules={ValidationRules.number(1, 99999, true)}
+            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
           />
         </div>
         <div>
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"address1"}
+          <CommonFields.Address1
+            name="address1"
             label="Address1"
-            variant="outlined"
+            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
           />
 
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            name={"address2"}
+          <CommonFields.Address2
+            name="address2"
             label="Address2"
-            variant="outlined"
+            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
           />
 
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"city"}
+          <CommonFields.City
+            name="city"
             label="City"
-            variant="outlined"
+            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
           />
         </div>
         <div>
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"state"}
+          <CommonFields.State
+            name="state"
             label="State"
-            variant="outlined"
+            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
           />
 
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"country"}
+          <CommonFields.Country
+            name="country"
             label="Country"
-            variant="outlined"
+            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
           />
 
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"zipcode"}
+          <CommonFields.Zipcode
+            name="zipcode"
             label="Zipcode"
-            variant="outlined"
+            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
           />
         </div>
 
         <div>
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            required
-            name={"phone"}
+          <CommonFields.Phone
+            name="phone"
             label="Phone"
-            validation={{ maxLength: 15, minLength: 8 }}
-            variant="outlined"
+            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
           />
 
-          <TextFieldElement
-            sx={{ m: 1.1, width: "31%" }}
-            name={"extension"}
+          <CommonFields.Extension
+            name="extension"
             label="Extension"
-            validation={{ maxLength: 6 }}
-            type={"number"}
-            variant="outlined"
+            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
           />
         </div>
 
-        <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-          <Stack direction="row" spacing={2}>
-            <Button
-              type={"submit"}
-              size="large"
-              variant="contained"
-              onClick={handleSubmitForm}
-            >
-              Save
-            </Button>
-            <Button
-              size="large"
-              variant="outlined"
-              type="button"
-              onClick={handleClearForm}
-            >
-              Cancel
-            </Button>
-          </Stack>
-        </div>
+        <FormActions onCancel={handleClearForm} />
       </FormContainer>
     </div>
   );

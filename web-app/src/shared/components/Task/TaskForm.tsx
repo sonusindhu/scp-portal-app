@@ -4,67 +4,38 @@ import {
   TextFieldElement,
   SelectElement,
 } from "react-hook-form-mui";
-import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { FormActions } from "../FormFields";
 
 import toast from "../../../utils/toast.util";
 import { Task } from "../../models/Task";
 import TaskService from "../../../services/task.service";
+import { TASK_STATUS, TASK_PRIORITY, TASK_CATEGORY, TEMP_USER_LIST } from "../../../utils/constants.util";
+import { ValidationRules } from "../../../utils/validation.util";
+import { useFormSubmit } from "../../../hooks";
+
 type TaskProps = { task: Partial<Task>; onSuccess: Function; id?: number };
 const TaskForm = (props: TaskProps) => {
   // let { id } = useParams();
   const task: Partial<Task> = props.task;
   const formContext = useForm({ defaultValues: task });
 
-  const priorityList = [
-    { id: 1, value: "High" },
-    { id: 2, value: "Medium" },
-    { id: 3, value: "Low" },
-  ];
-
-  const categoryList = [
-    { id: 1, value: "Call" },
-    { id: 2, value: "Email" },
-    { id: 3, value: "Reminder" },
-  ];
-
-  const assignedToList = [
-    { id: 1, value: "Sonu Sindhu" },
-    { id: 2, value: "Pulkit Kumawat" },
-    { id: 3, value: "Tushar" },
-  ];
-  const pointOfContactList = [
-    { id: 1, value: "Sonu Sindhu" },
-    { id: 2, value: "Pulkit Kumawat" },
-    { id: 3, value: "Tushar" },
-  ];
-
-  const statusList = [
-    { id: 1, value: "New" },
-    { id: 2, value: "In Progress" },
-    { id: 2, value: "Canceled" },
-    { id: 3, value: "Completed" },
-  ];
-
   const { reset } = formContext;
+
+  const { handleSubmit: handleFormSubmit } = useFormSubmit({
+    onSuccess: (response) => {
+      reset();
+      if (response?.result) {
+        props.onSuccess(response.result);
+      }
+    },
+  });
 
   const handleClearForm = () => reset();
 
-  const handleSubmitForm = (e) => {
-    if (!e.subject || !e.description) return;
-    TaskService.create(e)
-      .then((response) => {
-        if (response.status) {
-          toast.success(response.message);
-          reset();
-          props.onSuccess(response.result);
-        } else {
-          toast.error(response.message);
-        }
-      })
-      .catch(({ response }) => {
-        toast.error(response.message);
-      });
+  const handleSubmitForm = async (data) => {
+    if (!data.subject || !data.description) return;
+    await handleFormSubmit(() => TaskService.create(data));
   };
 
   return (
@@ -76,21 +47,19 @@ const TaskForm = (props: TaskProps) => {
       <div>
         <TextFieldElement
           sx={{ m: 1, minWidth: "96%" }}
-          required={true}
           name={"subject"}
           label="Subject"
           variant="outlined"
-          validation={{ maxLength: 100 }}
+          rules={ValidationRules.text(undefined, 100, true)}
         />
       </div>
       <div>
         <TextFieldElement
           sx={{ m: 1, minWidth: "96%" }}
-          required={true}
           name={"description"}
           label="Description"
           variant="outlined"
-          validation={{ maxLength: 1000 }}
+          rules={ValidationRules.text(undefined, 1000, true)}
           multiline={true}
           rows={4}
         />
@@ -100,19 +69,19 @@ const TaskForm = (props: TaskProps) => {
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "45%" }}
-          required
-          options={priorityList}
+          options={TASK_PRIORITY}
           name={"priority"}
           label="Priority"
+          rules={ValidationRules.required()}
         ></SelectElement>
         <SelectElement
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "45%" }}
-          required
-          options={categoryList}
+          options={TASK_CATEGORY}
           name={"category"}
           label="Category"
+          rules={ValidationRules.required()}
         ></SelectElement>
       </div>
       <div>
@@ -120,19 +89,19 @@ const TaskForm = (props: TaskProps) => {
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "45%" }}
-          required
-          options={assignedToList}
+          options={TEMP_USER_LIST}
           name={"assignedTo"}
           label="Assigned To"
+          rules={ValidationRules.required()}
         ></SelectElement>
         <SelectElement
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "45%" }}
-          required
-          options={pointOfContactList}
+          options={TEMP_USER_LIST}
           name={"pointOfContact"}
           label="Point Of Contact"
+          rules={ValidationRules.required()}
         ></SelectElement>
       </div>
 
@@ -163,28 +132,14 @@ const TaskForm = (props: TaskProps) => {
           valueKey="id"
           labelKey="value"
           sx={{ m: 1, width: "46%" }}
-          required
-          options={statusList}
+          options={TASK_STATUS.filter(s => s.id !== "")}
           name={"status"}
           label="Status"
+          rules={ValidationRules.required()}
         ></SelectElement>
       </div>
 
-      <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-        <Stack direction="row" spacing={2}>
-          <Button type={"submit"} size="large" variant="contained">
-            Save
-          </Button>
-          <Button
-            size="large"
-            variant="outlined"
-            type="button"
-            onClick={handleClearForm}
-          >
-            Cancel
-          </Button>
-        </Stack>
-      </div>
+      <FormActions onCancel={handleClearForm} />
     </FormContainer>
   );
 };

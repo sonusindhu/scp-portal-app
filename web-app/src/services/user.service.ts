@@ -1,14 +1,29 @@
-import axios from "../utils/config.util";
-const API_URL = import.meta.env.VITE_API_ENDPOINT;
+import BaseService, { ApiResponse } from "./BaseService";
 
-const uploadUserImage = (payload) => {
-  return axios.post(API_URL + "user/uploadProfileImage", payload)
-    .then( (response) => response.data);
-};
+/**
+ * User profile image upload payload
+ */
+export interface UploadImagePayload {
+  file: File | Blob;
+  [key: string]: any;
+}
 
-const UserService = {
-  uploadUserImage
-};
+/**
+ * User Service - handles user-related API operations
+ * Extends BaseService for common HTTP methods and error handling
+ */
+class UserService extends BaseService {
+  /**
+   * Upload user profile image
+   * @param payload - Image upload data (FormData)
+   * @returns Promise with uploaded image result
+   */
+  async uploadUserImage(payload: any): Promise<ApiResponse<any>> {
+    return this.post<any>("user/uploadProfileImage", payload, {
+      showSuccessToast: true,
+    });
+  }
+}
 
-export default UserService;
+export default new UserService();
 

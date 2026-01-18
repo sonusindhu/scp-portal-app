@@ -10,8 +10,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Avatar as Avat } from '@mui/material';
 import Cropper from 'react-easy-crop';
 import UserService from '../../services/user.service';
-
 import toast from "../../utils/toast.util";
+import { useFormSubmit } from '../../hooks';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -121,24 +121,21 @@ const UserProfileImage = (props) => {
     }
   }
 
-  const uploadUserImage = () => {
+  const { handleSubmit } = useFormSubmit({
+    onSuccess: (response) => {
+      const img = `${API_URL}user-images/${response.result.userImage}`;
+      setUserImage(img);
+      setIsLoading(false);
+      handleClose();
+    },
+  });
+
+  const uploadUserImage = async () => {
     setIsLoading(true);
-    UserService.uploadUserImage(state)
-      .then((response) => {
-        if (response.status) {
-          const img = `${API_URL}user-images/${response.result.userImage}`;
-          setUserImage(img);
-          setIsLoading(false);
-          handleClose();
-          toast.success(response.message);
-        } else {
-          toast.error(response.message);
-        }
-      })
-      .catch(({ response }) => {
-        setIsLoading(false);
-        toast.error(response.message);
-      });
+    const success = await handleSubmit(() => UserService.uploadUserImage(state));
+    if (!success) {
+      setIsLoading(false);
+    }
   };
 
   return (

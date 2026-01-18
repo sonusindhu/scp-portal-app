@@ -5,7 +5,11 @@ import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 import GridService from "../../../services/grid.service";
 import { MenuItem } from "../../../shared/models/MenuList.model";
 
-const columnDefs = [
+/**
+ * Column definitions factory function that accepts menuCallback
+ * @param menuCallback - Function to handle menu actions (edit, delete, etc.)
+ */
+const getColumnDefs = (menuCallback?: (args: any) => void) => [
   {
     accessorKey: "packageId",
     header: "Package ID",
@@ -120,7 +124,8 @@ const columnDefs = [
     cell: ({ row }) => (
       <GridActionMenu
         className="grid-action-menu"
-        menuCallback={(fn) => fn}
+        data={row.original}
+        menuCallback={menuCallback}
         menus={[
           { key: "edit", title: "Edit" },
           { key: "delete", title: "Delete" },
@@ -148,7 +153,8 @@ const mainMenus: MenuItem[] = [
 const listUrl: string = "inventory/list";
 
 const InventoryConfig = {
-  columnDefs,
+  getColumnDefs, // Export factory function
+  columnDefs: [], // Keep for backward compatibility, will be replaced
   defaultColDef,
   mainMenus,
   listUrl,

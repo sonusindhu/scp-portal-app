@@ -1,68 +1,109 @@
-import axios from "../utils/config.util";
-const API_URL = import.meta.env.VITE_API_ENDPOINT;
+import BaseService, { ApiResponse } from "./BaseService";
+import { COMMON_STATUS, API_ENDPOINTS } from "../utils/constants.util";
 
-
-interface statusListModel {
-  id: string,
-  title: string
+/**
+ * Status list model
+ */
+interface StatusListModel {
+  id: string;
+  title: string;
 }
 
-const statusList: statusListModel[] = [
-  {
-    id: "",
-    title: "Select",
-  },
-  {
-    id: "active",
-    title: "Active",
-  },
-  {
-    id: "inactive",
-    title: "Inactive",
-  },
-];
+/**
+ * Contact data model
+ */
+export interface Contact {
+  id: number;
+  firstName?: string;
+  lastName?: string;
+  fullName?: string;
+  email?: string;
+  phone?: string;
+  extension?: string;
+  jobTitle?: string;
+  department?: string;
+  companyId?: number;
+  address1?: string;
+  address2?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  zipcode?: string;
+  status?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
 
-const deleteContacts = (ids: number[]) => {
-  return axios
-    .post(`${API_URL}contact/deleteRange`, { ids })
-    .then(({ data }) => data);
-};
+/**
+ * Contact Service - handles all contact-related API operations
+ * Extends BaseService for common HTTP methods and error handling
+ */
+class ContactService extends BaseService {
+  /**
+   * Status list constant
+   */
+  CONST = { statusList: COMMON_STATUS };
 
-const find = (id: number) => {
-  return axios.get(`${API_URL}contact/find/${id}`).then(({ data }) => data);
-};
+  /**
+   * Get contacts with optional filters
+   * @param filters - Optional filter parameters
+   * @returns Promise with contacts list
+   */
+  async getContacts(filters: any = {}): Promise<ApiResponse<Contact[]>> {
+    return this.post<Contact[]>(API_ENDPOINTS.CONTACT.LIST, filters);
+  }
 
-const get = (fitlers = {}) => {
-  return axios.post(`${API_URL}contact/get`, fitlers).then(({ data }) => data);
-};
+  /**
+   * Find a contact by ID
+   * @param id - Contact ID
+   * @returns Promise with contact details
+   */
+  async find(id: number): Promise<ApiResponse<Contact>> {
+    return this.get<Contact>(API_ENDPOINTS.CONTACT.FIND(id));
+  }
 
-const create = (payload) => {
-  return axios
-    .post(API_URL + "contact/create", payload)
-    .then(({ data }) => data)
-    .catch(() => [])
-};
+  /**
+   * Create a new contact
+   * @param payload - Contact data
+   * @returns Promise with created contact
+   */
+  async create(payload: any): Promise<ApiResponse<Contact>> {
+    return this.post<Contact>(API_ENDPOINTS.CONTACT.CREATE, payload, {
+      showSuccessToast: true,
+    });
+  }
 
-const update = (payload) => {
-  return axios
-    .post(API_URL + "contact/update", payload)
-    .then(({ data }) => data);
-};
+  /**
+   * Update an existing contact
+   * @param payload - Updated contact data
+   * @returns Promise with updated contact
+   */
+  async update(payload: any): Promise<ApiResponse<Contact>> {
+    return this.post<Contact>("contact/update", payload, {
+      showSuccessToast: true,
+    });
+  }
 
-const getCompanies = () => {
-  return axios
-    .get(API_URL + "company/listOfNames")
-    .then(({ data }) => data.result)
-};
+  /**
+   * Delete multiple contacts
+   * @param ids - Array of contact IDs to delete
+   * @returns Promise with deletion result
+   */
+  async deleteContacts(ids: number[]): Promise<ApiResponse<void>> {
+    return this.post<void>(API_ENDPOINTS.CONTACT.DELETE, { ids }, {
+      showSuccessToast: true,
+    });
+  }
 
-const ContactService = {
-  get,
-  create,
-  update,
-  find,
-  deleteContacts,
-  getCompanies,
-  CONST: { statusList }
-};
+  /**
+   * Get companies list for contact association
+   * @returns Promise with companies list
+   */
+  async getCompanies(): Promise<any[]> {
+    const response = await this.get<any[]>(API_ENDPOINTS.COMPANY.LIST_OF_NAMES);
+    return response.result || [];
+  }
+}
 
-export default ContactService;
+// Export as singleton
+export default new ContactService();

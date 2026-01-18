@@ -1,88 +1,51 @@
-import React, { useState, useEffect, Fragment, useRef } from "react";
+import React, { Fragment } from "react";
 import { Button } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import GridListView from "../../../shared/components/GridList/GridListView";
 import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 import ContactService from "../../../services/contact.service";
-import toast from "../../../utils/toast.util";
 import ContactConfig from "../../Contacts/ContactList/contact.config";
-import { MenuItem } from "../../../shared/models/MenuItem";
+import { useDeleteConfirmation, useGridActions, useRefresh } from "../../../hooks";
 
 const CompanyContactList = () => {
   const { id } = useParams();
-  let navigate = useNavigate();
-  const [mainMenus, setMainMenus] = useState<MenuItem[]>(
-    ContactConfig.mainMenus
-  );
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const [refreshKey, setRefreshKey] = useState(0);
+  const navigate = useNavigate();
+  const { refreshKey, refresh } = useRefresh();
 
-  // const defaultFilters = undefined; 
   const defaultFilters = [{ field: 'companyId', operator: 'contains', value: id }];
 
-  const deleteAction = (ids: number[]) => (
-    <Fragment>
-      <Button onClick={() => confirmDelete(ids)}>Confirm</Button>
-      <Button onClick={() => toast.close()}>Close</Button>
-    </Fragment>
-  );
+  const { deleteWithConfirmation } = useDeleteConfirmation({
+    onDelete: async (ids) => {
+      await ContactService.deleteContacts(ids);
+    },
+    onSuccess: refresh,
+  });
 
-  const confirmDelete = (ids: number[]) => {
-    toast.close();
-    ContactService.deleteContacts(ids)
-      .then(({ message }) => {
-        toast.success(message);
-        setRefreshKey(prev => prev + 1);
-      })
-      .catch(({ message }) => {
-        toast.error(message);
-      });
-  };
-
-  const deleteContact = (ids: number[]) => {
-    toast.warning("Are you sure, you want to delete?", {
-      action: () => deleteAction(ids),
-    });
-  };
-
-  const menuCallbackFun = ({ event, data, menu }) => {
-    switch (menu?.key) {
-      case "create":
-        navigate(`/app/contact/create`);
-        break;
-      case "delete":
-        deleteContact([data.id]);
-        break;
-      case "deletes":
-        selectedIds.length && deleteContact(selectedIds);
-        break;
-      case "edit":
-        navigate(`/app/contact/${data.id}/edit`);
-        break;
-      case "selectRow":
-        setSelectedIds(data);
-        const menus = mainMenus.map((menu: MenuItem) => {
-          if (!menu.alwaysEnable) menu.disabled = data.length === 0;
-          return menu;
-        });
-        setMainMenus(menus);
-        break;
-    }
-  };
+  const { menuCallbackFun, mainMenus, selectedIds } = useGridActions({
+    mainMenus: ContactConfig.mainMenus,
+    editRoute: (id) => `/app/contact/${id}/edit`,
+    onDelete: deleteWithConfirmation,
+  });
 
   const onCreate = () => {
     navigate(`/app/contact/create`);
   };
 
   const onAddSuccess = () => {
-    setRefreshKey(prev => prev + 1);
+    refresh();
+  };
+
+  // Create config with menuCallback
+  const configWithCallback = {
+    ...ContactConfig,
+    columnDefs: ContactConfig.getColumnDefs(menuCallbackFun),
   };
 
   return (
     <Fragment>
       <GridListView
-        options={ContactConfig}
+        options={configWithCallback}
         defaultFilters={defaultFilters}
         refreshKey={refreshKey}
         searchPlaceholder="Search contacts..."

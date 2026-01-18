@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import AuthService from "../../services/auth.service";
-import { ResponseModel } from "../../models/common.model";
-const REDIRECT_AFTER_LOGIN = "/app/company/list";
+import { useAuth } from "../../hooks";
+import { useLoading } from "../../hooks/useLoading";
+import { LoadingButton } from "../../shared/components/Loading";
+import { ROUTES } from "../../utils/constants.util";
+
+const REDIRECT_AFTER_LOGIN = ROUTES.COMPANY_LIST;
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login: loginUser } = useAuth();
+  const { isLoading, withLoading } = useLoading();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   const onChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,34 +26,7 @@ const Login = () => {
     setPassword(password);
   };
 
-  const handleSuccess = (response: ResponseModel) => {
-    if (response.status) {
-      navigate(REDIRECT_AFTER_LOGIN, { replace: true });
-    } else {
-      setLoading(false);
-      setMessage(response.message || "Login failed");
-    }
-  }
-
-  const handleError = (error: any) => {
-    setLoading(false);
-    let errorMessage = "An unexpected error occurred";
-    
-    if (error.response) {
-      // Server responded with error status
-      errorMessage = error.response.data?.message || error.response.data || `Server error: ${error.response.status}`;
-    } else if (error.request) {
-      // Request was made but no response received
-      errorMessage = "Network error: Unable to connect to server";
-    } else if (error.message) {
-      // Something else happened
-      errorMessage = error.message;
-    }
-    
-    setMessage(typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage));
-  }
-
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Basic form validation
@@ -64,11 +41,14 @@ const Login = () => {
     }
 
     setMessage("");
-    setLoading(true);
 
-    AuthService.login(username.trim(), password)
-      .then((response) => handleSuccess(response))
-      .catch((error) => handleError(error));
+    const result = await withLoading(loginUser(username.trim(), password));
+    
+    if (result.success) {
+      navigate(REDIRECT_AFTER_LOGIN, { replace: true });
+    } else {
+      setMessage(result.error || "Login failed");
+    }
   };
 
   return (
@@ -91,7 +71,7 @@ const Login = () => {
                 required
                 autoFocus
                 className="form-input"
-                disabled={loading}
+                disabled={isLoading}
               />
             </div>
             
@@ -104,19 +84,21 @@ const Login = () => {
                 onChange={onChangePassword}
                 required
                 className="form-input"
-                disabled={loading}
+                disabled={isLoading}
               />
             </div>
             
             <div className="form-group">
-              <button
+              <LoadingButton
                 type="submit"
-                className={`login-button ${loading ? 'loading' : ''}`}
-                disabled={loading}
+                loading={isLoading}
+                loadingText="Signing in..."
+                className="login-button"
+                fullWidth
+                variant="contained"
               >
-                {loading && <span className="spinner"></span>}
-                {loading ? 'Signing in...' : 'Submit'}
-              </button>
+                Submit
+              </LoadingButton>
             </div>
           </form>
           

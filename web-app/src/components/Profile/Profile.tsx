@@ -2,16 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
-import {
-  CircularProgress,
-  Grid,
-  Tab,
-  Tabs,
-} from "@mui/material";
+import { Grid, Tab, Tabs } from "@mui/material";
 import UserForm from "./UserForm";
+import { useLoading } from "../../hooks/useLoading";
+import { LoadingContainer } from "../../shared/components/Loading";
 
 const QuoteForm = (props) => {
-  let [isLoading, setIsLoading] = useState<boolean>(true);
+  const { isLoading, startLoading, stopLoading } = useLoading({ initialState: true });
   let [selectedTab, setSelectedTab] = useState<string>("updatepassword");
   let [user, setUser] = useState<any>({});
   const navigate = useNavigate();
@@ -23,17 +20,16 @@ const QuoteForm = (props) => {
 
   // check if user is authenticated, if not redirect to login page
   useEffect(() => {
-    
-    setIsLoading(true);
+    startLoading();
     AuthService.getUserDetail()
       .then((response) => {
         if (response.status) {
           setUser(response.result)
         }
-        setIsLoading(false);
+        stopLoading();
       })
       .catch(() => {
-        setIsLoading(false);
+        stopLoading();
       });
   }, []);
 
@@ -41,7 +37,9 @@ const QuoteForm = (props) => {
     <div className="container-fluid">
       <Grid container spacing={2}>        
         <Grid item xs={3} className="left-user-form">
-          { isLoading ? <CircularProgress /> : <UserForm user={user}/> }          
+          <LoadingContainer loading={isLoading}>
+            <UserForm user={user}/>
+          </LoadingContainer>
         </Grid>
 
         <Grid item xs={9}>

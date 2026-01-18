@@ -1,108 +1,199 @@
-import axios from "../utils/config.util";
-const API_URL = import.meta.env.VITE_API_ENDPOINT;
+import BaseService, { ApiResponse } from "./BaseService";
 
-const deleteRange = (ids: number[]) => {
-  return axios
-    .post(`${API_URL}quote/deleteRange`, { ids })
-    .then(({ data }) => data);
-};
+/**
+ * Quote data model
+ */
+export interface Quote {
+  id: number;
+  quoteName?: string;
+  serviceTypeId?: string;
+  transportMode?: string;
+  companyId?: number;
+  contactId?: number;
+  quotePickUpDate?: string;
+  expiryDate?: string;
+  cargoDetail?: any;
+  createdAt?: string;
+  updatedAt?: string;
+}
 
-const find = (id) => {
-  return axios.get(`${API_URL}quote/find/${id}`)
-    .then(({ data }) => data)
-    .then((data) => {
-      return {
-        ...data,
-        result: {
-          ...data.result,
-          cargoDetail: {
-            ...data.result.cargoDetail,
-            cargoTypeId: data.result.cargoDetail.cargoTypeId || undefined,
-            equipmentId: data.result.cargoDetail.equipmentId || undefined,
-            commodityId: data.result.cargoDetail.commodityId || undefined,
-          }
-        }
-      }
+/**
+ * Quote Service - handles all quote-related API operations
+ * Extends BaseService for common HTTP methods and error handling
+ */
+class QuoteService extends BaseService {
+  /**
+   * Find a quote by ID
+   * @param id - Quote ID
+   * @returns Promise with quote details
+   */
+  async find(id: number): Promise<ApiResponse<Quote>> {
+    const response = await this.get<Quote>(`quote/find/${id}`);
+    
+    // Transform cargo detail to handle undefined values
+    if (response.result?.cargoDetail) {
+      response.result.cargoDetail = {
+        ...response.result.cargoDetail,
+        cargoTypeId: response.result.cargoDetail.cargoTypeId || undefined,
+        equipmentId: response.result.cargoDetail.equipmentId || undefined,
+        commodityId: response.result.cargoDetail.commodityId || undefined,
+      };
+    }
+    
+    return response;
+  }
+
+  /**
+   * Create a new quote
+   * @param payload - Quote data
+   * @returns Promise with created quote
+   */
+  async create(payload: any): Promise<ApiResponse<Quote>> {
+    return this.post<Quote>("quote/create", payload, {
+      showSuccessToast: true,
     });
-};
+  }
 
-const create = (payload) => {
-  return axios.post(API_URL + "quote/create", payload).then(({ data }) => data);
-};
+  /**
+   * Update an existing quote
+   * @param payload - Updated quote data
+   * @returns Promise with updated quote
+   */
+  async update(payload: any): Promise<ApiResponse<Quote>> {
+    return this.post<Quote>("quote/update", payload, {
+      showSuccessToast: true,
+    });
+  }
 
-const update = (payload) => {
-  return axios.post(API_URL + "quote/update", payload).then(({ data }) => data);
-};
+  /**
+   * Delete multiple quotes
+   * @param ids - Array of quote IDs to delete
+   * @returns Promise with deletion result
+   */
+  async deleteRange(ids: number[]): Promise<ApiResponse<void>> {
+    return this.post<void>("quote/deleteRange", { ids }, {
+      showSuccessToast: true,
+    });
+  }
 
-const getCompanies = () => {
-  return axios.get(API_URL + "quote/getCompanies").then(({ data }) => data);
-};
+  /**
+   * Get companies for quote selection
+   * @returns Promise with companies list
+   */
+  async getCompanies(): Promise<ApiResponse<any[]>> {
+    return this.get<any[]>("quote/getCompanies");
+  }
 
-const getContactsByCompany = (id: number) => {
-  return axios
-  .get(API_URL + `quote/getContactsByCompany/${id}`)
-  .then(({ data }) => data);
-};
+  /**
+   * Get contacts by company ID
+   * @param id - Company ID
+   * @returns Promise with contacts list
+   */
+  async getContactsByCompany(id: number): Promise<ApiResponse<any[]>> {
+    return this.get<any[]>(`quote/getContactsByCompany/${id}`);
+  }
 
-const getEquipments = () => {
-  return axios.get(API_URL + "common/getEquipments").then(({ data }) => data);
-};
-const getCommodities = () => {
-  return axios.get(API_URL + "common/getCommodities").then(({ data }) => data);
-};
-const getCargos = () => {
-  return axios.get(API_URL + "common/getCargos").then(({ data }) => data);
-};
+  /**
+   * Get equipments list
+   * @returns Promise with equipments
+   */
+  async getEquipments(): Promise<ApiResponse<any[]>> {
+    return this.get<any[]>("common/getEquipments");
+  }
 
-const createNote = (payload) => {
-  return axios.post(API_URL + "quote/createNote", payload).then(({ data }) => data);
-};
+  /**
+   * Get commodities list
+   * @returns Promise with commodities
+   */
+  async getCommodities(): Promise<ApiResponse<any[]>> {
+    return this.get<any[]>("common/getCommodities");
+  }
 
-const getNotes = (id: number, filter?) => {
-  return axios.post(API_URL + `quote/${id}/notes`, { ...filter })
-    .then(({ data }) => data.result);
-};
+  /**
+   * Get cargos list
+   * @returns Promise with cargos
+   */
+  async getCargos(): Promise<ApiResponse<any[]>> {
+    return this.get<any[]>("common/getCargos");
+  }
 
-const createTask = (payload) => {
-  return axios.post(API_URL + "quote/createTask", payload).then(({ data }) => data);
-};
+  /**
+   * Create a note for a quote
+   * @param payload - Note data
+   * @returns Promise with created note
+   */
+  async createNote(payload: any): Promise<ApiResponse<any>> {
+    return this.post<any>("quote/createNote", payload, {
+      showSuccessToast: true,
+    });
+  }
 
-const getTasks = (id: string, filter?) => {
-  return axios.post(API_URL + `quote/${id}/tasks`, { ...filter }).then(({ data }) => data.result);
-};
+  /**
+   * Get notes for a quote
+   * @param id - Quote ID
+   * @param filter - Optional filter parameters
+   * @returns Promise with notes list
+   */
+  async getNotes(id: number, filter?: any): Promise<any[]> {
+    const response = await this.post<any[]>(`quote/${id}/notes`, { ...filter });
+    return response.result || [];
+  }
 
+  /**
+   * Create a task for a quote
+   * @param payload - Task data
+   * @returns Promise with created task
+   */
+  async createTask(payload: any): Promise<ApiResponse<any>> {
+    return this.post<any>("quote/createTask", payload, {
+      showSuccessToast: true,
+    });
+  }
 
-const createEmail = (payload) => {
-  return axios.post(API_URL + "quote/createEmail", payload).then(({ data }) => data);
-};
+  /**
+   * Get tasks for a quote
+   * @param id - Quote ID
+   * @param filter - Optional filter parameters
+   * @returns Promise with tasks list
+   */
+  async getTasks(id: string, filter?: any): Promise<any[]> {
+    const response = await this.post<any[]>(`quote/${id}/tasks`, { ...filter });
+    return response.result || [];
+  }
 
-const getEmails = (id: number, filter?) => {
-  return axios.post(API_URL + `quote/${id}/emails`, { ...filter }).then(({ data }) => data.result);
-};
+  /**
+   * Create an email for a quote
+   * @param payload - Email data
+   * @returns Promise with created email
+   */
+  async createEmail(payload: any): Promise<ApiResponse<any>> {
+    return this.post<any>("quote/createEmail", payload, {
+      showSuccessToast: true,
+    });
+  }
 
-const getEmailById = (id: number, emailId: number) => {
-  return axios.get(API_URL + `quote/${id}/getEmailById/${emailId}`).then(({ data }) => data.result);
-};
+  /**
+   * Get emails for a quote
+   * @param id - Quote ID
+   * @param filter - Optional filter parameters
+   * @returns Promise with emails list
+   */
+  async getEmails(id: number, filter?: any): Promise<any[]> {
+    const response = await this.post<any[]>(`quote/${id}/emails`, { ...filter });
+    return response.result || [];
+  }
 
+  /**
+   * Get a specific email by ID
+   * @param id - Quote ID
+   * @param emailId - Email ID
+   * @returns Promise with email details
+   */
+  async getEmailById(id: number, emailId: number): Promise<any> {
+    const response = await this.get<any>(`quote/${id}/getEmailById/${emailId}`);
+    return response.result;
+  }
+}
 
-
-const QuoteService = {
-  create,
-  update,
-  find,
-  deleteRange,
-  getCompanies,
-  getContactsByCompany,
-  getEquipments,
-  getCommodities,
-  getCargos,
-  createNote,
-  getNotes,
-  createTask,
-  getTasks,
-  createEmail,
-  getEmails,
-  getEmailById
-};
-
-export default QuoteService;
+// Export as singleton
+export default new QuoteService();

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 
-import AuthService from "../../../services/auth.service";
 import QuoteService from "../../../services/quote.service";
 
 import { Grid, Tab, Tabs } from "@mui/material";
+import { useAuth } from "../../../hooks";
 
 const QuoteForm = () => {
   const location = useLocation();
@@ -21,15 +21,17 @@ const QuoteForm = () => {
   };
 
   // check if user is authenticated, if not redirect to login page
-  const user = AuthService.getCurrentUser();
+  const { isAuthenticated } = useAuth();
   useEffect(() => {
-    if (user && id) {
+    if (isAuthenticated && id) {
       QuoteService.find(+id)
         .then((response) => {
-          if (response.status) {
-            response.result.transportMode =
-              response.result.transportMode.split(",");
-            setQuote(response.result);
+          if (response.status && response.result) {
+            const updatedResult = {
+              ...response.result,
+              transportMode: response.result.transportMode?.split(",") || []
+            };
+            setQuote(updatedResult);
           } else {
             navigate("/app/quote/list");
           }
@@ -37,11 +39,12 @@ const QuoteForm = () => {
         .catch(() => {
           navigate("/app/quote/list");
         });
-    } else {
+    } else if (!isAuthenticated) {
       navigate("/auth/login");
     }
-  }, []);
-  if (!user) return <></>;
+  }, [isAuthenticated, id, navigate]);
+  
+  if (!isAuthenticated) return <></>;
 
   return (
     <div className="container-fluid">

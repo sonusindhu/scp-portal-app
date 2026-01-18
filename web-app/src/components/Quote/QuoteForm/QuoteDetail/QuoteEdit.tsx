@@ -4,13 +4,14 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { FormContainer } from "react-hook-form-mui";
 import QuoteService from "../../../../services/quote.service";
+import { ValidationRules } from "../../../../utils/validation.util";
+import { CommonFields, FormTextField, FormActions } from "../../../../shared/components/FormFields";
 
-import toast from "../../../../utils/toast.util";
 import QuoteAccessorials from "./QuoteAccessorials";
 import QuoteRoutes from "./QuoteRoutes";
 import QuoteCargoDetail from "./QuoteCargoDetail";
 import { Quote } from "../../../../shared/models/Quote";
-import { ResponseModel } from "../../../../models/common.model";
+import { useFormSubmit } from "../../../../hooks";
 
 interface QuoteEditProps{
   quote: Quote[],
@@ -24,7 +25,10 @@ const QuoteEdit = (props: QuoteEditProps) => {
   const commodities = props.commodities;
   const equipments = props.equipments;
   const cargos = props.cargos;
-  const formContext = useForm({ defaultValues });
+  const formContext = useForm({ 
+    defaultValues,
+    mode: "onBlur"
+  });
 
   const {
     control,
@@ -39,28 +43,21 @@ const QuoteEdit = (props: QuoteEditProps) => {
 
   const handleClearForm = () => reset();
 
-  const handleSave = (response: ResponseModel) => {
-    if (response.status) {
-      toast.success(response.message);
-      reset(response.result);
-    } else {
-      toast.error(response.message);
-    }
-  }
+  const { handleSubmit: submitForm } = useFormSubmit({
+    onSuccess: (response) => {
+      if (response) {
+        reset(response.result);
+      }
+    },
+  });
 
-  const handleSubmitForm = (e) => {
-    if (!e.email || !e.fullName) return;
-    const payload = { ...e };
-    QuoteService.update(payload)
-      .then((response) => handleSave(response))
-      .catch(({ response }) => {
-        toast.error(response.data);
-      });
+  const handleSubmitForm = async (data) => {
+    await submitForm(() => QuoteService.update(data));
   };
 
   return (
     <div className="container-fluid">
-      <FormContainer formContext={formContext} defaultValues={defaultValues} onSuccess={() => handleSubmit(handleSubmitForm)}>
+      <FormContainer formContext={formContext} defaultValues={defaultValues} onSuccess={handleSubmitForm}>
         {/* Cargo Details Start */}
         <QuoteCargoDetail 
           {...{
@@ -111,25 +108,7 @@ const QuoteEdit = (props: QuoteEditProps) => {
         
         {/* Accessorials Details End */}
 
-        <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-          <Stack direction="row" spacing={2}>
-            <Button
-              type={"submit"}
-              size="large"
-              variant="contained"
-            >
-              Save
-            </Button>
-            <Button
-              size="large"
-              variant="outlined"
-              type="button"
-              onClick={handleClearForm}
-            >
-              Cancel
-            </Button>
-          </Stack>
-        </div>
+        <FormActions onCancel={handleClearForm} />
       </FormContainer>
     </div>
   );

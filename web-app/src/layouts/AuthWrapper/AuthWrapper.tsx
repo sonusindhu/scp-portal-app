@@ -1,9 +1,14 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import AuthService from "../../services/auth.service";
+import { useAuth } from "../../hooks";
 
 const AuthWrapper = () => {
-  const user = AuthService.getCurrentUser();
-  return user ? <Outlet /> : <Navigate to="/auth/login" />;
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Or use your Loader component
+  }
+
+  return isAuthenticated ? <Outlet /> : <Navigate to="/auth/login" />;
 };
 export default AuthWrapper;

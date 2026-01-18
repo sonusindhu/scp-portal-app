@@ -1,37 +1,35 @@
 import React from "react";
-import { FormContainer, TextFieldElement } from "react-hook-form-mui";
+import { FormContainer } from "react-hook-form-mui";
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import toast from "../../utils/toast.util";
 import AuthService from "../../services/auth.service";
-import { ResponseModel } from "../../models/common.model";
+import { useFormSubmit } from "../../hooks";
+import { CommonFields, FormActions } from "../../shared/components/FormFields";
+import { ValidationRules } from "../../utils/validation.util";
 
 const ProfileChangePassword = () => {
-  const formContext = useForm({ defaultValues: {} });
-  const { reset } = formContext;
+  const formContext = useForm({ 
+    defaultValues: {},
+    mode: "onBlur", // Validate on blur for better UX
+  });
+  const { reset, watch } = formContext;
+  const passwordValue = watch("password");
 
-  const handleResponse = (response: ResponseModel) => {
-    if (response.status) {
-      toast.success(response.message);
+  const { handleSubmit } = useFormSubmit({
+    onSuccess: () => {
       reset({
         currentPassword: '',
         password: '',
         confirmPassword: '',
-      })
-    } else {
-      toast.error(response.message);
-    }
-  }
+      });
+    },
+  });
 
   const handleClearForm = () => reset();
 
-  const handleSubmitForm = (e) => {
-    if (!e.currentPassword || !e.password || !e.confirmPassword) return;
-    const payload = { ...e };
-    AuthService.updatePassword(payload)
-      .then((response) => handleResponse(response))
-      .catch(({ response }) => toast.error(response.message));
+  const handleSubmitForm = async (data) => {
+    await handleSubmit(() => AuthService.updatePassword(data));
   };
 
   return (
@@ -39,58 +37,29 @@ const ProfileChangePassword = () => {
       <h3 style={{ marginLeft: "10px" }}>Change Password</h3>         
 
       <div>
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "46%" }}
-          type='password'
-          required={true}
-          name={"currentPassword"}
+        <CommonFields.Password
+          name="currentPassword"
           label="Current Password"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
+          sx={{ m: 1, minWidth: "46%" }}
         />
       </div>
       <div>
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "46%" }}
-          type='password'
-          required={true}
-          name={"password"}
+        <CommonFields.Password
+          name="password"
           label="New Password"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
+          sx={{ m: 1, minWidth: "46%" }}
         />
       </div>
       <div>
-        <TextFieldElement
-          sx={{ m: 1, minWidth: "46%" }}
-          type='password'
-          required={true}
-          name={"confirmPassword"}
+        <CommonFields.Password
+          name="confirmPassword"
           label="Confirm Password"
-          variant="outlined"
-          validation={{ maxLength: 100 }}
+          sx={{ m: 1, minWidth: "46%" }}
+          rules={ValidationRules.confirmPassword(passwordValue)}
         />
       </div>
            
-      <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-        <Stack direction="row" spacing={2}>
-          <Button
-            type={"submit"}
-            size="large"
-            variant="contained"
-          >
-            Update Password
-          </Button>
-          <Button
-            size="large"
-            variant="outlined"
-            type="button"
-            onClick={handleClearForm}
-          >
-            Cancel
-          </Button>
-        </Stack>
-      </div>
+      <FormActions onCancel={handleClearForm} submitLabel="Update Password" />
     </FormContainer>        
   );
 };

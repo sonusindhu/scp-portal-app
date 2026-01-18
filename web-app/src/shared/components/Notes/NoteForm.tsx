@@ -4,13 +4,15 @@ import {
   TextFieldElement,
   CheckboxElement,
 } from "react-hook-form-mui";
-import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { FormActions } from "../FormFields";
 import toast from "../../../utils/toast.util";
 import { Note } from "../../models/Note";
 import NoteService from "../../../services/note.service";
 import { Box } from "@mui/material";
 import HeaderWithTitle from "../HeaderWithTitle";
+import { ValidationRules } from "../../../utils/validation.util";
+import { useFormSubmit } from "../../../hooks";
 
 interface NoteProps {
   id?: number;
@@ -25,43 +27,38 @@ const NoteForm = (props: NoteProps) => {
 
   const { reset } = formContext;
 
+  const onCloseDrawer = () => {
+    props.onCloseDrawer && props.onCloseDrawer();
+  };
+
+  const { handleSubmit: handleFormSubmit } = useFormSubmit({
+    onSuccess: (response) => {
+      reset({
+        isCritical: false,
+        title: "",
+        message: "",
+        type: note?.type,
+        companyId: note?.companyId,
+      });
+      props.onSuccess(response?.result);
+    },
+  });
+
   const handleClearForm = () => {
     reset();
     onCloseDrawer();
   };
 
-  const handleSubmitForm = async (e) => {
-    if (!e.title || !e.message) return;
+  const handleSubmitForm = async (data) => {
+    if (!data.title || !data.message) return;
     const payload = {
-      ...e,
-      isCritical: e.isCritical || false,
+      ...data,
+      isCritical: data.isCritical || false,
       id: props.id,
       type: note?.type,
       companyId: note?.companyId,
     };
-    NoteService.create(payload)
-      .then((response) => {
-        if (response.status) {
-          toast.success(response.message);
-          reset({
-            isCritical: false,
-            title: "",
-            message: "",
-            type: note?.type,
-            companyId: note?.companyId,
-          });
-          props.onSuccess(response.result);
-        } else {
-          toast.error(response.message);
-        }
-      })
-      .catch(({ response }) => {
-        toast.error(response.message);
-      });
-  };
-
-  const onCloseDrawer = () => {
-    props.onCloseDrawer && props.onCloseDrawer();
+    await handleFormSubmit(() => NoteService.create(payload));
   };
 
   return (
@@ -76,21 +73,19 @@ const NoteForm = (props: NoteProps) => {
         <div>
           <TextFieldElement
             sx={{ m: 1, minWidth: "96%" }}
-            required={true}
             name={"title"}
             label="Note Title"
             variant="outlined"
-            validation={{ maxLength: 100 }}
+            rules={ValidationRules.text(undefined, 100, true)}
           />
         </div>
         <div>
           <TextFieldElement
             sx={{ m: 1, minWidth: "96%" }}
-            required={true}
             name={"message"}
             label="Note Description"
             variant="outlined"
-            validation={{ maxLength: 1000 }}
+            rules={ValidationRules.text(undefined, 1000, true)}
             multiline={true}
             rows={7}
           />
@@ -103,21 +98,7 @@ const NoteForm = (props: NoteProps) => {
           />
         </div>
 
-        <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-          <Stack direction="row" spacing={2}>
-            <Button type={"submit"} size="large" variant="contained">
-              Save
-            </Button>
-            <Button
-              size="large"
-              variant="outlined"
-              type="button"
-              onClick={handleClearForm}
-            >
-              Cancel
-            </Button>
-          </Stack>
-        </div>
+        <FormActions onCancel={handleClearForm} />
       </FormContainer>
     </Box>
   );

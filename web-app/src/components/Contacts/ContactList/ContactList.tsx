@@ -1,108 +1,56 @@
-import React, { useState, useCallback, Fragment, useRef, useEffect } from "react";
-import { Button, Drawer } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import React, { Fragment, useRef } from "react";
+import { Drawer, Button } from "@mui/material";
 
 import GridListView from "../../../shared/components/GridList/GridListView";
-import ContactService from "../../../services/contact.service";
-import toast from "../../../utils/toast.util";
-import ContactConfig from "./contact.config";
-import { MenuItem } from "../../../shared/models/MenuItem";
-import AddContact from "./AddContact";
 import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
-
-interface MenuCallbackArgs {
-  event: React.MouseEvent;
-  data: any;
-  menu: MenuItem;
-}
+import ContactService from "../../../services/contact.service";
+import ContactConfig from "./contact.config";
+import AddContact from "./AddContact";
+import { useDeleteConfirmation, useDrawer, useGridActions, useRefresh } from "../../../hooks";
 
 const ContactList: React.FC = () => {
-  const navigate = useNavigate();
   const gridRef = useRef<any>(null);
-  const [mainMenus, setMainMenus] = useState<MenuItem[]>(ContactConfig.mainMenus);
-  const [selectedRows, setSelectedRows] = useState<any[]>([]);
-  const [addDrawer, setAddDrawer] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0);
+  const { refreshKey, refresh } = useRefresh();
+  const { isOpen: addDrawer, openDrawer, closeDrawer } = useDrawer();
+  
+  const { deleteWithConfirmation } = useDeleteConfirmation({
+    onDelete: async (ids) => {
+      await ContactService.deleteContacts(ids);
+    },
+    onSuccess: refresh,
+  });
 
-  const confirmDelete = useCallback((ids: number[]) => {
-    toast.close();
-    ContactService.deleteContacts(ids)
-      .then(({ message }) => {
-        toast.success(message);
-        setRefreshKey((prev) => prev + 1);
-      })
-      .catch(({ message }) => {
-        toast.error(message);
-      });
-  }, []);
+  const { menuCallbackFun, mainMenus, selectedIds } = useGridActions({
+    mainMenus: ContactConfig.mainMenus,
+    editRoute: (id) => `/app/contact/${id}/details`,
+    onDelete: deleteWithConfirmation,
+  });
 
-  const deleteAction = useCallback((ids: number[]) => (
-    <Fragment>
-      <Button onClick={() => confirmDelete(ids)} aria-label="Confirm delete">Confirm</Button>
-      <Button onClick={() => toast.close()} aria-label="Close dialog">Close</Button>
-    </Fragment>
-  ), [confirmDelete]);
+  const onAddSuccess = () => {
+    refresh();
+  };
 
-  const deleteContact = useCallback((ids: number[]) => {
-    toast.warning("Are you sure, you want to delete?", {
-      action: () => deleteAction(ids),
-    });
-  }, [deleteAction]);
-
-  const onCreate = useCallback(() => {
-    setAddDrawer(true);
-  }, []);
-
-  const closeDrawer = useCallback(() => {
-    setAddDrawer(false);
-  }, []);
-
-  const onAddSuccess = useCallback(() => {
-    setRefreshKey((prev) => prev + 1);
-  }, []);
-
-  const menuCallbackFun = useCallback(({ event, data, menu }: MenuCallbackArgs) => {
-    switch (menu?.key) {
-      case "create":
-        navigate(`/app/contact/create`);
-        break;
-      case "delete":
-        deleteContact([data.id]);
-        break;
-      case "deletes":
-        selectedRows.length && deleteContact(selectedRows.map((row) => row.id));
-        break;
-      case "edit":
-        navigate(`/app/contact/${data.id}/general`);
-        break;
-    }
-  }, [navigate, deleteContact, selectedRows]);
-
-  useEffect(() => {
-    setMainMenus((prevMenus) =>
-      prevMenus.map((menu) => {
-        if (!menu.alwaysEnable) menu.disabled = selectedRows.length === 0;
-        return menu;
-      })
-    );
-  }, [selectedRows]);
+  // Create config with menuCallback
+  const configWithCallback = {
+    ...ContactConfig,
+    columnDefs: ContactConfig.getColumnDefs(menuCallbackFun),
+  };
 
   return (
     <Fragment>
       <GridListView
         ref={gridRef}
-        options={ContactConfig}
+        options={configWithCallback}
         refreshKey={refreshKey}
         searchPlaceholder="Search contacts..."
         title="Contact List"
-        onRowSelectionChange={setSelectedRows}
       >
         <Button
           className="blue-btn"
           type="button"
           size="large"
           variant="contained"
-          onClick={onCreate}
+          onClick={openDrawer}
           aria-label="Create contact"
         >
           Create

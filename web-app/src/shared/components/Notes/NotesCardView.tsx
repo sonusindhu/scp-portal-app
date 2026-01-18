@@ -56,8 +56,9 @@ const NotesListView = (props: NotesListProps) => {
 
   useEffect(() => {
     if (id) {
-      NoteService.get(props.options).then((response) => {
-        setNotes(response.result);
+      NoteService.list(props.options).then((response) => {
+        const notes = response?.result || [];
+        setNotes(notes);
       });
     }
   }, [id, props.options]);
