@@ -1,5 +1,5 @@
-import { Checkbox } from "@mui/material";
 import React, { useState } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const GridHeaderCheckbox = (props) => {
   const [, setState] = useState(false);
@@ -10,14 +10,14 @@ const GridHeaderCheckbox = (props) => {
     });
   };
 
-  const updateState = (e) => {
-    setState(e.target.checked);
-    selectAllRows(e.target.checked);
+  const updateState = (checked) => {
+    setState(checked);
+    selectAllRows(checked);
   };
 
   return (
     <div className="custom-header-checkbox">
-      <Checkbox onChange={updateState} />
+      <Checkbox onCheckedChange={updateState} />
     </div>
   );
 };
