@@ -1,14 +1,18 @@
-import React from "react";
+import React, { memo } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../../hooks";
+import Loader from "../../shared/components/Loader";
 
-const AuthWrapper = () => {
+const AuthWrapper = memo(() => {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
-    return <div>Loading...</div>; // Or use your Loader component
+    return <Loader />; // Use proper Loader component for consistent UX
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/auth/login" />;
-};
+  return isAuthenticated ? <Outlet /> : <Navigate to="/auth/login" replace />;
+});
+
+AuthWrapper.displayName = 'AuthWrapper';
+
 export default AuthWrapper;
