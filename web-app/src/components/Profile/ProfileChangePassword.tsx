@@ -40,21 +40,21 @@ const ProfileChangePassword = () => {
         <CommonFields.Password
           name="currentPassword"
           label="Current Password"
-          sx={{ m: 1, minWidth: "46%" }}
+          className="m-2 w-[46%]"
         />
       </div>
       <div>
         <CommonFields.Password
           name="password"
           label="New Password"
-          sx={{ m: 1, minWidth: "46%" }}
+          className="m-2 w-[46%]"
         />
       </div>
       <div>
         <CommonFields.Password
           name="confirmPassword"
           label="Confirm Password"
-          sx={{ m: 1, minWidth: "46%" }}
+          className="m-2 w-[46%]"
           rules={ValidationRules.confirmPassword(passwordValue)}
         />
       </div>

@@ -56,7 +56,7 @@ const AddInventory = (props) => {
           name="trackingNumber"
           label="Tracking Number"
           rules={ValidationRules.text(undefined, 100, true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         
         <FormSelectField
@@ -64,7 +64,7 @@ const AddInventory = (props) => {
           label="Status"
           options={statusList}
           rules={ValidationRules.select(true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         
         <FormSelectField
@@ -72,7 +72,7 @@ const AddInventory = (props) => {
           label="Type"
           options={packages}
           rules={ValidationRules.select(true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormSelectField
@@ -81,7 +81,7 @@ const AddInventory = (props) => {
           options={companies}
           rules={ValidationRules.select(true)}
           labelKey="name"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         
         <FormTextField
@@ -89,7 +89,7 @@ const AddInventory = (props) => {
           label="Location"
           rules={ValidationRules.text(undefined, 50, false)}
           multiline
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         
         <FormTextField
@@ -97,7 +97,7 @@ const AddInventory = (props) => {
           label="Length"
           type="number"
           rules={ValidationRules.number(0, 9999, true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -105,7 +105,7 @@ const AddInventory = (props) => {
           label="Width"
           type="number"
           rules={ValidationRules.number(0, 9999, true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -113,7 +113,7 @@ const AddInventory = (props) => {
           label="Height"
           type="number"
           rules={ValidationRules.number(0, 9999, true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -121,7 +121,7 @@ const AddInventory = (props) => {
           label="Weight"
           type="number"
           rules={ValidationRules.number(0, 99999, true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -130,7 +130,7 @@ const AddInventory = (props) => {
           rules={ValidationRules.text(undefined, 254, false)}
           multiline
           rows={4}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <div className="drawer-footer">

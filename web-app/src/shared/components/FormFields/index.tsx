@@ -76,7 +76,7 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
   label,
   type = "text",
   rules,
-  sx = { m: 1, width: FieldWidths.FULL },
+  className = "m-2 w-full",
   disabled = false,
   helperText,
   placeholder,
@@ -91,7 +91,7 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
       label={label}
       type={type}
       rules={rules}
-      sx={sx}
+      className={className}
       disabled={disabled}
       helperText={helperText}
       placeholder={placeholder}
@@ -113,7 +113,7 @@ export const FormSelectField: React.FC<FormSelectFieldProps> = ({
   label,
   options,
   rules,
-  sx = { m: 1, width: FieldWidths.FULL },
+  className = "m-2 w-full",
   disabled = false,
   labelKey = "value",
   valueKey = "id",
@@ -124,7 +124,7 @@ export const FormSelectField: React.FC<FormSelectFieldProps> = ({
       label={label}
       options={options}
       rules={rules}
-      sx={sx}
+      className={className}
       disabled={disabled}
       labelKey={labelKey}
       valueKey={valueKey}
@@ -138,14 +138,14 @@ export const FormSelectField: React.FC<FormSelectFieldProps> = ({
 export const FormCheckboxField: React.FC<FormCheckboxFieldProps> = ({
   name,
   label,
-  sx = { m: 1 },
+  className = "m-2",
   disabled = false,
 }) => {
   return (
     <CheckboxElement
       name={name}
       label={label}
-      sx={sx}
+      className={className}
       disabled={disabled}
     />
   );
@@ -331,10 +331,10 @@ export const FormActions: React.FC<FormActionsProps> = ({
   cancelLabel = "Cancel",
   isSubmitting = false,
   showCancel = true,
-  sx = { marginLeft: "12px", marginTop: "15px" },
+  className = "ml-3 mt-4",
 }) => {
   return (
-    <div style={sx as any}>
+    <div className={className}>
       <div className="flex flex-row gap-4">
         <Button 
           type="submit" 

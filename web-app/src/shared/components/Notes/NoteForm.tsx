@@ -72,7 +72,7 @@ const NoteForm = (props: NoteProps) => {
         <h3 style={{ marginLeft: "10px" }}>New Note</h3>
         <div>
           <TextFieldElement
-            sx={{ m: 1, minWidth: "96%" }}
+            className="m-2 w-[96%]"
             name={"title"}
             label="Note Title"
             variant="outlined"
@@ -81,7 +81,7 @@ const NoteForm = (props: NoteProps) => {
         </div>
         <div>
           <TextFieldElement
-            sx={{ m: 1, minWidth: "96%" }}
+            className="m-2 w-[96%]"
             name={"message"}
             label="Note Description"
             variant="outlined"
@@ -92,7 +92,7 @@ const NoteForm = (props: NoteProps) => {
         </div>
         <div style={{ marginLeft: "10px" }}>
           <CheckboxElement
-            sx={{ m: 1 }}
+            className="m-2"
             name={"isCritical"}
             label="Mark Critical"
           />

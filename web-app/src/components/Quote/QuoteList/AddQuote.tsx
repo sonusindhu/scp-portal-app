@@ -97,7 +97,7 @@ const AddQuote = (props) => {
             name="name"
             label="Quote Name"
             rules={ValidationRules.text(undefined, 200, false)}
-            sx={{ m: 1, width: FieldWidths.DRAWER }}
+            className="m-2 w-full"
           />
           
           <FormSelectField
@@ -106,7 +106,7 @@ const AddQuote = (props) => {
             options={SERVICE_TYPES}
             rules={ValidationRules.select(true)}
             labelKey="value"
-            sx={{ m: 1, width: FieldWidths.DRAWER }}
+            className="m-2 w-full"
           />
           
           <FormSelectField
@@ -115,7 +115,7 @@ const AddQuote = (props) => {
             options={TRANSPORT_MODES}
             rules={ValidationRules.select(true)}
             labelKey="value"
-            sx={{ m: 1, width: FieldWidths.DRAWER }}
+            className="m-2 w-full"
           />
 
           <FormSelectField
@@ -124,7 +124,7 @@ const AddQuote = (props) => {
             options={companies}
             rules={ValidationRules.select(true)}
             labelKey="name"
-            sx={{ m: 1, width: FieldWidths.DRAWER }}
+            className="m-2 w-full"
           />
 
           <FormSelectField
@@ -133,14 +133,13 @@ const AddQuote = (props) => {
             options={contacts}
             rules={ValidationRules.select(true)}
             labelKey="fullName"
-            sx={{ m: 1, width: FieldWidths.DRAWER }}
+            className="m-2 w-full"
           />
 
           <FormTextField
             name="expiryDate"
             type="date"
             label="Expiry Date"
-            sx={{ m: 1, minWidth: FieldWidths.DRAWER }}
             InputLabelProps={{ shrink: true }}
           />
         </div>

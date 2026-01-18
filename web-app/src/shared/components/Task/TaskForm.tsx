@@ -46,7 +46,7 @@ const TaskForm = (props: TaskProps) => {
       <h3 style={{ marginLeft: "10px" }}>New Task</h3>
       <div>
         <TextFieldElement
-          sx={{ m: 1, minWidth: "96%" }}
+          className="m-2 w-[96%]"
           name={"subject"}
           label="Subject"
           variant="outlined"
@@ -55,7 +55,7 @@ const TaskForm = (props: TaskProps) => {
       </div>
       <div>
         <TextFieldElement
-          sx={{ m: 1, minWidth: "96%" }}
+          className="m-2 w-[96%]"
           name={"description"}
           label="Description"
           variant="outlined"
@@ -68,7 +68,7 @@ const TaskForm = (props: TaskProps) => {
         <SelectElement
           valueKey="id"
           labelKey="value"
-          sx={{ m: 1, width: "45%" }}
+          className="m-2 w-[45%]"
           options={TASK_PRIORITY}
           name={"priority"}
           label="Priority"
@@ -77,7 +77,7 @@ const TaskForm = (props: TaskProps) => {
         <SelectElement
           valueKey="id"
           labelKey="value"
-          sx={{ m: 1, width: "45%" }}
+          className="m-2 w-[45%]"
           options={TASK_CATEGORY}
           name={"category"}
           label="Category"
@@ -88,7 +88,7 @@ const TaskForm = (props: TaskProps) => {
         <SelectElement
           valueKey="id"
           labelKey="value"
-          sx={{ m: 1, width: "45%" }}
+          className="m-2 w-[45%]"
           options={TEMP_USER_LIST}
           name={"assignedTo"}
           label="Assigned To"
@@ -97,7 +97,7 @@ const TaskForm = (props: TaskProps) => {
         <SelectElement
           valueKey="id"
           labelKey="value"
-          sx={{ m: 1, width: "45%" }}
+          className="m-2 w-[45%]"
           options={TEMP_USER_LIST}
           name={"pointOfContact"}
           label="Point Of Contact"
@@ -108,7 +108,7 @@ const TaskForm = (props: TaskProps) => {
       <div className="quote-task-datepicker">
         <div className="due-date">
           <TextFieldElement
-            sx={{ m: 1, minWidth: "96%" }}
+            className="m-2 w-[96%]"
             name={"dueDateTime"}
             label="Due Date"
             variant="outlined"
@@ -117,7 +117,7 @@ const TaskForm = (props: TaskProps) => {
         </div>
         <div className="reminder-date">
           <TextFieldElement
-            sx={{ m: 1, minWidth: "96%" }}
+            className="m-2 w-[96%]"
             name={"reminderDateTime"}
             label="Reminder Date"
             variant="outlined"
@@ -131,7 +131,7 @@ const TaskForm = (props: TaskProps) => {
         <SelectElement
           valueKey="id"
           labelKey="value"
-          sx={{ m: 1, width: "46%" }}
+          className="m-2 w-[46%]"
           options={TASK_STATUS.filter(s => s.id !== "")}
           name={"status"}
           label="Status"

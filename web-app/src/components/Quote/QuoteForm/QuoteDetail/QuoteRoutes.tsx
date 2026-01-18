@@ -19,7 +19,7 @@ const QuoteRoutes = ({ control }) => {
           return (    
             <div key={item.key}>
               <TextFieldElement
-                sx={{ m: 0.9, }}
+                className="m-2"
                 name={`stops.${index}.origin`}
                 label="Origin"
                 disabled={true}
@@ -27,7 +27,7 @@ const QuoteRoutes = ({ control }) => {
                 margin={"dense"}
               />
               <TextFieldElement
-                sx={{ m: 0.9, }}
+                className="m-2"
                 required
                 name={`stops.${index}.city`}
                 label="City"
@@ -35,7 +35,7 @@ const QuoteRoutes = ({ control }) => {
                 margin={"dense"}
               />
               <TextFieldElement
-                sx={{ m: 0.9, }}
+                className="m-2"
                 required
                 name={`stops.${index}.zipcode`}
                 label="Zipcode"
@@ -43,7 +43,7 @@ const QuoteRoutes = ({ control }) => {
                 variant="outlined"
               />
               <TextFieldElement
-                sx={{ m: 0.9, }}
+                className="m-2"
                 required
                 name={`stops.${index}.state`}
                 label="State"
@@ -51,7 +51,7 @@ const QuoteRoutes = ({ control }) => {
                 variant="outlined"
               />
               <TextFieldElement
-                sx={{ m: 0.9, }}
+                className="m-2"
                 required
                 name={`stops.${index}.country`}
                 label="Country"

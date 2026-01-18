@@ -32,7 +32,7 @@ const QuoteAccessorials = ({ control }) => {
           return (
             <div key={item.key}>
               <TextFieldElement
-                sx={{ m: 0.9 }}
+                className="m-2"
                 required
                 name={`accessorials.${index}.name`}
                 label="Name"
@@ -40,7 +40,7 @@ const QuoteAccessorials = ({ control }) => {
                 margin={"dense"}
               />
               <TextFieldElement
-                sx={{ m: 0.9 }}
+                className="m-2"
                 required
                 name={`accessorials.${index}.quantity`}
                 label="Quantity"
@@ -48,7 +48,7 @@ const QuoteAccessorials = ({ control }) => {
                 variant="outlined"
               />
               <TextFieldElement
-                sx={{ m: 0.9 }}
+                className="m-2"
                 required
                 name={`accessorials.${index}.rate`}
                 label="Rate"
@@ -56,7 +56,7 @@ const QuoteAccessorials = ({ control }) => {
                 variant="outlined"
               />
               <TextFieldElement
-                sx={{ m: 0.9 }}
+                className="m-2"
                 name={`accessorials.${index}.totalRate`}
                 label="Total Rate"
                 margin={"dense"}
@@ -64,7 +64,7 @@ const QuoteAccessorials = ({ control }) => {
                 variant="outlined"
               />
               <TextFieldElement
-                sx={{ m: 0.9 }}
+                className="m-2"
                 name={`accessorials.${index}.description`}
                 label="Description"
                 disabled={true}

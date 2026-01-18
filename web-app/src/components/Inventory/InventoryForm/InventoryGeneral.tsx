@@ -66,7 +66,7 @@ const InventoryGeneral = () => {
           name="trackingNumber"
           label="Tracking Number"
           rules={ValidationRules.text(undefined, 100, true)}
-          sx={{ m: 1, width: 375 }}
+          className="m-2 w-full"
         />
         
         <FormSelectField
@@ -74,7 +74,7 @@ const InventoryGeneral = () => {
           label="Status"
           options={statusList}
           rules={ValidationRules.select(true)}
-          sx={{ m: 1, width: 375 }}
+          className="m-2 w-full"
         />
         
         <FormSelectField
@@ -82,7 +82,7 @@ const InventoryGeneral = () => {
           label="Type"
           options={packages}
           rules={ValidationRules.select(true)}
-          sx={{ m: 1, width: 375 }}
+          className="m-2 w-full"
         />
 
         <FormSelectField
@@ -91,7 +91,7 @@ const InventoryGeneral = () => {
           options={companies}
           rules={ValidationRules.select(true)}
           labelKey="name"
-          sx={{ m: 1, width: 375 }}
+          className="m-2 w-full"
         />
         
         <FormTextField
@@ -99,7 +99,7 @@ const InventoryGeneral = () => {
           label="Location"
           rules={ValidationRules.text(undefined, 50, false)}
           multiline
-          sx={{ m: 1, width: 375 }}
+          className="m-2 w-full"
         />
         
         <FormTextField
@@ -107,7 +107,7 @@ const InventoryGeneral = () => {
           label="Length"
           type="number"
           rules={ValidationRules.number(0, 9999, true)}
-          sx={{ m: 1, width: 375 }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -115,7 +115,7 @@ const InventoryGeneral = () => {
           label="Width"
           type="number"
           rules={ValidationRules.number(0, 9999, true)}
-          sx={{ m: 1, width: 375 }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -123,7 +123,7 @@ const InventoryGeneral = () => {
           label="Height"
           type="number"
           rules={ValidationRules.number(0, 9999, true)}
-          sx={{ m: 1, width: 375 }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -131,7 +131,7 @@ const InventoryGeneral = () => {
           label="Weight"
           type="number"
           rules={ValidationRules.number(0, 99999, true)}
-          sx={{ m: 1, width: 375 }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -140,7 +140,7 @@ const InventoryGeneral = () => {
           rules={ValidationRules.text(undefined, 254, false)}
           multiline
           rows={4}
-          sx={{ m: 1, width: 375 }}
+          className="m-2 w-full"
         />
 
         <FormActions onCancel={handleClearForm} />

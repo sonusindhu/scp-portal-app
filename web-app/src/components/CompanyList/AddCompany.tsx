@@ -45,13 +45,13 @@ const AddCompany = (props) => {
           name="name"
           label="Name"
           rules={ValidationRules.companyName(true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         
         <CommonFields.Email
           name="email"
           label="Email"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormSelectField
@@ -63,7 +63,7 @@ const AddCompany = (props) => {
             { id: "inactive", title: "Inactive" },
           ]}
           rules={ValidationRules.select(true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormSelectField
@@ -75,7 +75,7 @@ const AddCompany = (props) => {
             { id: "carrier", title: "Carrier" },
           ]}
           rules={ValidationRules.select(true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -83,7 +83,7 @@ const AddCompany = (props) => {
           label="Revenue"
           type="number"
           rules={ValidationRules.number(0, 9999999999, true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -91,55 +91,55 @@ const AddCompany = (props) => {
           label="Employees Count"
           type="number"
           rules={ValidationRules.number(1, 99999, true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Address1
           name="address1"
           label="Address1"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Address2
           name="address2"
           label="Address2"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.City
           name="city"
           label="City"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.State
           name="state"
           label="State"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Country
           name="country"
           label="Country"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Zipcode
           name="zipcode"
           label="Zipcode"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Phone
           name="phone"
           label="Phone"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Extension
           name="extension"
           label="Extension"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         <div className="drawer-footer">
           <FormActions onCancel={onCloseDrawer} cancelLabel="Close" />

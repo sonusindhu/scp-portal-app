@@ -55,7 +55,7 @@ const EmailForm = (props: EmailFormProps) => {
       <PageHeading title="New Email" />
       <div>
         <FormTextField
-          sx={{ m: 1, minWidth: "96%" }}
+          className="m-2 w-[96%]"
           name="title"
           label="Email Title"
           rules={ValidationRules.text(undefined, 100, true)}
@@ -63,7 +63,7 @@ const EmailForm = (props: EmailFormProps) => {
       </div>
       <div>
         <FormTextField
-          sx={{ m: 1, minWidth: "96%" }}
+          className="m-2 w-[96%]"
           name="message"
           label="Email Description"
           rules={ValidationRules.text(undefined, 1000, true)}
@@ -73,7 +73,7 @@ const EmailForm = (props: EmailFormProps) => {
       </div>
       <div style={{ marginLeft: "10px" }}>
         <CheckboxElement
-          sx={{ m: 1 }}
+          className="m-2"
           name={"isCritical"}
           label="Mark Critical"
         />

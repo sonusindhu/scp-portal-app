@@ -53,19 +53,19 @@ const AddContact = (props) => {
         <CommonFields.FirstName
           name="firstName"
           label="First Name"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         
         <CommonFields.LastName
           name="lastName"
           label="Last Name"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         
         <CommonFields.Email
           name="email"
           label="Email"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormSelectField
@@ -73,7 +73,7 @@ const AddContact = (props) => {
           label="Status"
           options={statusList}
           rules={ValidationRules.select(true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormSelectField
@@ -82,67 +82,67 @@ const AddContact = (props) => {
           options={companies}
           rules={ValidationRules.select(true)}
           labelKey="name"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Department
           name="department"
           label="Department"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.JobTitle
           name="jobTitle"
           label="Job Title"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Address1
           name="address1"
           label="Address1"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Address2
           name="address2"
           label="Address2"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.City
           name="city"
           label="City"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         
         <CommonFields.State
           name="state"
           label="State"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Country
           name="country"
           label="Country"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Zipcode
           name="zipcode"
           label="Zipcode"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Phone
           name="phone"
           label="Phone"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Extension
           name="extension"
           label="Extension"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <div className="drawer-footer">
