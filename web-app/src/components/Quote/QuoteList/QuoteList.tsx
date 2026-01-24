@@ -1,7 +1,8 @@
 import React, { Fragment } from "react";
-import { Drawer, Button } from "@mui/material";
 
 import QuoteService from "../../../services/quote.service";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import QuoteConfig from "./quote.config";
 import GridListView from "../../../shared/components/GridList/GridListView";
 import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
@@ -47,8 +48,8 @@ const QuoteList: React.FC = () => {
         <Button
           className="blue-btn"
           type="button"
-          size="large"
-          variant="contained"
+          size="lg"
+          variant="default"
           onClick={openDrawer}
           aria-label="Create quote"
         >
@@ -61,14 +62,11 @@ const QuoteList: React.FC = () => {
           menuCallback={menuCallbackFun}
         />
       </GridListView>
-      <Drawer
-        anchor="right"
-        open={addDrawer}
-        onClose={closeDrawer}
-        ModalProps={{ disableEnforceFocus: true }}
-      >
-        <AddQuote onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
-      </Drawer>
+      <Sheet open={addDrawer} onOpenChange={(open) => !open && closeDrawer()}>
+        <SheetContent side="right">
+          <AddQuote onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
+        </SheetContent>
+      </Sheet>
     </Fragment>
   );
 };

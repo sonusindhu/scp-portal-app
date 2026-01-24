@@ -3,8 +3,8 @@ import {
   FormContainer,
   TextFieldElement,
   CheckboxElement,
-} from "react-hook-form-mui";
-import { Button, Stack } from "@mui/material";
+} from "../FormFields";
+
 import { useForm } from "react-hook-form";
 
 import toast from "../../../utils/toast.util";
@@ -14,6 +14,7 @@ import { ResponseModel } from "../../../models/common.model";
 import EmailService from "../../../services/email.service";
 import { ValidationRules } from "../../../utils/validation.util";
 import { FormTextField, FormActions } from "../FormFields";
+import { ApiResponse } from "@/services/BaseService";
 
 const EmailForm = (props: EmailFormProps) => {
   const email: Partial<Email> = props.email || {};
@@ -26,7 +27,7 @@ const EmailForm = (props: EmailFormProps) => {
 
   const handleClearForm = () => reset();
 
-  const handleSuccess = (response: ResponseModel) => {
+  const handleSuccess = (response: ApiResponse<Email>) => {
     if (response.status) {
       toast.success(response.message);
       reset({ ...email, isCritical: false, title: "", message: "" });
@@ -55,7 +56,7 @@ const EmailForm = (props: EmailFormProps) => {
       <PageHeading title="New Email" />
       <div>
         <FormTextField
-          sx={{ m: 1, minWidth: "96%" }}
+          className="m-2 w-[96%]"
           name="title"
           label="Email Title"
           rules={ValidationRules.text(undefined, 100, true)}
@@ -63,7 +64,7 @@ const EmailForm = (props: EmailFormProps) => {
       </div>
       <div>
         <FormTextField
-          sx={{ m: 1, minWidth: "96%" }}
+          className="m-2 w-[96%]"
           name="message"
           label="Email Description"
           rules={ValidationRules.text(undefined, 1000, true)}
@@ -73,7 +74,7 @@ const EmailForm = (props: EmailFormProps) => {
       </div>
       <div style={{ marginLeft: "10px" }}>
         <CheckboxElement
-          sx={{ m: 1 }}
+          className="m-2"
           name={"isCritical"}
           label="Mark Critical"
         />

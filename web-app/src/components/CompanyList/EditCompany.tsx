@@ -1,16 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
-import {
-  FormContainer,
-} from "react-hook-form-mui";
 
 import CompanyService from "../../services/company.service";
 import PageHeading from "../../shared/components/PageHeading/PageHeading";
 import { useFormSubmit } from "../../hooks";
 import { ValidationRules } from "../../utils/validation.util";
-import { CommonFields, FormTextField, FormSelectField, FieldWidths, FormActions } from "../../shared/components/FormFields";
+import { CommonFields, FormTextField, FormSelectField, FieldWidths, FormActions, FormContainer } from "../../shared/components/FormFields";
 
 const EditCompany = () => {
   let { id } = useParams();
@@ -54,18 +50,18 @@ const EditCompany = () => {
       <PageHeading title="Edit Company" />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
-        <div>
+        <div className="grid grid-cols-4 gap-4">
           <FormTextField
             name="name"
             label="Name"
             rules={ValidationRules.companyName(true)}
-            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
           
           <CommonFields.Email
             name="email"
             label="Email"
-            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
 
           <FormSelectField
@@ -77,11 +73,11 @@ const EditCompany = () => {
               { id: "inactive", title: "Inactive" },
             ]}
             rules={ValidationRules.select(true)}
-            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
+            valueKey="id"
+            labelKey="title"
           />
-        </div>
 
-        <div>
           <FormSelectField
             name="type"
             label="Type"
@@ -91,7 +87,9 @@ const EditCompany = () => {
               { id: "carrier", title: "Carrier" },
             ]}
             rules={ValidationRules.select(true)}
-            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
+            valueKey="id"
+            labelKey="title"
           />
 
           <FormTextField
@@ -99,7 +97,7 @@ const EditCompany = () => {
             label="Revenue"
             type="number"
             rules={ValidationRules.number(0, 9999999999, true)}
-            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
 
           <FormTextField
@@ -107,59 +105,55 @@ const EditCompany = () => {
             label="Employees Count"
             type="number"
             rules={ValidationRules.number(1, 99999, true)}
-            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
-        </div>
-        <div>
+
           <CommonFields.Address1
             name="address1"
             label="Address1"
-            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
 
           <CommonFields.Address2
             name="address2"
             label="Address2"
-            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
 
           <CommonFields.City
             name="city"
             label="City"
-            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
-        </div>
-        <div>
+
           <CommonFields.State
             name="state"
             label="State"
-            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
 
           <CommonFields.Country
             name="country"
             label="Country"
-            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
 
           <CommonFields.Zipcode
             name="zipcode"
             label="Zipcode"
-            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
-        </div>
 
-        <div>
           <CommonFields.Phone
             name="phone"
             label="Phone"
-            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
 
           <CommonFields.Extension
             name="extension"
             label="Extension"
-            sx={{ m: 1.1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
         </div>
 

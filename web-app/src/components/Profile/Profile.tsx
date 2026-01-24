@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
-import { Grid, Tab, Tabs } from "@mui/material";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UserForm from "./UserForm";
 import { useLoading } from "../../hooks/useLoading";
 import { LoadingContainer } from "../../shared/components/Loading";
@@ -13,9 +13,9 @@ const QuoteForm = (props) => {
   let [user, setUser] = useState<any>({});
   const navigate = useNavigate();
 
-  const handleChangeTab = (event, tab: string) => {
-    setSelectedTab(tab);
-    navigate(tab);
+  const handleChangeTab = (value: string) => {
+    setSelectedTab(value);
+    navigate(value);
   };
 
   // check if user is authenticated, if not redirect to login page
@@ -35,27 +35,28 @@ const QuoteForm = (props) => {
 
   return (
     <div className="container-fluid">
-      <Grid container spacing={2}>        
-        <Grid item xs={3} className="left-user-form">
+      <div className="grid grid-cols-12 gap-4">        
+        <div className="col-span-3 left-user-form">
           <LoadingContainer loading={isLoading}>
             <UserForm user={user}/>
           </LoadingContainer>
-        </Grid>
+        </div>
 
-        <Grid item xs={9}>
+        <div className="col-span-9">
           <Tabs
             value={selectedTab}
-            onChange={handleChangeTab}
-            aria-label="User Profile Tab"
+            onValueChange={handleChangeTab}
           >
-            <Tab value="updatepassword" label="Update Password" />
-            <Tab value="integrations" label="Integrations" />
-            <Tab value="templates" label="Templates" />
+            <TabsList>
+              <TabsTrigger value="updatepassword">Update Password</TabsTrigger>
+              <TabsTrigger value="integrations">Integrations</TabsTrigger>
+              <TabsTrigger value="templates">Templates</TabsTrigger>
+            </TabsList>
           </Tabs>
           <Outlet />
-        </Grid>
+        </div>
 
-      </Grid>
+      </div>
     </div>
   );
 };

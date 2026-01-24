@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from "react";
+import React, { useState, Suspense, useMemo } from "react";
 import { useRoutes, useLocation } from "react-router-dom";
 
 import "./App.css";
@@ -15,8 +15,14 @@ const App = () => {
   const [theme, setTheme] = useState<string>("light");
 
   // Don't show header on public routes (auth pages, home page)
-  const isPublicRoute = location.pathname === "/" || location.pathname.startsWith("/auth");
-  const shouldShowHeader = isAuthenticated && !isPublicRoute;
+  const isPublicRoute = useMemo(
+    () => location.pathname === "/" || location.pathname.startsWith("/auth"),
+    [location.pathname]
+  );
+  const shouldShowHeader = useMemo(
+    () => isAuthenticated && !isPublicRoute,
+    [isAuthenticated, isPublicRoute]
+  );
 
   return (
     <div className={`app-root theme-${theme}`}>

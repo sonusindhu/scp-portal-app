@@ -1,6 +1,7 @@
 import React, { Fragment, useRef } from "react";
-import { Drawer, Button } from "@mui/material";
 
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import GridListView from "../../../shared/components/GridList/GridListView";
 import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 import ContactService from "../../../services/contact.service";
@@ -48,8 +49,8 @@ const ContactList: React.FC = () => {
         <Button
           className="blue-btn"
           type="button"
-          size="large"
-          variant="contained"
+          size="lg"
+          variant="default"
           onClick={openDrawer}
           aria-label="Create contact"
         >
@@ -61,14 +62,11 @@ const ContactList: React.FC = () => {
           menuCallback={menuCallbackFun}
         />
       </GridListView>
-      <Drawer
-        anchor="right"
-        open={addDrawer}
-        onClose={closeDrawer}
-        ModalProps={{ disableEnforceFocus: true }}
-      >
-        <AddContact onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
-      </Drawer>
+      <Sheet open={addDrawer} onOpenChange={(open) => !open && closeDrawer()}>
+        <SheetContent side="right">
+          <AddContact onCloseDrawer={closeDrawer} onAddSuccess={onAddSuccess} />
+        </SheetContent>
+      </Sheet>
     </Fragment>
   );
 };

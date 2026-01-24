@@ -1,5 +1,5 @@
 import React, { useCallback, Fragment } from "react";
-import { Button } from "@mui/material";
+import { Button } from "@/components/ui/button";
 import toast from "../utils/toast.util";
 
 interface UseDeleteConfirmationOptions {
@@ -35,10 +35,10 @@ export const useDeleteConfirmation = ({
 
   const deleteAction = useCallback((ids: number[]) => (
     <Fragment>
-      <Button onClick={() => confirmDelete(ids)} aria-label="Confirm delete">
+      <Button onClick={() => confirmDelete(ids)} aria-label="Confirm delete" size="sm" variant="default">
         Confirm
       </Button>
-      <Button onClick={() => toast.close()} aria-label="Close dialog">
+      <Button onClick={() => toast.close()} aria-label="Close dialog" size="sm" variant="outline">
         Close
       </Button>
     </Fragment>

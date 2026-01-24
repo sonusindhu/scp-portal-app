@@ -1,11 +1,11 @@
 import React from "react";
+import { useForm, FormProvider } from "react-hook-form";
 import {
   FormContainer,
   TextFieldElement,
   SelectElement,
-} from "react-hook-form-mui";
-import { useForm } from "react-hook-form";
-import { FormActions } from "../FormFields";
+  FormActions,
+} from "../FormFields";
 
 import toast from "../../../utils/toast.util";
 import { Task } from "../../models/Task";
@@ -46,19 +46,17 @@ const TaskForm = (props: TaskProps) => {
       <h3 style={{ marginLeft: "10px" }}>New Task</h3>
       <div>
         <TextFieldElement
-          sx={{ m: 1, minWidth: "96%" }}
+          className="m-2 w-[96%]"
           name={"subject"}
           label="Subject"
-          variant="outlined"
           rules={ValidationRules.text(undefined, 100, true)}
         />
       </div>
       <div>
         <TextFieldElement
-          sx={{ m: 1, minWidth: "96%" }}
+          className="m-2 w-[96%]"
           name={"description"}
           label="Description"
-          variant="outlined"
           rules={ValidationRules.text(undefined, 1000, true)}
           multiline={true}
           rows={4}
@@ -68,7 +66,7 @@ const TaskForm = (props: TaskProps) => {
         <SelectElement
           valueKey="id"
           labelKey="value"
-          sx={{ m: 1, width: "45%" }}
+          className="m-2 w-[45%]"
           options={TASK_PRIORITY}
           name={"priority"}
           label="Priority"
@@ -77,7 +75,7 @@ const TaskForm = (props: TaskProps) => {
         <SelectElement
           valueKey="id"
           labelKey="value"
-          sx={{ m: 1, width: "45%" }}
+          className="m-2 w-[45%]"
           options={TASK_CATEGORY}
           name={"category"}
           label="Category"
@@ -88,7 +86,7 @@ const TaskForm = (props: TaskProps) => {
         <SelectElement
           valueKey="id"
           labelKey="value"
-          sx={{ m: 1, width: "45%" }}
+          className="m-2 w-[45%]"
           options={TEMP_USER_LIST}
           name={"assignedTo"}
           label="Assigned To"
@@ -97,7 +95,7 @@ const TaskForm = (props: TaskProps) => {
         <SelectElement
           valueKey="id"
           labelKey="value"
-          sx={{ m: 1, width: "45%" }}
+          className="m-2 w-[45%]"
           options={TEMP_USER_LIST}
           name={"pointOfContact"}
           label="Point Of Contact"
@@ -108,19 +106,17 @@ const TaskForm = (props: TaskProps) => {
       <div className="quote-task-datepicker">
         <div className="due-date">
           <TextFieldElement
-            sx={{ m: 1, minWidth: "96%" }}
+            className="m-2 w-[96%]"
             name={"dueDateTime"}
             label="Due Date"
-            variant="outlined"
             type="date"
           />
         </div>
         <div className="reminder-date">
           <TextFieldElement
-            sx={{ m: 1, minWidth: "96%" }}
+            className="m-2 w-[96%]"
             name={"reminderDateTime"}
             label="Reminder Date"
-            variant="outlined"
             type="date"
           />
 
@@ -131,7 +127,7 @@ const TaskForm = (props: TaskProps) => {
         <SelectElement
           valueKey="id"
           labelKey="value"
-          sx={{ m: 1, width: "46%" }}
+          className="m-2 w-[46%]"
           options={TASK_STATUS.filter(s => s.id !== "")}
           name={"status"}
           label="Status"

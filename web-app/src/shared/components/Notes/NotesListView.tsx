@@ -1,27 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import WarningOutlinedIcon from "@mui/icons-material/WarningOutlined";
+import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+
+import { MoreVertical, AlertTriangle } from "lucide-react";
 
 import { Note } from "../../models/Note";
-import { Button, Chip, Drawer } from "@mui/material";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import PageHeading from "../PageHeading/PageHeading";
 import { MenuItem } from "../../models/MenuItem";
 import { useParams } from "react-router-dom";
 import NoteService from "../../../services/note.service";
 import NoteForm from "./NoteForm";
 import { NotesMainMenu } from "../../const/notes.conts";
+import { AvatarFallback } from "@radix-ui/react-avatar";
 
 interface NotesListProps {
   options: any;
@@ -75,8 +70,8 @@ const NotesCardView = (props: NotesListProps) => {
         <Button
           className="blue-btn m-r-20"
           type="button"
-          size="large"
-          variant="contained"
+          size="lg"
+          variant="default"
           onClick={onCreate}
         >
           Create
@@ -88,14 +83,17 @@ const NotesCardView = (props: NotesListProps) => {
           <CardHeader
             className="note-card-header"
             avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="User Name">
-                R
+              <Avatar className="bg-red-500">
+                <AvatarFallback className="bg-red-500 text-white">R</AvatarFallback>
               </Avatar>
             }
             action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
+              <button
+                aria-label="settings"
+                className="inline-flex items-center justify-center rounded-full p-2 hover:bg-gray-100 transition-colors"
+              >
+                <MoreVertical className="w-5 h-5" />
+              </button>
             }
             title={note.title}
             subheader={
@@ -103,19 +101,19 @@ const NotesCardView = (props: NotesListProps) => {
                 <span>{noteSubHeader(note)}</span>
 
                 {note.isCritical && (
-                  <Chip
-                    icon={<WarningOutlinedIcon color="error" />}
-                    label="Critical"
-                  />
+                  <Badge variant="destructive" className="flex items-center gap-1">
+                    <AlertTriangle className="w-3 h-3" />
+                    Critical
+                  </Badge>
                 )}
               </div>
             }
           />
 
           <CardContent className="note-card-content">
-            <Typography variant="body2" color="text.secondary">
+            <p className="text-sm text-gray-600">
               {note.message}
-            </Typography>
+            </p>
           </CardContent>
           {/* <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
@@ -128,19 +126,15 @@ const NotesCardView = (props: NotesListProps) => {
         </Card>
       ))}
 
-      <Drawer
-        anchor="right"
-        open={addDrawer}
-        onClose={closeDrawer}
-        ModalProps={{ disableEnforceFocus: true }}
-      >
-        <NoteForm
-          note={note}
-          onSuccess={onSuccess}
-          onCloseDrawer={closeDrawer}
-        />
-        `
-      </Drawer>
+      <Sheet open={addDrawer} onOpenChange={(open) => !open && closeDrawer()}>
+        <SheetContent side="right">
+          <NoteForm
+            note={note}
+            onSuccess={onSuccess}
+            onCloseDrawer={closeDrawer}
+          />
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };

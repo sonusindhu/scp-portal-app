@@ -1,16 +1,10 @@
 import React from "react";
-import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { Box } from "@mui/material";
-
-import {
-  FormContainer,
-} from "react-hook-form-mui";
 
 import CompanyService from "../../services/company.service";
 import HeaderWithTitle from "../../shared/components/HeaderWithTitle";
 import { useFormSubmit } from "../../hooks";
-import { CommonFields, FormTextField, FormSelectField, FieldWidths, FormActions } from "../../shared/components/FormFields";
+import { CommonFields, FormTextField, FormSelectField, FieldWidths, FormActions, FormContainer } from "../../shared/components/FormFields";
 import { ValidationRules } from "../../utils/validation.util";
 
 const AddCompany = (props) => {
@@ -37,7 +31,7 @@ const AddCompany = (props) => {
   };
 
   return (
-    <Box sx={{ width: 450 }} className="form-container">
+    <div className="form-container">
       <HeaderWithTitle title="Add Company" onCloseDrawer={onCloseDrawer} />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
@@ -45,37 +39,35 @@ const AddCompany = (props) => {
           name="name"
           label="Name"
           rules={ValidationRules.companyName(true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         
         <CommonFields.Email
           name="email"
           label="Email"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormSelectField
           name="status"
           label="Status"
           options={[
-            { id: "", title: "Select" },
-            { id: "active", title: "Active" },
-            { id: "inactive", title: "Inactive" },
+            { id: "active", value: "Active" },
+            { id: "inactive", value: "Inactive" },
           ]}
           rules={ValidationRules.select(true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormSelectField
           name="type"
           label="Type"
           options={[
-            { id: "", title: "Select" },
-            { id: "customer", title: "Customer" },
-            { id: "carrier", title: "Carrier" },
+            { id: "customer", value: "Customer" },
+            { id: "carrier", value: "Carrier" },
           ]}
           rules={ValidationRules.select(true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -83,7 +75,7 @@ const AddCompany = (props) => {
           label="Revenue"
           type="number"
           rules={ValidationRules.number(0, 9999999999, true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -91,61 +83,61 @@ const AddCompany = (props) => {
           label="Employees Count"
           type="number"
           rules={ValidationRules.number(1, 99999, true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Address1
           name="address1"
           label="Address1"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Address2
           name="address2"
           label="Address2"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.City
           name="city"
           label="City"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.State
           name="state"
           label="State"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Country
           name="country"
           label="Country"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Zipcode
           name="zipcode"
           label="Zipcode"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Phone
           name="phone"
           label="Phone"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <CommonFields.Extension
           name="extension"
           label="Extension"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         <div className="drawer-footer">
           <FormActions onCancel={onCloseDrawer} cancelLabel="Close" />
         </div>
       </FormContainer>
-    </Box>
+    </div>
   );
 };
 

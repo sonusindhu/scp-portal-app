@@ -1,11 +1,9 @@
 import React from "react";
-import { FormContainer } from "react-hook-form-mui";
-import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import AuthService from "../../services/auth.service";
 import { useFormSubmit } from "../../hooks";
-import { CommonFields, FormActions } from "../../shared/components/FormFields";
+import { CommonFields, FormActions, FormContainer } from "../../shared/components/FormFields";
 import { ValidationRules } from "../../utils/validation.util";
 
 const ProfileChangePassword = () => {
@@ -40,21 +38,21 @@ const ProfileChangePassword = () => {
         <CommonFields.Password
           name="currentPassword"
           label="Current Password"
-          sx={{ m: 1, minWidth: "46%" }}
+          className="m-2 w-[46%]"
         />
       </div>
       <div>
         <CommonFields.Password
           name="password"
           label="New Password"
-          sx={{ m: 1, minWidth: "46%" }}
+          className="m-2 w-[46%]"
         />
       </div>
       <div>
         <CommonFields.Password
           name="confirmPassword"
           label="Confirm Password"
-          sx={{ m: 1, minWidth: "46%" }}
+          className="m-2 w-[46%]"
           rules={ValidationRules.confirmPassword(passwordValue)}
         />
       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, createContext, useContext } from "react";
+import React, { useState, useEffect, useCallback, createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import EventBus, { AppEvents } from "../common/EventBus";
@@ -68,16 +68,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem("user", JSON.stringify(userData));
   }, []);
 
-  const isAuthenticated = !!currentUser;
+  const isAuthenticated = useMemo(() => !!currentUser, [currentUser]);
 
-  const value = {
+  const value = useMemo(() => ({
     currentUser,
     isAuthenticated,
     isLoading,
     login,
     logout,
     updateUser,
-  };
+  }), [currentUser, isAuthenticated, isLoading, login, logout, updateUser]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

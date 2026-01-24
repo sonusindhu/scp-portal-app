@@ -1,30 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, memo } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./AppHeader.css";
 
-const AppHeader = (props) => {
+interface AppHeaderProps {
+  onLogout: (event?: any) => void;
+}
+
+const AppHeader: React.FC<AppHeaderProps> = memo(({ onLogout }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
-  const logOut = (event) => {
-    props.onLogout(event);
-  };
+  const logOut = useCallback((event: any) => {
+    onLogout(event);
+  }, [onLogout]);
 
-  const handleOpenNavMenu = (event) => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
+  const handleOpenNavMenu = useCallback(() => {
+    setMobileMenuOpen(prev => !prev);
+  }, []);
 
-  const handleOpenUserMenu = (event) => {
-    setUserMenuOpen(!userMenuOpen);
-  };
+  const handleOpenUserMenu = useCallback(() => {
+    setUserMenuOpen(prev => !prev);
+  }, []);
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = useCallback(() => {
     setMobileMenuOpen(false);
-  };
+  }, []);
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = useCallback(() => {
     setUserMenuOpen(false);
-  };
+  }, []);
 
   return (
     <header className="app-header">
@@ -164,6 +168,8 @@ const AppHeader = (props) => {
       </div>
     </header>
   );
-};
+});
+
+AppHeader.displayName = 'AppHeader';
 
 export default AppHeader;

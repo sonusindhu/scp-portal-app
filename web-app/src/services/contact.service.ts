@@ -22,7 +22,7 @@ export interface Contact {
   extension?: string;
   jobTitle?: string;
   department?: string;
-  companyId?: number;
+  companyId?: number | null;
   address1?: string;
   address2?: string;
   city?: string;

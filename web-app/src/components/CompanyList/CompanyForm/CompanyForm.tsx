@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 
-import { Tab, Tabs } from "@mui/material";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "../../../hooks";
 
 const CompanyForm = (props) => {
@@ -11,9 +11,9 @@ const CompanyForm = (props) => {
   let [selectedTab, setSelectedTab] = useState<string>(pathname ?? 'details');
   const navigate = useNavigate();
 
-  const handleChangeTab = (event, tab: string) => {
-    setSelectedTab(tab);
-    navigate(tab);
+  const handleChangeTab = (value: string) => {
+    setSelectedTab(value);
+    navigate(value);
   };
 
   // check if user is authenticated, if not redirect to login page
@@ -32,14 +32,15 @@ const CompanyForm = (props) => {
         <div className="company-form-content">
           <Tabs
             value={selectedTab}
-            onChange={handleChangeTab}
-            aria-label="Vertical tabs example"
+            onValueChange={handleChangeTab}
           >
-            <Tab value="details" label="General" />
-            <Tab value="notes" label="Notes" />
-            <Tab value="emails" label="Emails" />
-            <Tab value="tasks" label="Tasks" />
-            <Tab value="contacts" label="Contacts" />
+            <TabsList>
+              <TabsTrigger value="details">General</TabsTrigger>
+              <TabsTrigger value="notes">Notes</TabsTrigger>
+              <TabsTrigger value="emails">Emails</TabsTrigger>
+              <TabsTrigger value="tasks">Tasks</TabsTrigger>
+              <TabsTrigger value="contacts">Contacts</TabsTrigger>
+            </TabsList>
           </Tabs>
           <Outlet />
         </div>

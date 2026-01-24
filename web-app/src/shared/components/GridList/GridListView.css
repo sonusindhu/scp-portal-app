@@ -84,7 +84,7 @@
   accent-color: #1976d2;
 }
 /* Pagination buttons */
-div > button {
+.grid-list-container > div > button {
   margin-right: 4px;
   padding: 4px 10px;
   border: 1px solid #1976d2;
@@ -94,7 +94,7 @@ div > button {
   cursor: pointer;
   font-size: 14px;
 }
-div > button:disabled {
+.grid-list-container > div > button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }

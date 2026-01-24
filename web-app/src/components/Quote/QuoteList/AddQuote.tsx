@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import {
-  FormContainer,
-} from "react-hook-form-mui";
-import { Box } from "@mui/material";
 import QuoteService from "../../../services/quote.service";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
+import { Button } from "@/components/ui/button";
 import { useFormSubmit } from "../../../hooks";
-import { FormTextField, FormSelectField, FieldWidths, FormActions } from "../../../shared/components/FormFields";
+import { FormTextField, FormSelectField, FieldWidths, FormActions, FormContainer } from "../../../shared/components/FormFields";
 import { ValidationRules } from "../../../utils/validation.util";
 import { SERVICE_TYPES, TRANSPORT_MODES } from "../../../utils/constants.util";
 
@@ -88,7 +84,7 @@ const AddQuote = (props) => {
   };
 
   return (
-    <Box className="quote-form" sx={{ width: 450 }}>
+    <div className="quote-form">
       <HeaderWithTitle title="Add Quote" onCloseDrawer={onCloseDrawer} />
       
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
@@ -97,7 +93,7 @@ const AddQuote = (props) => {
             name="name"
             label="Quote Name"
             rules={ValidationRules.text(undefined, 200, false)}
-            sx={{ m: 1, width: FieldWidths.DRAWER }}
+            className="m-2 w-full"
           />
           
           <FormSelectField
@@ -106,7 +102,7 @@ const AddQuote = (props) => {
             options={SERVICE_TYPES}
             rules={ValidationRules.select(true)}
             labelKey="value"
-            sx={{ m: 1, width: FieldWidths.DRAWER }}
+            className="m-2 w-full"
           />
           
           <FormSelectField
@@ -115,7 +111,7 @@ const AddQuote = (props) => {
             options={TRANSPORT_MODES}
             rules={ValidationRules.select(true)}
             labelKey="value"
-            sx={{ m: 1, width: FieldWidths.DRAWER }}
+            className="m-2 w-full"
           />
 
           <FormSelectField
@@ -124,7 +120,7 @@ const AddQuote = (props) => {
             options={companies}
             rules={ValidationRules.select(true)}
             labelKey="name"
-            sx={{ m: 1, width: FieldWidths.DRAWER }}
+            className="m-2 w-full"
           />
 
           <FormSelectField
@@ -133,41 +129,39 @@ const AddQuote = (props) => {
             options={contacts}
             rules={ValidationRules.select(true)}
             labelKey="fullName"
-            sx={{ m: 1, width: FieldWidths.DRAWER }}
+            className="m-2 w-full"
           />
 
           <FormTextField
             name="expiryDate"
             type="date"
             label="Expiry Date"
-            sx={{ m: 1, minWidth: FieldWidths.DRAWER }}
-            InputLabelProps={{ shrink: true }}
           />
         </div>
 
         <div className="drawer-footer">
           <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-            <Stack direction="row" spacing={2}>
+            <div className="flex flex-row gap-4">
               <Button
                 type="submit"
-                size="large"
-                variant="contained"
+                size="lg"
+                variant="default"
               >
                 Save
               </Button>
               <Button
-                size="large"
-                variant="outlined"
+                size="lg"
+                variant="outline"
                 type="button"
                 onClick={onCloseDrawer}
               >
                 Close
               </Button>
-            </Stack>
+            </div>
           </div>
         </div>
       </FormContainer>
-    </Box>
+    </div>
   );
 };
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Grid } from "@mui/material";
 
 import QuoteService from "../../../services/quote.service";
 import TasksList from "../../../shared/components/Task/TasksListView";
@@ -26,17 +25,17 @@ const QuoteTasks = () => {
   }, []);
 
   return (
-    <Grid container spacing={2}>
+    <div className="grid grid-cols-12 gap-4">
       
-      <Grid item xs={4}>        
+      <div className="col-span-4">        
         <TaskForm task={task} onSuccess={onSuccess} />
-      </Grid>
+      </div>
 
-      <Grid item xs={8}>
+      <div className="col-span-8">
         <TasksList tasks={tasks} />
-      </Grid>
+      </div>
 
-    </Grid>
+    </div>
   );
 };
 

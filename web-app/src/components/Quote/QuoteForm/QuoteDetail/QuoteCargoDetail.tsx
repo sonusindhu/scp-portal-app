@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { SelectElement, TextFieldElement } from "react-hook-form-mui";
+import { SelectElement, TextFieldElement } from "@/shared/components/FormFields";
 import PageHeading from "../../../../shared/components/PageHeading/PageHeading";
 import { YES_NO_OPTIONS } from "../../../../utils/constants.util";
 
@@ -19,69 +19,61 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
   return (
     <div className="container-fluid">
       <PageHeading title="Cargo Details" />
-      <div>
+      <div className="grid grid-cols-4 gap-4">
         <SelectElement
-          sx={{ m: 1, width: "15%" }}
-          required
+          className="m-2 w-full"
           options={equipments}
           name={"cargoDetail.equipmentId"}
           label="Equipment"
           labelKey="name"
           valueKey="id"
+          rules={{ required: "Equipment is required" }}
         ></SelectElement>
         <SelectElement
-          sx={{ m: 1, width: "15%" }}
-          required
+          className="m-2 w-full"
           options={commodities}
           name={"cargoDetail.commodityId"}
           label="Commodity"
           labelKey="name"
           valueKey="id"
+          rules={{ required: "Commodity is required" }}
         ></SelectElement>
 
         <TextFieldElement
-          sx={{ m: 1, width: "15%" }}
-          required
+          className="m-2 w-full"
           name={"cargoDetail.weight"}
           label="Weight"
-          variant="outlined"
-          margin={"dense"}
+          rules={{ required: "Weight is required" }}
         />
         <TextFieldElement
-          sx={{ m: 1, width: "15%" }}
-          required
+          className="m-2 w-full"
           name={"cargoDetail.cargoValue"}
           label="Cargo Value"
-          variant="outlined"
-          margin={"dense"}
+          rules={{ required: "Cargo Value is required" }}
         />
         <TextFieldElement
-          sx={{ m: 1, width: "15%" }}
+          className="m-2 w-full"
           name={"cargoDetail.temperature"}
           label="Temperature"
-          margin={"dense"}
-          variant="outlined"
         />
         <TextFieldElement
-          sx={{ m: 1, width: "15%" }}
+          className="m-2 w-full"
           name={"cargoDetail.pieces"}
           label="Pieces"
-          margin={"dense"}
-          variant="outlined"
         />
 
         <SelectElement
-          sx={{ m: 1, width: "15%" }}
-          required
+          className="m-2 w-full"
           options={cargos}
           name={"cargoDetail.cargoTypeId"}
           label="Cargo Type"
           labelKey="name"
           valueKey="id"
+          rules={{ required: "Cargo Type is required" }}
         ></SelectElement>
 
         <SelectElement
-          sx={{ m: 1, width: "15%" }}
+          className="m-2 w-full"
           options={YES_NO_OPTIONS}
           name={"cargoDetail.isHazmat"}
           label="Hazmat"
@@ -91,28 +83,31 @@ const QuoteCargoDetail = ({ resetField, equipments, commodities, cargos, watch }
 
 
         <TextFieldElement
-          sx={{ m: 1, width: "15%" }}
-          required={isHazmat === "1"}
+          className="m-2 w-full"
           name={"cargoDetail.hazmatName"}
           label="Hazmat Name"
-          variant="outlined"
-          rules={{ maxLength: 20 }}
+          rules={{ 
+            maxLength: 20,
+            required: isHazmat === "1" ? "Hazmat Name is required" : false 
+          }}
         />
         <TextFieldElement
-          sx={{ m: 1, width: "15%" }}
-          required={isHazmat === "1"}
+          className="m-2 w-full"
           name={"cargoDetail.hazmatClass"}
           label="Hazmat Class"
-          variant="outlined"
-          rules={{ maxLength: 20 }}
+          rules={{ 
+            maxLength: 20,
+            required: isHazmat === "1" ? "Hazmat Class is required" : false 
+          }}
         />
         <TextFieldElement
-          sx={{ m: 1, width: "15%" }}
-          required={isHazmat === "1"}
+          className="m-2 w-full"
           name={"cargoDetail.hazmatUN"}
           label="Hazmat UN"
-          variant="outlined"
-          rules={{ maxLength: 20 }}
+          rules={{ 
+            maxLength: 20,
+            required: isHazmat === "1" ? "Hazmat UN is required" : false 
+          }}
         />
       </div>
 

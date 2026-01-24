@@ -1,5 +1,5 @@
 import React from "react";
-import { TextFieldElement } from "react-hook-form-mui";
+import { TextFieldElement } from "@/shared/components/FormFields";
 import { useFieldArray } from "react-hook-form";
 import PageHeading from "../../../../shared/components/PageHeading/PageHeading";
 
@@ -17,46 +17,36 @@ const QuoteRoutes = ({ control }) => {
       <div>
         { fields.map((item, index) => {
           return (    
-            <div key={item.key}>
+            <div key={item.key} className="flex items-end gap-2 mb-4">
               <TextFieldElement
-                sx={{ m: 0.9, }}
+                className="m-2 flex-1"
                 name={`stops.${index}.origin`}
                 label="Origin"
                 disabled={true}
-                variant="outlined"
-                margin={"dense"}
               />
               <TextFieldElement
-                sx={{ m: 0.9, }}
-                required
+                className="m-2 flex-1"
                 name={`stops.${index}.city`}
                 label="City"
-                variant="outlined"
-                margin={"dense"}
+                rules={{ required: "City is required" }}
               />
               <TextFieldElement
-                sx={{ m: 0.9, }}
-                required
+                className="m-2 flex-1"
                 name={`stops.${index}.zipcode`}
                 label="Zipcode"
-                margin={"dense"}
-                variant="outlined"
+                rules={{ required: "Zipcode is required" }}
               />
               <TextFieldElement
-                sx={{ m: 0.9, }}
-                required
+                className="m-2 flex-1"
                 name={`stops.${index}.state`}
                 label="State"
-                margin={"dense"}
-                variant="outlined"
+                rules={{ required: "State is required" }}
               />
               <TextFieldElement
-                sx={{ m: 0.9, }}
-                required
+                className="m-2 flex-1"
                 name={`stops.${index}.country`}
                 label="Country"
-                margin={"dense"}
-                variant="outlined"
+                rules={{ required: "Country is required" }}
               />
             </div> 
           );  

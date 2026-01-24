@@ -3,13 +3,13 @@ import {
   FormContainer,
   TextFieldElement,
   CheckboxElement,
-} from "react-hook-form-mui";
+} from "../FormFields";
 import { useForm } from "react-hook-form";
 import { FormActions } from "../FormFields";
 import toast from "../../../utils/toast.util";
 import { Note } from "../../models/Note";
 import NoteService from "../../../services/note.service";
-import { Box } from "@mui/material";
+
 import HeaderWithTitle from "../HeaderWithTitle";
 import { ValidationRules } from "../../../utils/validation.util";
 import { useFormSubmit } from "../../../hooks";
@@ -62,7 +62,7 @@ const NoteForm = (props: NoteProps) => {
   };
 
   return (
-    <Box sx={{ width: 400 }}>
+    <div style={{ width: 400 }}>
       <HeaderWithTitle title="Add Note" onCloseDrawer={onCloseDrawer} />
 
       <FormContainer
@@ -72,19 +72,17 @@ const NoteForm = (props: NoteProps) => {
         <h3 style={{ marginLeft: "10px" }}>New Note</h3>
         <div>
           <TextFieldElement
-            sx={{ m: 1, minWidth: "96%" }}
+            className="m-2 w-[96%]"
             name={"title"}
             label="Note Title"
-            variant="outlined"
             rules={ValidationRules.text(undefined, 100, true)}
           />
         </div>
         <div>
           <TextFieldElement
-            sx={{ m: 1, minWidth: "96%" }}
+            className="m-2 w-[96%]"
             name={"message"}
             label="Note Description"
-            variant="outlined"
             rules={ValidationRules.text(undefined, 1000, true)}
             multiline={true}
             rows={7}
@@ -92,7 +90,7 @@ const NoteForm = (props: NoteProps) => {
         </div>
         <div style={{ marginLeft: "10px" }}>
           <CheckboxElement
-            sx={{ m: 1 }}
+            className="m-2"
             name={"isCritical"}
             label="Mark Critical"
           />
@@ -100,7 +98,7 @@ const NoteForm = (props: NoteProps) => {
 
         <FormActions onCancel={handleClearForm} />
       </FormContainer>
-    </Box>
+    </div>
   );
 };
 

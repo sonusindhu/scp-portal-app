@@ -39,24 +39,29 @@ export const useFormSubmit = ({
       // Handle ResponseModel pattern
       if (response && typeof response === 'object' && 'status' in response) {
         if (response.status) {
-          toast.success(successMessage || response.message || "Operation successful");
+          // Success toast already shown by BaseService if configured
           onSuccess?.(response);
           return true;
         } else {
-          toast.error(response.message || "Operation failed");
+          // Error case - service should handle toast, but fallback just in case
+          if (!response.message) {
+            toast.error("Operation failed");
+          }
           onError?.(response);
           return false;
         }
       }
       
       // Handle direct success (no ResponseModel wrapper)
-      toast.success(successMessage || "Operation successful");
+      // Only show toast if successMessage is explicitly provided
+      if (successMessage) {
+        toast.success(successMessage);
+      }
       onSuccess?.(response);
       return true;
       
     } catch (error: any) {
-      const errorMessage = error?.response?.message || error?.message || "An error occurred";
-      toast.error(errorMessage);
+      // Error toast already shown by BaseService in most cases
       onError?.(error);
       return false;
     }

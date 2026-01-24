@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  FormContainer,
-} from "react-hook-form-mui";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import ContactService from "../../../services/contact.service";
 import PageHeading from "../../../shared/components/PageHeading/PageHeading";
 import { useFormSubmit } from "../../../hooks";
-import { CommonFields, FormSelectField, FieldWidths, FormActions } from "../../../shared/components/FormFields";
+import { CommonFields, FormSelectField, FieldWidths, FormActions, FormContainer } from "../../../shared/components/FormFields";
 import { ValidationRules } from "../../../utils/validation.util";
 
 const ContactGeneral = () => {
@@ -19,7 +15,23 @@ const ContactGeneral = () => {
   const [statusList] = useState(ContactService.CONST.statusList);
 
   const formContext = useForm({
-    defaultValues: {},
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      status: "",
+      companyId: "",
+      department: "",
+      jobTitle: "",
+      address1: "",
+      address2: "",
+      city: "",
+      state: "",
+      country: "",
+      zipcode: "",
+      phone: "",
+      extension: "",
+    },
     mode: "onBlur",
   });
   const { reset } = formContext;
@@ -47,43 +59,59 @@ const ContactGeneral = () => {
     getCompanies();
     if (id) {
       ContactService.find(+id)
-        .then(({ result }) =>  reset(result))
+        .then(({ result }) =>  {
+          reset({
+            firstName: result?.firstName || "",
+            lastName: result?.lastName || "",
+            email: result?.email || "",
+            status: result?.status || "",
+            companyId: result?.companyId?.toString() || "",
+            department: result?.department || "",
+            jobTitle: result?.jobTitle || "",
+            address1: result?.address1 || "",
+            address2: result?.address2 || "",
+            city: result?.city || "",
+            state: result?.state || "",
+            country: result?.country || "",
+            zipcode: result?.zipcode || "",
+            phone: result?.phone || "",
+            extension: result?.extension || "",
+          });
+        })
         .catch(() => navigate("/app/contact/list"));
     }
-  }, []);
+  }, [id, navigate, reset]);
 
   return (
     <div className="container-fluid">
       <PageHeading title="Edit Contact" />
 
       <FormContainer formContext={formContext} onSuccess={handleSubmitForm}>
-        <div>
+        <div className="grid grid-cols-4 gap-4">
           <CommonFields.FirstName
             name="firstName"
             label="First Name"
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
           
           <CommonFields.LastName
             name="lastName"
             label="Last Name"
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
           
           <CommonFields.Email
             name="email"
             label="Email"
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
-        </div>
 
-        <div>
           <FormSelectField
             name="status"
             label="Status"
             options={statusList}
             rules={ValidationRules.select(true)}
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
 
           <FormSelectField
@@ -92,71 +120,67 @@ const ContactGeneral = () => {
             options={companies}
             rules={ValidationRules.select(true)}
             labelKey="name"
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
 
           <CommonFields.Department
             name="department"
             label="Department"
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
-        </div>
-        <div>
+
           <CommonFields.JobTitle
             name="jobTitle"
             label="Job Title"
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
 
           <CommonFields.Address1
             name="address1"
             label="Address1"
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
 
           <CommonFields.Address2
             name="address2"
             label="Address2"
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
-        </div>
-        <div>
+
           <CommonFields.City
             name="city"
             label="City"
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
           
           <CommonFields.State
             name="state"
             label="State"
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
 
           <CommonFields.Country
             name="country"
             label="Country"
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
-        </div>
 
-        <div>
           <CommonFields.Zipcode
             name="zipcode"
             label="Zipcode"
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
 
           <CommonFields.Phone
             name="phone"
             label="Phone"
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
 
           <CommonFields.Extension
             name="extension"
             label="Extension"
-            sx={{ m: 1, width: FieldWidths.STANDARD }}
+            className="m-2 w-full"
           />
         </div>
 

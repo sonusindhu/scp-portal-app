@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { Box } from "@mui/material";
-import {
-  FormContainer,
-} from "react-hook-form-mui";
 import InventoryService from "../../../services/inventory.service";
 import HeaderWithTitle from "../../../shared/components/HeaderWithTitle";
 import { useFormSubmit } from "../../../hooks";
-import { FormTextField, FormSelectField, FieldWidths, FormActions } from "../../../shared/components/FormFields";
+import { Button } from "@/components/ui/button";
+import { FormTextField, FormSelectField, FieldWidths, FormActions, FormContainer } from "../../../shared/components/FormFields";
 import { ValidationRules } from "../../../utils/validation.util";
 
 const AddInventory = (props) => {
@@ -46,7 +42,7 @@ const AddInventory = (props) => {
   }, []);
 
   return (
-    <Box sx={{ width: 450 }} className="form-container">
+    <div className="form-container">
       <HeaderWithTitle title="Add Inventory" onCloseDrawer={onCloseDrawer} />
 
       <FormContainer
@@ -57,7 +53,7 @@ const AddInventory = (props) => {
           name="trackingNumber"
           label="Tracking Number"
           rules={ValidationRules.text(undefined, 100, true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         
         <FormSelectField
@@ -65,7 +61,7 @@ const AddInventory = (props) => {
           label="Status"
           options={statusList}
           rules={ValidationRules.select(true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         
         <FormSelectField
@@ -73,7 +69,7 @@ const AddInventory = (props) => {
           label="Type"
           options={packages}
           rules={ValidationRules.select(true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormSelectField
@@ -82,7 +78,7 @@ const AddInventory = (props) => {
           options={companies}
           rules={ValidationRules.select(true)}
           labelKey="name"
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         
         <FormTextField
@@ -90,7 +86,7 @@ const AddInventory = (props) => {
           label="Location"
           rules={ValidationRules.text(undefined, 50, false)}
           multiline
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
         
         <FormTextField
@@ -98,7 +94,7 @@ const AddInventory = (props) => {
           label="Length"
           type="number"
           rules={ValidationRules.number(0, 9999, true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -106,7 +102,7 @@ const AddInventory = (props) => {
           label="Width"
           type="number"
           rules={ValidationRules.number(0, 9999, true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -114,7 +110,7 @@ const AddInventory = (props) => {
           label="Height"
           type="number"
           rules={ValidationRules.number(0, 9999, true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -122,7 +118,7 @@ const AddInventory = (props) => {
           label="Weight"
           type="number"
           rules={ValidationRules.number(0, 99999, true)}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <FormTextField
@@ -131,32 +127,32 @@ const AddInventory = (props) => {
           rules={ValidationRules.text(undefined, 254, false)}
           multiline
           rows={4}
-          sx={{ m: 1, width: FieldWidths.DRAWER }}
+          className="m-2 w-full"
         />
 
         <div className="drawer-footer">
           <div style={{ marginLeft: "12px", marginTop: "15px" }}>
-            <Stack direction="row" spacing={2}>
+            <div className="flex flex-row gap-4">
               <Button
                 type="submit"
-                size="large"
-                variant="contained"
+                size="lg"
+                variant="default"
               >
                 Save
               </Button>
               <Button
-                size="large"
-                variant="outlined"
+                size="lg"
+                variant="outline"
                 type="button"
                 onClick={onCloseDrawer}
               >
                 Close
               </Button>
-            </Stack>
+            </div>
           </div>
         </div>
       </FormContainer>
-    </Box>
+    </div>
   );
 };
 

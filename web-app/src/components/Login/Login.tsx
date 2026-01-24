@@ -93,9 +93,8 @@ const Login = () => {
                 type="submit"
                 loading={isLoading}
                 loadingText="Signing in..."
-                className="login-button"
-                fullWidth
-                variant="contained"
+                className="login-button w-full"
+                variant="default"
               >
                 Submit
               </LoadingButton>

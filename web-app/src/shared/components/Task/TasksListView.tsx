@@ -1,17 +1,11 @@
 import React from "react";
 import { format } from "date-fns";
 
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { MoreVertical, AlertTriangle } from 'lucide-react';
 
-import { Chip } from "@mui/material";
+import { Badge } from "@/components/ui/badge";
 import { Task } from "../../models/Task";
 
 interface TaskListProps {
@@ -34,29 +28,37 @@ const TasksListView = (props: TaskListProps) => {
             <CardHeader
               className="note-card-header"
               avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="User Name">
-                  R
+                <Avatar className="bg-red-500">
+                  <AvatarFallback className="bg-red-500 text-white">R</AvatarFallback>
                 </Avatar>
               }
               action={
-                <IconButton aria-label="settings">
-                  <MoreVertIcon />
-                </IconButton>
+                <button
+                  aria-label="settings"
+                  className="inline-flex items-center justify-center rounded-full p-2 hover:bg-gray-100 transition-colors"
+                >
+                  <MoreVertical className="w-5 h-5" />
+                </button>
               }
               title={task.subject}
               subheader={
                 <div className="sub-header">
                   <span>{ taskSubHeader(task) }</span>
-                  { task.isCritical && <Chip icon={<WarningOutlinedIcon color="error"  />} label="Critical" /> }                  
+                  { task.isCritical && (
+                    <Badge variant="destructive" className="flex items-center gap-1">
+                      <AlertTriangle className="w-3 h-3" />
+                      Critical
+                    </Badge>
+                  ) }                  
                   
                 </div>
               }
             />
           
           <CardContent className="note-card-content">
-            <Typography variant="body2" color="text.secondary">
+            <p className="text-sm text-gray-600">
               {task.description}
-            </Typography>
+            </p>
           </CardContent>
           
           </Card>

@@ -1,14 +1,10 @@
 import React from "react";
-import {
-  FormContainer,
-} from "react-hook-form-mui";
-import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import AuthService from "../../services/auth.service";
 import UserProfileImage from "./UserProfileImage";
 import { useFormSubmit } from "../../hooks";
-import { CommonFields, FormTextField, FormActions } from "../../shared/components/FormFields";
+import { CommonFields, FormTextField, FormActions, FormContainer } from "../../shared/components/FormFields";
 import { ValidationRules } from "../../utils/validation.util";
 
 const UserForm = (props) => {
@@ -45,35 +41,35 @@ const UserForm = (props) => {
           <CommonFields.FirstName
             name="firstName"
             label="First Name"
-            sx={{ m: 1, minWidth: "90%" }}
+            className="m-2 w-[90%]"
           />
         </div>
         <div>
           <CommonFields.LastName
             name="lastName"
             label="Last Name"
-            sx={{ m: 1, minWidth: "90%" }}
+            className="m-2 w-[90%]"
           />
         </div>
         <div>        
           <CommonFields.Email
             name="email"
             label="Email"
-            sx={{ m: 1, minWidth: "90%" }}
+            className="m-2 w-[90%]"
           />      
         </div>      
         <div>        
           <CommonFields.JobTitle
             name="jobTitle"
             label="Job Title"
-            sx={{ m: 1, minWidth: "90%" }}
+            className="m-2 w-[90%]"
           />      
         </div>      
         <div>        
           <CommonFields.Department
             name="department"
             label="Department"
-            sx={{ m: 1, minWidth: "90%" }}
+            className="m-2 w-[90%]"
           />      
         </div>      
         <div>        
@@ -81,7 +77,7 @@ const UserForm = (props) => {
             name="location"
             label="Location"
             rules={ValidationRules.text(undefined, 100, true)}
-            sx={{ m: 1, minWidth: "90%" }}
+            className="m-2 w-[90%]"
           />      
         </div>      
         <div>        
@@ -89,14 +85,14 @@ const UserForm = (props) => {
             name="phoneNumber"
             label="Phone Number"
             rules={ValidationRules.phone(true)}
-            sx={{ m: 1, minWidth: "90%" }}
+            className="m-2 w-[90%]"
           />
         </div>
         <div>
           <CommonFields.Extension
             name="extension"
             label="Extension"
-            sx={{ m: 1, minWidth: "90%" }}
+            className="m-2 w-[90%]"
           />      
         </div>      
       </div>
