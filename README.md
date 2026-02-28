@@ -1,53 +1,79 @@
-# 🚀 SCP Portal App
+
+# 🌐 SCP Portal App
 
 <div align="center">
 
-![SCP Portal](https://img.shields.io/badge/SCP%20Portal-App-4A90E2?style=for-the-badge&logo=react&logoColor=white)
-![Version](https://img.shields.io/badge/version-1.0.0-28a745?style=for-the-badge&logo=github&logoColor=white)
-![License](https://img.shields.io/badge/license-Free%20to%20Use-ffc107?style=for-the-badge&logo=open-source-initiative&logoColor=white)
+![React](https://img.shields.io/badge/React-19.0.0-61DAFB?style=for-the-badge&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.4.5-3178C6?style=for-the-badge&logo=typescript)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1.18-38BDF8?style=for-the-badge&logo=tailwindcss)
+![shadcn/ui](https://img.shields.io/badge/shadcn--ui-%F0%9F%92%96-000?style=for-the-badge)
+![Sails.js](https://img.shields.io/badge/Sails.js-1.5.2-2C3E50?style=for-the-badge&logo=sails&logoColor=white)
 
-*A modern, full-stack portal application built with React 19 and Node.js*
+*A modern, full-stack portal application for business management*
 
 </div>
 
 ---
 
-## 📖 About Application
+## 📋 Overview
 
-SCP Portal App is a comprehensive business management platform designed to streamline operations across multiple domains. Built with modern web technologies, it provides an intuitive interface for managing companies, contacts, tasks, emails, quotes, and inventory in one centralized system.
+SCP Portal App is a comprehensive platform for managing companies, contacts, tasks, emails, quotes, and inventory. It features a modern React/TypeScript frontend and a robust Node.js/Sails.js backend, providing a seamless, responsive user experience.
 
-**Tech Stack:**
-- **Frontend**: React 19.0.0 + TypeScript 5.4.5 + Material-UI 5.15.14 + Vite
-- **Backend**: Node.js + Sails.js 1.5.2 + MySQL/PostgreSQL
+## 🛠️ Tech Stack
+
+- **Frontend**: React 19.0.0, TypeScript 5.4.5, Tailwind CSS 4.1.18, shadcn/ui, Vite
+- **Backend**: Node.js, Sails.js 1.5.2, MySQL/PostgreSQL
+- **UI System**: Tailwind CSS, shadcn/ui, Radix UI
+- **Other Libraries**: React Router, TanStack React Table, React Hook Form, Axios, Notistack
 - **Architecture**: RESTful API with JWT authentication
 
-## ⭐ Feature Includes
 
-- 🏢 **Company Management** - Complete company profiles and information tracking
-- 👥 **Contact Management** - Comprehensive contact database with relationships
-- ✅ **Task Management** - Task creation, assignment, and progress tracking
-- 📧 **Email System** - Integrated email functionality with templates
-- 💰 **Quote Management** - Generate, manage, and track business quotes
-- 📦 **Inventory Management** - Stock tracking and inventory control
+## 🎨 Features
+
+- 📊 **Dashboard** - Overview of tasks, companies, and analytics
+- 🏢 **Company Management** - Add, edit, and manage companies
+- 👥 **Contact Management** - Maintain contact information
+- ✅ **Task Management** - Create and track tasks
+- 📧 **Email Integration** - Send and manage emails
+- 📝 **Notes System** - Create and organize notes
+- 📦 **Inventory Management** - Track inventory items
+- 💰 **Quote Management** - Generate and manage quotes
+- 👤 **User Profiles** - User account management
 - 🔐 **User Authentication** - Secure login with JWT tokens
 - 📊 **Dashboard Analytics** - Business insights and reporting
 - 🎨 **Responsive Design** - Mobile-friendly interface
 - 🔍 **Advanced Search & Filtering** - Quick data retrieval
 
-## 🚀 Quick Start
 
-Get up and running in minutes:
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** (v18.0 or higher)
+- **npm** or **yarn**
+- **MySQL or PostgreSQL database**
+
+### Clone the repository
 
 ```bash
-# Clone the repository
 git clone https://github.com/sonusindhu/scp-portal-app.git
 cd scp-portal-app
+```
 
-# Install and start frontend
-cd web-app && npm install && npm run dev
+### Start the Backend API
 
-# Install and start backend (in another terminal)
-cd web-api && npm install && npm start
+```bash
+cd web-api
+npm install
+npm start
+```
+
+### Start the Frontend
+
+```bash
+cd web-app
+npm install
+npm run dev
 ```
 
 **Access the application:**
@@ -55,85 +81,85 @@ cd web-api && npm install && npm start
 - 🔧 **Backend API**: http://localhost:1337
 - 📚 **API Docs**: http://localhost:1337/docs
 
-## 🖥️ Server Setup
 
-### Prerequisites
-- Node.js 22+ and npm
-- MySQL or PostgreSQL database
-- Git
+---
 
-### Installation Steps
+## 📁 Project Structure (Frontend)
 
-1. **Navigate to server directory:**
-   ```bash
-   cd web-api
-   ```
+```
+src/
+├── components/          # Feature and UI components
+│   ├── Home/           # Home page
+│   ├── Profile/        # User profile
+│   ├── CompanyList/    # Company management (CRUD, forms, list)
+│   ├── Contacts/       # Contact management
+│   ├── Inventory/      # Inventory management
+│   ├── Quote/          # Quote management
+│   ├── Login/          # Auth/login UI
+│   ├── ui/             # Custom UI primitives (Button, Card, Tabs, etc.)
+├── layouts/            # Page layout components
+├── models/             # TypeScript type definitions
+├── services/           # API service functions
+├── shared/             # Shared utilities and components
+│   ├── components/     # Shared components (Tasks, Emails, Notes)
+│   └── common/         # Common utilities
+├── utils/              # Helper functions and utilities
+├── App.tsx             # Main App component
+└── index.tsx           # Application entry point
+```
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+## 🧩 UI & Component System
 
-3. **Configure database:**
-   - Copy `config/datastores.js.example` to `config/datastores.js`
-   - Update database connection settings
+- **Tailwind CSS** and **shadcn/ui** are used for all new UI components, providing a modern, accessible, and customizable design system.
+- **Radix UI** primitives are used for accessibility and composability.
 
-4. **Set environment variables:**
-   ```bash
-   cp config/env/production.js.example config/env/production.js
-   # Edit production.js with your settings
-   ```
+See `src/components/ui/` for custom UI primitives (Button, Card, Tabs, etc.).
+See `src/components/TailwindDemo.tsx` for a demo of the new UI system.
 
-5. **Start the server:**
-   ```bash
-   npm start              # Development mode
-   NODE_ENV=production npm start  # Production mode
-   ```
+## 🪝 Custom Hooks
 
-### Available Scripts
-- `npm start` - Start development server
-- `npm test` - Run tests
-- `npm run lint` - Code linting
+Reusable hooks simplify state management and common patterns:
 
-**Server will be available at:** http://localhost:1337
+- `useAuth` - Authentication state and user info
+- `useDeleteConfirmation` - Standardized delete confirmation dialogs
+- `useDrawer` - Drawer open/close state
+- `useGridActions` - Grid/list action menu logic
+- `useLoading`, `useLoadingStates` - Loading state management
+- `useRefresh` - Simple refresh triggers
+- `useFormSubmit` - Form submission helpers
 
-## 💻 Client Setup
+See `src/hooks/HOOKS_USAGE_GUIDE.tsx` for usage examples.
 
-### Prerequisites
-- Node.js 22+ and npm
-- Modern web browser
+## ⚡ Loading Components & Patterns
 
-### Installation Steps
+Consistent loading UI is provided by reusable components in `src/shared/components/Loading/`:
 
-1. **Navigate to client directory:**
-   ```bash
-   cd web-app
-   ```
+- `LoadingButton` - Button with loading state
+- `LoadingContainer` - Wrapper for loading/error/empty states
+- `LoadingOverlay` - Blocks interaction during async ops
+- `LoadingSpinner`, `PageLoader`, `InlineLoadingSpinner` - Spinners for various contexts
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+Use with hooks: `useLoading`, `useLoadingStates` (see [QUICK_REFERENCE.md](src/shared/components/Loading/QUICK_REFERENCE.md)).
 
-3. **Configure environment:**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your API endpoint
-   ```
+**Example:**
 
-4. **Start the application:**
-   ```bash
-   npm run dev              # Development mode
-   npm run build            # Production build
-   ```
+```tsx
+const { isLoading, withLoading } = useLoading();
+await withLoading(saveData(data));
+<LoadingButton loading={isLoading}>Save</LoadingButton>
+```
 
-### Available Scripts
-- `npm run dev` - Start development server with hot reload (Vite)
-- `npm run build` - Create production build
-- `npm test` - Run test suite
-- `npm run lint` - Code linting and formatting
+## 🗂️ Constants Organization
 
-**Client will be available at:** http://localhost:5173
+All constants are centralized in `src/constants/` and re-exported via `src/utils/constants.util.ts` for easy import.
+
+- **types.constants.ts** - Core types and entity enums
+- **domain.constants.ts** - Business/domain values (statuses, types, etc.)
+- **ui.constants.ts** - UI config (field widths, date formats, etc.)
+- **api.constants.ts** - API endpoints and HTTP status codes
+- **routes.constants.ts** - All route paths (see `ROUTES`)
+
+See [src/constants/README.md](src/constants/README.md) and [src/utils/CONSTANTS_GUIDE.md](src/utils/CONSTANTS_GUIDE.md) for details and usage patterns.
 
 ## ⚙️ Environment Configuration
 
@@ -144,57 +170,38 @@ Create a `.env` file in the `web-app` root directory:
 VITE_API_ENDPOINT=http://localhost:1337/api/v1/app/
 ```
 
-## 🤝 Contribution
+## ⚙️ Environment Configuration
 
-We welcome contributions from the community! Here's how you can help:
+Create a `.env` file in the `web-app` root directory:
 
-### Getting Started
-1. 🍴 **Fork** the repository
-2. 🌿 **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. 💻 **Make** your changes
-4. ✅ **Add** tests for your changes
-5. 🧪 **Ensure** all tests pass (`npm test`)
-6. 📝 **Commit** your changes (`git commit -m 'Add amazing feature'`)
-7. 📤 **Push** to the branch (`git push origin feature/amazing-feature`)
-8. 🔄 **Open** a Pull Request
+```bash
+# API Configuration
+VITE_API_ENDPOINT=http://localhost:1337/api/v1/app/
+```
 
-### Development Guidelines
-- Follow existing code style and conventions
-- Write clear, concise commit messages
-- Add tests for new features
-- Update documentation when necessary
-- Ensure all existing tests pass
-
-### Code Standards
-- **ESLint**: Run `npm run lint` before committing
-- **Prettier**: Use `npm run format` for code formatting
-- **TypeScript**: Maintain strict type checking
-
-### Reporting Issues
-- Use GitHub Issues for bug reports
-- Provide detailed reproduction steps
-- Include system information and screenshots when relevant
 
 ## 🧪 Testing
 
+Testing is set up with **Jest** and **React Testing Library**. Example test: `src/components/CompanyList/test/CompanyList.spec.tsx`.
+
+Scripts:
+
+```bash
+npm test
+npm test -- --coverage
+npm test -- --watchAll
+```
+
+This project includes:
 - **Unit Tests** - Component testing with React Testing Library
 - **Integration Tests** - API integration testing
 - **E2E Tests** - End-to-end user flow testing
+
 
 ## 🚀 Deployment
 
 See the [Vite deployment documentation](https://vitejs.dev/guide/static-deploy.html) for more information on deploying this React application.
 
-## 📄 License
-
-This project is free to use for personal and commercial purposes. Feel free to modify, distribute, and use as needed.
-
 ---
 
-<div align="center">
-
-**⭐ Star this repository if you find it helpful!**
-
-Made with ❤️ by [Sonu Sindhu](https://github.com/sonusindhu)
-
-</div>
+**Built with ❤️ by [Sonu Sindhu](https://github.com/sonusindhu)**
