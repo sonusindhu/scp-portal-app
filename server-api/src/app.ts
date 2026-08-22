@@ -9,6 +9,7 @@ import { healthRouter } from './modules/health/health.routes.js';
 import { authRouter } from './modules/auth/auth.routes.js';
 import { notFoundHandler } from './common/middleware/notFoundHandler.js';
 import { errorHandler } from './common/middleware/errorHandler.js';
+import { ok } from './common/utils/response.js';
 
 export function createApp(): Express {
   const app = express();
@@ -25,7 +26,9 @@ export function createApp(): Express {
   app.use(morgan(env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
   app.get('/api/health', (_req, res) => {
-    res.status(200).json({ status: 'ok', service: 'server-api' });
+    return ok(res, 'server-api is healthy', {
+      service: 'server-api',
+    });
   });
 
   app.use('/api', healthRouter);

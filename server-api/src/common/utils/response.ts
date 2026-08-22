@@ -1,26 +1,33 @@
 import type { Response } from 'express';
 
-export function ok(res: Response, message: string, result?: unknown, meta?: Record<string, unknown>) {
+export interface ApiResponse<T = unknown> {
+  status: boolean;
+  message: string;
+  data?: T;
+  meta?: Record<string, unknown>;
+}
+
+export function ok<T>(res: Response, message: string, data?: T, meta?: Record<string, unknown>) {
   return res.status(200).json({
     status: true,
     message,
-    result,
+    ...(data !== undefined ? { data } : {}),
     ...(meta ? { meta } : {}),
-  });
+  } satisfies ApiResponse<T>);
 }
 
-export function created(res: Response, message: string, result?: unknown) {
+export function created<T>(res: Response, message: string, data?: T) {
   return res.status(201).json({
     status: true,
     message,
-    result,
-  });
+    ...(data !== undefined ? { data } : {}),
+  } satisfies ApiResponse<T>);
 }
 
-export function fail(res: Response, statusCode: number, message: string, result?: unknown) {
+export function fail<T>(res: Response, statusCode: number, message: string, data?: T) {
   return res.status(statusCode).json({
     status: false,
     message,
-    ...(result !== undefined ? { result } : {}),
-  });
+    ...(data !== undefined ? { data } : {}),
+  } satisfies ApiResponse<T>);
 }

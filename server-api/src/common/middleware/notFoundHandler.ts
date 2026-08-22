@@ -1,8 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
 
+import { fail } from '../utils/response.js';
+
 export function notFoundHandler(_req: Request, res: Response, _next: NextFunction) {
-  res.status(404).json({
-    status: false,
-    message: 'Route not found',
-  });
+  return fail(res, 404, 'Route not found');
 }
