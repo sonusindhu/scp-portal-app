@@ -10,7 +10,8 @@
     "lint": "eslint . --ext .ts",
     "test": "vitest run",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:migrate": "prisma migrate dev",
+    "migration:status": "node scripts/migration-status.mjs"
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
