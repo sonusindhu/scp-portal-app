@@ -1,7 +1,9 @@
 import { AppError } from '../../common/errors/AppError.js';
 import { InventoryRepository } from './inventory.repository.js';
 
-export type InventoryPayload = {
+export type SortDirection = 'asc' | 'desc';
+
+export interface InventoryPayload {
   trackingNumber: string;
   companyId: number;
   type?: string | null;
@@ -19,7 +21,14 @@ export type InventoryPayload = {
   updatedBy?: number | null;
   isDeleted?: boolean;
   packageId?: string | null;
-};
+}
+
+export interface InventoryListQuery {
+  skip?: number;
+  take?: number;
+  orderBy?: string;
+  sortDirection?: SortDirection;
+}
 
 export class InventoryService {
   constructor(private readonly inventoryRepository = new InventoryRepository()) {}

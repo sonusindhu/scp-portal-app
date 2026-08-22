@@ -1,7 +1,9 @@
 import { AppError } from '../../common/errors/AppError.js';
 import { ContactRepository } from './contact.repository.js';
 
-export type ContactPayload = {
+export type SortDirection = 'asc' | 'desc';
+
+export interface ContactPayload {
   firstName: string;
   lastName: string;
   email: string;
@@ -21,7 +23,14 @@ export type ContactPayload = {
   createdBy?: number | null;
   updatedBy?: number | null;
   isDeleted?: boolean;
-};
+}
+
+export interface ContactListQuery {
+  skip?: number;
+  take?: number;
+  orderBy?: string;
+  sortDirection?: SortDirection;
+}
 
 export class ContactService {
   constructor(private readonly contactRepository = new ContactRepository()) {}

@@ -14,8 +14,12 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
   const token = authHeader.replace('Bearer ', '');
 
   try {
-    const decoded = jwt.verify(token, env.JWT_SECRET) as { id?: number };
-    req.user = { id: decoded.id } as any;
+    const decoded = jwt.verify(token, env.JWT_SECRET);
+    if (typeof decoded !== 'object' || decoded === null || typeof decoded.id !== 'number') {
+      return fail(res, 401, 'Invalid or expired token');
+    }
+
+    req.user = { id: decoded.id };
     return next();
   } catch (error) {
     return fail(res, 401, 'Invalid or expired token');

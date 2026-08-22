@@ -1,7 +1,9 @@
 import { AppError } from '../../common/errors/AppError.js';
 import { CompanyRepository } from './company.repository.js';
 
-export type CompanyPayload = {
+export type SortDirection = 'asc' | 'desc';
+
+export interface CompanyPayload {
   name: string;
   email: string;
   type?: string | null;
@@ -20,7 +22,14 @@ export type CompanyPayload = {
   createdBy?: number | null;
   updatedBy?: number | null;
   isDeleted?: boolean;
-};
+}
+
+export interface CompanyListQuery {
+  skip?: number;
+  take?: number;
+  orderBy?: string;
+  sortDirection?: SortDirection;
+}
 
 export class CompanyService {
   constructor(private readonly companyRepository = new CompanyRepository()) {}
