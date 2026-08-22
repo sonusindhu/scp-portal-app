@@ -77,4 +77,10 @@ export class EmailRepository {
       where: { id },
     });
   }
+
+  async deleteRange(ids: number[]) {
+    return prisma.email.deleteMany({
+      where: { id: { in: ids } },
+    });
+  }
 }

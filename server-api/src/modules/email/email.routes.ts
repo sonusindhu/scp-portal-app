@@ -30,6 +30,10 @@ emailRouter.delete('/:id', (req, res, next) => {
   emailController.delete(req, res, next);
 });
 
+emailRouter.post('/delete-range', (req, res, next) => {
+  emailController.deleteRange(req, res, next);
+});
+
 emailRouter.post('/list', validate(emailListQuerySchema), (req, res, next) => {
   emailController.list(req, res, next);
 });

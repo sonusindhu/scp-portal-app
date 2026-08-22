@@ -38,4 +38,12 @@ export class EmailService {
 
     return this.emailRepository.delete(id);
   }
+
+  async deleteRange(ids: number[]) {
+    if (!ids.length) {
+      throw new AppError('At least one email id is required', 400);
+    }
+
+    return this.emailRepository.deleteRange(ids);
+  }
 }
