@@ -98,6 +98,12 @@ export class CompanyRepository {
     });
   }
 
+  async deleteRange(ids: number[]) {
+    return prisma.company.deleteMany({
+      where: { id: { in: ids } },
+    });
+  }
+
   async findByEmail(email: string) {
     return prisma.company.findUnique({
       where: { email },

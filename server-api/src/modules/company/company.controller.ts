@@ -87,6 +87,21 @@ export class CompanyController {
       return next(error);
     }
   }
+
+  async deleteRange(req: Request, res: Response, next: NextFunction) {
+    try {
+      const ids = z.array(z.number().int().positive()).parse(req.body.ids ?? []);
+      if (!ids.length) {
+        return fail(res, 400, 'At least one company id is required');
+      }
+
+      await companyService.deleteRange(ids);
+      return ok(res, 'Companies has been deleted successfully.');
+    } catch (error) {
+      if (error instanceof AppError) return fail(res, error.statusCode, error.message);
+      return next(error);
+    }
+  }
 }
 
 const localCompanyListQuerySchema = createCompanySchema.partial().extend({

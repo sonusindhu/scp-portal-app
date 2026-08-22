@@ -66,4 +66,12 @@ export class CompanyService {
 
     return this.companyRepository.delete(id);
   }
+
+  async deleteRange(ids: number[]) {
+    if (!ids.length) {
+      throw new AppError('At least one company id is required', 400);
+    }
+
+    return this.companyRepository.deleteRange(ids);
+  }
 }

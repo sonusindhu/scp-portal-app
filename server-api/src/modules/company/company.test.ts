@@ -10,6 +10,7 @@ vi.mock('../../config/database.js', () => ({
       findMany: vi.fn(),
       findUnique: vi.fn(),
       count: vi.fn(),
+      delete: vi.fn(),
     },
   },
 }));
@@ -133,5 +134,21 @@ describe('company module', () => {
         expect.objectContaining({ name: 'Northwind' }),
       ])
     );
+  });
+
+  it('should delete multiple companies when authenticated', async () => {
+    const app = createApp();
+    const token = buildToken();
+
+    vi.mocked(prisma.company.deleteMany).mockResolvedValue({ count: 2 });
+
+    const response = await request(app)
+      .post('/api/company/delete-range')
+      .set(withAuth(token))
+      .send({ ids: [1, 2] });
+
+    expect(response.status).toBe(200);
+    expect(response.body.status).toBe(true);
+    expect(response.body.message).toBe('Companies has been deleted successfully.');
   });
 });

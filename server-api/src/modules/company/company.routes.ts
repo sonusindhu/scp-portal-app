@@ -34,6 +34,10 @@ companyRouter.delete('/:id', (req, res, next) => {
   companyController.delete(req, res, next);
 });
 
+companyRouter.post('/delete-range', (req, res, next) => {
+  companyController.deleteRange(req, res, next);
+});
+
 companyRouter.post('/list', validate(companyListQuerySchema), (req, res, next) => {
   companyController.list(req, res, next);
 });
