@@ -28,6 +28,7 @@ export const swaggerSpec = swaggerJsdoc({
       { name: 'Health', description: 'Service health endpoints' },
       { name: 'Auth', description: 'Authentication and registration endpoints' },
       { name: 'Company', description: 'Company management endpoints' },
+      { name: 'Contact', description: 'Contact management endpoints' },
     ],
   },
   apis: ['./src/**/*.swagger.ts', './src/**/*.ts'],

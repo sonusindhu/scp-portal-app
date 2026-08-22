@@ -41,3 +41,32 @@ model Company {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
+
+model Contact {
+  id          Int      @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  fullName    String?
+  email       String
+  companyId   Int
+  status      String?
+  department  String?
+  jobTitle    String?
+  phone       String?
+  extension   String?
+  address1    String?
+  address2    String?
+  city        String?
+  zipcode     String?
+  state       String?
+  country     String?
+  birthDate   String?
+  isDeleted   Boolean  @default(false)
+  createdBy   Int?
+  updatedBy   Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([companyId])
+  @@index([email])
+}
