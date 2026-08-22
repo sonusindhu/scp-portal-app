@@ -83,4 +83,10 @@ export class QuoteRepository {
       where: { id },
     });
   }
+
+  async deleteRange(ids: number[]) {
+    return prisma.quote.deleteMany({
+      where: { id: { in: ids } },
+    });
+  }
 }

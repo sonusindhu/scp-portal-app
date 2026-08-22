@@ -124,4 +124,20 @@ describe('quote module', () => {
       ])
     );
   });
+
+  it('should delete multiple quotes when authenticated', async () => {
+    const app = createApp();
+    const token = buildToken();
+
+    vi.mocked(prisma.quote.deleteMany).mockResolvedValue({ count: 2 });
+
+    const response = await request(app)
+      .post('/api/quote/delete-range')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ ids: [1, 2] });
+
+    expect(response.status).toBe(200);
+    expect(response.body.status).toBe(true);
+    expect(response.body.message).toBe('Quotes have been deleted successfully.');
+  });
 });

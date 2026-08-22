@@ -52,4 +52,12 @@ export class QuoteService {
 
     return this.quoteRepository.delete(id);
   }
+
+  async deleteRange(ids: number[]) {
+    if (!ids.length) {
+      throw new AppError('At least one quote id is required', 400);
+    }
+
+    return this.quoteRepository.deleteRange(ids);
+  }
 }
