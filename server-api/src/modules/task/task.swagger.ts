@@ -171,3 +171,42 @@
  *       200:
  *         description: Task deleted successfully
  */
+
+/**
+ * @openapi
+ * /api/task/get:
+ *   get:
+ *     tags: [Task]
+ *     summary: Legacy alias for listing tasks
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Task list fetched successfully
+ */
+
+/**
+ * @openapi
+ * /api/task/create:
+ *   post:
+ *     tags: [Task]
+ *     summary: Legacy alias for creating a task
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: Task created successfully
+ */
+
+/**
+ * @openapi
+ * /api/task/delete-range:
+ *   post:
+ *     tags: [Task]
+ *     summary: Legacy bulk delete alias for task records
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Task records deleted successfully
+ */

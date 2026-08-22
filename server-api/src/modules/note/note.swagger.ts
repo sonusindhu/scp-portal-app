@@ -147,3 +147,42 @@
  *       200:
  *         description: Note deleted successfully
  */
+
+/**
+ * @openapi
+ * /api/note/get:
+ *   get:
+ *     tags: [Note]
+ *     summary: Legacy alias for listing notes
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Note list fetched successfully
+ */
+
+/**
+ * @openapi
+ * /api/note/create:
+ *   post:
+ *     tags: [Note]
+ *     summary: Legacy alias for creating a note
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: Note created successfully
+ */
+
+/**
+ * @openapi
+ * /api/note/delete-range:
+ *   post:
+ *     tags: [Note]
+ *     summary: Legacy bulk delete alias for note records
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Note records deleted successfully
+ */

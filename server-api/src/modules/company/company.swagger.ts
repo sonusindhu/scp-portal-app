@@ -225,3 +225,55 @@
  *       404:
  *         description: Company not found
  */
+
+/**
+ * @openapi
+ * /api/company/get:
+ *   get:
+ *     tags: [Company]
+ *     summary: Legacy alias for fetching all companies
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Company list fetched successfully
+ */
+
+/**
+ * @openapi
+ * /api/company/listOfNames:
+ *   get:
+ *     tags: [Company]
+ *     summary: Legacy alias for listOfNames
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Company names fetched successfully
+ */
+
+/**
+ * @openapi
+ * /api/company/create:
+ *   post:
+ *     tags: [Company]
+ *     summary: Legacy alias for creating a company
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: Company created successfully
+ */
+
+/**
+ * @openapi
+ * /api/company/delete-range:
+ *   post:
+ *     tags: [Company]
+ *     summary: Legacy bulk delete alias for company records
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Company records deleted successfully
+ */

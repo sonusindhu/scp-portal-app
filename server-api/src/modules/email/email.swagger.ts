@@ -159,3 +159,42 @@
  *       200:
  *         description: Email deleted successfully
  */
+
+/**
+ * @openapi
+ * /api/email/get:
+ *   get:
+ *     tags: [Email]
+ *     summary: Legacy alias for listing emails
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Email list fetched successfully
+ */
+
+/**
+ * @openapi
+ * /api/email/create:
+ *   post:
+ *     tags: [Email]
+ *     summary: Legacy alias for creating an email
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: Email created successfully
+ */
+
+/**
+ * @openapi
+ * /api/email/delete-range:
+ *   post:
+ *     tags: [Email]
+ *     summary: Legacy bulk delete alias for email records
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Email records deleted successfully
+ */

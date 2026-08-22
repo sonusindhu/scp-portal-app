@@ -190,3 +190,42 @@
  *       404:
  *         description: Contact not found
  */
+
+/**
+ * @openapi
+ * /api/contact/get:
+ *   get:
+ *     tags: [Contact]
+ *     summary: Legacy alias for listing contacts
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Contact list fetched successfully
+ */
+
+/**
+ * @openapi
+ * /api/contact/create:
+ *   post:
+ *     tags: [Contact]
+ *     summary: Legacy alias for creating a contact
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: Contact created successfully
+ */
+
+/**
+ * @openapi
+ * /api/contact/delete-range:
+ *   post:
+ *     tags: [Contact]
+ *     summary: Legacy bulk delete alias for contact records
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Contact records deleted successfully
+ */

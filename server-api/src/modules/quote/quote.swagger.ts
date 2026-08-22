@@ -157,3 +157,67 @@
  *       200:
  *         description: Quote deleted successfully
  */
+
+/**
+ * @openapi
+ * /api/quote/getCompanies:
+ *   get:
+ *     tags: [Quote]
+ *     summary: Legacy quote lookup for company options
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Company lookup successful
+ */
+
+/**
+ * @openapi
+ * /api/quote/getContactsByCompany/{id}:
+ *   get:
+ *     tags: [Quote]
+ *     summary: Legacy quote lookup for contacts by company id
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Contacts lookup successful
+ */
+
+/**
+ * @openapi
+ * /api/quote/getQuoteDetails/{id}:
+ *   get:
+ *     tags: [Quote]
+ *     summary: Legacy quote details lookup
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Quote detail lookup successful
+ */
+
+/**
+ * @openapi
+ * /api/quote/delete-range:
+ *   post:
+ *     tags: [Quote]
+ *     summary: Legacy bulk delete alias for quote records
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Quote records deleted successfully
+ */
