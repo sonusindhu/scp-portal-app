@@ -30,6 +30,10 @@ noteRouter.delete('/:id', (req, res, next) => {
   noteController.delete(req, res, next);
 });
 
+noteRouter.post('/delete-range', (req, res, next) => {
+  noteController.deleteRange(req, res, next);
+});
+
 noteRouter.post('/list', validate(noteListQuerySchema), (req, res, next) => {
   noteController.list(req, res, next);
 });

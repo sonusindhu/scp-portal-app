@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
+import { z } from 'zod';
 
 import { AppError } from '../../common/errors/AppError.js';
 import { fail, ok, created } from '../../common/utils/response.js';
@@ -75,6 +76,21 @@ export class NoteController {
       const id = Number(req.params.id);
       await noteService.delete(id);
       return ok(res, 'Note has been deleted successfully.');
+    } catch (error) {
+      if (error instanceof AppError) return fail(res, error.statusCode, error.message);
+      return next(error);
+    }
+  }
+
+  async deleteRange(req: Request, res: Response, next: NextFunction) {
+    try {
+      const ids = z.array(z.number().int().positive()).parse(req.body.ids ?? []);
+      if (!ids.length) {
+        return fail(res, 400, 'At least one note id is required');
+      }
+
+      await noteService.deleteRange(ids);
+      return ok(res, 'Notes have been deleted successfully.');
     } catch (error) {
       if (error instanceof AppError) return fail(res, error.statusCode, error.message);
       return next(error);

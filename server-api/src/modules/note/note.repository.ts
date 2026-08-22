@@ -73,4 +73,10 @@ export class NoteRepository {
       where: { id },
     });
   }
+
+  async deleteRange(ids: number[]) {
+    return prisma.note.deleteMany({
+      where: { id: { in: ids } },
+    });
+  }
 }

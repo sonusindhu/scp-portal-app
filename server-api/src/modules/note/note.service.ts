@@ -38,4 +38,12 @@ export class NoteService {
 
     return this.noteRepository.delete(id);
   }
+
+  async deleteRange(ids: number[]) {
+    if (!ids.length) {
+      throw new AppError('At least one note id is required', 400);
+    }
+
+    return this.noteRepository.deleteRange(ids);
+  }
 }
