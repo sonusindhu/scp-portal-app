@@ -14,6 +14,16 @@ export const swaggerSpec = swaggerJsdoc({
         description: 'Local development server',
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'JWT token from /api/auth/login or /api/auth/signup',
+        },
+      },
+    },
     tags: [
       { name: 'Health', description: 'Service health endpoints' },
       { name: 'Auth', description: 'Authentication and registration endpoints' },

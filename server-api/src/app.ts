@@ -37,7 +37,15 @@ export function createApp(): Express {
   app.use('/api', healthRouter);
   app.use('/api/auth', authRouter);
   app.use('/api/company', companyRouter);
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  app.use(
+    '/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, {
+      swaggerOptions: {
+        persistAuthorization: true,
+      },
+    })
+  );
   app.get('/api-docs.json', (_req, res) => {
     return res.json(swaggerSpec);
   });

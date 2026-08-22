@@ -4,6 +4,8 @@
  *   get:
  *     tags: [Company]
  *     summary: Get company names list
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Company names fetched successfully
@@ -33,12 +35,16 @@
  *   get:
  *     tags: [Company]
  *     summary: Get all companies
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Company list fetched successfully
  *   post:
  *     tags: [Company]
  *     summary: Create a company
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -97,6 +103,8 @@
  *   post:
  *     tags: [Company]
  *     summary: Get paginated company list
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: false
  *       content:
@@ -127,6 +135,8 @@
  *   get:
  *     tags: [Company]
  *     summary: Get company by id
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -141,6 +151,8 @@
  *   put:
  *     tags: [Company]
  *     summary: Update company
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -199,6 +211,8 @@
  *   delete:
  *     tags: [Company]
  *     summary: Delete company
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
