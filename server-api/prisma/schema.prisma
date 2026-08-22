@@ -224,3 +224,27 @@ model Note {
   @@index([quoteId])
   @@index([userId])
 }
+
+model Email {
+  id          Int       @id @default(autoincrement())
+  type        String?
+  title       String?
+  message     String?
+  toEmail     String?
+  fromEmail   String?
+  isCritical  Boolean?  @default(false)
+  quoteId     Int?
+  contactId   Int?
+  companyId   Int?
+  inventoryId Int?
+  userId      Int?
+  createdBy   Int?
+  updatedBy   Int?
+  isDeleted   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([companyId])
+  @@index([quoteId])
+  @@index([userId])
+}
