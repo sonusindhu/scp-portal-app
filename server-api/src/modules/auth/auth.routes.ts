@@ -1,21 +1,16 @@
 import { Router } from 'express';
 
-export const authRouter = Router();
+import { AuthController } from './auth.controller.js';
+import { validate } from '../../common/middleware/validate.js';
+import { loginSchema, signupSchema } from './auth.validator.js';
 
-authRouter.post('/login', (_req, res) => {
-  res.status(200).json({
-    status: true,
-    message: 'Auth module scaffold ready',
-    result: {
-      token: 'placeholder-token',
-      fullName: 'Example User',
-    },
-  });
+export const authRouter = Router();
+const authController = new AuthController();
+
+authRouter.post('/login', validate(loginSchema), (req, res, next) => {
+  authController.login(req, res, next);
 });
 
-authRouter.post('/signup', (_req, res) => {
-  res.status(200).json({
-    status: true,
-    message: 'Signup scaffold ready',
-  });
+authRouter.post('/signup', validate(signupSchema), (req, res, next) => {
+  authController.signup(req, res, next);
 });
