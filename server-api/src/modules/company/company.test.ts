@@ -1,6 +1,18 @@
 import request from 'supertest';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import jwt from 'jsonwebtoken';
+
+vi.mock('../../config/database.js', () => ({
+  prisma: {
+    company: {
+      deleteMany: vi.fn(),
+      create: vi.fn(),
+      findMany: vi.fn(),
+      findUnique: vi.fn(),
+      count: vi.fn(),
+    },
+  },
+}));
 
 import { createApp } from '../../app.js';
 import { prisma } from '../../config/database.js';
@@ -15,8 +27,8 @@ function buildToken() {
 }
 
 describe('company module', () => {
-  beforeEach(async () => {
-    await prisma.company.deleteMany();
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
   it('should reject unauthenticated requests to company endpoints', async () => {
@@ -34,6 +46,29 @@ describe('company module', () => {
   it('should create a company through the HTTP API when authenticated', async () => {
     const app = createApp();
     const token = buildToken();
+
+    vi.mocked(prisma.company.create).mockResolvedValue({
+      id: 1,
+      name: 'Acme Logistics',
+      email: 'hello@acme.com',
+      type: 'customer',
+      status: 'active',
+      phone: '1234567890',
+      address1: null,
+      address2: null,
+      city: 'Dallas',
+      state: 'TX',
+      zipcode: null,
+      country: 'USA',
+      employeesCount: 120,
+      revenue: 5000000,
+      mainContactId: null,
+      createdBy: null,
+      updatedBy: null,
+      isDeleted: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    } as any);
 
     const response = await request(app)
       .post('/api/company')
@@ -61,12 +96,31 @@ describe('company module', () => {
     const app = createApp();
     const token = buildToken();
 
-    await prisma.company.create({
-      data: {
+    vi.mocked(prisma.company.findMany).mockResolvedValue([
+      {
+        id: 1,
         name: 'Northwind',
         email: 'northwind@example.com',
+        type: null,
+        status: null,
+        phone: null,
+        extension: null,
+        address1: null,
+        address2: null,
+        city: null,
+        state: null,
+        zipcode: null,
+        country: null,
+        employeesCount: null,
+        revenue: null,
+        mainContactId: null,
+        createdBy: null,
+        updatedBy: null,
+        isDeleted: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
-    });
+    ] as any);
 
     const response = await request(app)
       .get('/api/company/list-of-names')

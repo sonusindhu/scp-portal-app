@@ -1,6 +1,26 @@
 import request from 'supertest';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import jwt from 'jsonwebtoken';
+
+vi.mock('../../config/database.js', () => ({
+  prisma: {
+    contact: {
+      deleteMany: vi.fn(),
+      create: vi.fn(),
+      findMany: vi.fn(),
+      findUnique: vi.fn(),
+      findFirst: vi.fn(),
+      count: vi.fn(),
+    },
+    company: {
+      deleteMany: vi.fn(),
+      create: vi.fn(),
+      findMany: vi.fn(),
+      findUnique: vi.fn(),
+      count: vi.fn(),
+    },
+  },
+}));
 
 import { createApp } from '../../app.js';
 import { prisma } from '../../config/database.js';
@@ -11,9 +31,8 @@ function buildToken() {
 }
 
 describe('contact module', () => {
-  beforeEach(async () => {
-    await prisma.contact.deleteMany();
-    await prisma.company.deleteMany();
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
   it('should reject unauthenticated requests to contact endpoints', async () => {
@@ -34,12 +53,61 @@ describe('contact module', () => {
     const app = createApp();
     const token = buildToken();
 
-    const company = await prisma.company.create({
-      data: {
-        name: 'Contoso Labs',
-        email: 'hello@contoso.com',
+    vi.mocked(prisma.contact.findFirst).mockResolvedValue(null);
+
+    vi.mocked(prisma.contact.create).mockResolvedValue({
+      id: 1,
+      firstName: 'Jane',
+      lastName: 'Doe',
+      fullName: 'Jane Doe',
+      email: 'jane@example.com',
+      companyId: 5,
+      status: 'active',
+      department: 'Sales',
+      jobTitle: 'Account Manager',
+      phone: '1234567890',
+      extension: null,
+      address1: null,
+      address2: null,
+      city: null,
+      zipcode: null,
+      state: null,
+      country: null,
+      birthDate: null,
+      isDeleted: false,
+      createdBy: null,
+      updatedBy: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    } as any);
+
+    vi.mocked(prisma.contact.findMany).mockResolvedValue([
+      {
+        id: 1,
+        firstName: 'Jane',
+        lastName: 'Doe',
+        fullName: 'Jane Doe',
+        email: 'jane@example.com',
+        companyId: 5,
+        status: 'active',
+        department: 'Sales',
+        jobTitle: 'Account Manager',
+        phone: '1234567890',
+        extension: null,
+        address1: null,
+        address2: null,
+        city: null,
+        zipcode: null,
+        state: null,
+        country: null,
+        birthDate: null,
+        isDeleted: false,
+        createdBy: null,
+        updatedBy: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
-    });
+    ] as any);
 
     const createResponse = await request(app)
       .post('/api/contact')
@@ -48,7 +116,7 @@ describe('contact module', () => {
         firstName: 'Jane',
         lastName: 'Doe',
         email: 'jane@example.com',
-        companyId: company.id,
+        companyId: 5,
         status: 'active',
         department: 'Sales',
         jobTitle: 'Account Manager',

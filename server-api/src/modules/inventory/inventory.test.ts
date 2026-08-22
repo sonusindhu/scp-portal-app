@@ -1,6 +1,26 @@
 import request from 'supertest';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import jwt from 'jsonwebtoken';
+
+vi.mock('../../config/database.js', () => ({
+  prisma: {
+    inventory: {
+      deleteMany: vi.fn(),
+      create: vi.fn(),
+      findMany: vi.fn(),
+      findUnique: vi.fn(),
+      findFirst: vi.fn(),
+      count: vi.fn(),
+    },
+    company: {
+      deleteMany: vi.fn(),
+      create: vi.fn(),
+      findMany: vi.fn(),
+      findUnique: vi.fn(),
+      count: vi.fn(),
+    },
+  },
+}));
 
 import { createApp } from '../../app.js';
 import { prisma } from '../../config/database.js';
@@ -11,9 +31,8 @@ function buildToken() {
 }
 
 describe('inventory module', () => {
-  beforeEach(async () => {
-    await prisma.inventory.deleteMany();
-    await prisma.company.deleteMany();
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
   it('should reject unauthenticated requests to inventory endpoints', async () => {
@@ -34,19 +53,62 @@ describe('inventory module', () => {
     const app = createApp();
     const token = buildToken();
 
-    const company = await prisma.company.create({
-      data: {
-        name: 'Warehouse One',
-        email: 'warehouse@example.com',
+    vi.mocked(prisma.inventory.findFirst).mockResolvedValue(null);
+
+    vi.mocked(prisma.inventory.create).mockResolvedValue({
+      id: 1,
+      trackingNumber: 'INV-1001',
+      companyId: 7,
+      type: 'container',
+      deviceType: '20ft',
+      status: 'active',
+      length: 20,
+      width: 8,
+      height: 8,
+      lwhType: 'ft',
+      weight: 4000,
+      weightType: 'lb',
+      location: 'Dallas',
+      notes: 'Priority shipment',
+      packageId: null,
+      createdBy: null,
+      updatedBy: null,
+      isDeleted: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    } as any);
+
+    vi.mocked(prisma.inventory.findMany).mockResolvedValue([
+      {
+        id: 1,
+        trackingNumber: 'INV-1001',
+        companyId: 7,
+        type: 'container',
+        deviceType: '20ft',
+        status: 'active',
+        length: 20,
+        width: 8,
+        height: 8,
+        lwhType: 'ft',
+        weight: 4000,
+        weightType: 'lb',
+        location: 'Dallas',
+        notes: 'Priority shipment',
+        packageId: null,
+        createdBy: null,
+        updatedBy: null,
+        isDeleted: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
-    });
+    ] as any);
 
     const createResponse = await request(app)
       .post('/api/inventory')
       .set('Authorization', `Bearer ${token}`)
       .send({
         trackingNumber: 'INV-1001',
-        companyId: company.id,
+        companyId: 7,
         type: 'container',
         deviceType: '20ft',
         status: 'active',
