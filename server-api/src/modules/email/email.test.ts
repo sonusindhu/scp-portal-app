@@ -94,7 +94,7 @@ describe('email module', () => {
     prismaMock.email.count.mockResolvedValue(1);
 
     const createResponse = await request(app)
-      .post('/api/email')
+      .post('/api/email/create')
       .set('Authorization', `Bearer ${token}`)
       .send({
         type: 'quote',
@@ -111,8 +111,9 @@ describe('email module', () => {
     expect(createResponse.body.data.title).toBe('Quote follow up');
 
     const listResponse = await request(app)
-      .get('/api/email')
-      .set('Authorization', `Bearer ${token}`);
+      .post('/api/email/list')
+      .set('Authorization', `Bearer ${token}`)
+      .send({});
 
     expect(listResponse.status).toBe(200);
     expect(listResponse.body.status).toBe(true);

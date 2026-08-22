@@ -10,6 +10,38 @@ const noteController = new NoteController();
 
 noteRouter.use(authenticate);
 
+noteRouter.get('/get', (req, res, next) => {
+  noteController.getAll(req, res, next);
+});
+
+noteRouter.post('/create', validate(createNoteSchema), (req, res, next) => {
+  noteController.create(req, res, next);
+});
+
+noteRouter.post('/update', validate(createNoteSchema), (req, res, next) => {
+  noteController.update(req, res, next);
+});
+
+noteRouter.get('/find/:id', (req, res, next) => {
+  noteController.getById(req, res, next);
+});
+
+noteRouter.post('/list', validate(noteListQuerySchema), (req, res, next) => {
+  noteController.list(req, res, next);
+});
+
+noteRouter.delete('/delete/:id', (req, res, next) => {
+  noteController.delete(req, res, next);
+});
+
+noteRouter.post('/deleteRange', (req, res, next) => {
+  noteController.deleteRange(req, res, next);
+});
+
+noteRouter.post('/delete-range', (req, res, next) => {
+  noteController.deleteRange(req, res, next);
+});
+
 noteRouter.get('/', (req, res, next) => {
   noteController.getAll(req, res, next);
 });
@@ -28,12 +60,4 @@ noteRouter.put('/:id', validate(createNoteSchema), (req, res, next) => {
 
 noteRouter.delete('/:id', (req, res, next) => {
   noteController.delete(req, res, next);
-});
-
-noteRouter.post('/delete-range', (req, res, next) => {
-  noteController.deleteRange(req, res, next);
-});
-
-noteRouter.post('/list', validate(noteListQuerySchema), (req, res, next) => {
-  noteController.list(req, res, next);
 });

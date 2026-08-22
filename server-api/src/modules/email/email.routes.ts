@@ -10,6 +10,38 @@ const emailController = new EmailController();
 
 emailRouter.use(authenticate);
 
+emailRouter.get('/get', (req, res, next) => {
+  emailController.getAll(req, res, next);
+});
+
+emailRouter.post('/create', validate(createEmailSchema), (req, res, next) => {
+  emailController.create(req, res, next);
+});
+
+emailRouter.post('/update', validate(createEmailSchema), (req, res, next) => {
+  emailController.update(req, res, next);
+});
+
+emailRouter.get('/find/:id', (req, res, next) => {
+  emailController.getById(req, res, next);
+});
+
+emailRouter.post('/list', validate(emailListQuerySchema), (req, res, next) => {
+  emailController.list(req, res, next);
+});
+
+emailRouter.delete('/delete/:id', (req, res, next) => {
+  emailController.delete(req, res, next);
+});
+
+emailRouter.post('/deleteRange', (req, res, next) => {
+  emailController.deleteRange(req, res, next);
+});
+
+emailRouter.post('/delete-range', (req, res, next) => {
+  emailController.deleteRange(req, res, next);
+});
+
 emailRouter.get('/', (req, res, next) => {
   emailController.getAll(req, res, next);
 });
@@ -28,12 +60,4 @@ emailRouter.put('/:id', validate(createEmailSchema), (req, res, next) => {
 
 emailRouter.delete('/:id', (req, res, next) => {
   emailController.delete(req, res, next);
-});
-
-emailRouter.post('/delete-range', (req, res, next) => {
-  emailController.deleteRange(req, res, next);
-});
-
-emailRouter.post('/list', validate(emailListQuerySchema), (req, res, next) => {
-  emailController.list(req, res, next);
 });

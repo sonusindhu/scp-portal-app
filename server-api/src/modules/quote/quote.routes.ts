@@ -66,6 +66,10 @@ quoteRouter.delete('/:id', (req, res, next) => {
   quoteController.delete(req, res, next);
 });
 
+quoteRouter.post('/deleteRange', (req, res, next) => {
+  quoteController.deleteRange(req, res, next);
+});
+
 quoteRouter.post('/delete-range', (req, res, next) => {
   quoteController.deleteRange(req, res, next);
 });

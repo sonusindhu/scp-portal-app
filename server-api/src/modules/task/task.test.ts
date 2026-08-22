@@ -97,7 +97,7 @@ describe('task module', () => {
     prismaMock.task.count.mockResolvedValue(1);
 
     const createResponse = await request(app)
-      .post('/api/task')
+      .post('/api/task/create')
       .set('Authorization', `Bearer ${token}`)
       .send({
         type: 'quote',
@@ -115,8 +115,9 @@ describe('task module', () => {
     expect(createResponse.body.data.subject).toBe('Follow up on quote');
 
     const listResponse = await request(app)
-      .get('/api/task')
-      .set('Authorization', `Bearer ${token}`);
+      .post('/api/task/list')
+      .set('Authorization', `Bearer ${token}`)
+      .send({});
 
     expect(listResponse.status).toBe(200);
     expect(listResponse.body.status).toBe(true);

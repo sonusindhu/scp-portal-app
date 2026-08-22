@@ -90,7 +90,7 @@ describe('note module', () => {
     prismaMock.note.count.mockResolvedValue(1);
 
     const createResponse = await request(app)
-      .post('/api/note')
+      .post('/api/note/create')
       .set('Authorization', `Bearer ${token}`)
       .send({
         type: 'quote',
@@ -106,8 +106,9 @@ describe('note module', () => {
     expect(createResponse.body.data.title).toBe('Follow up');
 
     const listResponse = await request(app)
-      .get('/api/note')
-      .set('Authorization', `Bearer ${token}`);
+      .post('/api/note/list')
+      .set('Authorization', `Bearer ${token}`)
+      .send({});
 
     expect(listResponse.status).toBe(200);
     expect(listResponse.body.status).toBe(true);
