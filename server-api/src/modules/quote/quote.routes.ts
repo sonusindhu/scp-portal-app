@@ -10,6 +10,42 @@ const quoteController = new QuoteController();
 
 quoteRouter.use(authenticate);
 
+quoteRouter.get('/getCompanies', (req, res, next) => {
+  quoteController.getCompanies(req, res, next);
+});
+
+quoteRouter.get('/getContactsByCompany/:id', (req, res, next) => {
+  quoteController.getContactsByCompany(req, res, next);
+});
+
+quoteRouter.get('/getQuoteDetails/:id', (req, res, next) => {
+  quoteController.getQuoteDetails(req, res, next);
+});
+
+quoteRouter.post('/createNote', (req, res, next) => {
+  quoteController.createNote(req, res, next);
+});
+
+quoteRouter.post('/createTask', (req, res, next) => {
+  quoteController.createTask(req, res, next);
+});
+
+quoteRouter.get('/:id/notes', (req, res, next) => {
+  quoteController.getNotes(req, res, next);
+});
+
+quoteRouter.post('/:id/notes', (req, res, next) => {
+  quoteController.getNotes(req, res, next);
+});
+
+quoteRouter.get('/:id/tasks', (req, res, next) => {
+  quoteController.getTasks(req, res, next);
+});
+
+quoteRouter.post('/:id/tasks', (req, res, next) => {
+  quoteController.getTasks(req, res, next);
+});
+
 quoteRouter.get('/', (req, res, next) => {
   quoteController.getAll(req, res, next);
 });

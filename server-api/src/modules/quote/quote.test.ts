@@ -14,6 +14,20 @@ vi.mock('../../config/database.js', () => ({
       update: vi.fn(),
       delete: vi.fn(),
     },
+    company: {
+      findMany: vi.fn(),
+    },
+    contact: {
+      findMany: vi.fn(),
+    },
+    note: {
+      create: vi.fn(),
+      findMany: vi.fn(),
+    },
+    task: {
+      create: vi.fn(),
+      findMany: vi.fn(),
+    },
   },
 }));
 
@@ -139,5 +153,143 @@ describe('quote module', () => {
     expect(response.status).toBe(200);
     expect(response.body.status).toBe(true);
     expect(response.body.message).toBe('Quotes have been deleted successfully.');
+  });
+
+  it('should return company and contact lookups and quote notes/tasks when authenticated', async () => {
+    const app = createApp();
+    const token = buildToken();
+
+    vi.mocked(prisma.company.findMany).mockResolvedValue([
+      { id: 1, name: 'Acme Logistics' },
+    ] as any);
+
+    vi.mocked(prisma.contact.findMany).mockResolvedValue([
+      { id: 5, fullName: 'Jane Doe' },
+    ] as any);
+
+    vi.mocked(prisma.quote.findUnique).mockResolvedValue({
+      id: 10,
+      name: 'LTL Quote',
+      companyId: 1,
+      contactId: 5,
+    } as any);
+
+    vi.mocked(prisma.note.create).mockResolvedValue({
+      id: 77,
+      title: 'Follow up',
+      message: 'Please review',
+      isCritical: false,
+      quoteId: 10,
+      companyId: 1,
+      contactId: 5,
+      type: 'quote',
+    } as any);
+
+    vi.mocked(prisma.note.findMany).mockResolvedValue([
+      {
+        id: 77,
+        title: 'Follow up',
+        message: 'Please review',
+        isCritical: false,
+        quoteId: 10,
+        companyId: 1,
+        contactId: 5,
+        type: 'quote',
+      },
+    ] as any);
+
+    vi.mocked(prisma.task.create).mockResolvedValue({
+      id: 88,
+      subject: 'Check pricing',
+      description: 'Review the cost break',
+      priority: 'high',
+      quoteId: 10,
+      companyId: 1,
+      type: 'quote',
+    } as any);
+
+    vi.mocked(prisma.task.findMany).mockResolvedValue([
+      {
+        id: 88,
+        subject: 'Check pricing',
+        description: 'Review the cost break',
+        priority: 'high',
+        quoteId: 10,
+        companyId: 1,
+        type: 'quote',
+      },
+    ] as any);
+
+    const companiesResponse = await request(app)
+      .get('/api/quote/getCompanies')
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(companiesResponse.status).toBe(200);
+    expect(companiesResponse.body.status).toBe(true);
+    expect(companiesResponse.body.data).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: 'Acme Logistics' }),
+      ])
+    );
+
+    const contactsResponse = await request(app)
+      .get('/api/quote/getContactsByCompany/1')
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(contactsResponse.status).toBe(200);
+    expect(contactsResponse.body.status).toBe(true);
+    expect(contactsResponse.body.data).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ fullName: 'Jane Doe' }),
+      ])
+    );
+
+    const createNoteResponse = await request(app)
+      .post('/api/quote/createNote')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        quoteId: 10,
+        title: 'Follow up',
+        message: 'Please review',
+        isCritical: false,
+      });
+
+    expect(createNoteResponse.status).toBe(201);
+    expect(createNoteResponse.body.data.title).toBe('Follow up');
+
+    const noteListResponse = await request(app)
+      .get('/api/quote/10/notes')
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(noteListResponse.status).toBe(200);
+    expect(noteListResponse.body.data).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ title: 'Follow up' }),
+      ])
+    );
+
+    const createTaskResponse = await request(app)
+      .post('/api/quote/createTask')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        quoteId: 10,
+        subject: 'Check pricing',
+        description: 'Review the cost break',
+        priority: 'high',
+      });
+
+    expect(createTaskResponse.status).toBe(201);
+    expect(createTaskResponse.body.data.subject).toBe('Check pricing');
+
+    const taskListResponse = await request(app)
+      .get('/api/quote/10/tasks')
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(taskListResponse.status).toBe(200);
+    expect(taskListResponse.body.data).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ subject: 'Check pricing' }),
+      ])
+    );
   });
 });
