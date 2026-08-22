@@ -93,4 +93,10 @@ export class ContactRepository {
       where: { id },
     });
   }
+
+  async deleteRange(ids: number[]) {
+    return prisma.contact.deleteMany({
+      where: { id: { in: ids } },
+    });
+  }
 }

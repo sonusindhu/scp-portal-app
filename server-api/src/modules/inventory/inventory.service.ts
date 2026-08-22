@@ -53,4 +53,12 @@ export class InventoryService {
 
     return this.inventoryRepository.delete(id);
   }
+
+  async deleteRange(ids: number[]) {
+    if (!ids.length) {
+      throw new AppError('At least one inventory id is required', 400);
+    }
+
+    return this.inventoryRepository.deleteRange(ids);
+  }
 }

@@ -50,4 +50,12 @@ export class ContactService {
 
     return this.contactRepository.delete(id);
   }
+
+  async deleteRange(ids: number[]) {
+    if (!ids.length) {
+      throw new AppError('At least one contact id is required', 400);
+    }
+
+    return this.contactRepository.deleteRange(ids);
+  }
 }

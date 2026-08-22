@@ -30,6 +30,10 @@ contactRouter.delete('/:id', (req, res, next) => {
   contactController.delete(req, res, next);
 });
 
+contactRouter.post('/delete-range', (req, res, next) => {
+  contactController.deleteRange(req, res, next);
+});
+
 contactRouter.post('/list', validate(contactListQuerySchema), (req, res, next) => {
   contactController.list(req, res, next);
 });

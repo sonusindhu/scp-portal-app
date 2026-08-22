@@ -89,4 +89,10 @@ export class InventoryRepository {
       where: { id },
     });
   }
+
+  async deleteRange(ids: number[]) {
+    return prisma.inventory.deleteMany({
+      where: { id: { in: ids } },
+    });
+  }
 }

@@ -30,6 +30,10 @@ inventoryRouter.delete('/:id', (req, res, next) => {
   inventoryController.delete(req, res, next);
 });
 
+inventoryRouter.post('/delete-range', (req, res, next) => {
+  inventoryController.deleteRange(req, res, next);
+});
+
 inventoryRouter.post('/list', validate(inventoryListQuerySchema), (req, res, next) => {
   inventoryController.list(req, res, next);
 });
