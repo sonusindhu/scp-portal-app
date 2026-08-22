@@ -30,6 +30,7 @@ export const swaggerSpec = swaggerJsdoc({
       { name: 'Company', description: 'Company management endpoints' },
       { name: 'Contact', description: 'Contact management endpoints' },
       { name: 'Inventory', description: 'Inventory management endpoints' },
+      { name: 'Quote', description: 'Quote management endpoints' },
     ],
   },
   apis: ['./src/**/*.swagger.ts', './src/**/*.ts'],

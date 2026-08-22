@@ -12,6 +12,7 @@ import { authRouter } from './modules/auth/auth.routes.js';
 import { companyRouter } from './modules/company/company.routes.js';
 import { contactRouter } from './modules/contact/contact.routes.js';
 import { inventoryRouter } from './modules/inventory/inventory.routes.js';
+import { quoteRouter } from './modules/quote/quote.routes.js';
 import { notFoundHandler } from './common/middleware/notFoundHandler.js';
 import { errorHandler } from './common/middleware/errorHandler.js';
 import { ok } from './common/utils/response.js';
@@ -41,6 +42,7 @@ export function createApp(): Express {
   app.use('/api/company', companyRouter);
   app.use('/api/contact', contactRouter);
   app.use('/api/inventory', inventoryRouter);
+  app.use('/api/quote', quoteRouter);
   app.use(
     '/api-docs',
     swaggerUi.serve,
