@@ -70,3 +70,29 @@ model Contact {
   @@index([companyId])
   @@index([email])
 }
+
+model Inventory {
+  id             Int      @id @default(autoincrement())
+  packageId      String?
+  trackingNumber String   @unique
+  companyId      Int
+  type           String?
+  deviceType     String?
+  status         String?
+  length         Float?
+  width          Float?
+  height         Float?
+  lwhType        String?  @default("in")
+  weight         Float?
+  weightType     String?  @default("lb")
+  location       String?
+  notes          String?
+  createdBy      Int?
+  updatedBy      Int?
+  isDeleted      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([companyId])
+  @@index([trackingNumber])
+}
