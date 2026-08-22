@@ -34,6 +34,7 @@ export const swaggerSpec = swaggerJsdoc({
       { name: 'Task', description: 'Task management endpoints' },
       { name: 'Note', description: 'Note management endpoints' },
       { name: 'Email', description: 'Email management endpoints' },
+      { name: 'User', description: 'User and profile management endpoints' },
     ],
   },
   apis: ['./src/**/*.swagger.ts', './src/**/*.ts'],

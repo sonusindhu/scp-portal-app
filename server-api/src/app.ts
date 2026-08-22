@@ -16,6 +16,7 @@ import { quoteRouter } from './modules/quote/quote.routes.js';
 import { taskRouter } from './modules/task/task.routes.js';
 import { noteRouter } from './modules/note/note.routes.js';
 import { emailRouter } from './modules/email/email.routes.js';
+import { userRouter } from './modules/user/user.routes.js';
 import { notFoundHandler } from './common/middleware/notFoundHandler.js';
 import { errorHandler } from './common/middleware/errorHandler.js';
 import { ok } from './common/utils/response.js';
@@ -49,6 +50,7 @@ export function createApp(): Express {
   app.use('/api/task', taskRouter);
   app.use('/api/note', noteRouter);
   app.use('/api/email', emailRouter);
+  app.use('/api/user', userRouter);
   app.use(
     '/api-docs',
     swaggerUi.serve,
