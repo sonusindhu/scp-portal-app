@@ -1,0 +1,26 @@
+model Task {
+  id               Int       @id @default(autoincrement())
+  type             String?
+  subject          String?
+  description      String?
+  priority         String?
+  dueDateTime      DateTime?
+  reminderDateTime DateTime?
+  category         String?
+  status           String?
+  assignedTo       Int?
+  pointOfContact   Int?
+  quoteId          Int?
+  companyId        Int?
+  inventoryId      Int?
+  userId           Int?
+  createdBy        Int?
+  updatedBy        Int?
+  isDeleted        Boolean   @default(false)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([companyId])
+  @@index([quoteId])
+  @@index([userId])
+}
