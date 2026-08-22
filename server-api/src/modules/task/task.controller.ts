@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
+import { z } from 'zod';
 
 import { AppError } from '../../common/errors/AppError.js';
 import { fail, ok, created } from '../../common/utils/response.js';
@@ -75,6 +76,21 @@ export class TaskController {
       const id = Number(req.params.id);
       await taskService.delete(id);
       return ok(res, 'Task has been deleted successfully.');
+    } catch (error) {
+      if (error instanceof AppError) return fail(res, error.statusCode, error.message);
+      return next(error);
+    }
+  }
+
+  async deleteRange(req: Request, res: Response, next: NextFunction) {
+    try {
+      const ids = z.array(z.number().int().positive()).parse(req.body.ids ?? []);
+      if (!ids.length) {
+        return fail(res, 400, 'At least one task id is required');
+      }
+
+      await taskService.deleteRange(ids);
+      return ok(res, 'Tasks have been deleted successfully.');
     } catch (error) {
       if (error instanceof AppError) return fail(res, error.statusCode, error.message);
       return next(error);

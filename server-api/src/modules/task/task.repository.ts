@@ -83,4 +83,10 @@ export class TaskRepository {
       where: { id },
     });
   }
+
+  async deleteRange(ids: number[]) {
+    return prisma.task.deleteMany({
+      where: { id: { in: ids } },
+    });
+  }
 }

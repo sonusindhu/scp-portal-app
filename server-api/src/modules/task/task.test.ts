@@ -126,4 +126,20 @@ describe('task module', () => {
       ])
     );
   });
+
+  it('should delete multiple tasks when authenticated', async () => {
+    const app = createApp();
+    const token = buildToken();
+
+    prismaMock.task.deleteMany.mockResolvedValue({ count: 2 });
+
+    const response = await request(app)
+      .post('/api/task/delete-range')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ ids: [1, 2] });
+
+    expect(response.status).toBe(200);
+    expect(response.body.status).toBe(true);
+    expect(response.body.message).toBe('Tasks have been deleted successfully.');
+  });
 });

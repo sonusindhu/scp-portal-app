@@ -30,6 +30,10 @@ taskRouter.delete('/:id', (req, res, next) => {
   taskController.delete(req, res, next);
 });
 
+taskRouter.post('/delete-range', (req, res, next) => {
+  taskController.deleteRange(req, res, next);
+});
+
 taskRouter.post('/list', validate(taskListQuerySchema), (req, res, next) => {
   taskController.list(req, res, next);
 });
