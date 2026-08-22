@@ -9,9 +9,10 @@
     "start": "node dist/server.js",
     "lint": "eslint . --ext .ts",
     "test": "vitest run",
+    "seed:users": "tsx deployment/seeders/seed-users.ts --run",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "migration:status": "node scripts/migration-status.mjs"
+    "migration:status": "node deployment/migration/migration-status.mjs"
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
