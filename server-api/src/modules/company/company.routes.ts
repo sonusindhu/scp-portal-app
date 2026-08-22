@@ -1,11 +1,14 @@
 import { Router } from 'express';
 
-import { CompanyController } from './company.controller.js';
+import { authenticate } from '../../common/middleware/authenticate.js';
 import { validate } from '../../common/middleware/validate.js';
+import { CompanyController } from './company.controller.js';
 import { createCompanySchema, companyListQuerySchema } from './company.validator.js';
 
 export const companyRouter = Router();
 const companyController = new CompanyController();
+
+companyRouter.use(authenticate);
 
 companyRouter.get('/list-of-names', (req, res, next) => {
   companyController.listOfNames(req, res, next);
