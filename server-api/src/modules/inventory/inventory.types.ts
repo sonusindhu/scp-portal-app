@@ -1,4 +1,4 @@
-export type SortDirection = 'asc' | 'desc';
+import type { PaginationQuery } from '../../common/types/api.js';
 
 export interface InventoryPayload {
   trackingNumber: string;
@@ -20,9 +20,4 @@ export interface InventoryPayload {
   packageId?: string | null;
 }
 
-export interface InventoryListQuery {
-  skip?: number;
-  take?: number;
-  orderBy?: string;
-  sortDirection?: SortDirection;
-}
+export interface InventoryListQuery extends PaginationQuery {}

@@ -1,4 +1,4 @@
-export type SortDirection = 'asc' | 'desc';
+import type { PaginationQuery } from '../../common/types/api.js';
 
 export interface CompanyPayload {
   name: string;
@@ -21,9 +21,4 @@ export interface CompanyPayload {
   isDeleted?: boolean;
 }
 
-export interface CompanyListQuery {
-  skip?: number;
-  take?: number;
-  orderBy?: string;
-  sortDirection?: SortDirection;
-}
+export interface CompanyListQuery extends PaginationQuery {}
