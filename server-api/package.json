@@ -10,8 +10,9 @@
     "lint": "eslint . --ext .ts",
     "test": "vitest run",
     "seed:users": "tsx deployment/seeders/seed-users.ts --run",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
+    "prisma:merge": "node prisma/merge-schema.mjs",
+    "prisma:generate": "pnpm prisma:merge && prisma generate",
+    "prisma:migrate": "pnpm prisma:merge && prisma migrate dev",
     "migration:status": "node deployment/migration/migration-status.mjs"
   },
   "dependencies": {
