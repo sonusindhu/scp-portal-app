@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import crypto from 'node:crypto';
 
 import { env } from '../../config/env.js';
 import { AppError } from '../../common/errors/AppError.js';
@@ -63,5 +64,42 @@ export class AuthService {
       lastName: payload.lastName,
       fullName: `${payload.firstName} ${payload.lastName}`,
     });
+  }
+
+  async requestPasswordReset(email: string) {
+    const user = await this.authRepository.findByEmail(email);
+
+    if (!user) {
+      return { message: 'Please check your email for the password reset link.' };
+    }
+
+    const token = crypto.randomBytes(32).toString('hex');
+    const expiresAt = Date.now() + 60 * 60 * 1000;
+
+    await this.authRepository.updateUserPasswordResetToken(user.id, token, expiresAt);
+
+    return {
+      message: 'Please check your email for the password reset link.',
+      token,
+    };
+  }
+
+  async resetPassword(payload: { token: string; password: string; confirmPassword: string }) {
+    if (payload.password !== payload.confirmPassword) {
+      throw new AppError('Password and confirm password do not match', 400);
+    }
+
+    const user = await this.authRepository.findByResetToken(payload.token);
+
+    if (!user || !user.passwordResetTokenExpiresAt || user.passwordResetTokenExpiresAt <= Date.now()) {
+      throw new AppError('Password token has been invalid/expired.', 400);
+    }
+
+    const hashedPassword = await this.hashPassword(payload.password);
+    await this.authRepository.resetPasswordWithToken(user.id, hashedPassword);
+
+    return {
+      message: 'Password has been reset successfully.',
+    };
   }
 }
