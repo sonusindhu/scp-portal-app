@@ -36,10 +36,10 @@ const InventoryGeneral = () => {
     if (id) {
       InventoryService.find(+id)
         .then((response) => {
-          if (response.result) {
+          if (response.data) {
             const inventory = {
-              ...response.result,
-              companyId: (response.result as any).company || response.result.companyId
+              ...response.data,
+              companyId: (response.data as any).company || response.data.companyId
             }
             reset(inventory);
           }
@@ -50,7 +50,7 @@ const InventoryGeneral = () => {
     }
 
     InventoryService.getCompanies()
-      .then(({ result }) => setCompanies(result || []))
+      .then(({ data }) => setCompanies(data || []))
       .catch(() => setCompanies([]));
   }, []);
 

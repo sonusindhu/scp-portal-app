@@ -40,7 +40,7 @@ const NoteForm = (props: NoteProps) => {
         type: note?.type,
         companyId: note?.companyId,
       });
-      props.onSuccess(response?.result);
+      props.onSuccess(response?.data);
     },
   });
 

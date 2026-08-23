@@ -25,8 +25,8 @@ const TaskForm = (props: TaskProps) => {
   const { handleSubmit: handleFormSubmit } = useFormSubmit({
     onSuccess: (response) => {
       reset();
-      if (response?.result) {
-        props.onSuccess(response.result);
+      if (response?.data) {
+        props.onSuccess(response.data);
       }
     },
   });

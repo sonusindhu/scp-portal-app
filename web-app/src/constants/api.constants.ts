@@ -20,7 +20,7 @@ export const HTTP_STATUS = {
  */
 export const API_ENDPOINTS = {
   AUTH: {
-    LOGIN: "auth/signin",
+    LOGIN: "auth/login",
     LOGOUT: "auth/signout",
     SIGNUP: "auth/signup",
     REFRESH: "auth/refresh",

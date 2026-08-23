@@ -92,13 +92,22 @@ class BaseService {
     response: AxiosResponse<ApiResponse<T>>,
     showToast: boolean = false
   ): ApiResponse<T> {
-    const data = response.data;
+    const data = response.data as any;
+
+    // Normalize backend envelope: ensure both `data` and `result` point to
+    // the same payload so callers can use either while we migrate to the
+    // standardized `data` field.
+    const payload = data?.data ?? data?.result;
+    if (payload !== undefined) {
+      if (data.data === undefined) data.data = payload;
+      if (data.result === undefined) data.result = payload;
+    }
 
     if (showToast && data.status && data.message) {
       toast.success(data.message);
     }
 
-    return data;
+    return data as ApiResponse<T>;
   }
 
   /**

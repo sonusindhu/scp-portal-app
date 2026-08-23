@@ -101,7 +101,7 @@ class ContactService extends BaseService {
    */
   async getCompanies(): Promise<any[]> {
     const response = await this.get<any[]>(API_ENDPOINTS.COMPANY.LIST_OF_NAMES);
-    return response.result || [];
+    return response.data || [];
   }
 }
 

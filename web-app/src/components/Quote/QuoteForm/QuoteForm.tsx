@@ -26,10 +26,10 @@ const QuoteForm = () => {
     if (isAuthenticated && id) {
       QuoteService.find(+id)
         .then((response) => {
-          if (response.status && response.result) {
+          if (response.status && response.data) {
             const updatedResult = {
-              ...response.result,
-              transportMode: response.result.transportMode?.split(",") || []
+              ...response.data,
+              transportMode: response.data.transportMode?.split(",") || []
             };
             setQuote(updatedResult);
           } else {

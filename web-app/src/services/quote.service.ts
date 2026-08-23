@@ -31,12 +31,12 @@ class QuoteService extends BaseService {
     const response = await this.get<Quote>(`quote/find/${id}`);
     
     // Transform cargo detail to handle undefined values
-    if (response.result?.cargoDetail) {
-      response.result.cargoDetail = {
-        ...response.result.cargoDetail,
-        cargoTypeId: response.result.cargoDetail.cargoTypeId || undefined,
-        equipmentId: response.result.cargoDetail.equipmentId || undefined,
-        commodityId: response.result.cargoDetail.commodityId || undefined,
+    if (response.data?.cargoDetail) {
+      response.data.cargoDetail = {
+        ...response.data.cargoDetail,
+        cargoTypeId: response.data.cargoDetail.cargoTypeId || undefined,
+        equipmentId: response.data.cargoDetail.equipmentId || undefined,
+        commodityId: response.data.cargoDetail.commodityId || undefined,
       };
     }
     
@@ -136,7 +136,7 @@ class QuoteService extends BaseService {
    */
   async getNotes(id: number, filter?: any): Promise<any[]> {
     const response = await this.post<any[]>(`quote/${id}/notes`, { ...filter });
-    return response.result || [];
+    return response.data || [];
   }
 
   /**
@@ -158,7 +158,7 @@ class QuoteService extends BaseService {
    */
   async getTasks(id: string, filter?: any): Promise<any[]> {
     const response = await this.post<any[]>(`quote/${id}/tasks`, { ...filter });
-    return response.result || [];
+    return response.data || [];
   }
 
   /**
@@ -180,7 +180,7 @@ class QuoteService extends BaseService {
    */
   async getEmails(id: number, filter?: any): Promise<any[]> {
     const response = await this.post<any[]>(`quote/${id}/emails`, { ...filter });
-    return response.result || [];
+    return response.data || [];
   }
 
   /**
@@ -191,7 +191,7 @@ class QuoteService extends BaseService {
    */
   async getEmailById(id: number, emailId: number): Promise<any> {
     const response = await this.get<any>(`quote/${id}/getEmailById/${emailId}`);
-    return response.result;
+    return response.data;
   }
 }
 

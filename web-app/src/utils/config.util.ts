@@ -11,11 +11,11 @@ instance.interceptors.request.use(
     const user = AuthService.getCurrentUser();
     if (user) {
       if (!config.headers) config.headers = {};
-      config.headers["token"] = user.token;
+        // Use standard Authorization header with Bearer token
+        config.headers["Authorization"] = `Bearer ${user.token}`;
     }
-    // Fix: ensure config.headers exists and use correct CORS header
-    if (!config.headers) config.headers = {};
-    config.headers["Access-Control-Allow-Origin"] = "*";
+      // Ensure headers object exists
+      if (!config.headers) config.headers = {};
     return config;
   },
   function (error) {

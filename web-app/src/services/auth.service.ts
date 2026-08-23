@@ -1,4 +1,5 @@
 import BaseService, { ApiResponse } from "./BaseService";
+import { API_ENDPOINTS } from "../constants/api.constants";
 
 /**
  * User data model
@@ -68,7 +69,7 @@ class AuthService extends BaseService {
    * @returns Promise with registration result
    */
   async register(payload: RegisterPayload): Promise<ApiResponse<User>> {
-    return this.post<User>("auth/signup", payload, {
+    return this.post<User>(API_ENDPOINTS.AUTH.SIGNUP, payload, {
       showSuccessToast: true,
     });
   }
@@ -81,10 +82,12 @@ class AuthService extends BaseService {
    */
   async login(email: string, password: string): Promise<ApiResponse<AuthResponse>> {
     const payload: LoginPayload = { email, password };
-    const response = await this.post<AuthResponse>("auth/login", payload);
+    const response = await this.post<AuthResponse>(API_ENDPOINTS.AUTH.LOGIN, payload);
 
-    if (response.status && response.result) {
-      localStorage.setItem("user", JSON.stringify(response.result));
+    // Prefer standardized `data` field; fall back to `result` for compatibility
+    const data: any = (response as any).data ?? (response as any).data ?? null;
+    if (response.status && data) {
+      localStorage.setItem("user", JSON.stringify(data));
     }
 
     return response;

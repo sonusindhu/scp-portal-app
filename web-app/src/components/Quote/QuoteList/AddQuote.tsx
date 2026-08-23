@@ -56,7 +56,7 @@ const AddQuote = (props) => {
     QuoteService.getCompanies()
       .then((response) => {
         if (response.status) {
-          setCompanies(response.result || []);
+          setCompanies(response.data || []);
         } else {
           setCompanies([]);
         }
@@ -69,7 +69,7 @@ const AddQuote = (props) => {
       QuoteService.getContactsByCompany(companyId)
         .then((response) => {
           if (response.status) {
-            setContacts(response.result || []);
+            setContacts(response.data || []);
           } else {
             setContacts([]);
           }

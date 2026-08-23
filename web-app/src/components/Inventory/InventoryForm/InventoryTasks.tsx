@@ -25,7 +25,7 @@ const InventoryTasks = () => {
       const payload = {
         companyId: id,
       };
-      TaskService.list(payload).then((response) => setTasks(response.result || []));
+      TaskService.list(payload).then((response) => setTasks(response.data || []));
     }
   }, []);
 
