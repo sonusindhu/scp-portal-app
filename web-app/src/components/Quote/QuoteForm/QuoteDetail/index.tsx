@@ -15,11 +15,15 @@ const QuoteDetails = () => {
 
   // check if user is authenticated, if not redirect to login page
   useEffect(() => {
+    if(!id) {
+      navigate("/app/quote/list");
+      return;
+    }
     let isMounted = true;
-    QuoteService.find(id)
-      .then(({ result }) => {
+    QuoteService.find(+id)
+      .then((response) => {
         if (isMounted) {
-          setQuote(result);
+          setQuote(response.data);
         }
       })
       .catch((error) => {
@@ -27,11 +31,11 @@ const QuoteDetails = () => {
       });
     
       QuoteService.getEquipments()
-        .then(({ result }) =>  setEquipments(result));
+        .then((response) => setEquipments(response.data ?? []));
       QuoteService.getCommodities()
-        .then(({ result }) => setCommodities(result));
+        .then((response) => setCommodities(response.data ?? []));
       QuoteService.getCargos()
-        .then(({ result }) => setCargos(result));
+        .then((response) => setCargos(response.data ?? []));
 
       return () => { isMounted = false };
   }, []);

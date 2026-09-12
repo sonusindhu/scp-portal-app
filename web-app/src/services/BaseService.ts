@@ -9,7 +9,8 @@ import EventBus, { AppEvents } from "../common/EventBus";
 export interface ApiResponse<T = any> {
   status: boolean;
   message: string;
-  result?: T;
+  data?: T;
+  meta?: Record<string, unknown>;
   error?: any;
 }
 
@@ -94,13 +95,10 @@ class BaseService {
   ): ApiResponse<T> {
     const data = response.data as any;
 
-    // Normalize backend envelope: ensure both `data` and `result` point to
-    // the same payload so callers can use either while we migrate to the
-    // standardized `data` field.
-    const payload = data?.data ?? data?.result;
-    if (payload !== undefined) {
-      if (data.data === undefined) data.data = payload;
-      if (data.result === undefined) data.result = payload;
+    // Match server-api contract: { status, message, data?, meta? }
+    const payload = data?.data;
+    if (payload !== undefined && data.data === undefined) {
+      data.data = payload;
     }
 
     if (showToast && data.status && data.message) {

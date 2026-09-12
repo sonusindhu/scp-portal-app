@@ -84,8 +84,8 @@ class AuthService extends BaseService {
     const payload: LoginPayload = { email, password };
     const response = await this.post<AuthResponse>(API_ENDPOINTS.AUTH.LOGIN, payload);
 
-    // Prefer standardized `data` field; fall back to `result` for compatibility
-    const data: any = (response as any).data ?? (response as any).data ?? null;
+    // Server API uses `data` as the canonical payload field.
+    const data: any = response.data ?? null;
     if (response.status && data) {
       localStorage.setItem("user", JSON.stringify(data));
     }

@@ -37,7 +37,7 @@ const AddInventory = (props) => {
   // check if user is authenticated, if not redirect to login page
   useEffect(() => {
     InventoryService.getCompanies()
-      .then(({ result }) => setCompanies(result || []))
+      .then((response) => setCompanies(response.data ?? []))
       .catch(() => setCompanies([]));
   }, []);
 
