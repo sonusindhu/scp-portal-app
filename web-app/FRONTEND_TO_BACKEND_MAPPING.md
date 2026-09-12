@@ -1,7 +1,7 @@
 Frontend → Backend Endpoint Mapping
 
 Notes:
-- Frontend call paths are passed to `BaseService` which prefixes with `VITE_API_ENDPOINT` (e.g. `http://localhost:4000/api`).
+- Frontend call paths are passed to `BaseService` which prefixes with `VITE_API_ENDPOINT` (e.g. `http://localhost:4001/api`).
 - Backend routes are mounted under `/api` in `server-api`. For compatibility both legacy action-style paths and hyphenated bulk-delete aliases are available (e.g. `deleteRange` and `delete-range`).
 - All responses use the standard response envelope: { status: boolean, message: string, result?: any, error?: any }.
 
@@ -110,7 +110,7 @@ Auth & User
 - Frontend uses `auth/signin`, `auth/signout`, etc. Map to `/api/auth/signin`, `/api/auth/signout`, `/api/auth/refresh`, `/api/auth/verify`.
 
 Developer Notes / Next Steps
-- Set `VITE_API_ENDPOINT` in `web-app/.env` to point to the server API base, e.g. `VITE_API_ENDPOINT=http://localhost:4000/api/`.
+- Set `VITE_API_ENDPOINT` in `web-app/.env` to point to the server API base, e.g. `VITE_API_ENDPOINT=http://localhost:4001/api/`.
 - For safety during migration, keep backend compatibility aliases active. After frontend is migrated and verified, plan to remove legacy aliases and document final routes.
 - If you want, I can generate a CSV of frontend method → HTTP method → backend path → payload example for import into tracking tools.
 

@@ -7,7 +7,7 @@ const isTestEnvironment = process.env.NODE_ENV === 'test';
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
-  PORT: z.coerce.number().default(4000),
+  PORT: z.coerce.number().default(4001),
   CORS_ORIGIN: z.string().default('*'),
   JWT_SECRET: isTestEnvironment
     ? z.string().min(16, 'JWT_SECRET must be at least 16 characters long').default('test_jwt_secret_key_12345')
