@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "node build/server.js",
+    "start": "node dist/server.js",
     "lint": "eslint . --ext .ts",
     "test": "vitest run",
     "seed:users": "tsx deployment/seeders/seed-users.ts --run",
