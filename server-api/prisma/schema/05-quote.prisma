@@ -1,0 +1,78 @@
+model Quote {
+  id          Int       @id @default(autoincrement())
+  quoteNumber String?   @unique
+  name        String?
+  service     String?
+  transportMode String?
+  status      String?
+  totalCost   Float?
+  totalProfit Float?
+  expiryDate  DateTime?
+  totalMiles  Float?
+  companyId   Int?
+  contactId   Int?
+  createdBy   Int?
+  updatedBy   Int?
+  isDeleted   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  stops        Stop[]
+  accessorials Accessorial[]
+  cargoDetail  CargoDetail?
+
+  @@index([companyId])
+  @@index([contactId])
+}
+
+model Stop {
+  id       Int      @id @default(autoincrement())
+  type     String?
+  city     String?
+  zipcode  String?
+  state    String?
+  country  String?
+  miles    Float?
+  quoteId  Int
+  quote    Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Accessorial {
+  id                 Int      @id @default(autoincrement())
+  name               String?
+  quantity           Float?
+  rate               Float?
+  totalRate          Float?
+  isIncludeInCharges Boolean? @default(false)
+  description        String?
+  quoteId            Int
+  quote              Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model CargoDetail {
+  id            Int      @id @default(autoincrement())
+  equipmentId   Int?
+  commodityId   Int?
+  cargoTypeId   Int?
+  weight        Float?
+  cargoValue    Float?
+  temperature   Float?
+  pieces        Int?
+  isHazmat      Boolean? @default(false)
+  hazmatName    String?
+  hazmatClass   String?
+  hazmatUN      String?
+  status        String?
+  comments      String?
+  quoteId       Int      @unique
+  quote         Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  createdBy     Int?
+  updatedBy     Int?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

@@ -23,9 +23,9 @@ const InventoryEmails = () => {
       EmailService.list({
         companyId: id,
         // type: "company",
-      }).then((response) => setEmails(response.result || []));
+      }).then((response) => setEmails(response.data || []));
     }
-  }, []);
+  }, [id]);
 
   return (
     <div className="grid-container">

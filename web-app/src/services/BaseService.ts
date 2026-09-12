@@ -9,7 +9,8 @@ import EventBus, { AppEvents } from "../common/EventBus";
 export interface ApiResponse<T = any> {
   status: boolean;
   message: string;
-  result?: T;
+  data?: T;
+  meta?: Record<string, unknown>;
   error?: any;
 }
 
@@ -92,13 +93,19 @@ class BaseService {
     response: AxiosResponse<ApiResponse<T>>,
     showToast: boolean = false
   ): ApiResponse<T> {
-    const data = response.data;
+    const data = response.data as any;
+
+    // Match server-api contract: { status, message, data?, meta? }
+    const payload = data?.data;
+    if (payload !== undefined && data.data === undefined) {
+      data.data = payload;
+    }
 
     if (showToast && data.status && data.message) {
       toast.success(data.message);
     }
 
-    return data;
+    return data as ApiResponse<T>;
   }
 
   /**

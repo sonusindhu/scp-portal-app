@@ -40,7 +40,7 @@ const ContactGeneral = () => {
   const { handleSubmit } = useFormSubmit({
     onSuccess: (response) => {
       if (response) {
-        reset(response.result);
+        reset(response.data);
       }
     },
   });
@@ -59,7 +59,8 @@ const ContactGeneral = () => {
     getCompanies();
     if (id) {
       ContactService.find(+id)
-        .then(({ result }) =>  {
+        .then((response) =>  {
+          const result = response.data;
           reset({
             firstName: result?.firstName || "",
             lastName: result?.lastName || "",

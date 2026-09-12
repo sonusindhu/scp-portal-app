@@ -32,8 +32,8 @@ const EditCompany = () => {
     const loadCompany = async () => {
       try {
         const response = await CompanyService.find(Number(id));
-        if (response.status && response.result) {
-          reset(response.result);
+        if (response.status && response.data) {
+          reset(response.data);
         }
       } catch (error) {
         // Error toast already shown by BaseService

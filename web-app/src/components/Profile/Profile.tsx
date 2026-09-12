@@ -24,7 +24,7 @@ const QuoteForm = (props) => {
     AuthService.getUserDetail()
       .then((response) => {
         if (response.status) {
-          setUser(response.result)
+          setUser(response.data)
         }
         stopLoading();
       })

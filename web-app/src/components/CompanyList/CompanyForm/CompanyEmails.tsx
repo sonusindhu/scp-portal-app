@@ -23,7 +23,7 @@ const CompanyEmails = () => {
       EmailService.list({
         companyId: id,
         // type: "company",
-      }).then((response) => setEmails(response.result || []));
+      }).then((response) => setEmails(response.data || []));
     }
   }, []);
 

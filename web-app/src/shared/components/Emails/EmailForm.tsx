@@ -31,7 +31,7 @@ const EmailForm = (props: EmailFormProps) => {
     if (response.status) {
       toast.success(response.message);
       reset({ ...email, isCritical: false, title: "", message: "" });
-      props.onSuccess(response.result);
+      props.onSuccess(response.data);
     } else {
       toast.error(response.message);
     }

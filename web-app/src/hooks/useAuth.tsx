@@ -48,7 +48,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const response = await AuthService.login(email, password);
       if (response.status) {
-        setCurrentUser(response.result);
+        setCurrentUser((response as any).data ?? (response as any).data);
         return { success: true, data: response };
       }
       return { success: false, error: response.message };

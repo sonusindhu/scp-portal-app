@@ -22,7 +22,7 @@ const UserForm = (props) => {
   const { handleSubmit } = useFormSubmit({
     onSuccess: (response) => {
       if (response) {
-        reset({ ...response.result });
+        reset({ ...(response.data ?? {}) });
       }
     },
   });

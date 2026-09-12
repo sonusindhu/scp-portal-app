@@ -1,4 +1,5 @@
 import BaseService, { ApiResponse } from "./BaseService";
+import { API_ENDPOINTS } from "../constants/api.constants";
 import { Email } from "../shared/models/Email";
 
 /**
@@ -33,7 +34,7 @@ class EmailService extends BaseService {
    * @returns Promise with list of emails
    */
   async list(filters = {}): Promise<ApiResponse<Email[]>> {
-    return this.post<Email[]>("email/list", filters);
+    return this.post<Email[]>(API_ENDPOINTS.EMAIL.LIST, filters);
   }
 
   /**
@@ -42,7 +43,7 @@ class EmailService extends BaseService {
    * @returns Promise with email details
    */
   async find(id: number): Promise<ApiResponse<Email>> {
-    return super.get<Email>(`email/find/${id}`);
+    return super.get<Email>(API_ENDPOINTS.EMAIL.FIND(id));
   }
 
   /**
@@ -51,7 +52,7 @@ class EmailService extends BaseService {
    * @returns Promise with created email
    */
   async create(payload: EmailCreatePayload): Promise<ApiResponse<Email>> {
-    return this.post<Email>("email/create", payload, {
+    return this.post<Email>(API_ENDPOINTS.EMAIL.CREATE, payload, {
       showSuccessToast: true,
     });
   }
@@ -62,7 +63,7 @@ class EmailService extends BaseService {
    * @returns Promise with updated email
    */
   async update(payload: EmailUpdatePayload): Promise<ApiResponse<Email>> {
-    return this.post<Email>("email/update", payload, {
+    return this.post<Email>(API_ENDPOINTS.EMAIL.UPDATE, payload, {
       showSuccessToast: true,
     });
   }
@@ -73,7 +74,7 @@ class EmailService extends BaseService {
    * @returns Promise with deletion result
    */
   async deleteRange(ids: number[]): Promise<ApiResponse<void>> {
-    return this.post<void>("email/deleteRange", { ids }, {
+    return this.post<void>(API_ENDPOINTS.EMAIL.DELETE, { ids }, {
       showSuccessToast: true,
     });
   }

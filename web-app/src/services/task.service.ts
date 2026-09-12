@@ -1,4 +1,5 @@
 import BaseService, { ApiResponse } from "./BaseService";
+import { API_ENDPOINTS } from "../constants/api.constants";
 import { Task } from "../shared/models/Task";
 
 /**
@@ -34,7 +35,7 @@ class TaskService extends BaseService {
    * @returns Promise with list of tasks
    */
   async list(filters = {}): Promise<ApiResponse<Task[]>> {
-    return this.post<Task[]>("task/list", filters);
+    return this.post<Task[]>(API_ENDPOINTS.TASK.LIST, filters);
   }
 
   /**
@@ -43,7 +44,7 @@ class TaskService extends BaseService {
    * @returns Promise with task details
    */
   async find(id: number): Promise<ApiResponse<Task>> {
-    return super.get<Task>(`task/find/${id}`);
+    return super.get<Task>(API_ENDPOINTS.TASK.FIND(id));
   }
 
   /**
@@ -52,7 +53,7 @@ class TaskService extends BaseService {
    * @returns Promise with created task
    */
   async create(payload: TaskCreatePayload): Promise<ApiResponse<Task>> {
-    return this.post<Task>("task/create", payload, {
+    return this.post<Task>(API_ENDPOINTS.TASK.CREATE, payload, {
       showSuccessToast: true,
     });
   }
@@ -63,7 +64,7 @@ class TaskService extends BaseService {
    * @returns Promise with updated task
    */
   async update(payload: TaskUpdatePayload): Promise<ApiResponse<Task>> {
-    return this.post<Task>("task/update", payload, {
+    return this.post<Task>(API_ENDPOINTS.TASK.UPDATE, payload, {
       showSuccessToast: true,
     });
   }
@@ -74,7 +75,7 @@ class TaskService extends BaseService {
    * @returns Promise with deletion result
    */
   async deleteRange(ids: number[]): Promise<ApiResponse<void>> {
-    return this.post<void>("task/deleteRange", { ids }, {
+    return this.post<void>(API_ENDPOINTS.TASK.DELETE, { ids }, {
       showSuccessToast: true,
     });
   }

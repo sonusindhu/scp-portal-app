@@ -55,7 +55,7 @@ const NotesCardView = (props: NotesListProps) => {
   useEffect(() => {
     if (id) {
       NoteService.list(props.options).then((response) => {
-        setNotes(response.result || []);
+        setNotes(response.data || []);
       });
     }
   }, []);

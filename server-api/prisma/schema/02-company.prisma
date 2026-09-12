@@ -1,0 +1,23 @@
+model Company {
+  id             Int      @id @default(autoincrement())
+  name           String   @unique
+  email          String   @unique
+  type           String?
+  status         String?
+  phone          String?
+  extension      String?
+  address1       String?
+  address2       String?
+  city           String?
+  state          String?
+  zipcode        String?
+  country        String?
+  employeesCount Int?
+  revenue        Int?
+  mainContactId  Int?
+  createdBy      Int?
+  updatedBy      Int?
+  isDeleted      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

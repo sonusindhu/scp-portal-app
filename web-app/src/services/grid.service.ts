@@ -31,10 +31,10 @@ const fetchRows = async ({ url, filters, pageIndex, pageSize, globalFilter, sort
     },
   };
 
-  const response = await axios.post(url, payload);
-  const { result, total } = response.data;
+  const response: any = await axios.post(url, payload);
+  const total = response.data?.meta?.total;
   return {
-    rows: result || [],
+    rows: response?.data?.data || [],
     pageCount: Math.ceil((total || 0) / pageSize),
   };
 };

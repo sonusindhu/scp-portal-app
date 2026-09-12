@@ -53,7 +53,7 @@ const NotesListView = (props: NotesListProps) => {
   useEffect(() => {
     if (id) {
       NoteService.list(props.options).then((response) => {
-        const notes = response?.result || [];
+        const notes = response?.data || [];
         setNotes(notes);
       });
     }

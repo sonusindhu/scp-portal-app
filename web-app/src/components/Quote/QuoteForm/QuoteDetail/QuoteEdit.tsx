@@ -45,7 +45,7 @@ const QuoteEdit = (props: QuoteEditProps) => {
   const { handleSubmit: submitForm } = useFormSubmit({
     onSuccess: (response) => {
       if (response) {
-        reset(response.result);
+        reset(response.data);
       }
     },
   });

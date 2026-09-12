@@ -1,0 +1,289 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  email          String   @unique
+  password       String
+  firstName      String
+  lastName       String
+  fullName       String?
+  isSuperAdmin   Boolean? @default(false)
+  isAdmin        Boolean? @default(false)
+  passwordResetToken String?
+  passwordResetTokenExpiresAt Int?
+  emailProofToken String?
+  emailProofTokenExpiresAt Int?
+  userImage      String?
+  jobTitle       String?
+  department     String?
+  location       String?
+  phoneNumber    String?
+  extension      String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Company {
+  id             Int      @id @default(autoincrement())
+  name           String   @unique
+  email          String   @unique
+  type           String?
+  status         String?
+  phone          String?
+  extension      String?
+  address1       String?
+  address2       String?
+  city           String?
+  state          String?
+  zipcode        String?
+  country        String?
+  employeesCount Int?
+  revenue        Int?
+  mainContactId  Int?
+  createdBy      Int?
+  updatedBy      Int?
+  isDeleted      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Contact {
+  id          Int      @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  fullName    String?
+  email       String
+  companyId   Int
+  status      String?
+  department  String?
+  jobTitle    String?
+  phone       String?
+  extension   String?
+  address1    String?
+  address2    String?
+  city        String?
+  zipcode     String?
+  state       String?
+  country     String?
+  birthDate   String?
+  isDeleted   Boolean  @default(false)
+  createdBy   Int?
+  updatedBy   Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([companyId])
+  @@index([email])
+}
+
+model Inventory {
+  id             Int      @id @default(autoincrement())
+  packageId      String?
+  trackingNumber String   @unique
+  companyId      Int
+  type           String?
+  deviceType     String?
+  status         String?
+  length         Float?
+  width          Float?
+  height         Float?
+  lwhType        String?  @default("in")
+  weight         Float?
+  weightType     String?  @default("lb")
+  location       String?
+  notes          String?
+  createdBy      Int?
+  updatedBy      Int?
+  isDeleted      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([companyId])
+  @@index([trackingNumber])
+}
+
+model Quote {
+  id          Int       @id @default(autoincrement())
+  quoteNumber String?   @unique
+  name        String?
+  service     String?
+  transportMode String?
+  status      String?
+  totalCost   Float?
+  totalProfit Float?
+  expiryDate  DateTime?
+  totalMiles  Float?
+  companyId   Int?
+  contactId   Int?
+  createdBy   Int?
+  updatedBy   Int?
+  isDeleted   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  stops        Stop[]
+  accessorials Accessorial[]
+  cargoDetail  CargoDetail?
+
+  @@index([companyId])
+  @@index([contactId])
+}
+
+model Stop {
+  id       Int      @id @default(autoincrement())
+  type     String?
+  city     String?
+  zipcode  String?
+  state    String?
+  country  String?
+  miles    Float?
+  quoteId  Int
+  quote    Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Accessorial {
+  id                 Int      @id @default(autoincrement())
+  name               String?
+  quantity           Float?
+  rate               Float?
+  totalRate          Float?
+  isIncludeInCharges Boolean? @default(false)
+  description        String?
+  quoteId            Int
+  quote              Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model CargoDetail {
+  id            Int      @id @default(autoincrement())
+  equipmentId   Int?
+  commodityId   Int?
+  cargoTypeId   Int?
+  weight        Float?
+  cargoValue    Float?
+  temperature   Float?
+  pieces        Int?
+  isHazmat      Boolean? @default(false)
+  hazmatName    String?
+  hazmatClass   String?
+  hazmatUN      String?
+  status        String?
+  comments      String?
+  quoteId       Int      @unique
+  quote         Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  createdBy     Int?
+  updatedBy     Int?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Task {
+  id               Int       @id @default(autoincrement())
+  type             String?
+  subject          String?
+  description      String?
+  priority         String?
+  dueDateTime      DateTime?
+  reminderDateTime DateTime?
+  category         String?
+  status           String?
+  assignedTo       Int?
+  pointOfContact   Int?
+  quoteId          Int?
+  companyId        Int?
+  inventoryId      Int?
+  userId           Int?
+  createdBy        Int?
+  updatedBy        Int?
+  isDeleted        Boolean   @default(false)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([companyId])
+  @@index([quoteId])
+  @@index([userId])
+}
+
+model Note {
+  id          Int       @id @default(autoincrement())
+  type        String?
+  title       String?
+  message     String?
+  isCritical  Boolean?  @default(false)
+  quoteId     Int?
+  contactId   Int?
+  companyId   Int?
+  inventoryId Int?
+  userId      Int?
+  createdBy   Int?
+  updatedBy   Int?
+  isDeleted   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([companyId])
+  @@index([quoteId])
+  @@index([userId])
+}
+
+model Email {
+  id          Int       @id @default(autoincrement())
+  type        String?
+  title       String?
+  message     String?
+  toEmail     String?
+  fromEmail   String?
+  isCritical  Boolean?  @default(false)
+  quoteId     Int?
+  contactId   Int?
+  companyId   Int?
+  inventoryId Int?
+  userId      Int?
+  createdBy   Int?
+  updatedBy   Int?
+  isDeleted   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([companyId])
+  @@index([quoteId])
+  @@index([userId])
+}
+
+model Equipment {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("equipments")
+}
+
+model CargoType {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("cargo_types")
+}
+
+model Commodity {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("commodities")
+}

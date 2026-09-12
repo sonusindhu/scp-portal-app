@@ -21,7 +21,7 @@ const QuoteEmails = () => {
   useEffect(() => {
     if (id) {
       EmailService.list({ quoteId: id }).then((response) =>
-        setEmails(response.result || [])
+        setEmails(response.data || [])
       );
     }
   }, []);

@@ -44,6 +44,34 @@ export interface CompanyUpdatePayload extends CompanyCreatePayload {
   id: number;
 }
 
+const toNumberOrUndefined = (value: number | string | null | undefined): number | undefined => {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+};
+
+const normalizeCompanyPayload = (
+  payload: Partial<CompanyCreatePayload> & {
+    id?: number | string | null;
+    mainContactId?: number | string | null;
+    employeesCount?: number | string | null;
+    revenue?: number | string | null;
+    createdBy?: number | string | null;
+    updatedBy?: number | string | null;
+  }
+) => ({
+  ...payload,
+  id: toNumberOrUndefined(payload.id),
+  employeesCount: toNumberOrUndefined(payload.employeesCount),
+  revenue: toNumberOrUndefined(payload.revenue),
+  mainContactId: toNumberOrUndefined(payload.mainContactId),
+  createdBy: toNumberOrUndefined(payload.createdBy),
+  updatedBy: toNumberOrUndefined(payload.updatedBy),
+});
+
 /**
  * Company Service - handles all company-related API operations
  * Extends BaseService for common HTTP methods and error handling
@@ -65,7 +93,8 @@ class CompanyService extends BaseService {
    * @returns Promise with created company
    */
   async create(payload: CompanyCreatePayload): Promise<ApiResponse<Company>> {
-    return this.post<Company>("company/create", payload, {
+    const normalizedPayload = normalizeCompanyPayload(payload as any);
+    return this.post<Company>("company/create", normalizedPayload, {
       showSuccessToast: true,
     });
   }
@@ -76,7 +105,8 @@ class CompanyService extends BaseService {
    * @returns Promise with updated company
    */
   async update(payload: CompanyUpdatePayload): Promise<ApiResponse<Company>> {
-    return this.post<Company>("company/update", payload, {
+    const normalizedPayload = normalizeCompanyPayload(payload as any);
+    return this.post<Company>("company/update", normalizedPayload, {
       showSuccessToast: true,
     });
   }

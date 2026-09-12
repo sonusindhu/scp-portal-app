@@ -82,7 +82,8 @@ const UserProfileImage = (props) => {
 
   const { handleSubmit } = useFormSubmit({
     onSuccess: (response) => {
-      const img = `${API_URL}user-images/${response?.result?.userImage}`;
+      const userImageValue = response?.data?.userImage;
+      const img = `${API_URL}user-images/${userImageValue}`;
       setUserImage(img);
       setIsLoading(false);
       handleClose();
