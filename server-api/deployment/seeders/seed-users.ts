@@ -19,6 +19,16 @@ const seedUsersData = [
 ];
 
 export async function seedUsers() {
+  if (process.env.SKIP_SEED === 'true') {
+    logger.info('User seed skipped because SKIP_SEED=true');
+    return { created: 0, skipped: seedUsersData.length };
+  }
+
+  if (!process.env.DATABASE_URL) {
+    logger.warn('User seed skipped because DATABASE_URL is not configured');
+    return { created: 0, skipped: seedUsersData.length };
+  }
+
   const created: string[] = [];
   const skipped: string[] = [];
 

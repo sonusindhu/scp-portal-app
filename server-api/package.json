@@ -12,7 +12,10 @@
     "seed:users": "tsx deployment/seeders/seed-users.ts --run",
     "prisma:merge": "node prisma/merge-schema.mjs",
     "prisma:generate": "pnpm prisma:merge && prisma generate",
-    "prisma:migrate": "pnpm prisma:merge && prisma migrate dev",
+    "prisma:migrate:dev": "pnpm prisma:merge && prisma migrate dev",
+    "prisma:migrate": "pnpm prisma:merge && prisma migrate deploy",
+    "db:prepare": "npm run prisma:generate && npm run prisma:migrate && npm run seed:users",
+    "prestart": "npm run db:prepare",
     "migration:status": "node deployment/migration/migration-status.mjs"
   },
   "dependencies": {
