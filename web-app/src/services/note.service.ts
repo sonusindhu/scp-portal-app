@@ -1,4 +1,5 @@
 import BaseService, { ApiResponse } from "./BaseService";
+import { API_ENDPOINTS } from "../constants/api.constants";
 import { Note } from "../shared/models/Note";
 
 /**
@@ -30,7 +31,7 @@ class NoteService extends BaseService {
    * @returns Promise with list of notes
    */
   async list(filters = {}): Promise<ApiResponse<Note[]>> {
-    return this.post<Note[]>("note/list", filters);
+    return this.post<Note[]>(API_ENDPOINTS.NOTE.LIST, filters);
   }
 
   /**
@@ -39,7 +40,7 @@ class NoteService extends BaseService {
    * @returns Promise with note details
    */
   async find(id: number): Promise<ApiResponse<Note>> {
-    return super.get<Note>(`note/find/${id}`);
+    return super.get<Note>(API_ENDPOINTS.NOTE.FIND(id));
   }
 
   /**
@@ -48,7 +49,7 @@ class NoteService extends BaseService {
    * @returns Promise with created note
    */
   async create(payload: NoteCreatePayload): Promise<ApiResponse<Note>> {
-    return this.post<Note>("note/create", payload, {
+    return this.post<Note>(API_ENDPOINTS.NOTE.CREATE, payload, {
       showSuccessToast: true,
     });
   }
@@ -59,7 +60,7 @@ class NoteService extends BaseService {
    * @returns Promise with updated note
    */
   async update(payload: NoteUpdatePayload): Promise<ApiResponse<Note>> {
-    return this.post<Note>("note/update", payload, {
+    return this.post<Note>(API_ENDPOINTS.NOTE.UPDATE, payload, {
       showSuccessToast: true,
     });
   }
@@ -70,7 +71,7 @@ class NoteService extends BaseService {
    * @returns Promise with deletion result
    */
   async deleteRange(ids: number[]): Promise<ApiResponse<void>> {
-    return this.post<void>("note/deleteRange", { ids }, {
+    return this.post<void>(API_ENDPOINTS.NOTE.DELETE, { ids }, {
       showSuccessToast: true,
     });
   }

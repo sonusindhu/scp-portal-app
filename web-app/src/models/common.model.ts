@@ -4,7 +4,6 @@ export interface ResponseModel {
     data?: any;
     meta?: Record<string, unknown>;
     error?: any;
-    result?: any;
 }
 
 export interface ErrorModel {

@@ -79,7 +79,7 @@ class ContactService extends BaseService {
    * @returns Promise with updated contact
    */
   async update(payload: any): Promise<ApiResponse<Contact>> {
-    return this.post<Contact>("contact/update", payload, {
+    return this.post<Contact>(API_ENDPOINTS.CONTACT.UPDATE, payload, {
       showSuccessToast: true,
     });
   }

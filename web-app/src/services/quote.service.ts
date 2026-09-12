@@ -1,4 +1,5 @@
 import BaseService, { ApiResponse } from "./BaseService";
+import { API_ENDPOINTS } from "../constants/api.constants";
 
 /**
  * Quote data model
@@ -28,7 +29,7 @@ class QuoteService extends BaseService {
    * @returns Promise with quote details
    */
   async find(id: number): Promise<ApiResponse<Quote>> {
-    const response = await this.get<Quote>(`quote/find/${id}`);
+    const response = await this.get<Quote>(API_ENDPOINTS.QUOTE.FIND(id));
     
     // Transform cargo detail to handle undefined values
     if (response.data?.cargoDetail) {
@@ -49,7 +50,7 @@ class QuoteService extends BaseService {
    * @returns Promise with created quote
    */
   async create(payload: any): Promise<ApiResponse<Quote>> {
-    return this.post<Quote>("quote/create", payload, {
+    return this.post<Quote>(API_ENDPOINTS.QUOTE.CREATE, payload, {
       showSuccessToast: true,
     });
   }
@@ -60,7 +61,7 @@ class QuoteService extends BaseService {
    * @returns Promise with updated quote
    */
   async update(payload: any): Promise<ApiResponse<Quote>> {
-    return this.post<Quote>("quote/update", payload, {
+    return this.post<Quote>(API_ENDPOINTS.QUOTE.UPDATE, payload, {
       showSuccessToast: true,
     });
   }
@@ -71,7 +72,7 @@ class QuoteService extends BaseService {
    * @returns Promise with deletion result
    */
   async deleteRange(ids: number[]): Promise<ApiResponse<void>> {
-    return this.post<void>("quote/deleteRange", { ids }, {
+    return this.post<void>(API_ENDPOINTS.QUOTE.DELETE, { ids }, {
       showSuccessToast: true,
     });
   }
@@ -81,7 +82,7 @@ class QuoteService extends BaseService {
    * @returns Promise with companies list
    */
   async getCompanies(): Promise<ApiResponse<any[]>> {
-    return this.get<any[]>("quote/getCompanies");
+    return this.get<any[]>(API_ENDPOINTS.QUOTE.GET_COMPANIES);
   }
 
   /**
@@ -90,7 +91,7 @@ class QuoteService extends BaseService {
    * @returns Promise with contacts list
    */
   async getContactsByCompany(id: number): Promise<ApiResponse<any[]>> {
-    return this.get<any[]>(`quote/getContactsByCompany/${id}`);
+    return this.get<any[]>(API_ENDPOINTS.QUOTE.GET_CONTACTS_BY_COMPANY(id));
   }
 
   /**
@@ -98,7 +99,7 @@ class QuoteService extends BaseService {
    * @returns Promise with equipments
    */
   async getEquipments(): Promise<ApiResponse<any[]>> {
-    return this.get<any[]>("common/getEquipments");
+    return this.get<any[]>(API_ENDPOINTS.COMMON.EQUIPMENTS);
   }
 
   /**
@@ -106,7 +107,7 @@ class QuoteService extends BaseService {
    * @returns Promise with commodities
    */
   async getCommodities(): Promise<ApiResponse<any[]>> {
-    return this.get<any[]>("common/getCommodities");
+    return this.get<any[]>(API_ENDPOINTS.COMMON.COMMODITIES);
   }
 
   /**
@@ -114,7 +115,7 @@ class QuoteService extends BaseService {
    * @returns Promise with cargos
    */
   async getCargos(): Promise<ApiResponse<any[]>> {
-    return this.get<any[]>("common/getCargos");
+    return this.get<any[]>(API_ENDPOINTS.COMMON.CARGOS);
   }
 
   /**
@@ -123,7 +124,7 @@ class QuoteService extends BaseService {
    * @returns Promise with created note
    */
   async createNote(payload: any): Promise<ApiResponse<any>> {
-    return this.post<any>("quote/createNote", payload, {
+    return this.post<any>(API_ENDPOINTS.QUOTE.CREATE_NOTE, payload, {
       showSuccessToast: true,
     });
   }
@@ -135,7 +136,7 @@ class QuoteService extends BaseService {
    * @returns Promise with notes list
    */
   async getNotes(id: number, filter?: any): Promise<any[]> {
-    const response = await this.post<any[]>(`quote/${id}/notes`, { ...filter });
+    const response = await this.post<any[]>(API_ENDPOINTS.QUOTE.NOTES(id), { ...filter });
     return response.data || [];
   }
 
@@ -145,7 +146,7 @@ class QuoteService extends BaseService {
    * @returns Promise with created task
    */
   async createTask(payload: any): Promise<ApiResponse<any>> {
-    return this.post<any>("quote/createTask", payload, {
+    return this.post<any>(API_ENDPOINTS.QUOTE.CREATE_TASK, payload, {
       showSuccessToast: true,
     });
   }
@@ -157,7 +158,7 @@ class QuoteService extends BaseService {
    * @returns Promise with tasks list
    */
   async getTasks(id: string, filter?: any): Promise<any[]> {
-    const response = await this.post<any[]>(`quote/${id}/tasks`, { ...filter });
+    const response = await this.post<any[]>(API_ENDPOINTS.QUOTE.TASKS(id), { ...filter });
     return response.data || [];
   }
 
@@ -167,7 +168,7 @@ class QuoteService extends BaseService {
    * @returns Promise with created email
    */
   async createEmail(payload: any): Promise<ApiResponse<any>> {
-    return this.post<any>("quote/createEmail", payload, {
+    return this.post<any>(API_ENDPOINTS.QUOTE.CREATE_EMAIL, payload, {
       showSuccessToast: true,
     });
   }
@@ -179,7 +180,7 @@ class QuoteService extends BaseService {
    * @returns Promise with emails list
    */
   async getEmails(id: number, filter?: any): Promise<any[]> {
-    const response = await this.post<any[]>(`quote/${id}/emails`, { ...filter });
+    const response = await this.post<any[]>(API_ENDPOINTS.QUOTE.EMAILS(id), { ...filter });
     return response.data || [];
   }
 
@@ -190,7 +191,7 @@ class QuoteService extends BaseService {
    * @returns Promise with email details
    */
   async getEmailById(id: number, emailId: number): Promise<any> {
-    const response = await this.get<any>(`quote/${id}/getEmailById/${emailId}`);
+    const response = await this.get<any>(API_ENDPOINTS.QUOTE.EMAIL_BY_ID(id, emailId));
     return response.data;
   }
 }
