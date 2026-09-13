@@ -19,6 +19,10 @@ vi.mock('../../config/database.js', () => ({
       findUnique: vi.fn(),
       count: vi.fn(),
     },
+    user: {
+      findMany: vi.fn(),
+      findUnique: vi.fn(),
+    },
   },
 }));
 
@@ -138,6 +142,61 @@ describe('contact module', () => {
         expect.objectContaining({ email: 'jane@example.com' }),
       ])
     );
+  });
+
+  it('should enrich list items with company and user names', async () => {
+    const app = createApp();
+    const token = buildToken();
+
+    vi.mocked(prisma.contact.findMany).mockResolvedValue([
+      {
+        id: 1,
+        firstName: 'Jane',
+        lastName: 'Doe',
+        fullName: 'Jane Doe',
+        email: 'jane@example.com',
+        companyId: 5,
+        status: 'active',
+        department: 'Sales',
+        jobTitle: 'Account Manager',
+        phone: '1234567890',
+        extension: null,
+        address1: null,
+        address2: null,
+        city: null,
+        zipcode: null,
+        state: null,
+        country: null,
+        birthDate: null,
+        isDeleted: false,
+        createdBy: 1,
+        updatedBy: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ] as any);
+
+    vi.mocked(prisma.contact.count).mockResolvedValue(1);
+    vi.mocked(prisma.company.findMany).mockResolvedValue([{ id: 5, name: 'Acme Corp' }] as any);
+    vi.mocked(prisma.user.findMany).mockResolvedValue([
+      { id: 1, firstName: 'System', lastName: 'Admin', fullName: 'System Admin' },
+      { id: 2, firstName: 'Demo', lastName: 'User', fullName: 'Demo User' },
+    ] as any);
+
+    const response = await request(app)
+      .post('/api/contact/list')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        skip: 0,
+        take: 20,
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body.data[0]).toMatchObject({
+      companyName: 'Acme Corp',
+      createdByName: 'System Admin',
+      updatedByName: 'Demo User',
+    });
   });
 
   it('should delete multiple contacts when authenticated', async () => {

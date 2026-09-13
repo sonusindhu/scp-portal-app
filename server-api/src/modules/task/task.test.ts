@@ -14,6 +14,15 @@ vi.mock('../../config/database.js', () => ({
       update: vi.fn(),
       delete: vi.fn(),
     },
+    company: {
+      findMany: vi.fn(),
+    },
+    contact: {
+      findMany: vi.fn(),
+    },
+    user: {
+      findMany: vi.fn(),
+    },
   },
 }));
 
@@ -95,6 +104,8 @@ describe('task module', () => {
     ]);
 
     prismaMock.task.count.mockResolvedValue(1);
+    prismaMock.company.findMany.mockResolvedValue([{ id: 7, name: 'Acme Corp' }]);
+    prismaMock.user.findMany.mockResolvedValue([{ id: 1, firstName: 'System', lastName: 'Admin', fullName: 'System Admin' }]);
 
     const createResponse = await request(app)
       .post('/api/task/create')

@@ -1,5 +1,5 @@
 import { prisma } from '../../config/database.js';
-import { buildFilterWhere, parseSortValue } from '../../common/utils/list-query.js';
+import { buildFilterWhere, enrichListItems, parseSortValue } from '../../common/utils/list-query.js';
 
 export class CompanyRepository {
   async findById(id: number) {
@@ -52,7 +52,17 @@ export class CompanyRepository {
       prisma.company.count({ where }),
     ]);
 
-    return { items, total };
+    const hydratedItems = await enrichListItems(items, {
+      user: {
+        ids: items.flatMap((item) => [item.createdBy, item.updatedBy]),
+        fetch: () => prisma.user.findMany({
+          where: { id: { in: items.flatMap((item) => [item.createdBy, item.updatedBy]).filter((id): id is number => id != null) } },
+          select: { id: true, firstName: true, lastName: true, fullName: true },
+        }),
+      },
+    });
+
+    return { items: hydratedItems, total };
   }
 
   async create(data: {

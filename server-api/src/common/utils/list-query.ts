@@ -141,3 +141,82 @@ export const buildFilterWhere = (filterValue?: any): Record<string, any> | undef
 
   return walk(filterValue);
 };
+
+const normalizeUserDisplayName = (user?: { firstName?: string | null; lastName?: string | null; fullName?: string | null } | null) => {
+  if (!user) return null;
+  if (user.fullName) return user.fullName;
+  const name = [user.firstName, user.lastName].filter(Boolean).join(' ').trim();
+  return name || null;
+};
+
+type EnrichedListFields = {
+  companyName?: string | null;
+  contactName?: string | null;
+  createdByName?: string | null;
+  updatedByName?: string | null;
+};
+
+type EnrichableListItem = Record<string, any> & {
+  companyId?: number | null;
+  contactId?: number | null;
+  createdBy?: number | null;
+  updatedBy?: number | null;
+};
+
+export const enrichListItems = async <T extends EnrichableListItem>(
+  items: T[],
+  lookups?: {
+    company?: { ids: Array<number | null | undefined>; fetch: () => Promise<Array<{ id: number; name?: string | null }>> };
+    contact?: { ids: Array<number | null | undefined>; fetch: () => Promise<Array<{ id: number; fullName?: string | null }>> };
+    user?: { ids: Array<number | null | undefined>; fetch: () => Promise<Array<{ id: number; firstName?: string | null; lastName?: string | null; fullName?: string | null }>> };
+  },
+): Promise<Array<T & EnrichedListFields>> => {
+  if (!items.length) return items as Array<T & EnrichedListFields>;
+
+  const isValidLookupId = (id: number | null | undefined): id is number => typeof id === 'number' && Number.isFinite(id);
+
+  const companyIds = [...new Set((lookups?.company?.ids ?? []).filter(isValidLookupId))];
+  const contactIds = [...new Set((lookups?.contact?.ids ?? []).filter(isValidLookupId))];
+  const userIds = [...new Set((lookups?.user?.ids ?? []).filter(isValidLookupId))];
+
+  const resolveLookup = async <R>(loader?: () => Promise<R[]>) => {
+    if (!loader) return [] as R[];
+    try {
+      return await loader();
+    } catch {
+      return [] as R[];
+    }
+  };
+
+  const [companyEntries, contactEntries, userEntries] = await Promise.all([
+    resolveLookup(lookups?.company && companyIds.length ? lookups.company.fetch : undefined),
+    resolveLookup(lookups?.contact && contactIds.length ? lookups.contact.fetch : undefined),
+    resolveLookup(lookups?.user && userIds.length ? lookups.user.fetch : undefined),
+  ]);
+
+  const companyMap = new Map(companyEntries.map((company) => [company.id, company.name ?? null]));
+  const contactMap = new Map(contactEntries.map((contact) => [contact.id, contact.fullName ?? null]));
+  const userMap = new Map(userEntries.map((user) => [user.id, normalizeUserDisplayName(user)]));
+
+  return items.map((item): T & EnrichedListFields => {
+    const nextItem: T & EnrichedListFields = { ...item };
+
+    if (item.companyId != null) {
+      nextItem.companyName = companyMap.get(Number(item.companyId)) ?? null;
+    }
+
+    if (item.contactId != null) {
+      nextItem.contactName = contactMap.get(Number(item.contactId)) ?? null;
+    }
+
+    if (item.createdBy != null) {
+      nextItem.createdByName = userMap.get(Number(item.createdBy)) ?? null;
+    }
+
+    if (item.updatedBy != null) {
+      nextItem.updatedByName = userMap.get(Number(item.updatedBy)) ?? null;
+    }
+
+    return nextItem;
+  });
+};
