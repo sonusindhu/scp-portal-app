@@ -51,13 +51,34 @@ const NoteForm = (props: NoteProps) => {
 
   const handleSubmitForm = async (data) => {
     if (!data.title || !data.message) return;
+
     const payload = {
       ...data,
-      isCritical: data.isCritical || false,
+      isCritical: Boolean(data.isCritical),
       id: props.id,
-      type: note?.type,
-      companyId: note?.companyId,
+      type: note?.type ?? data.type,
+      companyId:
+        data.companyId === "" || data.companyId === undefined
+          ? note?.companyId
+          : Number(data.companyId),
+      quoteId:
+        data.quoteId === "" || data.quoteId === undefined
+          ? undefined
+          : Number(data.quoteId),
+      contactId:
+        data.contactId === "" || data.contactId === undefined
+          ? undefined
+          : Number(data.contactId),
+      inventoryId:
+        data.inventoryId === "" || data.inventoryId === undefined
+          ? undefined
+          : Number(data.inventoryId),
+      userId:
+        data.userId === "" || data.userId === undefined
+          ? undefined
+          : Number(data.userId),
     };
+
     await handleFormSubmit(() => NoteService.create(payload));
   };
 

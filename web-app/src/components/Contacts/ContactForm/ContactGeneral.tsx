@@ -46,7 +46,12 @@ const ContactGeneral = () => {
   });
 
   const handleSubmitForm = async (data) => {
-    await handleSubmit(() => ContactService.update(data));
+    const payload = {
+      ...data,
+      companyId: data.companyId === "" || data.companyId === undefined ? undefined : Number(data.companyId),
+    };
+
+    await handleSubmit(() => ContactService.update(payload));
   };
 
   const getCompanies = async () => {

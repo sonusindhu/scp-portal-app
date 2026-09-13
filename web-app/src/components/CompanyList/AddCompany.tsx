@@ -27,7 +27,13 @@ const AddCompany = (props) => {
   });
 
   const handleSubmitForm = async (data) => {
-    await handleSubmit(() => CompanyService.create(data));
+    const payload = {
+      ...data,
+      employeesCount: data.employeesCount === "" || data.employeesCount === undefined ? undefined : Number(data.employeesCount),
+      revenue: data.revenue === "" || data.revenue === undefined ? undefined : Number(data.revenue),
+    };
+
+    await handleSubmit(() => CompanyService.create(payload));
   };
 
   return (

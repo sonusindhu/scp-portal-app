@@ -28,7 +28,16 @@ const InventoryGeneral = () => {
   });
 
   const handleSubmitForm = async (data) => {
-    await handleSubmit(() => InventoryService.update(data));
+    const payload = {
+      ...data,
+      companyId: Number(data.companyId) || undefined,
+      length: data.length === "" || data.length === undefined ? undefined : Number(data.length),
+      width: data.width === "" || data.width === undefined ? undefined : Number(data.width),
+      height: data.height === "" || data.height === undefined ? undefined : Number(data.height),
+      weight: data.weight === "" || data.weight === undefined ? undefined : Number(data.weight),
+    };
+
+    await handleSubmit(() => InventoryService.update(payload));
   };
 
   // check if user is authenticated, if not redirect to login page

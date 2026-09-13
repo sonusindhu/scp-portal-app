@@ -40,9 +40,30 @@ const EmailForm = (props: EmailFormProps) => {
   const handleSubmitForm = (e) => {
     const payload = {
       ...e,
-      isCritical: e.isCritical || false,
+      isCritical: Boolean(e.isCritical),
       id: props.id,
+      companyId:
+        e.companyId === "" || e.companyId === undefined
+          ? undefined
+          : Number(e.companyId),
+      contactId:
+        e.contactId === "" || e.contactId === undefined
+          ? undefined
+          : Number(e.contactId),
+      inventoryId:
+        e.inventoryId === "" || e.inventoryId === undefined
+          ? undefined
+          : Number(e.inventoryId),
+      quoteId:
+        e.quoteId === "" || e.quoteId === undefined
+          ? undefined
+          : Number(e.quoteId),
+      userId:
+        e.userId === "" || e.userId === undefined
+          ? undefined
+          : Number(e.userId),
     };
+
     EmailService.create(payload)
       .then((response) => handleSuccess(response))
       .catch(({ response }) => toast.error(response.message));
