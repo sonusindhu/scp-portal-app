@@ -1,4 +1,5 @@
 import { prisma } from '../../config/database.js';
+import { buildFilterWhere, parseSortValue } from '../../common/utils/list-query.js';
 
 export class ContactRepository {
   async findById(id: number) {
@@ -19,19 +20,32 @@ export class ContactRepository {
     });
   }
 
-  async list({ skip = 0, take = 20, orderBy = 'createdAt', sortDirection = 'desc' }: {
+  async list({
+    skip = 0,
+    take = 20,
+    orderBy = 'createdAt',
+    sortDirection = 'desc',
+    filter,
+    sort,
+  }: {
     skip?: number;
     take?: number;
     orderBy?: string;
     sortDirection?: 'asc' | 'desc';
+    filter?: any;
+    sort?: string[];
   }) {
+    const parsedSort = parseSortValue(sort, orderBy, sortDirection);
+    const where = buildFilterWhere(filter);
+
     const [items, total] = await Promise.all([
       prisma.contact.findMany({
+        where,
         skip,
         take,
-        orderBy: { [orderBy]: sortDirection },
+        orderBy: { [parsedSort.field]: parsedSort.direction },
       }),
-      prisma.contact.count(),
+      prisma.contact.count({ where }),
     ]);
 
     return { items, total };

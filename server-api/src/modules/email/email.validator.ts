@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { listQuerySchema } from '../../common/utils/list-query.js';
 
 export const createEmailSchema = z.object({
   type: z.string().max(20).optional().nullable(),
@@ -17,9 +18,4 @@ export const createEmailSchema = z.object({
   isDeleted: z.boolean().optional(),
 });
 
-export const emailListQuerySchema = z.object({
-  skip: z.number().int().min(0).optional(),
-  take: z.number().int().min(1).max(100).optional(),
-  orderBy: z.string().optional(),
-  sortDirection: z.enum(['asc', 'desc']).optional(),
-});
+export const emailListQuerySchema = listQuerySchema;

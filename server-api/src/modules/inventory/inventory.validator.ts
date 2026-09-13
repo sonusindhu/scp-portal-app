@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { listQuerySchema } from '../../common/utils/list-query.js';
 
 export const createInventorySchema = z.object({
   trackingNumber: z.string().min(1).max(50),
@@ -20,9 +21,4 @@ export const createInventorySchema = z.object({
   packageId: z.string().max(50).optional().nullable(),
 });
 
-export const inventoryListQuerySchema = z.object({
-  skip: z.number().int().min(0).optional(),
-  take: z.number().int().min(1).max(100).optional(),
-  orderBy: z.string().optional(),
-  sortDirection: z.enum(['asc', 'desc']).optional(),
-});
+export const inventoryListQuerySchema = listQuerySchema;
