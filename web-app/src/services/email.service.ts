@@ -16,6 +16,53 @@ export interface EmailCreatePayload {
   isCritical?: boolean;
 }
 
+const toNumberOrUndefined = (value: number | string | null | undefined): number | undefined => {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+};
+
+const normalizeEmailPayload = (payload: Record<string, any>): Record<string, any> => {
+  const normalized = { ...payload };
+
+  if (normalized.id !== undefined) {
+    normalized.id = toNumberOrUndefined(normalized.id);
+  }
+
+  if (normalized.companyId !== undefined) {
+    normalized.companyId = toNumberOrUndefined(normalized.companyId);
+  }
+
+  if (normalized.contactId !== undefined) {
+    normalized.contactId = toNumberOrUndefined(normalized.contactId);
+  }
+
+  if (normalized.inventoryId !== undefined) {
+    normalized.inventoryId = toNumberOrUndefined(normalized.inventoryId);
+  }
+
+  if (normalized.quoteId !== undefined) {
+    normalized.quoteId = toNumberOrUndefined(normalized.quoteId);
+  }
+
+  if (normalized.userId !== undefined) {
+    normalized.userId = toNumberOrUndefined(normalized.userId);
+  }
+
+  if (normalized.createdBy !== undefined) {
+    normalized.createdBy = toNumberOrUndefined(normalized.createdBy);
+  }
+
+  if (normalized.updatedBy !== undefined) {
+    normalized.updatedBy = toNumberOrUndefined(normalized.updatedBy);
+  }
+
+  return normalized;
+};
+
 /**
  * Email update payload
  */
@@ -52,7 +99,8 @@ class EmailService extends BaseService {
    * @returns Promise with created email
    */
   async create(payload: EmailCreatePayload): Promise<ApiResponse<Email>> {
-    return this.post<Email>(API_ENDPOINTS.EMAIL.CREATE, payload, {
+    const normalizedPayload = normalizeEmailPayload(payload as Record<string, any>);
+    return this.post<Email>(API_ENDPOINTS.EMAIL.CREATE, normalizedPayload, {
       showSuccessToast: true,
     });
   }
@@ -63,7 +111,8 @@ class EmailService extends BaseService {
    * @returns Promise with updated email
    */
   async update(payload: EmailUpdatePayload): Promise<ApiResponse<Email>> {
-    return this.post<Email>(API_ENDPOINTS.EMAIL.UPDATE, payload, {
+    const normalizedPayload = normalizeEmailPayload(payload as Record<string, any>);
+    return this.post<Email>(API_ENDPOINTS.EMAIL.UPDATE, normalizedPayload, {
       showSuccessToast: true,
     });
   }

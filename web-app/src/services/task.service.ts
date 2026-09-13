@@ -17,6 +17,57 @@ export interface TaskCreatePayload {
   status?: number;
 }
 
+const toNumberOrUndefined = (value: number | string | null | undefined): number | undefined => {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+};
+
+const normalizeTaskPayload = (payload: Record<string, any>): Record<string, any> => {
+  const normalized = { ...payload };
+
+  if (normalized.id !== undefined) {
+    normalized.id = toNumberOrUndefined(normalized.id);
+  }
+
+  if (normalized.assignedTo !== undefined) {
+    normalized.assignedTo = toNumberOrUndefined(normalized.assignedTo);
+  }
+
+  if (normalized.pointOfContact !== undefined) {
+    normalized.pointOfContact = toNumberOrUndefined(normalized.pointOfContact);
+  }
+
+  if (normalized.quoteId !== undefined) {
+    normalized.quoteId = toNumberOrUndefined(normalized.quoteId);
+  }
+
+  if (normalized.companyId !== undefined) {
+    normalized.companyId = toNumberOrUndefined(normalized.companyId);
+  }
+
+  if (normalized.inventoryId !== undefined) {
+    normalized.inventoryId = toNumberOrUndefined(normalized.inventoryId);
+  }
+
+  if (normalized.userId !== undefined) {
+    normalized.userId = toNumberOrUndefined(normalized.userId);
+  }
+
+  if (normalized.createdBy !== undefined) {
+    normalized.createdBy = toNumberOrUndefined(normalized.createdBy);
+  }
+
+  if (normalized.updatedBy !== undefined) {
+    normalized.updatedBy = toNumberOrUndefined(normalized.updatedBy);
+  }
+
+  return normalized;
+};
+
 /**
  * Task update payload
  */
@@ -53,7 +104,8 @@ class TaskService extends BaseService {
    * @returns Promise with created task
    */
   async create(payload: TaskCreatePayload): Promise<ApiResponse<Task>> {
-    return this.post<Task>(API_ENDPOINTS.TASK.CREATE, payload, {
+    const normalizedPayload = normalizeTaskPayload(payload as Record<string, any>);
+    return this.post<Task>(API_ENDPOINTS.TASK.CREATE, normalizedPayload, {
       showSuccessToast: true,
     });
   }
@@ -64,7 +116,8 @@ class TaskService extends BaseService {
    * @returns Promise with updated task
    */
   async update(payload: TaskUpdatePayload): Promise<ApiResponse<Task>> {
-    return this.post<Task>(API_ENDPOINTS.TASK.UPDATE, payload, {
+    const normalizedPayload = normalizeTaskPayload(payload as Record<string, any>);
+    return this.post<Task>(API_ENDPOINTS.TASK.UPDATE, normalizedPayload, {
       showSuccessToast: true,
     });
   }

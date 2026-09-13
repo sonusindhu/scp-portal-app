@@ -13,6 +13,53 @@ export interface NoteCreatePayload {
   companyId?: number;
 }
 
+const toNumberOrUndefined = (value: number | string | null | undefined): number | undefined => {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+};
+
+const normalizeNotePayload = (payload: Record<string, any>): Record<string, any> => {
+  const normalized = { ...payload };
+
+  if (normalized.id !== undefined) {
+    normalized.id = toNumberOrUndefined(normalized.id);
+  }
+
+  if (normalized.companyId !== undefined) {
+    normalized.companyId = toNumberOrUndefined(normalized.companyId);
+  }
+
+  if (normalized.quoteId !== undefined) {
+    normalized.quoteId = toNumberOrUndefined(normalized.quoteId);
+  }
+
+  if (normalized.contactId !== undefined) {
+    normalized.contactId = toNumberOrUndefined(normalized.contactId);
+  }
+
+  if (normalized.inventoryId !== undefined) {
+    normalized.inventoryId = toNumberOrUndefined(normalized.inventoryId);
+  }
+
+  if (normalized.userId !== undefined) {
+    normalized.userId = toNumberOrUndefined(normalized.userId);
+  }
+
+  if (normalized.createdBy !== undefined) {
+    normalized.createdBy = toNumberOrUndefined(normalized.createdBy);
+  }
+
+  if (normalized.updatedBy !== undefined) {
+    normalized.updatedBy = toNumberOrUndefined(normalized.updatedBy);
+  }
+
+  return normalized;
+};
+
 /**
  * Payload for updating an existing note
  */
@@ -49,7 +96,8 @@ class NoteService extends BaseService {
    * @returns Promise with created note
    */
   async create(payload: NoteCreatePayload): Promise<ApiResponse<Note>> {
-    return this.post<Note>(API_ENDPOINTS.NOTE.CREATE, payload, {
+    const normalizedPayload = normalizeNotePayload(payload as Record<string, any>);
+    return this.post<Note>(API_ENDPOINTS.NOTE.CREATE, normalizedPayload, {
       showSuccessToast: true,
     });
   }
@@ -60,7 +108,8 @@ class NoteService extends BaseService {
    * @returns Promise with updated note
    */
   async update(payload: NoteUpdatePayload): Promise<ApiResponse<Note>> {
-    return this.post<Note>(API_ENDPOINTS.NOTE.UPDATE, payload, {
+    const normalizedPayload = normalizeNotePayload(payload as Record<string, any>);
+    return this.post<Note>(API_ENDPOINTS.NOTE.UPDATE, normalizedPayload, {
       showSuccessToast: true,
     });
   }
