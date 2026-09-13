@@ -45,6 +45,17 @@ describe('list-query utils', () => {
     });
   });
 
+  it('coerces numeric filter values to numbers for Prisma numeric fields', () => {
+    const filter = {
+      logic: 'and',
+      filters: [{ field: 'companyId', operator: 'eq', value: '10' }],
+    };
+
+    expect(buildFilterWhere(filter)).toEqual({
+      AND: [{ companyId: 10 }],
+    });
+  });
+
   it('accepts the canonical grid list query payload shape', () => {
     const payload = {
       skip: 0,

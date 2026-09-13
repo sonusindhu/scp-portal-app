@@ -57,6 +57,36 @@ export const parseSortValue = (
   };
 };
 
+const coerceFilterValue = (field: string, value: any, operator?: string) => {
+  if (value === null || value === undefined || value === '') return value;
+
+  const numericOperators = ['eq', 'neq', 'gt', 'gte', 'lt', 'lte', 'in', 'notin'];
+  const isNumericField = /(?:^|[A-Z])Id$|(?:^|[A-Z])Count$|^(?:skip|take|page|count|total|amount|price|cost|quantity|miles|year|month|day)$/i.test(field);
+
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    const numericLike = /^-?\d+(?:\.\d+)?$/.test(trimmed);
+    if ((numericOperators.includes(operator ?? '') || isNumericField) && numericLike) {
+      return Number(trimmed);
+    }
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item) => {
+      if (typeof item === 'string') {
+        const trimmed = item.trim();
+        return (numericOperators.includes(operator ?? '') || isNumericField) && /^-?\d+(?:\.\d+)?$/.test(trimmed)
+          ? Number(trimmed)
+          : item;
+      }
+      return item;
+    });
+  }
+
+  return value;
+};
+
 export const buildFilterWhere = (filterValue?: any): Record<string, any> | undefined => {
   if (!filterValue) return undefined;
 
@@ -73,7 +103,7 @@ export const buildFilterWhere = (filterValue?: any): Record<string, any> | undef
 
     const field = node.field;
     const operator = node.operator ?? 'contains';
-    const value = node.value;
+    const value = coerceFilterValue(field, node.value, operator);
 
     switch (operator) {
       case 'eq':
