@@ -21,9 +21,28 @@ export const createCompanySchema = z.object({
   isDeleted: z.boolean().optional(),
 });
 
+const companyFilterNodeSchema: z.ZodTypeAny = z.lazy(() =>
+  z.object({
+    field: z.string().optional(),
+    operator: z.enum([
+      'eq', 'neq', 'contains', 'notcontains', 'startswith', 'endswith',
+      'gt', 'gte', 'lt', 'lte', 'isnull', 'isnotnull', 'in', 'notin'
+    ]).optional(),
+    value: z.any().optional(),
+    logic: z.enum(['and', 'or']).optional(),
+    filters: z.array(companyFilterNodeSchema).optional(),
+  })
+);
+
 export const companyListQuerySchema = z.object({
   skip: z.number().int().min(0).optional(),
   take: z.number().int().min(1).max(100).optional(),
   orderBy: z.string().optional(),
   sortDirection: z.enum(['asc', 'desc']).optional(),
+  group: z.array(z.any()).optional(),
+  sort: z.array(z.string()).optional(),
+  filter: z.object({
+    logic: z.enum(['and', 'or']).optional(),
+    filters: z.array(companyFilterNodeSchema).optional(),
+  }).passthrough().optional(),
 });

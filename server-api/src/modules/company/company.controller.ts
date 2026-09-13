@@ -21,7 +21,7 @@ export class CompanyController {
 
   async list(req: Request, res: Response, next: NextFunction) {
     try {
-      const parsed = localCompanyListQuerySchema.parse(req.body ?? {});
+      const parsed = companyListQuerySchema.parse(req.body ?? {});
       const { items, total } = await companyService.list(parsed);
       return ok(res, 'Company list fetched successfully.', items, { total, skip: parsed.skip ?? 0, take: parsed.take ?? items.length });
     } catch (error) {
@@ -104,9 +104,3 @@ export class CompanyController {
   }
 }
 
-const localCompanyListQuerySchema = createCompanySchema.partial().extend({
-  skip: z.number().int().min(0).optional(),
-  take: z.number().int().min(1).max(100).optional(),
-  orderBy: z.string().optional(),
-  sortDirection: z.enum(['asc', 'desc']).optional(),
-});

@@ -17,7 +17,15 @@ export class CompanyService {
     return this.companyRepository.findAllNames();
   }
 
-  async list(params: { skip?: number; take?: number; orderBy?: string; sortDirection?: 'asc' | 'desc' }) {
+  async list(params: {
+    skip?: number;
+    take?: number;
+    orderBy?: string;
+    sortDirection?: 'asc' | 'desc';
+    filter?: any;
+    sort?: string[];
+    group?: any[];
+  }) {
     return this.companyRepository.list(params);
   }
 
