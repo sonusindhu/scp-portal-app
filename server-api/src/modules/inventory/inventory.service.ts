@@ -17,7 +17,7 @@ export class InventoryService {
     return this.inventoryRepository.list(params);
   }
 
-  async create(payload: InventoryPayload) {
+  async create(payload: InventoryPayload, userId?: number) {
     const existing = await this.inventoryRepository.findByTrackingNumber(payload.trackingNumber);
     if (existing) {
       throw new AppError('Inventory tracking number is already taken', 409);
@@ -26,10 +26,12 @@ export class InventoryService {
     return this.inventoryRepository.create({
       ...payload,
       packageId: payload.packageId ?? undefined,
+      createdBy: userId ?? payload.createdBy ?? null,
+      updatedBy: userId ?? payload.updatedBy ?? null,
     });
   }
 
-  async update(id: number, payload: InventoryPayload) {
+  async update(id: number, payload: InventoryPayload, userId?: number) {
     const inventory = await this.inventoryRepository.findById(id);
     if (!inventory) {
       throw new AppError('Inventory not found', 404);
@@ -42,7 +44,11 @@ export class InventoryService {
       }
     }
 
-    return this.inventoryRepository.update(id, payload);
+    return this.inventoryRepository.update(id, {
+      ...payload,
+      createdBy: payload.createdBy ?? inventory.createdBy ?? null,
+      updatedBy: userId ?? payload.updatedBy ?? inventory.updatedBy ?? null,
+    });
   }
 
   async delete(id: number) {

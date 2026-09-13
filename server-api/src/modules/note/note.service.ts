@@ -17,17 +17,25 @@ export class NoteService {
     return this.noteRepository.list(params);
   }
 
-  async create(payload: NotePayload) {
-    return this.noteRepository.create(payload);
+  async create(payload: NotePayload, userId?: number) {
+    return this.noteRepository.create({
+      ...payload,
+      createdBy: userId ?? payload.createdBy ?? null,
+      updatedBy: userId ?? payload.updatedBy ?? null,
+    });
   }
 
-  async update(id: number, payload: NotePayload) {
+  async update(id: number, payload: NotePayload, userId?: number) {
     const note = await this.noteRepository.findById(id);
     if (!note) {
       throw new AppError('Note not found', 404);
     }
 
-    return this.noteRepository.update(id, payload);
+    return this.noteRepository.update(id, {
+      ...payload,
+      createdBy: payload.createdBy ?? note.createdBy ?? null,
+      updatedBy: userId ?? payload.updatedBy ?? note.updatedBy ?? null,
+    });
   }
 
   async delete(id: number) {

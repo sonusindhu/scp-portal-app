@@ -17,16 +17,20 @@ export class ContactService {
     return this.contactRepository.list(params);
   }
 
-  async create(payload: ContactPayload) {
+  async create(payload: ContactPayload, userId?: number) {
     const existingByEmail = await this.contactRepository.findByEmail(payload.email);
     if (existingByEmail) {
       throw new AppError('Contact email is already taken', 409);
     }
 
-    return this.contactRepository.create(payload);
+    return this.contactRepository.create({
+      ...payload,
+      createdBy: userId ?? payload.createdBy ?? null,
+      updatedBy: userId ?? payload.updatedBy ?? null,
+    });
   }
 
-  async update(id: number, payload: ContactPayload) {
+  async update(id: number, payload: ContactPayload, userId?: number) {
     const contact = await this.contactRepository.findById(id);
     if (!contact) {
       throw new AppError('Contact not found', 404);
@@ -39,7 +43,11 @@ export class ContactService {
       }
     }
 
-    return this.contactRepository.update(id, payload);
+    return this.contactRepository.update(id, {
+      ...payload,
+      createdBy: payload.createdBy ?? contact.createdBy ?? null,
+      updatedBy: userId ?? payload.updatedBy ?? contact.updatedBy ?? null,
+    });
   }
 
   async delete(id: number) {

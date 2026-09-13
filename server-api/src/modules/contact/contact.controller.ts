@@ -37,7 +37,7 @@ export class ContactController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const payload = createContactSchema.parse(req.body);
-      const contact = await contactService.create(payload);
+      const contact = await contactService.create(payload, req.user?.id);
       return created(res, 'Contact has been successfully created.', contact);
     } catch (error) {
       if (error instanceof AppError) return fail(res, error.statusCode, error.message);
@@ -63,7 +63,7 @@ export class ContactController {
     try {
       const id = Number(req.params.id);
       const payload = createContactSchema.parse(req.body);
-      const contact = await contactService.update(id, payload);
+      const contact = await contactService.update(id, payload, req.user?.id);
       return ok(res, 'Contact has been updated successfully.', contact);
     } catch (error) {
       if (error instanceof AppError) return fail(res, error.statusCode, error.message);

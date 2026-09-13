@@ -17,17 +17,25 @@ export class TaskService {
     return this.taskRepository.list(params);
   }
 
-  async create(payload: TaskPayload) {
-    return this.taskRepository.create(payload);
+  async create(payload: TaskPayload, userId?: number) {
+    return this.taskRepository.create({
+      ...payload,
+      createdBy: userId ?? payload.createdBy ?? null,
+      updatedBy: userId ?? payload.updatedBy ?? null,
+    });
   }
 
-  async update(id: number, payload: TaskPayload) {
+  async update(id: number, payload: TaskPayload, userId?: number) {
     const task = await this.taskRepository.findById(id);
     if (!task) {
       throw new AppError('Task not found', 404);
     }
 
-    return this.taskRepository.update(id, payload);
+    return this.taskRepository.update(id, {
+      ...payload,
+      createdBy: payload.createdBy ?? task.createdBy ?? null,
+      updatedBy: userId ?? payload.updatedBy ?? task.updatedBy ?? null,
+    });
   }
 
   async delete(id: number) {

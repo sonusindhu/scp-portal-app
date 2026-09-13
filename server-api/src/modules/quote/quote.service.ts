@@ -96,7 +96,7 @@ export class QuoteService {
     return this.quoteRepository.list(params);
   }
 
-  async create(payload: QuotePayload) {
+  async create(payload: QuotePayload, userId?: number) {
     if (payload.quoteNumber) {
       const existing = await this.quoteRepository.findByQuoteNumber(payload.quoteNumber);
       if (existing) {
@@ -104,10 +104,14 @@ export class QuoteService {
       }
     }
 
-    return this.quoteRepository.create(payload);
+    return this.quoteRepository.create({
+      ...payload,
+      createdBy: userId ?? payload.createdBy ?? null,
+      updatedBy: userId ?? payload.updatedBy ?? null,
+    });
   }
 
-  async update(id: number, payload: QuotePayload) {
+  async update(id: number, payload: QuotePayload, userId?: number) {
     const quote = await this.quoteRepository.findById(id);
     if (!quote) {
       throw new AppError('Quote not found', 404);
@@ -120,7 +124,11 @@ export class QuoteService {
       }
     }
 
-    return this.quoteRepository.update(id, payload);
+    return this.quoteRepository.update(id, {
+      ...payload,
+      createdBy: payload.createdBy ?? quote.createdBy ?? null,
+      updatedBy: userId ?? payload.updatedBy ?? quote.updatedBy ?? null,
+    });
   }
 
   async delete(id: number) {
