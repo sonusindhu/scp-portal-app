@@ -37,7 +37,7 @@ export class EmailController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const payload = createEmailSchema.parse(req.body);
-      const email = await emailService.create(payload);
+      const email = await emailService.create(payload, req.user?.id);
       return created(res, 'Email has been successfully created.', email);
     } catch (error) {
       if (error instanceof AppError) return fail(res, error.statusCode, error.message);
@@ -61,9 +61,14 @@ export class EmailController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const id = Number(req.params.id);
       const payload = createEmailSchema.parse(req.body);
-      const email = await emailService.update(id, payload);
+      const id = Number(req.params.id ?? payload.id);
+
+      if (!Number.isFinite(id) || id <= 0) {
+        return fail(res, 400, 'Email id is required');
+      }
+
+      const email = await emailService.update(id, payload, req.user?.id);
       return ok(res, 'Email has been updated successfully.', email);
     } catch (error) {
       if (error instanceof AppError) return fail(res, error.statusCode, error.message);

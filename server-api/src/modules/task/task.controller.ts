@@ -37,7 +37,7 @@ export class TaskController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const payload = createTaskSchema.parse(req.body);
-      const task = await taskService.create(payload);
+      const task = await taskService.create(payload, req.user?.id);
       return created(res, 'Task has been successfully created.', task);
     } catch (error) {
       if (error instanceof AppError) return fail(res, error.statusCode, error.message);
@@ -61,9 +61,14 @@ export class TaskController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const id = Number(req.params.id);
       const payload = createTaskSchema.parse(req.body);
-      const task = await taskService.update(id, payload);
+      const id = Number(req.params.id ?? payload.id);
+
+      if (!Number.isFinite(id) || id <= 0) {
+        return fail(res, 400, 'Task id is required');
+      }
+
+      const task = await taskService.update(id, payload, req.user?.id);
       return ok(res, 'Task has been updated successfully.', task);
     } catch (error) {
       if (error instanceof AppError) return fail(res, error.statusCode, error.message);

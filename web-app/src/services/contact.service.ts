@@ -34,6 +34,39 @@ export interface Contact {
   updatedAt?: string;
 }
 
+const toNumberOrUndefined = (value: number | string | null | undefined): number | undefined => {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+};
+
+const normalizeContactPayload = (
+  payload: Record<string, any>
+): Record<string, any> => {
+  const normalized = { ...payload };
+
+  if (normalized.id !== undefined) {
+    normalized.id = toNumberOrUndefined(normalized.id);
+  }
+
+  if (normalized.companyId !== undefined) {
+    normalized.companyId = toNumberOrUndefined(normalized.companyId);
+  }
+
+  if (normalized.createdBy !== undefined) {
+    normalized.createdBy = toNumberOrUndefined(normalized.createdBy);
+  }
+
+  if (normalized.updatedBy !== undefined) {
+    normalized.updatedBy = toNumberOrUndefined(normalized.updatedBy);
+  }
+
+  return normalized;
+};
+
 /**
  * Contact Service - handles all contact-related API operations
  * Extends BaseService for common HTTP methods and error handling
@@ -68,7 +101,8 @@ class ContactService extends BaseService {
    * @returns Promise with created contact
    */
   async create(payload: any): Promise<ApiResponse<Contact>> {
-    return this.post<Contact>(API_ENDPOINTS.CONTACT.CREATE, payload, {
+    const normalizedPayload = normalizeContactPayload(payload);
+    return this.post<Contact>(API_ENDPOINTS.CONTACT.CREATE, normalizedPayload, {
       showSuccessToast: true,
     });
   }
@@ -79,7 +113,8 @@ class ContactService extends BaseService {
    * @returns Promise with updated contact
    */
   async update(payload: any): Promise<ApiResponse<Contact>> {
-    return this.post<Contact>(API_ENDPOINTS.CONTACT.UPDATE, payload, {
+    const normalizedPayload = normalizeContactPayload(payload);
+    return this.post<Contact>(API_ENDPOINTS.CONTACT.UPDATE, normalizedPayload, {
       showSuccessToast: true,
     });
   }

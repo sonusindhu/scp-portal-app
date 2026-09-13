@@ -30,7 +30,12 @@ const AddContact = (props) => {
   });
 
   const handleSubmitForm = async (data) => {
-    await handleSubmit(() => ContactService.create(data));
+    const payload = {
+      ...data,
+      companyId: data.companyId === "" || data.companyId === undefined ? undefined : Number(data.companyId),
+    };
+
+    await handleSubmit(() => ContactService.create(payload));
   };
 
   useEffect(() => {

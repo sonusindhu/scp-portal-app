@@ -1,6 +1,8 @@
 import { z } from 'zod';
+import { listQuerySchema } from '../../common/utils/list-query.js';
 
 export const createNoteSchema = z.object({
+  id: z.number().int().positive().optional(),
   type: z.string().max(20).optional().nullable(),
   title: z.string().max(100).optional().nullable(),
   message: z.string().max(5000).optional().nullable(),
@@ -15,9 +17,4 @@ export const createNoteSchema = z.object({
   isDeleted: z.boolean().optional(),
 });
 
-export const noteListQuerySchema = z.object({
-  skip: z.number().int().min(0).optional(),
-  take: z.number().int().min(1).max(100).optional(),
-  orderBy: z.string().optional(),
-  sortDirection: z.enum(['asc', 'desc']).optional(),
-});
+export const noteListQuerySchema = listQuerySchema;

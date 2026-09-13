@@ -1,4 +1,5 @@
 import { prisma } from '../../config/database.js';
+import { buildFilterWhere, enrichListItems, parseSortValue } from '../../common/utils/list-query.js';
 
 export class CompanyRepository {
   async findById(id: number) {
@@ -23,22 +24,45 @@ export class CompanyRepository {
     });
   }
 
-  async list({ skip = 0, take = 20, orderBy = 'createdAt', sortDirection = 'desc' }: {
+  async list({
+    skip = 0,
+    take = 20,
+    orderBy = 'createdAt',
+    sortDirection = 'desc',
+    filter,
+    sort,
+  }: {
     skip?: number;
     take?: number;
     orderBy?: string;
     sortDirection?: 'asc' | 'desc';
+    filter?: any;
+    sort?: string[];
   }) {
+    const parsedSort = parseSortValue(sort, orderBy, sortDirection);
+    const where = buildFilterWhere(filter);
+
     const [items, total] = await Promise.all([
       prisma.company.findMany({
+        where,
         skip,
         take,
-        orderBy: { [orderBy]: sortDirection },
+        orderBy: { [parsedSort.field]: parsedSort.direction },
       }),
-      prisma.company.count(),
+      prisma.company.count({ where }),
     ]);
 
-    return { items, total };
+    const hydratedItems = await enrichListItems(items, {
+      user: {
+        ids: items.flatMap((item) => [item.createdBy, item.updatedBy]),
+        fetch: () => prisma.user.findMany({
+          where: { id: { in: items.flatMap((item) => [item.createdBy, item.updatedBy]).filter((id): id is number => id != null) } },
+          select: { id: true, firstName: true, lastName: true, fullName: true },
+        }),
+      },
+    });
+
+    return { items: hydratedItems, total };
   }
 
   async create(data: {

@@ -10,12 +10,12 @@ import { ValidationRules } from "../../../utils/validation.util";
 import { SERVICE_TYPES, TRANSPORT_MODES } from "../../../utils/constants.util";
 
 interface AddQuoteFormData {
-  quoteName: string;
-  serviceTypeId: string;
+  name: string;
+  service: string;
   transportMode: string;
-  companyId: number;
+  companyId: number | string;
   contactId: number | string;
-  quotePickUpDate: string;
+  expiryDate: string;
 }
 
 const AddQuote = (props) => {
@@ -24,12 +24,12 @@ const AddQuote = (props) => {
 
   const formContext = useForm<AddQuoteFormData>({
     defaultValues: {
-      quoteName: "",
-      serviceTypeId: "",
+      name: "",
+      service: "",
       transportMode: "",
       companyId: 0,
       contactId: "",
-      quotePickUpDate: "",
+      expiryDate: "",
     },
     mode: "onBlur",
   });
@@ -47,8 +47,15 @@ const AddQuote = (props) => {
     },
   });
 
-  const handleSubmitForm = async (data) => {
-    await handleSubmit(() => QuoteService.create(data));
+  const handleSubmitForm = async (data: AddQuoteFormData) => {
+    const payload = {
+      ...data,
+      companyId: Number(data.companyId) || undefined,
+      contactId: Number(data.contactId) || undefined,
+      expiryDate: data.expiryDate || undefined,
+    };
+
+    await handleSubmit(() => QuoteService.create(payload));
   };
 
   // check if user is authenticated, if not redirect to login page
@@ -66,15 +73,18 @@ const AddQuote = (props) => {
 
   useEffect(() => {
     if (companyId) {
-      QuoteService.getContactsByCompany(companyId)
-        .then((response) => {
-          if (response.status) {
-            setContacts(response.data || []);
-          } else {
-            setContacts([]);
-          }
-        })
-        .catch(() => setContacts([]));
+      const numericCompanyId = Number(companyId);
+      if (!Number.isNaN(numericCompanyId)) {
+        QuoteService.getContactsByCompany(numericCompanyId)
+          .then((response) => {
+            if (response.status) {
+              setContacts(response.data || []);
+            } else {
+              setContacts([]);
+            }
+          })
+          .catch(() => setContacts([]));
+      }
     }
   }, [companyId]);
 

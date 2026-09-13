@@ -17,7 +17,7 @@ const Card = React.forwardRef<
 ))
 Card.displayName = "Card"
 
-interface MuiCardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+interface MuiCardHeaderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
   avatar?: React.ReactNode;
   action?: React.ReactNode;
   title?: React.ReactNode;

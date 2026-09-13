@@ -17,11 +17,19 @@ export class CompanyService {
     return this.companyRepository.findAllNames();
   }
 
-  async list(params: { skip?: number; take?: number; orderBy?: string; sortDirection?: 'asc' | 'desc' }) {
+  async list(params: {
+    skip?: number;
+    take?: number;
+    orderBy?: string;
+    sortDirection?: 'asc' | 'desc';
+    filter?: any;
+    sort?: string[];
+    group?: any[];
+  }) {
     return this.companyRepository.list(params);
   }
 
-  async create(payload: CompanyPayload) {
+  async create(payload: CompanyPayload, userId?: number) {
     const existingByName = await this.companyRepository.findByName(payload.name);
     if (existingByName) {
       throw new AppError('Company name is already taken', 409);
@@ -32,10 +40,14 @@ export class CompanyService {
       throw new AppError('Company email is already taken', 409);
     }
 
-    return this.companyRepository.create(payload);
+    return this.companyRepository.create({
+      ...payload,
+      createdBy: userId ?? payload.createdBy ?? null,
+      updatedBy: userId ?? payload.updatedBy ?? null,
+    });
   }
 
-  async update(id: number, payload: CompanyPayload) {
+  async update(id: number, payload: CompanyPayload, userId?: number) {
     const company = await this.companyRepository.findById(id);
     if (!company) {
       throw new AppError('Company not found', 404);
@@ -55,7 +67,11 @@ export class CompanyService {
       }
     }
 
-    return this.companyRepository.update(id, payload);
+    return this.companyRepository.update(id, {
+      ...payload,
+      createdBy: payload.createdBy ?? company.createdBy ?? null,
+      updatedBy: userId ?? payload.updatedBy ?? company.updatedBy ?? null,
+    });
   }
 
   async delete(id: number) {

@@ -35,7 +35,18 @@ const TaskForm = (props: TaskProps) => {
 
   const handleSubmitForm = async (data) => {
     if (!data.subject || !data.description) return;
-    await handleFormSubmit(() => TaskService.create(data));
+
+    const payload = {
+      ...data,
+      assignedTo: data.assignedTo === "" || data.assignedTo === undefined ? undefined : Number(data.assignedTo),
+      pointOfContact: data.pointOfContact === "" || data.pointOfContact === undefined ? undefined : Number(data.pointOfContact),
+      companyId: data.companyId === "" || data.companyId === undefined ? undefined : Number(data.companyId),
+      inventoryId: data.inventoryId === "" || data.inventoryId === undefined ? undefined : Number(data.inventoryId),
+      quoteId: data.quoteId === "" || data.quoteId === undefined ? undefined : Number(data.quoteId),
+      userId: data.userId === "" || data.userId === undefined ? undefined : Number(data.userId),
+    };
+
+    await handleFormSubmit(() => TaskService.create(payload));
   };
 
   return (

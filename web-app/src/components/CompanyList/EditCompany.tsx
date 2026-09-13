@@ -25,7 +25,13 @@ const EditCompany = () => {
   });
 
   const handleSubmitForm = async (data) => {
-    await handleSubmit(() => CompanyService.update(data));
+    const payload = {
+      ...data,
+      employeesCount: data.employeesCount === "" || data.employeesCount === undefined ? undefined : Number(data.employeesCount),
+      revenue: data.revenue === "" || data.revenue === undefined ? undefined : Number(data.revenue),
+    };
+
+    await handleSubmit(() => CompanyService.update(payload));
   };
 
   useEffect(() => {

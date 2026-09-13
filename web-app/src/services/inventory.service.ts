@@ -19,6 +19,53 @@ export interface Inventory {
   updatedAt?: string;
 }
 
+const toNumberOrUndefined = (value: number | string | null | undefined): number | undefined => {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+};
+
+const normalizeInventoryPayload = (payload: Record<string, any>): Record<string, any> => {
+  const normalized = { ...payload };
+
+  if (normalized.id !== undefined) {
+    normalized.id = toNumberOrUndefined(normalized.id);
+  }
+
+  if (normalized.companyId !== undefined) {
+    normalized.companyId = toNumberOrUndefined(normalized.companyId);
+  }
+
+  if (normalized.length !== undefined) {
+    normalized.length = toNumberOrUndefined(normalized.length);
+  }
+
+  if (normalized.width !== undefined) {
+    normalized.width = toNumberOrUndefined(normalized.width);
+  }
+
+  if (normalized.height !== undefined) {
+    normalized.height = toNumberOrUndefined(normalized.height);
+  }
+
+  if (normalized.weight !== undefined) {
+    normalized.weight = toNumberOrUndefined(normalized.weight);
+  }
+
+  if (normalized.createdBy !== undefined) {
+    normalized.createdBy = toNumberOrUndefined(normalized.createdBy);
+  }
+
+  if (normalized.updatedBy !== undefined) {
+    normalized.updatedBy = toNumberOrUndefined(normalized.updatedBy);
+  }
+
+  return normalized;
+};
+
 /**
  * Inventory Service - handles all inventory-related API operations
  * Extends BaseService for common HTTP methods and error handling
@@ -44,7 +91,8 @@ class InventoryService extends BaseService {
    * @returns Promise with created inventory
    */
   async create(payload: any): Promise<ApiResponse<Inventory>> {
-    return this.post<Inventory>(API_ENDPOINTS.INVENTORY.CREATE, payload, {
+    const normalizedPayload = normalizeInventoryPayload(payload);
+    return this.post<Inventory>(API_ENDPOINTS.INVENTORY.CREATE, normalizedPayload, {
       showSuccessToast: true,
     });
   }
@@ -55,7 +103,8 @@ class InventoryService extends BaseService {
    * @returns Promise with updated inventory
    */
   async update(payload: any): Promise<ApiResponse<Inventory>> {
-    return this.post<Inventory>(API_ENDPOINTS.INVENTORY.UPDATE, payload, {
+    const normalizedPayload = normalizeInventoryPayload(payload);
+    return this.post<Inventory>(API_ENDPOINTS.INVENTORY.UPDATE, normalizedPayload, {
       showSuccessToast: true,
     });
   }

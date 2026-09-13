@@ -7,6 +7,7 @@ vi.mock('../../config/database.js', () => ({
     company: {
       deleteMany: vi.fn(),
       create: vi.fn(),
+      update: vi.fn(),
       findMany: vi.fn(),
       findUnique: vi.fn(),
       count: vi.fn(),
@@ -91,6 +92,89 @@ describe('company module', () => {
     expect(response.body.status).toBe(true);
     expect(response.body.data.email).toBe('hello@acme.com');
     expect(response.body.data.name).toBe('Acme Logistics');
+  });
+
+  it('should update a company using the id from the request body for POST /update', async () => {
+    const app = createApp();
+    const token = buildToken();
+
+    vi.mocked(prisma.company.findUnique).mockResolvedValue({
+      id: 10,
+      name: 'Taazaa LLC',
+      email: 'sonu@taazaa.com',
+      type: 'customer',
+      status: 'active',
+      phone: '1234567890',
+      extension: '232',
+      address1: 'Pegasus tower',
+      address2: 'New',
+      city: 'Noida',
+      state: 'UP',
+      zipcode: '203209',
+      country: 'india',
+      employeesCount: 300,
+      revenue: 112312312,
+      mainContactId: null,
+      createdBy: null,
+      updatedBy: null,
+      isDeleted: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    } as any);
+
+    vi.mocked(prisma.company.update).mockResolvedValue({
+      id: 10,
+      name: 'Taazaa LLC',
+      email: 'sonu@taazaa.com',
+      type: 'customer',
+      status: 'active',
+      phone: '1234567890',
+      extension: '232',
+      address1: 'Pegasus tower',
+      address2: 'New',
+      city: 'Noida',
+      state: 'UP',
+      zipcode: '203209',
+      country: 'india',
+      employeesCount: 300,
+      revenue: 112312312,
+      mainContactId: null,
+      createdBy: 1,
+      updatedBy: 1,
+      isDeleted: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    } as any);
+
+    const response = await request(app)
+      .post('/api/company/update')
+      .set(withAuth(token))
+      .send({
+        id: 10,
+        name: 'Taazaa LLC',
+        email: 'sonu@taazaa.com',
+        type: 'customer',
+        status: 'active',
+        phone: '1234567890',
+        extension: '232',
+        address1: 'Pegasus tower',
+        address2: 'New',
+        city: 'Noida',
+        state: 'UP',
+        zipcode: '203209',
+        country: 'india',
+        employeesCount: 300,
+        revenue: 112312312,
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body.status).toBe(true);
+    expect(response.body.message).toBe('Company has been updated successfully.');
+    expect(prisma.company.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: 10 },
+      })
+    );
   });
 
   it('should list company names when authenticated', async () => {

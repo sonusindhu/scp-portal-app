@@ -21,7 +21,7 @@ export class CompanyController {
 
   async list(req: Request, res: Response, next: NextFunction) {
     try {
-      const parsed = localCompanyListQuerySchema.parse(req.body ?? {});
+      const parsed = companyListQuerySchema.parse(req.body ?? {});
       const { items, total } = await companyService.list(parsed);
       return ok(res, 'Company list fetched successfully.', items, { total, skip: parsed.skip ?? 0, take: parsed.take ?? items.length });
     } catch (error) {
@@ -43,7 +43,7 @@ export class CompanyController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const payload = createCompanySchema.parse(req.body);
-      const company = await companyService.create(payload);
+      const company = await companyService.create(payload, req.user?.id);
       return created(res, 'Company has been successfully created.', company);
     } catch (error) {
       if (error instanceof AppError) return fail(res, error.statusCode, error.message);
@@ -67,9 +67,14 @@ export class CompanyController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const id = Number(req.params.id);
       const payload = createCompanySchema.parse(req.body);
-      const company = await companyService.update(id, payload);
+      const id = Number(req.params.id ?? payload.id);
+
+      if (!Number.isFinite(id) || id <= 0) {
+        return fail(res, 400, 'Company id is required');
+      }
+
+      const company = await companyService.update(id, payload, req.user?.id);
       return ok(res, 'Company has been updated successfully.', company);
     } catch (error) {
       if (error instanceof AppError) return fail(res, error.statusCode, error.message);
@@ -104,9 +109,3 @@ export class CompanyController {
   }
 }
 
-const localCompanyListQuerySchema = createCompanySchema.partial().extend({
-  skip: z.number().int().min(0).optional(),
-  take: z.number().int().min(1).max(100).optional(),
-  orderBy: z.string().optional(),
-  sortDirection: z.enum(['asc', 'desc']).optional(),
-});

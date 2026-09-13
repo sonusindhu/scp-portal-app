@@ -7,6 +7,7 @@ import GridActionMenu from "../../../shared/components/GridList/GridActionMenu";
 import ContactService from "../../../services/contact.service";
 import ContactConfig from "../../Contacts/ContactList/contact.config";
 import { useDeleteConfirmation, useGridActions, useRefresh } from "../../../hooks";
+import { Button } from "@/components/ui/button";
 
 const CompanyContactList = () => {
   const { id } = useParams();
@@ -54,7 +55,7 @@ const CompanyContactList = () => {
         <Button
           className="blue-btn m-r-20"
           type="button"
-          size="large"
+          size="lg"
           variant="default"
           onClick={onCreate}
         >

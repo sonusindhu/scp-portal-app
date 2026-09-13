@@ -1,6 +1,8 @@
 import { z } from 'zod';
+import { listQuerySchema } from '../../common/utils/list-query.js';
 
 export const createCompanySchema = z.object({
+  id: z.number().int().positive().optional(),
   name: z.string().min(1).max(200),
   email: z.string().email(),
   type: z.string().max(15).optional().nullable(),
@@ -21,9 +23,4 @@ export const createCompanySchema = z.object({
   isDeleted: z.boolean().optional(),
 });
 
-export const companyListQuerySchema = z.object({
-  skip: z.number().int().min(0).optional(),
-  take: z.number().int().min(1).max(100).optional(),
-  orderBy: z.string().optional(),
-  sortDirection: z.enum(['asc', 'desc']).optional(),
-});
+export const companyListQuerySchema = listQuerySchema;

@@ -18,6 +18,41 @@ export interface Quote {
   updatedAt?: string;
 }
 
+const toNumberOrUndefined = (value: number | string | null | undefined): number | undefined => {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+};
+
+const normalizeQuotePayload = (payload: Record<string, any>): Record<string, any> => {
+  const normalized = { ...payload };
+
+  if (normalized.id !== undefined) {
+    normalized.id = toNumberOrUndefined(normalized.id);
+  }
+
+  if (normalized.companyId !== undefined) {
+    normalized.companyId = toNumberOrUndefined(normalized.companyId);
+  }
+
+  if (normalized.contactId !== undefined) {
+    normalized.contactId = toNumberOrUndefined(normalized.contactId);
+  }
+
+  if (normalized.createdBy !== undefined) {
+    normalized.createdBy = toNumberOrUndefined(normalized.createdBy);
+  }
+
+  if (normalized.updatedBy !== undefined) {
+    normalized.updatedBy = toNumberOrUndefined(normalized.updatedBy);
+  }
+
+  return normalized;
+};
+
 /**
  * Quote Service - handles all quote-related API operations
  * Extends BaseService for common HTTP methods and error handling
@@ -50,7 +85,8 @@ class QuoteService extends BaseService {
    * @returns Promise with created quote
    */
   async create(payload: any): Promise<ApiResponse<Quote>> {
-    return this.post<Quote>(API_ENDPOINTS.QUOTE.CREATE, payload, {
+    const normalizedPayload = normalizeQuotePayload(payload);
+    return this.post<Quote>(API_ENDPOINTS.QUOTE.CREATE, normalizedPayload, {
       showSuccessToast: true,
     });
   }
@@ -61,7 +97,8 @@ class QuoteService extends BaseService {
    * @returns Promise with updated quote
    */
   async update(payload: any): Promise<ApiResponse<Quote>> {
-    return this.post<Quote>(API_ENDPOINTS.QUOTE.UPDATE, payload, {
+    const normalizedPayload = normalizeQuotePayload(payload);
+    return this.post<Quote>(API_ENDPOINTS.QUOTE.UPDATE, normalizedPayload, {
       showSuccessToast: true,
     });
   }

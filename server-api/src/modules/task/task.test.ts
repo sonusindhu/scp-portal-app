@@ -14,6 +14,15 @@ vi.mock('../../config/database.js', () => ({
       update: vi.fn(),
       delete: vi.fn(),
     },
+    company: {
+      findMany: vi.fn(),
+    },
+    contact: {
+      findMany: vi.fn(),
+    },
+    user: {
+      findMany: vi.fn(),
+    },
   },
 }));
 
@@ -95,6 +104,8 @@ describe('task module', () => {
     ]);
 
     prismaMock.task.count.mockResolvedValue(1);
+    prismaMock.company.findMany.mockResolvedValue([{ id: 7, name: 'Acme Corp' }]);
+    prismaMock.user.findMany.mockResolvedValue([{ id: 1, firstName: 'System', lastName: 'Admin', fullName: 'System Admin' }]);
 
     const createResponse = await request(app)
       .post('/api/task/create')
@@ -125,6 +136,57 @@ describe('task module', () => {
       expect.arrayContaining([
         expect.objectContaining({ subject: 'Follow up on quote' }),
       ])
+    );
+  });
+
+  it('should convert ISO date strings into real Date objects before creating a task', async () => {
+    const app = createApp();
+    const token = buildToken();
+
+    prismaMock.task.create.mockResolvedValue({
+      id: 1,
+      type: 'company',
+      subject: 'Test task',
+      description: 'test',
+      priority: '1',
+      dueDateTime: new Date('2026-10-10T00:00:00.000Z'),
+      reminderDateTime: null,
+      category: '1',
+      status: 'in-progress',
+      assignedTo: 1,
+      pointOfContact: 1,
+      quoteId: null,
+      companyId: 10,
+      inventoryId: null,
+      userId: 1,
+      isDeleted: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    const response = await request(app)
+      .post('/api/task/create')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        type: 'company',
+        subject: 'Test task',
+        description: 'test',
+        priority: '1',
+        dueDateTime: '2026-10-10',
+        category: '1',
+        status: 'in-progress',
+        assignedTo: 1,
+        pointOfContact: 1,
+        companyId: 10,
+      });
+
+    expect(response.status).toBe(201);
+    expect(prismaMock.task.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          dueDateTime: expect.any(Date),
+        }),
+      })
     );
   });
 

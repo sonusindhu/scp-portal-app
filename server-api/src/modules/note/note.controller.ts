@@ -37,7 +37,7 @@ export class NoteController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const payload = createNoteSchema.parse(req.body);
-      const note = await noteService.create(payload);
+      const note = await noteService.create(payload, req.user?.id);
       return created(res, 'Note has been successfully created.', note);
     } catch (error) {
       if (error instanceof AppError) return fail(res, error.statusCode, error.message);
@@ -61,9 +61,14 @@ export class NoteController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const id = Number(req.params.id);
       const payload = createNoteSchema.parse(req.body);
-      const note = await noteService.update(id, payload);
+      const id = Number(req.params.id ?? payload.id);
+
+      if (!Number.isFinite(id) || id <= 0) {
+        return fail(res, 400, 'Note id is required');
+      }
+
+      const note = await noteService.update(id, payload, req.user?.id);
       return ok(res, 'Note has been updated successfully.', note);
     } catch (error) {
       if (error instanceof AppError) return fail(res, error.statusCode, error.message);

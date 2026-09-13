@@ -17,17 +17,25 @@ export class EmailService {
     return this.emailRepository.list(params);
   }
 
-  async create(payload: EmailPayload) {
-    return this.emailRepository.create(payload);
+  async create(payload: EmailPayload, userId?: number) {
+    return this.emailRepository.create({
+      ...payload,
+      createdBy: userId ?? payload.createdBy ?? null,
+      updatedBy: userId ?? payload.updatedBy ?? null,
+    });
   }
 
-  async update(id: number, payload: EmailPayload) {
+  async update(id: number, payload: EmailPayload, userId?: number) {
     const email = await this.emailRepository.findById(id);
     if (!email) {
       throw new AppError('Email not found', 404);
     }
 
-    return this.emailRepository.update(id, payload);
+    return this.emailRepository.update(id, {
+      ...payload,
+      createdBy: payload.createdBy ?? email.createdBy ?? null,
+      updatedBy: userId ?? payload.updatedBy ?? email.updatedBy ?? null,
+    });
   }
 
   async delete(id: number) {

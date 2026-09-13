@@ -16,7 +16,6 @@ import { useParams } from "react-router-dom";
 import NoteService from "../../../services/note.service";
 import NoteForm from "./NoteForm";
 import { NotesMainMenu } from "../../const/notes.conts";
-import { AvatarFallback } from "@radix-ui/react-avatar";
 
 interface NotesListProps {
   options: any;

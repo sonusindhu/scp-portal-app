@@ -25,5 +25,11 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": [
+    "src/**/*.spec.*",
+    "src/**/*.test.*",
+    "src/**/EXAMPLES.tsx",
+    "src/**/HOOKS_USAGE_GUIDE.tsx"
+  ]
 }
