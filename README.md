@@ -1,6 +1,6 @@
 # SCP Portal App
 
-A full-stack business portal for managing companies, contacts, tasks, notes, emails, quotes, and inventory. The project currently uses a migrated Express + TypeScript + Prisma API and a React + Vite frontend.
+SCP Portal App is a modern full-stack business portal for managing companies, contacts, tasks, notes, emails, quotes, and inventory. The application combines a React + TypeScript frontend with a migrated Express + TypeScript + Prisma backend, providing a responsive user experience and secure JWT-based authentication.
 
 ## Stack
 
@@ -144,15 +144,6 @@ npm run preview
 npm run type-check
 npm run lint
 ```
-
-## API conventions
-
-The migrated backend follows a consistent response envelope and a shared list-query utility for filter/sort logic. The frontend uses the backend API contract where list responses include hydrated display values such as:
-
-- createdByName
-- updatedByName
-- companyName
-- contactName
 
 ## Notes
 
