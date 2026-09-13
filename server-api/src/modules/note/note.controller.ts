@@ -61,8 +61,13 @@ export class NoteController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const id = Number(req.params.id);
       const payload = createNoteSchema.parse(req.body);
+      const id = Number(req.params.id ?? payload.id);
+
+      if (!Number.isFinite(id) || id <= 0) {
+        return fail(res, 400, 'Note id is required');
+      }
+
       const note = await noteService.update(id, payload, req.user?.id);
       return ok(res, 'Note has been updated successfully.', note);
     } catch (error) {

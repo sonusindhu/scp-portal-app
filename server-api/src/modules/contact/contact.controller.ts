@@ -61,8 +61,13 @@ export class ContactController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const id = Number(req.params.id);
       const payload = createContactSchema.parse(req.body);
+      const id = Number(req.params.id ?? payload.id);
+
+      if (!Number.isFinite(id) || id <= 0) {
+        return fail(res, 400, 'Contact id is required');
+      }
+
       const contact = await contactService.update(id, payload, req.user?.id);
       return ok(res, 'Contact has been updated successfully.', contact);
     } catch (error) {

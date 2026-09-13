@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { listQuerySchema } from '../../common/utils/list-query.js';
 
 export const createQuoteSchema = z.object({
+  id: z.number().int().positive().optional(),
   quoteNumber: z.string().max(50).optional(),
   name: z.string().max(100).optional().nullable(),
   service: z.string().max(50).optional().nullable(),

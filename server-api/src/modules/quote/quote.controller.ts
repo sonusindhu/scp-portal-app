@@ -96,8 +96,13 @@ export class QuoteController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const id = Number(req.params.id);
       const payload = createQuoteSchema.parse(req.body);
+      const id = Number(req.params.id ?? payload.id);
+
+      if (!Number.isFinite(id) || id <= 0) {
+        return fail(res, 400, 'Quote id is required');
+      }
+
       const quote = await quoteService.update(id, payload, req.user?.id);
       return ok(res, 'Quote has been updated successfully.', quote);
     } catch (error) {

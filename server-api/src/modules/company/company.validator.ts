@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { listQuerySchema } from '../../common/utils/list-query.js';
 
 export const createCompanySchema = z.object({
+  id: z.number().int().positive().optional(),
   name: z.string().min(1).max(200),
   email: z.string().email(),
   type: z.string().max(15).optional().nullable(),

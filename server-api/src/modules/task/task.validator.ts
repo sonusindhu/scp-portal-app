@@ -13,6 +13,7 @@ const dateValueSchema = z.preprocess((value) => {
 }, z.date().nullable().optional());
 
 export const createTaskSchema = z.object({
+  id: z.number().int().positive().optional(),
   type: z.string().max(20).optional().nullable(),
   subject: z.string().max(100).optional().nullable(),
   description: z.string().max(5000).optional().nullable(),

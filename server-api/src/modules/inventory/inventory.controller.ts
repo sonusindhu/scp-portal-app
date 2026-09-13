@@ -61,8 +61,13 @@ export class InventoryController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const id = Number(req.params.id);
       const payload = createInventorySchema.parse(req.body);
+      const id = Number(req.params.id ?? payload.id);
+
+      if (!Number.isFinite(id) || id <= 0) {
+        return fail(res, 400, 'Inventory id is required');
+      }
+
       const inventory = await inventoryService.update(id, payload, req.user?.id);
       return ok(res, 'Inventory has been updated successfully.', inventory);
     } catch (error) {

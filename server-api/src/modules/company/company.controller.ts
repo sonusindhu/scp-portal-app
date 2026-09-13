@@ -67,8 +67,13 @@ export class CompanyController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const id = Number(req.params.id);
       const payload = createCompanySchema.parse(req.body);
+      const id = Number(req.params.id ?? payload.id);
+
+      if (!Number.isFinite(id) || id <= 0) {
+        return fail(res, 400, 'Company id is required');
+      }
+
       const company = await companyService.update(id, payload, req.user?.id);
       return ok(res, 'Company has been updated successfully.', company);
     } catch (error) {
