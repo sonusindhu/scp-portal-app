@@ -73,15 +73,18 @@ const AddQuote = (props) => {
 
   useEffect(() => {
     if (companyId) {
-      QuoteService.getContactsByCompany(companyId)
-        .then((response) => {
-          if (response.status) {
-            setContacts(response.data || []);
-          } else {
-            setContacts([]);
-          }
-        })
-        .catch(() => setContacts([]));
+      const numericCompanyId = Number(companyId);
+      if (!Number.isNaN(numericCompanyId)) {
+        QuoteService.getContactsByCompany(numericCompanyId)
+          .then((response) => {
+            if (response.status) {
+              setContacts(response.data || []);
+            } else {
+              setContacts([]);
+            }
+          })
+          .catch(() => setContacts([]));
+      }
     }
   }, [companyId]);
 

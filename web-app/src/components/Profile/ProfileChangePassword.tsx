@@ -7,9 +7,17 @@ import { CommonFields, FormActions, FormContainer } from "../../shared/component
 import { ValidationRules } from "../../utils/validation.util";
 
 const ProfileChangePassword = () => {
-  const formContext = useForm({ 
-    defaultValues: {},
-    mode: "onBlur", // Validate on blur for better UX
+  const formContext = useForm<{
+    currentPassword: string;
+    password: string;
+    confirmPassword: string;
+  }>({
+    defaultValues: {
+      currentPassword: "",
+      password: "",
+      confirmPassword: "",
+    },
+    mode: "onBlur",
   });
   const { reset, watch } = formContext;
   const passwordValue = watch("password");
@@ -27,7 +35,11 @@ const ProfileChangePassword = () => {
   const handleClearForm = () => reset();
 
   const handleSubmitForm = async (data) => {
-    await handleSubmit(() => AuthService.updatePassword(data));
+    await handleSubmit(() => AuthService.updatePassword({
+      ...data,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+    }));
   };
 
   return (
@@ -53,7 +65,6 @@ const ProfileChangePassword = () => {
           name="confirmPassword"
           label="Confirm Password"
           className="m-2 w-[46%]"
-          rules={ValidationRules.confirmPassword(passwordValue)}
         />
       </div>
            
